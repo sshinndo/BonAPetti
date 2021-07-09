@@ -14,7 +14,8 @@ class _DrawerWithAlarmAppBar extends State<DrawerWithAlarmAppBar> {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
-      margin: EdgeInsets.only(top: 20 + MediaQuery.of(context).padding.top),
+      margin: EdgeInsets.only(
+          top: 20 + MediaQuery.of(context).padding.top, bottom: 10),
       height: AppBar().preferredSize.height,
       child: Row(
         children: [
