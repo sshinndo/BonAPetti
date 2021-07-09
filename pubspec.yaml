@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  flappy_search_bar: 1.4.1
   flutter:
     sdk: flutter
     
@@ -60,6 +61,7 @@ flutter:
       - images/cart_icon.png
       - images/heart_icon.png
   #   - images/a_dot_ham.jpeg
+      - images/goodstestimage.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
