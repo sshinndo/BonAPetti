@@ -23,6 +23,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
+  intl: ^0.17.0
+  retrofit: any
+  dio: ^3.0.1
+  logger:
+  json_annotation: ^3.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -32,6 +38,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  retrofit_generator: any
+  json_serializable: ^3.5.1
+  build_runner: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -48,6 +57,8 @@ flutter:
   assets:
       - images/bell_icon.png
       - images/hamburger_icon.png
+      - images/cart_icon.png
+      - images/heart_icon.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
