@@ -1,8 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:pet_service_application/card_news_detail/CardNewsDetailRoute.dart';
 import 'package:pet_service_application/CardNewsListRoute.dart';
+
+import 'package:pet_service_application/SeungHyun/screen/search_screen.dart';
+import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
+import 'package:pet_service_application/SeungHyun/screen/detail_goods_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,6 +26,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -35,40 +42,273 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
-            crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
-            children: <Widget>[
-              // appbar 부분 구현
-              DrawerWithAlarmAppBar(nickName: '닉네임'),
-              GestureDetector(
-                  onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CardNewsListRoute()),
-                      ),
-                  child: Container(
-                      alignment: Alignment.centerRight,
-                      child: Text("더보기 >"),
-                      margin: EdgeInsets.all(20.0))),
-              Expanded(flex: 2, child: CardNewsPageView()),
-              // 여기부분 부터 합치면 됩니다
-              //검색 창 그림만들기 -> 클릭하면 다른 라우터로 이동합니다.
-              // Expand 필요할 수도 있음
-              Container(
-                child: ElevatedButton(
-                  child: Text('Go to the Search_Screen'),
-                  onPressed: () {
-                    /*
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SearchRoute()));*/
-                  },
-                ),
-              ),
-              // 또 item 추가 가능
-            ]),
+
+      appBar: AppBar(
+        title: DrawerWithAlarmAppBar(nickName: '닉네임'),
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        elevation: 0.0,
       ),
+      body: ListView(
+        children: <Widget>[
+
+
+          GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CardNewsListRoute()),
+              ),
+              child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Text("더보기 >"),
+                  margin: EdgeInsets.all(20.0))),
+
+
+          RaisedButton.icon(
+            onPressed: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchRoute()));
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            label: Text('상품 검색',
+              style: TextStyle(color: Colors.white),),
+            icon: Icon(Icons.search, color:Colors.white,),
+            textColor: Colors.white,
+            splashColor: Colors.red,
+            color: Colors.green,),
+
+          Padding(padding: EdgeInsets.all(32)),
+
+          Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                    '당신과 함께하는',
+                  style: TextStyle(fontSize: 32),
+
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              children: <Widget>[
+                Text(
+                  '사탕이',
+                    style: TextStyle(
+                        color: Color.fromRGBO(255, 113, 113, 1),
+                        decoration: TextDecoration.underline,
+                        letterSpacing: 2.0,
+                        fontSize: 32,fontWeight: FontWeight.bold
+                    ),
+                ),
+                Text(
+                  '를 위한',
+                  style: TextStyle(
+                      fontSize: 32,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              children: <Widget>[
+                Text(
+                  '건강 식단',
+                  style: TextStyle(fontSize: 32),
+                ),
+
+              ],
+            ),
+          ),
+
+
+          GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GoodsScreen()),
+              ),
+              child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Text("더보기 >"),
+                  margin: EdgeInsets.all(20.0))),
+
+
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 220,
+                  width: 220,
+                  child: FlatButton(
+                    onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));},
+                    child: Container(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                GestureDetector(
+                                  child: Icon(Icons.favorite),
+                                ),
+                                Text(
+                                    '바로주문'
+                                ),
+                                GestureDetector(
+                                  child: Icon(Icons.shopping_cart),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 150,
+                            width: 150,
+                            child:  Image.asset('images/goodstestimage.png'),
+                          ),
+                          Text('맛있는 개껌'),
+                          Text('30,000원'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 220,
+                  width: 220,
+                  child: FlatButton(
+                    onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));},
+                    child: Container(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                GestureDetector(
+                                  child: Icon(Icons.favorite),
+                                ),
+                                Text(
+                                    '바로주문'
+                                ),
+                                GestureDetector(
+                                  child: Icon(Icons.shopping_cart),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 150,
+                            width: 150,
+                            child:  Image.asset('images/goodstestimage.png'),
+                          ),
+                          Text('맛있는 개껌'),
+                          Text('30,000원'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 220,
+                  width: 220,
+                  child: FlatButton(
+                    onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));},
+                    child: Container(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                GestureDetector(
+                                  child: Icon(Icons.favorite),
+                                ),
+                                Text(
+                                    '바로주문'
+                                ),
+                                GestureDetector(
+                                  child: Icon(Icons.shopping_cart),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 150,
+                            width: 150,
+                            child:  Image.asset('images/goodstestimage.png'),
+                          ),
+                          Text('맛있는 개껌'),
+                          Text('30,000원'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 220,
+                  width: 220,
+                  child: FlatButton(
+                    onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));},
+                    child: Container(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                GestureDetector(
+                                  child: Icon(Icons.favorite),
+                                ),
+                                Text(
+                                    '바로주문'
+                                ),
+                                GestureDetector(
+                                  child: Icon(Icons.shopping_cart),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 150,
+                            width: 150,
+                            child:  Image.asset('images/goodstestimage.png'),
+                          ),
+                          Text('맛있는 개껌'),
+                          Text('30,000원'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+
+        ],
+      ),
+
+
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -94,6 +334,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+
+
     );
   }
 }

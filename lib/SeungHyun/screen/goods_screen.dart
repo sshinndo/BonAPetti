@@ -15,7 +15,7 @@ import 'dart:math';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flutter/material.dart';
-
+import 'package:pet_service_application/SeungHyun/screen/detail_goods_screen.dart';
 
 
 class GoodsScreen extends StatefulWidget {
@@ -46,6 +46,14 @@ class _GoodsScreen extends State<GoodsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      appBar: AppBar(
+        title: DrawerWithAlarmAppBar(nickName: '닉네임'),
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        elevation: 0.0,
+      ),
+
       body: SafeArea(
         child: SearchBar<Food>(
           searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -53,7 +61,7 @@ class _GoodsScreen extends State<GoodsScreen> {
           listPadding: EdgeInsets.symmetric(horizontal: 10),
           onSearch: _getALlFoods,
           searchBarController: _searchBarController,
-          placeHolder: Text("placeholder"),
+          placeHolder: GoodsList(),
           //cancellationWidget: Text("Cancel"),
           emptyWidget: Text("empty"),
           indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
@@ -94,7 +102,7 @@ class _GoodsScreen extends State<GoodsScreen> {
                 isThreeLine: true,
                 subtitle: Text(food.description),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Detail()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));
                 },
               ),
             );
@@ -105,21 +113,181 @@ class _GoodsScreen extends State<GoodsScreen> {
   }
 }
 
-class Detail extends StatelessWidget {
+class GoodsList extends StatelessWidget{
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            Text("Detail"),
-          ],
-        ),
-      ),
-    );
+
+  Widget build(BuildContext context){
+   return Container(
+     child: Column(
+       children: <Widget>[
+         Padding(padding: EdgeInsets.all(20)),
+         Container(
+           child: Row(
+             mainAxisAlignment: MainAxisAlignment.center,
+             crossAxisAlignment: CrossAxisAlignment.center,
+             children: <Widget>[
+               SizedBox(
+                 height: 220,
+                 width: 220,
+                 child: FlatButton(
+                   onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));},
+                   child: Container(
+                     child: Column(
+                       children: <Widget>[
+                         Container(
+                           child: Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                             crossAxisAlignment: CrossAxisAlignment.center,
+                             children: <Widget>[
+                               GestureDetector(
+                                 child: Icon(Icons.favorite),
+                               ),
+                               Text(
+                                   '바로주문'
+                               ),
+                               GestureDetector(
+                                 child: Icon(Icons.shopping_cart),
+                               ),
+                             ],
+                           ),
+                         ),
+                         SizedBox(
+                           height: 150,
+                           width: 150,
+                           child:  Image.asset('images/goodstestimage.png'),
+                         ),
+                         Text('맛있는 개껌'),
+                         Text('30,000원'),
+                       ],
+                     ),
+                   ),
+                 ),
+               ),
+               SizedBox(
+                 height: 220,
+                 width: 220,
+                 child: FlatButton(
+                   onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));},
+                   child: Container(
+                     child: Column(
+                       children: <Widget>[
+                         Container(
+                           child: Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                             crossAxisAlignment: CrossAxisAlignment.center,
+                             children: <Widget>[
+                               GestureDetector(
+                                 child: Icon(Icons.favorite),
+                               ),
+                               Text(
+                                   '바로주문'
+                               ),
+                               GestureDetector(
+                                 child: Icon(Icons.shopping_cart),
+                               ),
+                             ],
+                           ),
+                         ),
+                         SizedBox(
+                           height: 150,
+                           width: 150,
+                           child:  Image.asset('images/goodstestimage.png'),
+                         ),
+                         Text('맛있는 개껌'),
+                         Text('30,000원'),
+                       ],
+                     ),
+                   ),
+                 ),
+               ),
+             ],
+           ),
+         ),
+         Container(
+           child: Row(
+             mainAxisAlignment: MainAxisAlignment.center,
+             crossAxisAlignment: CrossAxisAlignment.center,
+             children: <Widget>[
+               SizedBox(
+                 height: 220,
+                 width: 220,
+                 child: FlatButton(
+                   onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));},
+                   child: Container(
+                     child: Column(
+                       children: <Widget>[
+                         Container(
+                           child: Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                             crossAxisAlignment: CrossAxisAlignment.center,
+                             children: <Widget>[
+                               GestureDetector(
+                                 child: Icon(Icons.favorite),
+                               ),
+                               Text(
+                                   '바로주문'
+                               ),
+                               GestureDetector(
+                                 child: Icon(Icons.shopping_cart),
+                               ),
+                             ],
+                           ),
+                         ),
+                         SizedBox(
+                           height: 150,
+                           width: 150,
+                           child:  Image.asset('images/goodstestimage.png'),
+                         ),
+                         Text('맛있는 개껌'),
+                         Text('30,000원'),
+                       ],
+                     ),
+                   ),
+                 ),
+               ),
+               SizedBox(
+                 height: 220,
+                 width: 220,
+                 child: FlatButton(
+                   onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));},
+                   child: Container(
+                     child: Column(
+                       children: <Widget>[
+                         Container(
+                           child: Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                             crossAxisAlignment: CrossAxisAlignment.center,
+                             children: <Widget>[
+                               GestureDetector(
+                                 child: Icon(Icons.favorite),
+                               ),
+                               Text(
+                                   '바로주문'
+                               ),
+                               GestureDetector(
+                                 child: Icon(Icons.shopping_cart),
+                               ),
+                             ],
+                           ),
+                         ),
+                         SizedBox(
+                           height: 150,
+                           width: 150,
+                           child:  Image.asset('images/goodstestimage.png'),
+                         ),
+                         Text('맛있는 개껌'),
+                         Text('30,000원'),
+                       ],
+                     ),
+                   ),
+                 ),
+               ),
+             ],
+           ),
+         ),
+       ],
+     ),
+   );
   }
 }
+

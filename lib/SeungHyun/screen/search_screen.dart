@@ -34,22 +34,18 @@ class SearchRoute extends StatelessWidget{
 
   Widget build(BuildContext context) {
     return Scaffold(
+
+      appBar: AppBar(
+        title: DrawerWithAlarmAppBar(nickName: '닉네임'),
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        elevation: 0.0,
+      ),
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
             crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
             children: <Widget>[
-
-              DrawerWithAlarmAppBar(nickName: '닉네임'),
-              GestureDetector (
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CardNewsListRoute()),
-                  ),
-                  child: Container(
-                  )),
-
 
               Expanded(
                 child: Padding(
@@ -67,8 +63,50 @@ class SearchRoute extends StatelessWidget{
                               padding: EdgeInsets.all(32)
                           ),
 
-                          //최근 검색어 argument 여기에 추가하면 됩니다.
                           Text('최근 검색어'),
+
+                          Padding(
+                              padding: EdgeInsets.all(12)
+                          ),
+                          //최근 검색어 argument 여기에 추가하면 됩니다.
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    _buildHashTagButton('#강아지'),
+                                    Padding(padding: EdgeInsets.all(20)),
+                                    _buildHashTagButton('#고양이'),
+                                    Padding(padding: EdgeInsets.all(20)),
+                                    _buildHashTagButton('#햄스터'),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    _buildHashTagButton('#기니피그'),
+                                    Padding(padding: EdgeInsets.all(20)),
+                                    _buildHashTagButton('#카멜레온'),
+                                    Padding(padding: EdgeInsets.all(20)),
+                                    _buildHashTagButton('#오소리'),
+                                    Padding(padding: EdgeInsets.all(20)),
+                                    _buildHashTagButton('#너구리'),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    _buildHashTagButton('#앵무새'),
+                                    Padding(padding: EdgeInsets.all(20)),
+                                    _buildHashTagButton('#사자'),
+                                    Padding(padding: EdgeInsets.all(20)),
+                                    _buildHashTagButton('#호랑이'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       )
                     ),
@@ -88,12 +126,22 @@ class SearchRoute extends StatelessWidget{
   }
 }
 
-
-/*
-    body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SearchBar(),
-        ),
-      ),
- */
+ElevatedButton _buildHashTagButton(String buttonText) {
+  return ElevatedButton(
+      child: Text(buttonText),
+      onPressed: () {
+      },
+      style: ElevatedButton.styleFrom(
+          primary: Color.fromRGBO(246, 246, 246, 1),
+          onPrimary:  Color.fromRGBO(255, 113, 113, 1),
+          padding: EdgeInsets.symmetric(horizontal: 23, vertical: 7),
+          textStyle: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold
+          ),
+          shape: new RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0)
+          )
+      )
+  );
+}
