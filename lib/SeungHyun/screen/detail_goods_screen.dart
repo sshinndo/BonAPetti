@@ -15,7 +15,14 @@ class _DetailedGoodsScreen extends State<DetailedGoodsScreen>{
 
     return Scaffold(
       appBar: AppBar(
-        title: DrawerWithAlarmAppBar(nickName: '닉네임'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(onPressed: (){Navigator.pop(context,null);}, icon: Icon(Icons.arrow_back,color: Colors.black,)),
+            Text('닉네임', style: TextStyle(color: Colors.black),),
+            Icon(Icons.alarm,color: Colors.black,),
+          ],
+        ),
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,
@@ -26,8 +33,11 @@ class _DetailedGoodsScreen extends State<DetailedGoodsScreen>{
           Padding(padding: EdgeInsets.all(32)),
           RaisedButton.icon(
             onPressed: (){
+              /*
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SearchRoute()));
+
+               */
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
