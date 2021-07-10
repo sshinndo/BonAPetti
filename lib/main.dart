@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/CardNewsModel.dart';
+import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
-import 'package:pet_service_application/card_news_detail/CardNewsDetailRoute.dart';
-import 'package:pet_service_application/CardNewsListRoute.dart';
+import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
+import 'package:pet_service_application/route/CardNewsListRoute.dart';
+import 'package:pet_service_application/card_news/CardNewsPageView.dart';
 
 import 'package:pet_service_application/SeungHyun/screen/search_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
@@ -31,60 +32,80 @@ class MyApp extends StatelessWidget {
 
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
+  final List<CardNewsModel> cardNewsModelList = [];
+
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  @override
+  void didUpdateWidget(covariant MyHomePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    loadData();
+  }
+
+  void loadData() {
+    // 남아있는 데이터 모두 제거
+    widget.cardNewsModelList.clear();
+
+    // 서버에서 데이터 불러오고 cardNewsModelList에 추가
+    // 현재는 더미데이터
+    CardNewsModel _cardNewsEventItem = CardNewsModel(
+        CardNewsType.CARDNEWS,
+        'https://picsum.photos/250?image=9',
+        "과연 고양이는 생선만\n먹어도 괜찮을까?",
+        null,
+        null,
+        List.filled(
+            5,
+            DetailCardNewsModel('https://picsum.photos/250?image=9',
+                "과연 고양이는 생선만\n먹어도 괜찮을까? 2")),
+        null);
+    for (int i = 0; i < 10; i++)
+      widget.cardNewsModelList.add(_cardNewsEventItem);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      appBar: AppBar(
-        title: DrawerWithAlarmAppBar(nickName: '닉네임'),
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        elevation: 0.0,
-      ),
       body: ListView(
         children: <Widget>[
-          GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CardNewsListRoute()),
-              ),
-              child: Container(
-                  alignment: Alignment.centerRight,
-                  child: Text("더보기 >"),
-                  margin: EdgeInsets.all(20.0))),
-
-         /*
-         Container(
-           margin: EdgeInsets.only(left: 30,right : 30),
-           child:  RaisedButton.icon(
-             onPressed: (){
-               Navigator.push(context,
-                   MaterialPageRoute(builder: (context) => SearchRoute()));
-
-             },
-             shape: RoundedRectangleBorder(
-                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
-             label: Text('상품 검색',
-               style: TextStyle(color: Colors.white),),
-             icon: Icon(Icons.search, color:Colors.white,),
-             textColor: Colors.white,
-             splashColor: Colors.red,
-             color: Colors.green,),
-         ),
-
-          */
-         Container(
+           DrawerWithAlarmAppBar(nickName: '닉네임'),Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
+            crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
+            children: <Widget>[
+              // appbar 부분 구현
+              DrawerWithAlarmAppBar(nickName: '닉네임'),
+              GestureDetector(
+                  onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CardNewsListRoute(
+                                cardNewsModelList: widget.cardNewsModelList)),
+                      ),
+                  child: Container(
+                      alignment: Alignment.centerRight,
+                      child: Text("더보기 >"),
+                      margin: EdgeInsets.all(20.0))),
+              Container(
+                  height: 300,
+                  child: CardNewsPageView(
+                      cardNewsModelList: widget.cardNewsModelList)),
+              // 여기부분 부터 합치면 됩니다
+              //검색 창 그림만들기 -> 클릭하면 다른 라우터로 이동합니다.
+              // Expand 필요할 수도 있음
+              Container(
           child: GestureDetector(
             onTap: (){
               Navigator.push(context,
@@ -248,53 +269,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
 
-    );
-  }
-}
-
-class CardNews extends StatelessWidget {
-  final CardNewsModel cardNewsModel;
-  final BorderRadius _baseBorderRadius = BorderRadius.circular(8);
-
-  CardNews({Key? key, required this.cardNewsModel}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CardNewsDetailRoute()),
-            ),
-        child: Card(
-          elevation: 5,
-          margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
-          semanticContainer: true,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          shape: RoundedRectangleBorder(borderRadius: _baseBorderRadius),
-          child: Image.network(
-            cardNewsModel.imgUrl,
-            fit: BoxFit.fill,
-          ),
-        ));
-  }
-}
-
-class CardNewsPageView extends StatefulWidget {
-  @override
-  _CardNewsPageView createState() => _CardNewsPageView();
-}
-
-class _CardNewsPageView extends State<CardNewsPageView> {
-  List<CardNews> cardNewsList = [];
-
-  @override
-  Widget build(BuildContext context) {
-    final PageController controller =
-        PageController(viewportFraction: 0.85, initialPage: 0);
-    return PageView(
-      scrollDirection: Axis.horizontal,
-      controller: controller,
-      children: cardNewsList,
     );
   }
 }
