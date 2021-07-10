@@ -36,10 +36,10 @@ class _GoodsScreen extends State<GoodsScreen> {
     //if (text.length == 5) throw Error();
     //if (text.length == 6) return [];
     List<Food> foods = [
-
       Food('개껌','씹는 껌', '강아지',3000),
       Food('나비막대기','놀이용','고양이',2500),
       Food('톱밥','생존용','햄스터',2000),
+      Food('당근','식용','토끼',700),
     ];
 
 
@@ -58,14 +58,7 @@ class _GoodsScreen extends State<GoodsScreen> {
     return Scaffold(
 
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            IconButton(onPressed: (){Navigator.pop(context,null);}, icon: Icon(Icons.arrow_back,color: Colors.black,)),
-            Text('닉네임', style: TextStyle(color: Colors.black),),
-            Icon(Icons.alarm,color: Colors.black,),
-          ],
-        ),
+        title: DrawerWithAlarmAppBar(nickName: '닉네임'),
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,

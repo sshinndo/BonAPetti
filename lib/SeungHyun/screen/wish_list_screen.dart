@@ -108,7 +108,7 @@ class _Wish_List_Screen extends State<Wish_List_Screen>{
                               Container(
                                 padding: EdgeInsets.only(right: 200),
                                 child: Text(
-                                  '기본 폴더',
+                                  '기본 폴더 1',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -187,7 +187,7 @@ class _Wish_List_Screen extends State<Wish_List_Screen>{
                               Container(
                                 padding: EdgeInsets.only(right: 200),
                                 child: Text(
-                                  '기본 폴더',
+                                  '기본 폴더 2',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,

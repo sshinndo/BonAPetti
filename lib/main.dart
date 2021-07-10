@@ -64,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text("더보기 >"),
                   margin: EdgeInsets.all(20.0))),
 
+         /*
          Container(
            margin: EdgeInsets.only(left: 30,right : 30),
            child:  RaisedButton.icon(
@@ -80,6 +81,39 @@ class _MyHomePageState extends State<MyHomePage> {
              textColor: Colors.white,
              splashColor: Colors.red,
              color: Colors.green,),
+         ),
+
+          */
+         Container(
+          child: GestureDetector(
+            onTap: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchRoute()));
+
+            },
+            child: Card(
+            semanticContainer: true,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            elevation: 5.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            margin: EdgeInsets.only(left: 30,right: 30),
+            child: SizedBox(
+              height: 50,
+              width: 100,
+              child: Container(
+                color: Color.fromRGBO(254, 254, 254, 1),
+                child: Row(
+                  children: <Widget>[
+                    Padding(padding: EdgeInsets.only(left: 10)),
+                    Icon(Icons.search,size: 30,color: Color.fromRGBO(217, 217, 217, 1),),
+                    ImageIcon(AssetImage('images/barbar.png')),
+                  ],
+                ),
+              ),
+            ),),
+          ),
          ),
 
           Padding(padding: EdgeInsets.all(32)),
@@ -165,6 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
+          Padding(padding: EdgeInsets.only(top: 52)),
           Container(
             margin: EdgeInsets.only(left: 30,right : 30),
             child:  RaisedButton.icon(

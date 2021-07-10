@@ -3,11 +3,11 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/SeungHyun/screen/shopping_basket.dart';
-
+/*
 class EachWishList extends StatefulWidget{
   @override
   _EachWishList createState() => _EachWishList();
-}
+}*/
 
 List<ProductModel> dummyProductModelList = [
   ProductModel('개구리', 'abc', 200, false),
@@ -15,27 +15,26 @@ List<ProductModel> dummyProductModelList = [
   ProductModel('타란튤라', 'abc', 200, false),
   ProductModel('전갈', 'abc', 200, false),
   ProductModel('지네', 'abc', 200, false),
-  ProductModel('지네', 'abc', 200, false),
-  ProductModel('지네', 'abc', 200, false),
-  ProductModel('지네', 'abc', 200, false),
-  ProductModel('지네', 'abc', 200, false),
-  ProductModel('지네', 'abc', 200, false),
-  ProductModel('지네', 'abc', 200, false),
 ];
-int a = 1;
 
-class _EachWishList extends State<EachWishList>{
+class EachWishList extends StatelessWidget {
 
     @override
     Widget build(BuildContext context){
+      ProductListView productListView = ProductListView(
+          productModelList: dummyProductModelList
+      );
+
     return Scaffold(
 
 
       appBar: AppBar(
         centerTitle: true,
-        leading: Icon(
-          Icons.arrow_back,
-          color: Colors.black,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black,),
+          onPressed: (){
+            Navigator.pop(context , null);
+          },
         ),
         title: Text(
           '찜목록',
@@ -51,18 +50,7 @@ class _EachWishList extends State<EachWishList>{
               Padding(padding: EdgeInsets.only(left: 25)),
               TextButton(
                   onPressed: (){
-                    setState(() {
-                      a++;
-                      if(a % 2 == 0){
-                      dummyProductModelList.forEach((element) {
-                        element.isChecked = true;
-                      });}
-                      else{
-                        dummyProductModelList.forEach((element) {
-                          element.isChecked= false;
-                        });
-                      }
-                    });
+                    productListView.getStateData().refreshAllData();
                   },
                   child: Text(
                     '전체선택',
@@ -73,7 +61,9 @@ class _EachWishList extends State<EachWishList>{
                 padding: EdgeInsets.all(32),
               ),
               TextButton(
-                  onPressed: (){},
+                  onPressed: () {
+                      productListView.getStateData().selectedItemRemove();
+                  },
                   child: Text(
                     '선택 삭제',
                     style: TextStyle(color: Colors.black26,fontWeight: FontWeight.bold),
@@ -81,16 +71,17 @@ class _EachWishList extends State<EachWishList>{
                   )
               ),
               Padding(padding: EdgeInsets.fromLTRB(215,0,0,0)),
-              IconButton(onPressed: (){},
+              IconButton(onPressed: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Shopping_Basket()));
+              },
                 icon: ImageIcon(AssetImage("images/shoppingcartfigma.png"),size: 20,color: Colors.black26,),
               ),
             ],
           ),
           Expanded(
             flex: 1,
-            child:ProductListView(
-          productModelList: dummyProductModelList
-            ),),
+            child:productListView,),
         ],
       ),
     );
@@ -110,8 +101,12 @@ class ProductListView extends StatefulWidget{
 
   ProductListView({Key? key, required this.productModelList}) : super(key: key);
 
+  final _ProductListView _productListView = _ProductListView();
+
+  _ProductListView getStateData() => _productListView;
+
   @override
-  _ProductListView createState() => _ProductListView();
+  _ProductListView createState() => _productListView;
 }
 
 class _ProductListView extends State<ProductListView>{
@@ -127,6 +122,21 @@ class _ProductListView extends State<ProductListView>{
     _loadData(widget.productModelList);
   }
 
+  void selectedItemRemove() {
+    setState(() {
+      _loadData(widget.productModelList);
+      productModelList.removeWhere((element) => element.isChecked);
+    });
+  }
+
+  void refreshAllData() {
+    setState(() {
+        dummyProductModelList.forEach((element) {
+          element.isChecked = !element.isChecked;
+        });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -137,6 +147,8 @@ class _ProductListView extends State<ProductListView>{
     );
   }
 }
+
+
 class ProductListItem extends StatefulWidget{
   final ProductModel productModel;
   ProductListItem({Key ? key, required this.productModel});
@@ -144,7 +156,7 @@ class ProductListItem extends StatefulWidget{
   _ProductListItem createState() => _ProductListItem();
 }
 
-class _ProductListItem extends State<ProductListItem>{
+class _ProductListItem extends State<ProductListItem> {
 
   @override
   Widget build(BuildContext context) {
@@ -167,12 +179,13 @@ class _ProductListItem extends State<ProductListItem>{
               child: Container(
                 child: Row(
                   children: <Widget>[
-                    Expanded(flex: 1, child: Container(
-                      margin: EdgeInsets.only(left: 25),
-                      height: 250,
-                      width: 250,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(255, 228, 228, 1),
+                    Expanded(flex: 2, child: Container(
+                      margin: EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.only(left: 0),
+                      child: SizedBox(
+                        height: 300,
+                        width: 400,
+                        child: Image.asset("images/goodstestimage.png"),
                       ),
                     ),),
                     Expanded(flex: 6,
@@ -180,33 +193,48 @@ class _ProductListItem extends State<ProductListItem>{
                       children: <Widget>[
                         Padding(padding: EdgeInsets.only(top: 10)),
                         Container(
-                          margin: EdgeInsets.only(left: 40,right: 40),
+                          margin: EdgeInsets.only(left: 16,right: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(widget.productModel.title),
                               Checkbox(
-
-                              value: widget.productModel.isChecked,
-                                onChanged: (bool ? value){
+                                activeColor: Color.fromRGBO(255, 113, 113, 1),
+                                value: widget.productModel.isChecked,
+                                onChanged: (bool? value){
                                 setState(() {
                                   widget.productModel.isChecked = value!;
                                 });
                                 },
                               ),
-
                             ],
                           ),
                         ),
-                        Padding(padding: EdgeInsets.only(top: 12)),
+                        Padding(padding: EdgeInsets.only(top: 0)),
                         Container(
-                          padding: EdgeInsets.only(right: 200),
+                          padding: EdgeInsets.only(right: 240),
                           child: Text(
                             '${widget.productModel.price}원',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
+                          ),
+                        ),
+                        Padding(padding: EdgeInsets.only(top: 5)),
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.only(left: 200,right: 20),
+                                child: Text('바로주문',
+                                  style: TextStyle(color: Color.fromRGBO(168, 168, 168, 1  )),),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 10,right: 20),
+                                child:  ImageIcon(AssetImage("images/shoppingcartfigma.png"),size: 20,color: Color.fromRGBO(217, 217, 217, 1)),
+                              ),
+                            ],
                           ),
                         ),
 

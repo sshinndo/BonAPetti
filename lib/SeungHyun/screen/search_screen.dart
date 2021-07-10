@@ -28,51 +28,47 @@ class SearchRoute extends StatefulWidget {
 }
 
 class _SearchRoute extends State<SearchRoute> {
-  final SearchBarController<Food> _searchBarController = SearchBarController();
-  bool isReplay = false;
-
-  Future<List<Food>> _getALlFoods(String text) async {
-    //await Future.delayed(Duration(seconds: text.length == 4 ? 10 : 1));
-    //if (isReplay) return [Food("Replaying !", "Replaying body")];
-    //if (text.length == 5) throw Error();
-    //if (text.length == 6) return [];
-    List<Food> foods = [
-
-      Food('개껌','씹는 껌', '강아지',3000),
-      Food('나비막대기','놀이용','고양이',2500),
-      Food('톱밥','생존용','햄스터',2000),
-    ];
-    /*
-    var random = new Random();
-    for (int i = 0; i < 10; i++) {
-      foods.add(Food("$text $i", "body random number : ${random.nextInt(100)}"));
-    }
-
-     */
-    return foods;
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            IconButton(onPressed: (){Navigator.pop(context,null);}, icon: Icon(Icons.arrow_back,color: Colors.black,)),
-            Text('닉네임', style: TextStyle(color: Colors.black),),
-            Icon(Icons.alarm,color: Colors.black,),
-          ],
-        ),
+        title: DrawerWithAlarmAppBar(nickName: '닉네임'),
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,
       ),
 
+      body: searcharea(),
+    );
+  }
+}
 
+class searcharea extends StatefulWidget{
+  @override
+  _searcharea createState() => _searcharea();
+}
 
-      body: SafeArea(
+class _searcharea extends State<searcharea>{
+  final SearchBarController<Food> _searchBarController = SearchBarController();
+  bool isReplay = false;
+
+  Future<List<Food>> _getALlFoods(String text) async {
+    List<Food> foods = [
+      Food('개껌','씹는 껌', '강아지',3000),
+      Food('나비막대기','놀이용','고양이',2500),
+      Food('톱밥','생존용','햄스터',2000),
+      Food('당근','식용','토끼',700),
+    ];
+    return foods;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        margin: EdgeInsets.only(left: 30,right: 30),
         child: SearchBar<Food>(
           searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
           headerPadding: EdgeInsets.symmetric(horizontal: 10),
