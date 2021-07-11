@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/ProfileQuestion.dart';
+import 'package:pet_service_application/log_in/UserInfoClass.dart';
 import 'package:pet_service_application/main.dart';
 import 'package:pet_service_application/log_in/SignUpPage.dart';
 import 'package:pet_service_application/log_in/Splash.dart';
@@ -8,16 +9,16 @@ import 'dart:math';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
-
   @override
   _LogInState createState() => _LogInState();
 }
-
 class _LogInState extends State<LogIn> {
+
   TextEditingController emailController=TextEditingController() ;
   TextEditingController passwordController=TextEditingController();
 
   bool isLoading = false;
+
 
   @override
   void initState(){
@@ -96,8 +97,8 @@ class _LogInState extends State<LogIn> {
                 child: Container(
                   child: customSubtitleColor('문의하기', GREY),
                 ),
-                onTap: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignUp())),
+                onTap: () =>
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp())),
               ),
             ])),
           ],

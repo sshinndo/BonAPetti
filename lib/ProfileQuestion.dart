@@ -11,46 +11,6 @@ const Color PINK = const Color.fromRGBO(255, 113, 113, 1);
 const Color LIGHTPINK = const Color.fromRGBO(255, 113, 113, 0.3);
 const Color GREY = const Color.fromRGBO(185, 185, 185, 1);
 
-// enum WriteProfileState { prepare, complete } //질문2] 작성여부? {작성X, 작성O}
-
-// class UserInfo {
-//   //질문1]당신의 이름을 알고싶어요!
-//   String userNickName;
-
-//   //질문2] 함께하고 계신 친구들에 대해 이야기 가능하신가요?
-//   WriteProfileState writeProfileState;
-
-//   //질문3] 펫의 이름은? ~
-//   PetInfo petInfo;
-
-//   UserInfo(this.userNickName, this.writeProfileState, this.petInfo);
-// }
-
-// enum PetAllergy { NO, YES }
-// enum PetSilhouette { BCS1, BCS2, BCS3, BCS4, BCS5 } // 반려동물 실루엣(BCS단계)
-
-// class PetInfo {
-//   final String petName; //반려동물 이름
-//   final String petType; //반려동물 종류
-//   final String petSpecies; //해당 반려동물 세부 종
-//   PetBodyInfo petBodyInfo;
-//   PetAllergy petAllergy;
-//   PetSilhouette petSilhouette;
-
-//   PetInfo(this.petName, this.petType, this.petSpecies, this.petBodyInfo,
-//       this.petAllergy, this.petSilhouette);
-// }
-
-// class PetBodyInfo {
-//   num petAge;
-//   num petLength;
-//   num petWeight;
-
-//   PetBodyInfo(this.petAge, this.petLength, this.petWeight);
-// }
-
-// class PetAllergyType {}
-
 class ProfileQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -74,9 +34,8 @@ class FirstRoute extends StatefulWidget {
 }
 
 class FirstRouteState extends State<FirstRoute> {
-  TextEditingController _userName = TextEditingController();
 
-
+   TextEditingController userNickname = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +59,7 @@ class FirstRouteState extends State<FirstRoute> {
               margin: EdgeInsets.only(top: 50, left: 40, right: 40),
               child: Column(
                 children: [
-                  customTextFormField('사용자의 이름을 입력해주세요.'),
+                  customTextFormField(userNickname,'사용자의 이름을 입력해주세요.'),
                   SizedBox(height: 20.0),
                   customPinkElevatedButton("입력 완료!", context, SecondRoute()),
                 ],
@@ -144,7 +103,7 @@ class SecondRoute extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       margin: EdgeInsets.only(left: 40, right: 40),
                       child: customSubtitleQuestion("추후 마이페이지에서 다시 설정 가능합니다."),
-                    )
+                    ),
                   ],
                 ),
               )),
@@ -212,7 +171,7 @@ class _ThirdRouteState extends State<ThirdRoute> {
             margin: EdgeInsets.only(top: 50, left: 40, right: 40),
             child: Column(
               children: [
-                customTextFormField('반려동물의 이름을 입력해주세요!'),
+                customTextFormField(_petName,'반려동물의 이름을 입력해주세요!'),
                 SizedBox(height: 20.0),
                 customPinkElevatedButton("입력 완료!", context, FourthRoute()),
               ],
@@ -517,8 +476,7 @@ GestureDetector animationDownButton(ScrollController _scrollController,double lo
   );
 }
 
-Card customTextFormField(String hint) {
-  final editingController = TextEditingController();
+Card customTextFormField(TextEditingController editingController, String hint) {
   return Card(
     elevation: 5.0, // 카드박스 그림자 음영
     //margin: EdgeInsets.only(top: 50),
@@ -535,6 +493,10 @@ Card customTextFormField(String hint) {
             hintText: hint,
             hintStyle: TextStyle(color: GREY)),
         cursorColor: GREY,
+        //테스트용 코드
+        onChanged: (text){
+          print(text);
+        }
       ),
     ),
   );
