@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/GoodsInfo.dart';
+import 'package:pet_service_application/GoodsWidget.dart';
 import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
-import 'package:pet_service_application/card_news/detail/CardNewsRelatedProductsWidget.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
 import 'package:pet_service_application/log_in/LogIn.dart';
 import 'package:pet_service_application/log_in/Splash.dart';
@@ -70,6 +71,27 @@ class _MyHomePageState extends State<MyHomePage> {
             5,
             DetailCardNewsModel('https://picsum.photos/250?image=9',
                 "과연 고양이는 생선만\n먹어도 괜찮을까? 2")),
+        List.filled(
+            4,
+            GoodsInfo(
+                '피부모질 닥터독 사료 2kg',
+                'imgUrl',
+                29500,
+                null,
+                GoodsDetailedInfo(
+                    ['imgUrl', 'imgUrl'],
+                    false,
+                    ['쌀', '대두', '연어'],
+                    [
+                      Ingredient('조단백질', 77),
+                      Ingredient('조지방', 19),
+                      Ingredient('칼슘', 2),
+                      Ingredient('인', 1),
+                      Ingredient('비타민 A', null),
+                      Ingredient('비타민 E', null),
+                      Ingredient('비타민 D3', null),
+                    ],
+                    'bannerUrl'))),
         null);
     for (int i = 0; i < 10; i++)
       widget.cardNewsModelList.add(_cardNewsEventItem);
@@ -211,21 +233,89 @@ class _MyHomePageState extends State<MyHomePage> {
                     crossAxisCount: 2,
                     childAspectRatio: 0.8,
                     children: [
-                      CardNewsRelatedProductCardWidget(
-                        relatedProductModel: CardNewsRelatedProductModel(
-                            'imgurl', '피부모질 닥터독 사료 2kg', 29500, null),
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                            '피부모질 닥터독 사료 2kg',
+                            'imgUrl',
+                            29500,
+                            null,
+                            GoodsDetailedInfo(
+                                ['imgUrl', 'imgUrl'],
+                                false,
+                                ['쌀', '대두', '연어'],
+                                [
+                                  Ingredient('조단백질', 77),
+                                  Ingredient('조지방', 19),
+                                  Ingredient('칼슘', 2),
+                                  Ingredient('인', 1),
+                                  Ingredient('비타민 A', null),
+                                  Ingredient('비타민 E', null),
+                                  Ingredient('비타민 D3', null),
+                                ],
+                                'bannerUrl')),
                       ),
-                      CardNewsRelatedProductCardWidget(
-                        relatedProductModel: CardNewsRelatedProductModel(
-                            'imgurl', '피부모질 닥터독 사료 2kg', 29500, 26500),
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                            '피부모질 닥터독 사료 2kg',
+                            'imgUrl',
+                            29500,
+                            26500,
+                            GoodsDetailedInfo(
+                                ['imgUrl', 'imgUrl'],
+                                false,
+                                ['쌀', '대두', '연어'],
+                                [
+                                  Ingredient('조단백질', 77),
+                                  Ingredient('조지방', 19),
+                                  Ingredient('칼슘', 2),
+                                  Ingredient('인', 1),
+                                  Ingredient('비타민 A', null),
+                                  Ingredient('비타민 E', null),
+                                  Ingredient('비타민 D3', null),
+                                ],
+                                'bannerUrl')),
                       ),
-                      CardNewsRelatedProductCardWidget(
-                        relatedProductModel: CardNewsRelatedProductModel(
-                            'imgurl', '피부모질 닥터독 사료 2kg', 29500, null),
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                            '피부모질 닥터독 사료 2kg',
+                            'imgUrl',
+                            29500,
+                            null,
+                            GoodsDetailedInfo(
+                                ['imgUrl', 'imgUrl'],
+                                false,
+                                ['쌀', '대두', '연어'],
+                                [
+                                  Ingredient('조단백질', 77),
+                                  Ingredient('조지방', 19),
+                                  Ingredient('칼슘', 2),
+                                  Ingredient('인', 1),
+                                  Ingredient('비타민 A', null),
+                                  Ingredient('비타민 E', null),
+                                  Ingredient('비타민 D3', null),
+                                ],
+                                'bannerUrl')),
                       ),
-                      CardNewsRelatedProductCardWidget(
-                        relatedProductModel: CardNewsRelatedProductModel(
-                            'imgurl', '피부모질 닥터독 사료 2kg', 29500, 19800),
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                            '피부모질 닥터독 사료 2kg',
+                            'imgUrl',
+                            29500,
+                            19800,
+                            GoodsDetailedInfo(
+                                ['imgUrl', 'imgUrl'],
+                                false,
+                                ['쌀', '대두', '연어'],
+                                [
+                                  Ingredient('조단백질', 77),
+                                  Ingredient('조지방', 19),
+                                  Ingredient('칼슘', 2),
+                                  Ingredient('인', 1),
+                                  Ingredient('비타민 A', null),
+                                  Ingredient('비타민 E', null),
+                                  Ingredient('비타민 D3', null),
+                                ],
+                                'bannerUrl')),
                       ),
                     ],
                   ),

@@ -1,3 +1,4 @@
+import 'package:pet_service_application/GoodsInfo.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
 
 class CardNewsModel {
@@ -8,10 +9,19 @@ class CardNewsModel {
   // 연관 상품 리스트 추가 예정
   List<DetailCardNewsModel>? detailCardNewsModelList;
 
+  List<GoodsInfo> goodsInfoList;
+
   List<CardNewsCommentModel>? cardNewsCommentList;
 
-  CardNewsModel(this.type, this.imgUrl, this.title, this.startDate,
-      this.endDate, this.detailCardNewsModelList, this.cardNewsCommentList);
+  CardNewsModel(
+      this.type,
+      this.imgUrl,
+      this.title,
+      this.startDate,
+      this.endDate,
+      this.detailCardNewsModelList,
+      this.goodsInfoList,
+      this.cardNewsCommentList);
 }
 
 class CardNewsCommentModel {

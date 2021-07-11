@@ -256,8 +256,8 @@ class _GoodsItem extends State<GoodsItem> {
 
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));
+        //Navigator.push(context,
+        //    MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));
       },
       child: Card(
         elevation: 5,
