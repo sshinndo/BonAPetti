@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/SeungHyun/screen/detail_goods_screen.dart';
+import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
 
 class goodscard extends StatelessWidget {
   Widget build(BuildContext context) {

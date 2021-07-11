@@ -66,6 +66,10 @@ flutter:
       - images/rectangle_icon.png
       - images/shopping_cart_figma.png
       - images/cancel_icon.png
+      - images/ingredient_bar.png
+      - images/
+      - images/loginIcon/
+      - images/bcs/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

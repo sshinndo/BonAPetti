@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
+import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
@@ -398,74 +398,80 @@ class _GoodsItem extends State<GoodsItem> {
   Widget build(BuildContext context) {
     final heartAndCartSize = MediaQuery.of(context).size.width * 0.04;
 
-    return Card(
-      elevation: 5,
-      semanticContainer: true,
-      margin: EdgeInsets.all(15),
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: RoundedRectangleBorder(borderRadius: _baseBorderRadius),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              margin: EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                          width: heartAndCartSize,
-                          height: heartAndCartSize,
-                          child: Image.asset('images/heart_icon.png'))),
-                  Expanded(
-                      flex: 3,
-                      child: Center(
-                        child: Text(
-                          '바로주문',
-                          style: TextStyle(
-                              color: Color.fromRGBO(168, 168, 168, 1)),
-                        ),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                          width: heartAndCartSize,
-                          height: heartAndCartSize,
-                          child: Image.asset('images/cart_icon.png')))
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Center(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));
+      },
+      child: Card(
+        elevation: 5,
+        semanticContainer: true,
+        margin: EdgeInsets.all(15),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        shape: RoundedRectangleBorder(borderRadius: _baseBorderRadius),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
               child: Container(
-                width: heartAndCartSize * 5,
-                height: heartAndCartSize * 5,
-                child: Image.network(widget._goodsItemModel.imgUrl),
+                margin: EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: SizedBox(
+                            width: heartAndCartSize,
+                            height: heartAndCartSize,
+                            child: Image.asset('images/heart_icon.png'))),
+                    Expanded(
+                        flex: 3,
+                        child: Center(
+                          child: Text(
+                            '바로주문',
+                            style: TextStyle(
+                                color: Color.fromRGBO(168, 168, 168, 1)),
+                          ),
+                        )),
+                    Expanded(
+                        flex: 1,
+                        child: SizedBox(
+                            width: heartAndCartSize,
+                            height: heartAndCartSize,
+                            child: Image.asset('images/cart_icon.png')))
+                  ],
+                ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-                margin: EdgeInsets.only(left: 20),
-                alignment: Alignment.bottomLeft,
-                child: Text(widget._goodsItemModel.productName)),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-                margin: EdgeInsets.only(left: 20, top: 5),
-                alignment: Alignment.topLeft,
-                child: RichText(
-                  text: TextSpan(
-                    children: getPriceTextSpan(widget._goodsItemModel),
-                  ),
-                )),
-          ),
-        ],
+            Expanded(
+              flex: 2,
+              child: Center(
+                child: Container(
+                  width: heartAndCartSize * 5,
+                  height: heartAndCartSize * 5,
+                  child: Image.network(widget._goodsItemModel.imgUrl),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                  margin: EdgeInsets.only(left: 20),
+                  alignment: Alignment.bottomLeft,
+                  child: Text(widget._goodsItemModel.productName)),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                  margin: EdgeInsets.only(left: 20, top: 5),
+                  alignment: Alignment.topLeft,
+                  child: RichText(
+                    text: TextSpan(
+                      children: getPriceTextSpan(widget._goodsItemModel),
+                    ),
+                  )),
+            ),
+          ],
+        ),
       ),
     );
   }
