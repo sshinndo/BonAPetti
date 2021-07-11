@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pet_service_application/SquareCardPageView.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:pet_service_application/GoodsInfo.dart';
@@ -81,22 +82,24 @@ class _ContentDetailedGoods extends State<ContentDetailedGoods> {
                     ),
                   ),
 
-                  Padding(padding: EdgeInsets.only(top: 20)),
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(left: 45, right: 45, top: 30),
+                      child: Text(
+                        widget.goodsInfo.name,
+                        style: TextStyle(
+                            fontSize: 27.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal),
+                      )),
 
                   // CardNews
-
                   Container(
                     margin: EdgeInsets.all(20),
                     height: MediaQuery.of(context).size.width *
                         squareCardPageView.getViewPortFractionValue(),
                     child: squareCardPageView,
                   ),
-
-                  Text(
-                    '상품 정보 표시 될 곳',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-
                   Padding(padding: EdgeInsets.only(top: 20)),
 
                   Container(
@@ -122,7 +125,10 @@ class _ContentDetailedGoods extends State<ContentDetailedGoods> {
 
                         Padding(padding: EdgeInsets.only(left: 300)),
                         Text(
-                          '${widget.goodsInfo.price}원',
+                          NumberFormat('###,###,###,###')
+                                  .format(widget.goodsInfo.price)
+                                  .replaceAll(' ', '') +
+                              '원',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ), // 가격은 일단 전역변수로 설정했는데 나중에 모델 불러올때 전역변수 자리에 모델.price 넣어주면 될거같음

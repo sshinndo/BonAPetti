@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pet_service_application/GoodsInfo.dart';
+import 'package:pet_service_application/GoodsWidget.dart';
 
 final pinkBoldTextColor = Color.fromRGBO(255, 87, 87, 1);
 
 class CardNewsRelatedProductsWidget extends StatefulWidget {
+  final List<GoodsInfo> goodsInfoList;
+
+  CardNewsRelatedProductsWidget(this.goodsInfoList);
+
   @override
   _CardNewsRelatedProductsWidget createState() =>
       _CardNewsRelatedProductsWidget();
@@ -48,7 +54,13 @@ class _CardNewsRelatedProductsWidget
             child: GridView.count(
               crossAxisCount: 2,
               childAspectRatio: 0.8,
-              children: [],
+              children: List.generate(
+                widget.goodsInfoList.length,
+                (index) {
+                  return GoodsCardWidget(
+                      goodsInfo: widget.goodsInfoList[index]);
+                },
+              ),
             ),
           ),
         ],
