@@ -11,18 +11,19 @@ class GoodsScreen extends StatefulWidget {
 }
 
 class _GoodsScreen extends State<GoodsScreen> {
-  FilterTabWithListView filterTabWithListView = FilterTabWithListView(
-    goodsItemModelList: [
-      GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, null),
-      GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, null),
-      GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, 26500),
-      GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, null),
-      GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, 18000),
-      GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, 20000),
-    ],
-  );
   @override
   Widget build(BuildContext context) {
+    FilterTabWithListView filterTabWithListView = FilterTabWithListView(
+      goodsItemModelList: [
+        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, null),
+        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, null),
+        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, 26500),
+        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, null),
+        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, 18000),
+        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, 20000),
+      ],
+    );
+
     return Scaffold(
       body: Column(
         children: [
@@ -48,151 +49,6 @@ class _GoodsScreen extends State<GoodsScreen> {
       ),
     );
   }
-/*        child: SearchBar<Food>(
-          searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
-          headerPadding: EdgeInsets.symmetric(horizontal: 10),
-          listPadding: EdgeInsets.symmetric(horizontal: 10),
-          onSearch: _getALlFoods,
-
-          searchBarController: _searchBarController,
-
-          placeHolder: Container(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      goodscard(),
-                      goodscard(),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      goodscard(),
-                      goodscard(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          //cancellationWidget: Text("Cancel"),
-          emptyWidget: Text("empty"),
-          /*
-          indexedScaledTileBuilder: (int index) =>
-              ScaledTile.count(1, index.isEven ? 2 : 1),
-
-          minimumChars: 1,*/
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          crossAxisCount: 2,
-          header: Container(
-            child: Column(
-              children: <Widget>[
-                Padding(padding: EdgeInsets.all(12)),
-                Container(
-                  height: 1.0,
-                  width: 500.0,
-                  color: Colors.black,
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            a++;
-                            if (a % 2 == 0) {
-                              _price = '가격낮은순';
-                            } else {
-                              _price = '가격높은순';
-                            }
-                          });
-                          if (a % 2 == 0) {
-                            /*_searchBarController.sortList((Food a, Food b) {
-                              return a.price.compareTo(b.price);
-                            });*/
-                          } else {
-                            // _searchBarController.removeSort();
-                          }
-                        },
-                        child: Text(_price),
-                      ),
-                      Padding(padding: EdgeInsets.all(32)),
-                      Text('리뷰많은순'),
-                      Padding(padding: EdgeInsets.all(32)),
-                      Text('인기순'),
-                      Padding(padding: EdgeInsets.all(32)),
-                      Text('종류'),
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.all(0)),
-              ],
-            ),
-          ),
-          onItemFound: (Food food, int index) {
-            return Column(
-              children: <Widget>[
-                Container(
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: SizedBox(
-                      height: 220,
-                      width: 220,
-                      child: FlatButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DetailedGoodsScreen()));
-                        },
-                        child: Container(
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      child: Icon(Icons.favorite),
-                                    ),
-                                    Text('바로주문'),
-                                    GestureDetector(
-                                      child: Icon(Icons.shopping_cart),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 150,
-                                width: 150,
-                                child: Image.asset('images/goodstestimage.png'),
-                              ),
-                              Text(food.title),
-                              Text('${food.price}원'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),*/
 }
 
 enum GoodsFilterType { PRICE, REVIEW, POPULARITY, CATEGORY }
@@ -237,7 +93,7 @@ class SearchBar extends StatelessWidget {
                   cursorColor: Color.fromRGBO(217, 217, 217, 1),
                   onChanged: (text) {
                     filterTabWithListView
-                        .createState()
+                        .getStateData()
                         .goodsItemListView!
                         .getStateData()
                         .applySearchData(text);
@@ -527,13 +383,14 @@ class FilterTabWithListView extends StatefulWidget {
 
   FilterTabWithListView({Key? key, required this.goodsItemModelList})
       : super(key: key);
+
   final _FilterTabWithListView _filterTabWithListView =
       _FilterTabWithListView();
 
   _FilterTabWithListView getStateData() => _filterTabWithListView;
 
   @override
-  _FilterTabWithListView createState() => _FilterTabWithListView();
+  _FilterTabWithListView createState() => _filterTabWithListView;
 }
 
 class _FilterTabWithListView extends State<FilterTabWithListView> {
