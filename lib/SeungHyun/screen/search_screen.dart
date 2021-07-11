@@ -454,7 +454,7 @@ class PopularSearchedWordItem extends StatelessWidget {
                     Expanded(
                       flex: 5,
                       child: Center(
-                        child: Text(rightWordName),
+                        child: Text(leftWordName),
                       ),
                     ),
                   ],
