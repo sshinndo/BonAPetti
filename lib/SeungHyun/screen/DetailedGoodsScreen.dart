@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/SquareCardPageView.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:pet_service_application/GoodsInfo.dart';
 
@@ -9,14 +10,6 @@ class DetailedGoodsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: DrawerWithAlarmAppBar(
-          nickName: '닉네임',
-        ),
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        elevation: 0.0,
-      ),
       body: ContentDetailedGoods(goodsInfo),
       //여기에 bottombar 추가하면됨
     );
@@ -34,85 +27,139 @@ class ContentDetailedGoods extends StatefulWidget {
 class _ContentDetailedGoods extends State<ContentDetailedGoods> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        Container(
-            // 상품 관련된 컨테이너
-            child: Column(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 20)),
+    SquareCardPageView squareCardPageView = SquareCardPageView(
+        imgUrlList: widget.goodsInfo.detailedInfo.imageUrlList);
 
-            Text(
-              '검색 바 표시 될 곳',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-
-            Padding(padding: EdgeInsets.only(top: 20)),
-
-            Text(
-              '상품 정보 표시 될 곳',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-
-            Padding(padding: EdgeInsets.only(top: 20)),
-
-            Container(
-              child: Row(
+    return Column(
+      children: [
+        DrawerWithAlarmAppBar(
+          nickName: '닉네임',
+        ),
+        Expanded(
+          child: ListView(
+            children: <Widget>[
+              Container(
+                  // 상품 관련된 컨테이너
+                  child: Column(
                 children: <Widget>[
-                  Padding(padding: EdgeInsets.only(left: 45)),
+                  Padding(padding: EdgeInsets.only(top: 20)),
 
-                  GestureDetector(
-                    child: Icon(
-                      Icons.favorite,
-                      size: 30,
-                      color: widget.goodsInfo.detailedInfo.isLike
-                          ? Color.fromRGBO(255, 87, 87, 1)
-                          : Color.fromRGBO(217, 217, 217, 1),
+                  // SearchBar
+                  Container(
+                    width: double.infinity,
+                    child: GestureDetector(
+                      onTap: () {
+                        // 클릭 이벤트
+                      },
+                      child: Card(
+                        semanticContainer: true,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        elevation: 5.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        margin: EdgeInsets.only(left: 50, top: 20, right: 50),
+                        child: SizedBox(
+                          height: 50,
+                          width: 100,
+                          child: Container(
+                            color: Color.fromRGBO(254, 254, 254, 1),
+                            child: Row(
+                              children: <Widget>[
+                                Padding(padding: EdgeInsets.only(left: 10)),
+                                Icon(
+                                  Icons.search,
+                                  size: 30,
+                                  color: Color.fromRGBO(217, 217, 217, 1),
+                                ),
+                                //ImageIcon(AssetImage('images/barbar.png')),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    onTap: () {
-                      setState() {
-                        widget.goodsInfo.detailedInfo.isLike =
-                            !widget.goodsInfo.detailedInfo.isLike;
-                      }
-                    },
                   ),
 
-                  Padding(padding: EdgeInsets.only(left: 300)),
+                  Padding(padding: EdgeInsets.only(top: 20)),
+
+                  // CardNews
+
+                  Container(
+                    margin: EdgeInsets.all(20),
+                    height: MediaQuery.of(context).size.width *
+                        squareCardPageView.getViewPortFractionValue(),
+                    child: squareCardPageView,
+                  ),
+
                   Text(
-                    '${widget.goodsInfo.price}원',
+                    '상품 정보 표시 될 곳',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ), // 가격은 일단 전역변수로 설정했는데 나중에 모델 불러올때 전역변수 자리에 모델.price 넣어주면 될거같음
+                  ),
+
+                  Padding(padding: EdgeInsets.only(top: 20)),
+
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        Padding(padding: EdgeInsets.only(left: 45)),
+
+                        GestureDetector(
+                          child: Icon(
+                            Icons.favorite,
+                            size: 30,
+                            color: widget.goodsInfo.detailedInfo.isLike
+                                ? Color.fromRGBO(255, 87, 87, 1)
+                                : Color.fromRGBO(217, 217, 217, 1),
+                          ),
+                          onTap: () {
+                            setState() {
+                              widget.goodsInfo.detailedInfo.isLike =
+                                  !widget.goodsInfo.detailedInfo.isLike;
+                            }
+                          },
+                        ),
+
+                        Padding(padding: EdgeInsets.only(left: 300)),
+                        Text(
+                          '${widget.goodsInfo.price}원',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ), // 가격은 일단 전역변수로 설정했는데 나중에 모델 불러올때 전역변수 자리에 모델.price 넣어주면 될거같음
+                      ],
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 10)),
+                  Container(
+                    // 실선 만들기
+                    height: 1.0,
+                    width: 400.0,
+                    color: Color.fromRGBO(0, 0, 0, 0.3),
+                  ),
+
+                  Padding(padding: EdgeInsets.only(top: 70)),
+
+                  Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          '알러지 요소',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Color.fromRGBO(0, 0, 0, 1)),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  IngredientList(widget.goodsInfo), // 상품 알러지 밑 성분표 같은거 밑으로 빼놓음
                 ],
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(top: 10)),
-            Container(
-              // 실선 만들기
-              height: 1.0,
-              width: 400.0,
-              color: Color.fromRGBO(0, 0, 0, 0.3),
-            ),
-
-            Padding(padding: EdgeInsets.only(top: 70)),
-
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    '알러지 요소',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                        color: Color.fromRGBO(0, 0, 0, 1)),
-                  )
-                ],
-              ),
-            ),
-
-            IngredientList(widget.goodsInfo), // 상품 알러지 밑 성분표 같은거 밑으로 빼놓음
-          ],
-        )),
+              )),
+            ],
+          ),
+        ),
       ],
     );
   }

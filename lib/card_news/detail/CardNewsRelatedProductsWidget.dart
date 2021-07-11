@@ -48,36 +48,7 @@ class _CardNewsRelatedProductsWidget
             child: GridView.count(
               crossAxisCount: 2,
               childAspectRatio: 0.8,
-              children: [
-                CardNewsRelatedProductCardWidget(
-                  relatedProductModel: CardNewsRelatedProductModel(
-                      'https://picsum.photos/250?image=9',
-                      '피부모질 닥터독 사료 2kg',
-                      29500,
-                      null),
-                ),
-                CardNewsRelatedProductCardWidget(
-                  relatedProductModel: CardNewsRelatedProductModel(
-                      'https://picsum.photos/250?image=9',
-                      '피부모질 닥터독 사료 2kg',
-                      29500,
-                      29500),
-                ),
-                CardNewsRelatedProductCardWidget(
-                  relatedProductModel: CardNewsRelatedProductModel(
-                      'https://picsum.photos/250?image=9',
-                      '피부모질 닥터독 사료 2kg',
-                      29500,
-                      null),
-                ),
-                CardNewsRelatedProductCardWidget(
-                  relatedProductModel: CardNewsRelatedProductModel(
-                      'https://picsum.photos/250?image=9',
-                      '피부모질 닥터독 사료 2kg',
-                      29500,
-                      29500),
-                ),
-              ],
+              children: [],
             ),
           ),
         ],
@@ -85,7 +56,7 @@ class _CardNewsRelatedProductsWidget
     );
   }
 }
-
+/*
 class CardNewsRelatedProductModel {
   String imgUrl;
   String productName;
@@ -233,3 +204,4 @@ class _CardNewsRelatedProductCardWidget
     return priceTextSpan;
   }
 }
+*/

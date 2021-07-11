@@ -61,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // 서버에서 데이터 불러오고 cardNewsModelList에 추가
     // 현재는 더미데이터
+    /*
     CardNewsModel _cardNewsEventItem = CardNewsModel(
         CardNewsType.CARDNEWS,
         'https://picsum.photos/250?image=9',
@@ -92,9 +93,125 @@ class _MyHomePageState extends State<MyHomePage> {
                       Ingredient('비타민 D3', null),
                     ],
                     'bannerUrl'))),
-        null);
-    for (int i = 0; i < 10; i++)
-      widget.cardNewsModelList.add(_cardNewsEventItem);
+        null);*/
+    //for (int i = 0; i < 10; i++)
+    //  widget.cardNewsModelList.add(_cardNewsEventItem);
+    widget.cardNewsModelList.add(
+      CardNewsModel(
+          CardNewsType.CARDNEWS,
+          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/004.png',
+          '고양이는 생선만\n먹어도 될까?',
+          null,
+          null,
+          [
+            DetailCardNewsModel(
+                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/006.png',
+                '고양이에게 생선을\n주식으로 주는 것은\n피해야 합니다'),
+            DetailCardNewsModel(
+                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/008.png',
+                '고등어, 전갱이, 정어리처럼\n등푸른 생선이 가진 불포화 지방산을\n고양이가 과다 섭취한다면'),
+            DetailCardNewsModel(
+                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/010.png',
+                '예로우 펫 증후군과 같은 질병에\n걸리기 쉽기 떄문입니다'),
+            DetailCardNewsModel(
+                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/012.png',
+                '예로우 펫 증후군은\n고양이의 하복부에 응어리를 만들어\n수의사의 진료가 필요합니다'),
+            DetailCardNewsModel(
+                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/014.png',
+                '아이가 물고기를 좋아한다고 해도\n균형잡힌 식사를 할 수 있도록\n도와주세요!'),
+          ],
+          [
+            GoodsInfo(
+              '닭고기맛 사료',
+              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+              25000,
+              null,
+              GoodsDetailedInfo(
+                  [
+                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+                  ],
+                  false,
+                  ['쌀', '대두', '연어'],
+                  [
+                    Ingredient('조지방', 77),
+                    Ingredient('조단백질', 19),
+                    Ingredient('칼슘', 2),
+                    Ingredient('인', 1),
+                    Ingredient('비타민 A', null),
+                    Ingredient('비타민 E', null),
+                    Ingredient('비타민 D3', null),
+                  ],
+                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image1.png'),
+            ),
+            GoodsInfo(
+              '훈제 사료',
+              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
+              32000,
+              null,
+              GoodsDetailedInfo(
+                  [
+                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
+                  ],
+                  false,
+                  ['쌀', '대두', '연어'],
+                  [
+                    Ingredient('조지방', 77),
+                    Ingredient('조단백질', 19),
+                    Ingredient('칼슘', 2),
+                    Ingredient('인', 1),
+                    Ingredient('비타민 A', null),
+                    Ingredient('비타민 E', null),
+                    Ingredient('비타민 D3', null),
+                  ],
+                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image2.png'),
+            ),
+            GoodsInfo(
+              '유기농 개사료',
+              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
+              15000,
+              null,
+              GoodsDetailedInfo(
+                  [
+                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
+                  ],
+                  false,
+                  ['쌀', '대두', '연어'],
+                  [
+                    Ingredient('조지방', 77),
+                    Ingredient('조단백질', 19),
+                    Ingredient('칼슘', 2),
+                    Ingredient('인', 1),
+                    Ingredient('비타민 A', null),
+                    Ingredient('비타민 E', null),
+                    Ingredient('비타민 D3', null),
+                  ],
+                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image3.png'),
+            ),
+            GoodsInfo(
+              '순수 도그온',
+              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
+              67000,
+              34000,
+              GoodsDetailedInfo(
+                  [
+                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
+                  ],
+                  false,
+                  ['쌀', '대두', '연어'],
+                  [
+                    Ingredient('조지방', 77),
+                    Ingredient('조단백질', 19),
+                    Ingredient('칼슘', 2),
+                    Ingredient('인', 1),
+                    Ingredient('비타민 A', null),
+                    Ingredient('비타민 E', null),
+                    Ingredient('비타민 D3', null),
+                  ],
+                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image4.png'),
+            ),
+          ],
+          null),
+    );
   }
 
   @override
@@ -121,7 +238,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text("더보기 >",
                             style:
                                 TextStyle(color: Colors.black, fontSize: 17)),
-                        margin: EdgeInsets.all(20.0))),
+                        margin: EdgeInsets.only(
+                            top: 20.0, bottom: 20, left: 20, right: 50))),
                 Container(
                     height: 300,
                     child: CardNewsPageView(
@@ -240,7 +358,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             29500,
                             null,
                             GoodsDetailedInfo(
-                                ['imgUrl', 'imgUrl'],
+                                [
+                                  'imgUrl',
+                                  'imgUrl',
+                                  'imgUrl',
+                                  'imgUrl',
+                                  'imgUrl'
+                                ],
                                 false,
                                 ['쌀', '대두', '연어'],
                                 [
