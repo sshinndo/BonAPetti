@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/TestUI.dart';
 
 class DrawerWithAlarmAppBar extends StatefulWidget {
   final String nickName;
@@ -46,6 +47,8 @@ class _DrawerWithAlarmAppBar extends State<DrawerWithAlarmAppBar> {
                   child: IconButton(
                       onPressed: () {
                         // 알람버튼 event
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => TestUI()));
                       },
                       icon: Image.asset('images/bell_icon.png')))),
         ],

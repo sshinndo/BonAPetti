@@ -1,16 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/CardNewsModel.dart';
-import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
-import 'package:pet_service_application/card_news_detail/CardNewsDetailRoute.dart';
-import 'package:pet_service_application/CardNewsListRoute.dart';
-
-import 'package:pet_service_application/SeungHyun/screen/search_screen.dart';
-import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/detail_goods_screen.dart';
 
-class goodscard extends StatelessWidget{
-  Widget build(BuildContext context){
+class goodscard extends StatelessWidget {
+  Widget build(BuildContext context) {
     return Container(
       child: Card(
         elevation: 5.0,
@@ -21,7 +14,12 @@ class goodscard extends StatelessWidget{
           height: 220,
           width: 220,
           child: FlatButton(
-            onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailedGoodsScreen()));
+            },
             child: Container(
               child: Column(
                 children: <Widget>[
@@ -33,9 +31,7 @@ class goodscard extends StatelessWidget{
                         GestureDetector(
                           child: Icon(Icons.favorite),
                         ),
-                        Text(
-                            '바로주문'
-                        ),
+                        Text('바로주문'),
                         GestureDetector(
                           child: Icon(Icons.shopping_cart),
                         ),
@@ -45,7 +41,7 @@ class goodscard extends StatelessWidget{
                   SizedBox(
                     height: 150,
                     width: 150,
-                    child:  Image.asset('images/goodstestimage.png'),
+                    child: Image.asset('images/goodstestimage.png'),
                   ),
                   Text('맛있는 개껌'),
                   Text('30,000원'),

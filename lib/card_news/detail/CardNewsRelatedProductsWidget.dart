@@ -219,7 +219,7 @@ class _CardNewsRelatedProductCardWidget
         TextSpan(
           text: ' ' +
               (NumberFormat('###,###,###,###')
-                      .format(relatedProductModel.price)
+                      .format(relatedProductModel.discountedPrice)
                       .replaceAll(' ', '') +
                   '원'),
           style: TextStyle(

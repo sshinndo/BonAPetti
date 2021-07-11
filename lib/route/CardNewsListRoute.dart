@@ -33,7 +33,7 @@ class CardNewsListRoute extends StatelessWidget {
           Container(
               margin: EdgeInsets.only(left: 20, right: 20),
               child: Divider(
-                color: Colors.grey.shade300,
+                color: Color.fromRGBO(0, 0, 0, 0.3),
                 height: 20,
                 thickness: 1.5,
                 indent: 15,

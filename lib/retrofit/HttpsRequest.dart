@@ -1,22 +1,21 @@
-/*
 import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
-part 'RestClient.g.dart';
+part 'HttpsRequest.g.dart';
 
 @RestApi(baseUrl: 'https://hacker-news.firebaseio.com/v0')
-abstract class RestClient {
-  factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
+abstract class HttpsRequest {
+  factory HttpsRequest(Dio dio, String baseUrl) = _HttpsRequest;
 
   @GET('/topstories.json')
   Future<List<int>> getTopNewsId();
 
-  @GET('/item/{id}.json')
-  Future<News> getNewsDetail({
-    @Path() int id,
-  });
+//  @POST('')
+//  Future<List<int>> getProductList();
 }
+
+class ProductModel {}
 
 @JsonSerializable()
 class News {
@@ -36,4 +35,3 @@ class News {
 
   Map<String, dynamic> toJson() => _$NewsToJson(this);
 }
-*/

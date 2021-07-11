@@ -1,26 +1,6 @@
-library flappy_search_bar;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flappy_search_bar/scaled_tile.dart';
-import 'package:pet_service_application/SeungHyun/model/foods_list.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
-import 'dart:math';
-import 'package:async/async.dart';
-import 'package:flutter/material.dart';
-import 'package:pet_service_application/CardNewsModel.dart';
-import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
-import 'package:pet_service_application/card_news_detail/CardNewsDetailRoute.dart';
-import 'package:pet_service_application/CardNewsListRoute.dart';
-import 'dart:math';
-
-import 'package:flappy_search_bar/flappy_search_bar.dart';
-import 'package:flappy_search_bar/scaled_tile.dart';
-import 'package:flutter/material.dart';
-import 'package:pet_service_application/SeungHyun/screen/detail_goods_screen.dart';
-import 'package:pet_service_application/SeungHyun/Widget/GoodsCard.dart';
-
-
-
+import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
 
 class SearchRoute extends StatefulWidget {
   @override
@@ -28,247 +8,533 @@ class SearchRoute extends StatefulWidget {
 }
 
 class _SearchRoute extends State<SearchRoute> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      appBar: AppBar(
-        title: DrawerWithAlarmAppBar(nickName: '닉네임'),
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        elevation: 0.0,
-      ),
-
-      body: searcharea(),
+      body: SearchArea(),
     );
   }
 }
 
-class searcharea extends StatefulWidget{
+class SearchArea extends StatefulWidget {
   @override
-  _searcharea createState() => _searcharea();
+  _SearchArea createState() => _SearchArea();
 }
 
-class _searcharea extends State<searcharea>{
-  final SearchBarController<Food> _searchBarController = SearchBarController();
-  bool isReplay = false;
+class _SearchArea extends State<SearchArea> {
+  @override
+  Widget build(BuildContext context) {
+    SearchContentsManagerWidget searchContentsManagerWidget =
+        SearchContentsManagerWidget();
 
-  Future<List<Food>> _getALlFoods(String text) async {
-    List<Food> foods = [
-      Food('개껌','씹는 껌', '강아지',3000),
-      Food('나비막대기','놀이용','고양이',2500),
-      Food('톱밥','생존용','햄스터',2000),
-      Food('당근','식용','토끼',700),
-    ];
-    return foods;
+    return Column(
+      children: [
+        BackBtnAppBar(nickName: '닉네임'),
+        Container(
+          margin: EdgeInsets.only(bottom: 20),
+          child: SearchBar(managerWidget: searchContentsManagerWidget),
+        ),
+        Expanded(
+          flex: 1,
+          child: searchContentsManagerWidget,
+        ),
+      ],
+    );
   }
+}
+
+class SearchBar extends StatelessWidget {
+  final SearchContentsManagerWidget managerWidget;
+  SearchBar({Key? key, required this.managerWidget}) : super(key: key);
+
+  final textFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        margin: EdgeInsets.only(left: 30,right: 30),
-        child: SearchBar<Food>(
-          searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
-          headerPadding: EdgeInsets.symmetric(horizontal: 10),
-          listPadding: EdgeInsets.symmetric(horizontal: 10),
-          onSearch: _getALlFoods,
-          header: Container(
-            child: Column(
-              children: <Widget>[
-                Padding(padding: EdgeInsets.all(12)),
-                Container(
-                  height: 1.0,
-                  width: 500.0,
-                  color: Colors.black,
+    return Container(
+      width: double.infinity,
+      child: Card(
+        semanticContainer: true,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        elevation: 5.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        margin: EdgeInsets.only(left: 50, top: 20, right: 50),
+        child: Container(
+          child: Row(
+            children: [
+              SizedBox(
+                height: 50,
+                width: 60,
+                child: Icon(
+                  Icons.search,
+                  size: 30,
+                  color: Color.fromRGBO(217, 217, 217, 1),
                 ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TextButton(
-                        onPressed: (){
-                          setState(() {
-                            a++;
-                            if (a % 2 ==0){
-                              _price = '가격낮은순';
-                            }
-                            else{
-                              _price = '가격높은순';
-                            }
-                          });
-                          if (a % 2 == 0){
-                            _searchBarController.sortList((Food a, Food b){
-                              return a.price.compareTo(b.price);
-                            });
-                          }
-                          else{
-                            _searchBarController.removeSort();
-                          }
-                        },
-                        child: Text(_price),
-                      ),
-                      Padding(padding: EdgeInsets.all(32)),
-                      Text('리뷰많은순'),
-                      Padding(padding: EdgeInsets.all(32)),
-                      Text('인기순'),
-                      Padding(padding: EdgeInsets.all(32)),
-                      Text('종류'),
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.all(0)),
-              ],
-            ),
-          ),
-
-          searchBarController: _searchBarController,
-
-
-          placeHolder: GoodsList(),
-          //cancellationWidget: Text("Cancel"),
-          emptyWidget: Text("empty"),
-          //indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
-
-          minimumChars: 1,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          crossAxisCount: 2,
-
-
-
-          onItemFound: (Food food, int index) {
-            return Container(
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-
-                child: SizedBox(
-                  height: 220,
-                  width: 220,
-                  child: FlatButton(
-                    onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context) => DetailedGoodsScreen()));},
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                GestureDetector(
-                                  child: Icon(Icons.favorite),
-                                ),
-                                Text(
-                                    '바로주문'
-                                ),
-                                GestureDetector(
-                                  child: Icon(Icons.shopping_cart),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 150,
-                            width: 150,
-                            child:  Image.asset('images/goodstestimage.png'),
-                          ),
-                          Text(food.title),
-                          Text('${food.price}'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
               ),
-            );
-          },
+              Expanded(
+                flex: 1,
+                child: TextField(
+                  decoration: InputDecoration(border: InputBorder.none),
+                  controller: textFieldController,
+                  style: TextStyle(
+                      fontSize: 17, color: Color.fromRGBO(0, 0, 0, 0.5)),
+                  cursorColor: Color.fromRGBO(217, 217, 217, 1),
+                  onChanged: (text) {
+                    if (text.length <= 0)
+                      managerWidget.getStateData().refresh(false);
+                    else
+                      managerWidget.getStateData().refresh(true);
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-String _price = '가격낮은순';
-int a = 1;
+class SearchContentsManagerWidget extends StatefulWidget {
+  final _SearchContentsManagerWidget _searchContentsManagerWidget =
+      _SearchContentsManagerWidget();
 
-class GoodsList extends StatefulWidget{
-  _GoodsList createState() => _GoodsList();
+  _SearchContentsManagerWidget getStateData() => _searchContentsManagerWidget;
+
+  @override
+  _SearchContentsManagerWidget createState() => _searchContentsManagerWidget;
 }
 
+class _SearchContentsManagerWidget extends State<SearchContentsManagerWidget> {
+  bool isSearchBarHasText = false;
 
-class _GoodsList extends State<GoodsList>{
   @override
+  void initState() {
+    super.initState();
+  }
 
-  Widget build(BuildContext context){
-   return Container(
-     child: Column(
-       children: <Widget>[
-         Padding(padding: EdgeInsets.all(20)),
-         Text('최근 검색어'),
-         Padding(padding: EdgeInsets.all(20)),
-         Row(
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: <Widget>[
-             _buildHashTagButton('#강아지'),
-             Padding(padding: EdgeInsets.all(20)),
-             _buildHashTagButton('#고양이'),
-             Padding(padding: EdgeInsets.all(20)),
-             _buildHashTagButton('#햄스터'),
-           ],
-         ),
-         Row(
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: <Widget>[
-             _buildHashTagButton('#기니피그'),
-             Padding(padding: EdgeInsets.all(20)),
-             _buildHashTagButton('#카멜레온'),
-             Padding(padding: EdgeInsets.all(20)),
-             _buildHashTagButton('#오소리'),
-             Padding(padding: EdgeInsets.all(20)),
-             _buildHashTagButton('#너구리'),
-           ],
-         ),
-         Row(
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: <Widget>[
-             _buildHashTagButton('#앵무새'),
-             Padding(padding: EdgeInsets.all(20)),
-             _buildHashTagButton('#사자'),
-             Padding(padding: EdgeInsets.all(20)),
-             _buildHashTagButton('#호랑이'),
-           ],
-         ),
+  void refresh(bool isHasText) {
+    setState(() {
+      isSearchBarHasText = isHasText;
+    });
+  }
 
-         Padding(padding: EdgeInsets.all(20)),
-         Text('인기 검색어'),
-       ],
-     ),
-   );
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: isSearchBarHasText ? getHaveTextUI() : getNotHaveTextUI(),
+    );
+  }
 
+  Widget getNotHaveTextUI() {
+    RecentSearchedWordsWidget recentWords = RecentSearchedWordsWidget([
+      '#말티즈',
+      '#웰시코기',
+      '#치와와',
+      '#도베르만',
+      '#시바견',
+      '#진돗개',
+      '#푸들',
+      '#비숑 프리제',
+      '#슈나우저',
+    ]);
 
+    return ListView(
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 55, left: 55, right: 55),
+          height: 50,
+          child: Row(children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '최근 검색어',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: GestureDetector(
+                onTap: () {
+                  recentWords.getStateData().removeAllBtn();
+                },
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    '전체 삭제',
+                    style: TextStyle(
+                      color: Color.fromRGBO(0, 0, 0, 0.5),
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ]),
+        ),
+        recentWords,
+        Container(
+          margin: EdgeInsets.only(top: 55, left: 55, bottom: 40),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            '인기 검색어',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+        ),
+        Container(
+          height: 300,
+          margin: EdgeInsets.only(left: 55, right: 55, bottom: 30),
+          child: PopularSearchedWordsWidget(
+            popularWordNameList: [
+              '인기검색어',
+              '인기검색어',
+              '인기검색어',
+              '인기검색어',
+              '인기검색어',
+              '인기검색어',
+              '인기검색어',
+              '인기검색어',
+              '인기검색어',
+              '인기검색어',
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget getHaveTextUI() {
+    return Container(
+        child: RelatedRecommentWordListView(
+      initialWordList: [
+        '관련/추천검색어',
+        '관련/추천검색어',
+        '관련/추천검색어',
+        '관련/추천검색어',
+        '관련/추천검색어',
+        '관련/추천검색어',
+        '관련/추천검색어',
+        '관련/추천검색어',
+        '관련/추천검색어',
+        '관련/추천검색어',
+      ],
+    ));
   }
 }
 
-ElevatedButton _buildHashTagButton(String buttonText) {
-  return ElevatedButton(
-      child: Text(buttonText),
-      onPressed: () {
-      },
-      style: ElevatedButton.styleFrom(
-          primary: Color.fromRGBO(246, 246, 246, 1),
-          onPrimary:  Color.fromRGBO(255, 113, 113, 1),
-          padding: EdgeInsets.symmetric(horizontal: 23, vertical: 7),
-          textStyle: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.bold
+class RelatedRecommentWordListView extends StatefulWidget {
+  final List<String> initialWordList;
+  RelatedRecommentWordListView({Key? key, required this.initialWordList})
+      : super(key: key);
+
+  final _RelatedRecommentWordListView _relatedRecommentWordListView =
+      _RelatedRecommentWordListView();
+
+  _RelatedRecommentWordListView getStateData() => _relatedRecommentWordListView;
+
+  @override
+  _RelatedRecommentWordListView createState() => _relatedRecommentWordListView;
+}
+
+class _RelatedRecommentWordListView
+    extends State<RelatedRecommentWordListView> {
+  List<String> currentWordList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _setData(widget.initialWordList);
+  }
+
+  void _setData(List<String> _currentWordList) {
+    currentWordList.clear();
+    currentWordList.addAll(_currentWordList);
+  }
+
+  void refreshAllData(List<String> _currentWordList) {
+    setState(() {
+      _setData(_currentWordList);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: currentWordList.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          margin: EdgeInsets.only(left: 45, right: 45),
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 10, bottom: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Icon(
+                        Icons.search,
+                        color: Color.fromRGBO(217, 217, 217, 1),
+                      ),
+                    ),
+                    Expanded(
+                        flex: 8,
+                        child: Container(
+                          child: Text(currentWordList[index]),
+                          margin: EdgeInsets.only(right: 20),
+                        )),
+                  ],
+                ),
+              ),
+              Divider(
+                color: Color.fromRGBO(0, 0, 0, 0.3),
+              ),
+            ],
           ),
-          shape: new RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0)
-          )
-      )
-  );
+        );
+      },
+    );
+  }
+}
+
+class RecentSearchedWordsWidget extends StatefulWidget {
+  final List<String> recentWordList;
+
+  RecentSearchedWordsWidget(this.recentWordList);
+
+  final _RecentSearchedWordsWidget _recentSearchedWordsWidget =
+      _RecentSearchedWordsWidget();
+
+  _RecentSearchedWordsWidget getStateData() => _recentSearchedWordsWidget;
+
+  @override
+  _RecentSearchedWordsWidget createState() => _recentSearchedWordsWidget;
+}
+
+class _RecentSearchedWordsWidget extends State<RecentSearchedWordsWidget> {
+  List<String> recentWordList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    addAllData(widget.recentWordList);
+  }
+
+  void addAllData(List<String> _recentWordList) {
+    recentWordList.clear();
+    recentWordList.addAll(_recentWordList);
+  }
+
+  void removeBtn(String name) {
+    setState(() {
+      recentWordList.removeWhere((element) => element == name);
+    });
+  }
+
+  void removeAllBtn() {
+    setState(() {
+      recentWordList.clear();
+    });
+  }
+
+  Widget getRecentWordBtn(String recentWord) {
+    final BorderRadius _baseBorderRadius = BorderRadius.circular(15);
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+      height: 47,
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: _baseBorderRadius),
+        semanticContainer: true,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        color: Color.fromRGBO(246, 246, 246, 1),
+        child: Container(
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: GestureDetector(
+                  onTap: () {
+                    removeBtn(recentWord);
+                  },
+                  child: Center(
+                    child: Image.asset(
+                      'images/cancel_icon.png',
+                      height: 10,
+                      width: 10,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    recentWord,
+                    style: TextStyle(
+                      color: Color.fromRGBO(255, 113, 113, 1),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 170,
+      margin: EdgeInsets.only(top: 30, left: 40, right: 40),
+      child: GridView.count(
+        childAspectRatio: 2.5,
+        crossAxisCount: 3,
+        children: List.generate(recentWordList.length, (index) {
+          return getRecentWordBtn(recentWordList[index]);
+        }),
+      ),
+    );
+  }
+}
+
+class PopularSearchedWordItem extends StatelessWidget {
+  final int leftRankNumber;
+  final String leftWordName;
+  final int rightRankNumber;
+  final String rightWordName;
+
+  PopularSearchedWordItem(
+      {Key? key,
+      required this.leftRankNumber,
+      required this.leftWordName,
+      required this.rightRankNumber,
+      required this.rightWordName})
+      : super(key: key);
+
+  void getRowItem() {}
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 10, bottom: 7),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                        child: Text(
+                          leftRankNumber.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: Center(
+                        child: Text(rightWordName),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                        child: Text(
+                          rightRankNumber.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: Center(
+                        child: Text(rightWordName),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Divider(
+          color: Color.fromRGBO(0, 0, 0, 0.3),
+        ),
+      ],
+    );
+  }
+}
+
+class PopularSearchedWordsWidget extends StatefulWidget {
+  final List<String> popularWordNameList;
+  PopularSearchedWordsWidget({Key? key, required this.popularWordNameList})
+      : super(key: key);
+
+  @override
+  _PopularSearchedWordsWidget createState() => _PopularSearchedWordsWidget();
+}
+
+class _PopularSearchedWordsWidget extends State<PopularSearchedWordsWidget> {
+  List<String> popularWordNameList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _setData(widget.popularWordNameList);
+  }
+
+  void _setData(List<String> _popularWordList) {
+    popularWordNameList.clear();
+    popularWordNameList.addAll(_popularWordList);
+  }
+
+  void refreshData(List<String> refreshedWordList) {
+    setState(() {
+      _setData(refreshedWordList);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: popularWordNameList.length ~/ 2,
+      itemBuilder: (BuildContext context, int index) {
+        return PopularSearchedWordItem(
+            leftRankNumber: index + 1,
+            leftWordName: popularWordNameList[index],
+            rightRankNumber: index + 6,
+            rightWordName: popularWordNameList[index + 5]);
+      },
+    );
+  }
 }

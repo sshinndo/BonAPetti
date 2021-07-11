@@ -42,15 +42,15 @@ class CardNews extends StatelessWidget {
 
 class CardNewsPageView extends StatefulWidget {
   final List<CardNewsModel> cardNewsModelList;
-  final _CardNewsPageView _cardNewsPageView = _CardNewsPageView();
 
   CardNewsPageView({Key? key, required this.cardNewsModelList})
       : super(key: key);
 
-  _CardNewsPageView getStateData() => _cardNewsPageView;
-
   @override
-  _CardNewsPageView createState() => _cardNewsPageView;
+  _CardNewsPageView createState() => _CardNewsPageView();
+
+  static _CardNewsPageView? of(BuildContext context) =>
+      context.findAncestorStateOfType<_CardNewsPageView>();
 }
 
 class _CardNewsPageView extends State<CardNewsPageView> {
@@ -91,6 +91,7 @@ class _CardNewsPageView extends State<CardNewsPageView> {
 
   @override
   Widget build(BuildContext context) {
+    print('test');
     final PageController controller =
         PageController(viewportFraction: 0.85, initialPage: 0);
     return PageView(
