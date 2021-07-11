@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/SeungHyun/model/IngredientModel.dart';
+import 'package:intl/intl.dart';
+import 'package:pet_service_application/SeungHyun/screen/shopping_basket.dart';
+import 'package:pet_service_application/SquareCardPageView.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
+import 'package:pet_service_application/GoodsInfo.dart';
 
 class DetailedGoodsScreen extends StatelessWidget {
+  final GoodsInfo goodsInfo;
+  DetailedGoodsScreen(this.goodsInfo);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: DrawerWithAlarmAppBar(
-          nickName: '닉네임',
-        ),
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        elevation: 0.0,
-      ),
-      body: ContentDetailedGoods(),
+      body: ContentDetailedGoods(goodsInfo),
       //여기에 bottombar 추가하면됨
     );
   }
 }
 
-int price = 29500;
-
 class ContentDetailedGoods extends StatefulWidget {
+  final GoodsInfo goodsInfo;
+  ContentDetailedGoods(this.goodsInfo);
+
   @override
   _ContentDetailedGoods createState() => _ContentDetailedGoods();
 }
@@ -30,92 +29,204 @@ class ContentDetailedGoods extends StatefulWidget {
 class _ContentDetailedGoods extends State<ContentDetailedGoods> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        Container(
-            // 상품 관련된 컨테이너
-            child: Column(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 20)),
+    SquareCardPageView squareCardPageView = SquareCardPageView(
+        imgUrlList: widget.goodsInfo.detailedInfo.imageUrlList);
 
-            Text(
-              '검색 바 표시 될 곳',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-
-            Padding(padding: EdgeInsets.only(top: 20)),
-
-            Text(
-              '상품 정보 표시 될 곳',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-
-            Padding(padding: EdgeInsets.only(top: 20)),
-
-            Container(
-              child: Row(
+    return Column(
+      children: [
+        DrawerWithAlarmAppBar(
+          nickName: '닉네임',
+        ),
+        Expanded(
+          child: ListView(
+            children: <Widget>[
+              Container(
+                  // 상품 관련된 컨테이너
+                  child: Column(
                 children: <Widget>[
-                  Padding(padding: EdgeInsets.only(left: 45)),
-                  Icon(
-                    Icons.favorite,
-                    size: 30,
-                    color: Color.fromRGBO(255, 87, 87, 1),
+                  Padding(padding: EdgeInsets.only(top: 20)),
+
+                  // SearchBar
+                  Container(
+                    width: double.infinity,
+                    child: GestureDetector(
+                      onTap: () {
+                        // 클릭 이벤트
+                      },
+                      child: Card(
+                        semanticContainer: true,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        elevation: 5.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        margin: EdgeInsets.only(left: 50, top: 20, right: 50),
+                        child: SizedBox(
+                          height: 50,
+                          width: 100,
+                          child: Container(
+                            color: Color.fromRGBO(254, 254, 254, 1),
+                            child: Row(
+                              children: <Widget>[
+                                Padding(padding: EdgeInsets.only(left: 10)),
+                                Icon(
+                                  Icons.search,
+                                  size: 30,
+                                  color: Color.fromRGBO(217, 217, 217, 1),
+                                ),
+                                //ImageIcon(AssetImage('images/barbar.png')),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  Padding(padding: EdgeInsets.only(left: 300)),
-                  Text(
-                    '${price}원',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ), // 가격은 일단 전역변수로 설정했는데 나중에 모델 불러올때 전역변수 자리에 모델.price 넣어주면 될거같음
+
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(left: 45, right: 45, top: 30),
+                      child: Text(
+                        widget.goodsInfo.name,
+                        style: TextStyle(
+                            fontSize: 27.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal),
+                      )),
+
+                  // CardNews
+                  Container(
+                    margin: EdgeInsets.all(20),
+                    height: MediaQuery.of(context).size.width *
+                        squareCardPageView.getViewPortFractionValue(),
+                    child: squareCardPageView,
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 20)),
+
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        Padding(padding: EdgeInsets.only(left: 45)),
+
+                        GestureDetector(
+                          child: Icon(
+                            Icons.favorite,
+                            size: 30,
+                            color: widget.goodsInfo.detailedInfo.isLike
+                                ? Color.fromRGBO(255, 87, 87, 1)
+                                : Color.fromRGBO(217, 217, 217, 1),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              widget.goodsInfo.detailedInfo.isLike =
+                                  !widget.goodsInfo.detailedInfo.isLike;
+                            });
+                          },
+                        ),
+
+                        Padding(padding: EdgeInsets.only(left: 300)),
+                        Text(
+                          NumberFormat('###,###,###,###')
+                                  .format(widget.goodsInfo.price)
+                                  .replaceAll(' ', '') +
+                              '원',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ), // 가격은 일단 전역변수로 설정했는데 나중에 모델 불러올때 전역변수 자리에 모델.price 넣어주면 될거같음
+                      ],
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 10)),
+                  Container(
+                    // 실선 만들기
+                    height: 1.0,
+                    width: 400.0,
+                    color: Color.fromRGBO(0, 0, 0, 0.3),
+                  ),
+
+                  Padding(padding: EdgeInsets.only(top: 70)),
+
+                  Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          '알러지 요소',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Color.fromRGBO(0, 0, 0, 1)),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  IngredientList(widget.goodsInfo), // 상품 알러지 밑 성분표 같은거 밑으로 빼놓음
                 ],
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(top: 10)),
-            Container(
-              // 실선 만들기
-              height: 1.0,
-              width: 400.0,
-              color: Color.fromRGBO(0, 0, 0, 0.3),
-            ),
-
-            Padding(padding: EdgeInsets.only(top: 70)),
-
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    '알러지 요소',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                        color: Color.fromRGBO(0, 0, 0, 1)),
-                  )
-                ],
-              ),
-            ),
-
-            IngredientList(), // 상품 알러지 밑 성분표 같은거 밑으로 빼놓음
-          ],
-        )),
+              )),
+            ],
+          ),
+        ),
       ],
     );
   }
 }
 
 class IngredientList extends StatefulWidget {
+  final GoodsInfo goodsInfo;
+  IngredientList(this.goodsInfo);
+
   @override
   _IngredientList createState() => _IngredientList();
 }
 
-// Dummy Data of IngredientModel
-List<IngredientModel> dummyIngredientModelList = [
-  //알러지요소, 비타민, 성분, 성분 양 순서임
-  IngredientModel(['쌀', '대두', '연어'], ['조지방', '조단백질', '칼슘', '인'],
-      ['A', 'E', 'D3'], [6, 25, 0.8, 0.6])
-  // 값은 하나만 넣었습니당 나중에 상품 Model에다가 하위 모델로 IngredientModel 넣으면 될듯
-];
-
 class _IngredientList extends State<IngredientList> {
+  List<Ingredient> barList = [];
+  List<Ingredient> circleList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    widget.goodsInfo.detailedInfo.ingredientList.forEach((element) {
+      if (element.amount != null)
+        barList.add(element);
+      else
+        circleList.add(element);
+    });
+  }
+
+  Widget getRowIngredientBar() {
+    List<Widget> tmpWidgetList = [];
+    List<Color> colorList = [
+      Color.fromRGBO(255, 113, 113, 1),
+      Color.fromRGBO(255, 152, 152, 1),
+      Color.fromRGBO(255, 184, 184, 1),
+      Color.fromRGBO(255, 217, 217, 1)
+    ];
+    int i = 0;
+    barList.forEach((element) {
+      tmpWidgetList.add(Expanded(
+        child: Container(
+          color: colorList[i],
+          child: i == 0
+              ? Center(
+                  child: Text(
+                    '${element.name} (${element.amount}%)',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              : Container(),
+        ),
+        flex: element.amount!,
+      ));
+      i++;
+    });
+
+    return Row(children: tmpWidgetList);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -137,7 +248,8 @@ class _IngredientList extends State<IngredientList> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            dummyIngredientModelList[0].Allergy_Factor[0],
+                            //dummyIngredientModelList[0].Allergy_Factor[0],
+                            widget.goodsInfo.detailedInfo.allergyFactorList[0],
                             style: TextStyle(
                               fontSize: 22,
                               color: Color.fromRGBO(255, 255, 255, 1),
@@ -165,7 +277,7 @@ class _IngredientList extends State<IngredientList> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            dummyIngredientModelList[0].Allergy_Factor[1],
+                            widget.goodsInfo.detailedInfo.allergyFactorList[1],
                             style: TextStyle(
                               fontSize: 22,
                               color: Color.fromRGBO(255, 255, 255, 1),
@@ -193,7 +305,7 @@ class _IngredientList extends State<IngredientList> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            dummyIngredientModelList[0].Allergy_Factor[2],
+                            widget.goodsInfo.detailedInfo.allergyFactorList[2],
                             style: TextStyle(
                               fontSize: 22,
                               color: Color.fromRGBO(255, 255, 255, 1),
@@ -232,12 +344,12 @@ class _IngredientList extends State<IngredientList> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              '조지방',
+                              barList[1].name.toString(),
                               style: TextStyle(
                                   fontSize: 10,
                                   color: Color.fromRGBO(255, 113, 113, 1)),
                             ),
-                            Text('(19%)',
+                            Text('${barList[1].amount}%',
                                 style: TextStyle(
                                     fontSize: 10,
                                     color: Color.fromRGBO(255, 113, 113, 1))),
@@ -248,11 +360,11 @@ class _IngredientList extends State<IngredientList> {
                       Container(
                         child: Column(
                           children: <Widget>[
-                            Text('칼슘',
+                            Text(barList[2].name.toString(),
                                 style: TextStyle(
                                     fontSize: 10,
                                     color: Color.fromRGBO(255, 113, 113, 1))),
-                            Text('(2%)',
+                            Text('${barList[2].amount}%',
                                 style: TextStyle(
                                     fontSize: 10,
                                     color: Color.fromRGBO(255, 113, 113, 1))),
@@ -263,11 +375,11 @@ class _IngredientList extends State<IngredientList> {
                       Container(
                         child: Column(
                           children: <Widget>[
-                            Text('인',
+                            Text(barList[3].name.toString(),
                                 style: TextStyle(
                                     fontSize: 10,
                                     color: Color.fromRGBO(255, 113, 113, 1))),
-                            Text('(1%)',
+                            Text('${barList[3].amount}%',
                                 style: TextStyle(
                                     fontSize: 10,
                                     color: Color.fromRGBO(255, 113, 113, 1))),
@@ -280,7 +392,7 @@ class _IngredientList extends State<IngredientList> {
                 SizedBox(
                   height: 40,
                   width: 400,
-                  child: Image.asset('images/ingredient_bar.png'),
+                  child: getRowIngredientBar(),
                 ),
                 Padding(padding: EdgeInsets.only(top: 10)),
                 Container(
@@ -291,15 +403,14 @@ class _IngredientList extends State<IngredientList> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              dummyIngredientModelList[0].Ingredient_Factor[0],
+                              barList[0].name.toString(),
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromRGBO(0, 0, 0, 1)),
                             ),
                             Padding(padding: EdgeInsets.only(top: 10)),
-                            Text(
-                                '${dummyIngredientModelList[0].Ingredient_Amount[0]}%',
+                            Text('${barList[0].amount}%',
                                 style: TextStyle(
                                     fontSize: 10,
                                     color: Color.fromRGBO(255, 113, 113, 1))),
@@ -310,16 +421,13 @@ class _IngredientList extends State<IngredientList> {
                       Container(
                         child: Column(
                           children: <Widget>[
-                            Text(
-                                dummyIngredientModelList[0]
-                                    .Ingredient_Factor[1],
+                            Text(barList[1].name.toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Color.fromRGBO(0, 0, 0, 1))),
                             Padding(padding: EdgeInsets.only(top: 10)),
-                            Text(
-                                '${dummyIngredientModelList[0].Ingredient_Amount[1]}%',
+                            Text('${barList[1].amount}%',
                                 style: TextStyle(
                                     fontSize: 10,
                                     color: Color.fromRGBO(255, 113, 113, 1))),
@@ -330,16 +438,13 @@ class _IngredientList extends State<IngredientList> {
                       Container(
                         child: Column(
                           children: <Widget>[
-                            Text(
-                                dummyIngredientModelList[0]
-                                    .Ingredient_Factor[2],
+                            Text(barList[2].name.toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Color.fromRGBO(0, 0, 0, 1))),
                             Padding(padding: EdgeInsets.only(top: 10)),
-                            Text(
-                                '${dummyIngredientModelList[0].Ingredient_Amount[0]}%',
+                            Text('${barList[2].amount}%',
                                 style: TextStyle(
                                     fontSize: 10,
                                     color: Color.fromRGBO(255, 113, 113, 1))),
@@ -350,16 +455,13 @@ class _IngredientList extends State<IngredientList> {
                       Container(
                         child: Column(
                           children: <Widget>[
-                            Text(
-                                dummyIngredientModelList[0]
-                                    .Ingredient_Factor[3],
+                            Text(barList[3].name.toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Color.fromRGBO(0, 0, 0, 1))),
                             Padding(padding: EdgeInsets.only(top: 10)),
-                            Text(
-                                '${dummyIngredientModelList[0].Ingredient_Amount[0]}%',
+                            Text('${barList[3].amount}%',
                                 style: TextStyle(
                                     fontSize: 10,
                                     color: Color.fromRGBO(255, 113, 113, 1))),
@@ -390,14 +492,7 @@ class _IngredientList extends State<IngredientList> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            '비타민',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                            ),
-                          ),
-                          Text(
-                            dummyIngredientModelList[0].Vitamin_Factor[0],
+                            circleList[0].name,
                             style: TextStyle(
                               fontSize: 14,
                               color: Color.fromRGBO(255, 255, 255, 1),
@@ -425,14 +520,7 @@ class _IngredientList extends State<IngredientList> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            '비타민',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                            ),
-                          ),
-                          Text(
-                            dummyIngredientModelList[0].Vitamin_Factor[1],
+                            circleList[1].name,
                             style: TextStyle(
                               fontSize: 14,
                               color: Color.fromRGBO(255, 255, 255, 1),
@@ -460,14 +548,7 @@ class _IngredientList extends State<IngredientList> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            '비타민',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                            ),
-                          ),
-                          Text(
-                            dummyIngredientModelList[0].Vitamin_Factor[2],
+                            circleList[2].name,
                             style: TextStyle(
                               fontSize: 14,
                               color: Color.fromRGBO(255, 255, 255, 1),
@@ -489,7 +570,6 @@ class _IngredientList extends State<IngredientList> {
           //비타민
 
           Padding(padding: EdgeInsets.only(top: 120)),
-
           Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -505,17 +585,19 @@ class _IngredientList extends State<IngredientList> {
                 SizedBox(
                   width: 400,
                   height: 400,
-                  child: Image.asset('images/goods_test_image.png'),
+                  child: Image.network(widget.goodsInfo.detailedInfo.bannerUrl),
                 ),
               ],
             ),
           ),
 
           Container(
+            margin: EdgeInsets.only(top: 30, bottom: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Card(
+                  margin: EdgeInsets.only(right: 10),
                   color: Color.fromRGBO(255, 113, 113, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
@@ -524,7 +606,12 @@ class _IngredientList extends State<IngredientList> {
                     height: 70,
                     width: 200,
                     child: FlatButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Shopping_Basket()));
+                      },
                       child: Text(
                         '장바구니 넣기',
                         style:
@@ -534,6 +621,7 @@ class _IngredientList extends State<IngredientList> {
                   ),
                 ),
                 Card(
+                  margin: EdgeInsets.only(left: 10),
                   color: Color.fromRGBO(255, 113, 113, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),

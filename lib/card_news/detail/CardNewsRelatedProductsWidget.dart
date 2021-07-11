@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pet_service_application/GoodsInfo.dart';
+import 'package:pet_service_application/GoodsWidget.dart';
 
 final pinkBoldTextColor = Color.fromRGBO(255, 87, 87, 1);
 
 class CardNewsRelatedProductsWidget extends StatefulWidget {
+  final List<GoodsInfo> goodsInfoList;
+
+  CardNewsRelatedProductsWidget(this.goodsInfoList);
+
   @override
   _CardNewsRelatedProductsWidget createState() =>
       _CardNewsRelatedProductsWidget();
@@ -48,36 +54,13 @@ class _CardNewsRelatedProductsWidget
             child: GridView.count(
               crossAxisCount: 2,
               childAspectRatio: 0.8,
-              children: [
-                CardNewsRelatedProductCardWidget(
-                  relatedProductModel: CardNewsRelatedProductModel(
-                      'https://picsum.photos/250?image=9',
-                      '피부모질 닥터독 사료 2kg',
-                      29500,
-                      null),
-                ),
-                CardNewsRelatedProductCardWidget(
-                  relatedProductModel: CardNewsRelatedProductModel(
-                      'https://picsum.photos/250?image=9',
-                      '피부모질 닥터독 사료 2kg',
-                      29500,
-                      29500),
-                ),
-                CardNewsRelatedProductCardWidget(
-                  relatedProductModel: CardNewsRelatedProductModel(
-                      'https://picsum.photos/250?image=9',
-                      '피부모질 닥터독 사료 2kg',
-                      29500,
-                      null),
-                ),
-                CardNewsRelatedProductCardWidget(
-                  relatedProductModel: CardNewsRelatedProductModel(
-                      'https://picsum.photos/250?image=9',
-                      '피부모질 닥터독 사료 2kg',
-                      29500,
-                      29500),
-                ),
-              ],
+              children: List.generate(
+                widget.goodsInfoList.length,
+                (index) {
+                  return GoodsCardWidget(
+                      goodsInfo: widget.goodsInfoList[index]);
+                },
+              ),
             ),
           ),
         ],
@@ -85,7 +68,7 @@ class _CardNewsRelatedProductsWidget
     );
   }
 }
-
+/*
 class CardNewsRelatedProductModel {
   String imgUrl;
   String productName;
@@ -233,3 +216,4 @@ class _CardNewsRelatedProductCardWidget
     return priceTextSpan;
   }
 }
+*/

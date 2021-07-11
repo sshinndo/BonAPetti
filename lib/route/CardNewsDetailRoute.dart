@@ -38,7 +38,7 @@ class CardNewsDetailRoute extends StatelessWidget {
               child: detailCardNewsPageView,
             ),
             cardNewsModel.type == CardNewsType.CARDNEWS
-                ? CardNewsRelatedProductsWidget()
+                ? CardNewsRelatedProductsWidget(cardNewsModel.goodsInfoList)
                 : cardNewsModel.type == CardNewsType.EVENT
                     ? SpecialCouponWidget()
                     : cardNewsModel.type == CardNewsType.TOPPET

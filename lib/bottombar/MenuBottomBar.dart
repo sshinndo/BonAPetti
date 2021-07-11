@@ -70,7 +70,7 @@ class _MenuBottomBar extends State<MenuBottomBar> {
           //상태 갱신이 되지 않으면 동작을 하지 않음
           screenIndex = value;
           if (value == 1) {
-            Navigator.pop(context, null);
+            Navigator.pop(context);
           }
           if (value == 2) {
             Navigator.push(
