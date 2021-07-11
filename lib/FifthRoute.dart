@@ -21,6 +21,9 @@ class FifthRoute extends StatefulWidget {
 }
 
 class _FifthRouteState extends State<FifthRoute> {
+  TextEditingController _petAgeController = TextEditingController();
+  TextEditingController _petBodyLengthController = TextEditingController();
+  TextEditingController _petWeightController = TextEditingController();
 
   final _scrollController = ScrollController();
 
@@ -83,7 +86,7 @@ class _FifthRouteState extends State<FifthRoute> {
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 10, left: 50, right: 50),
-                      child: customTextFormField('나이를 입력해 주세요.'),
+                      child: customTextFormField(_petAgeController,'나이를 입력해 주세요.'),
                     )
                   ]),
                 ),
@@ -97,7 +100,7 @@ class _FifthRouteState extends State<FifthRoute> {
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 10, left: 50, right: 50),
-                      child: customTextFormField('몸 길이를 입력해 주세요.'),
+                      child: customTextFormField(_petBodyLengthController,'몸 길이를 입력해 주세요.'),
                     )
                   ]),
                 ),
@@ -111,7 +114,7 @@ class _FifthRouteState extends State<FifthRoute> {
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 10, left: 50, right: 50),
-                      child: customTextFormField('몸무게를 입력해 주세요.'),
+                      child: customTextFormField(_petWeightController,'몸무게를 입력해 주세요.'),
                     )
                   ]),
                 ),
@@ -264,7 +267,7 @@ class _FifthRouteState extends State<FifthRoute> {
                 height: 40.0,
                 child: animationUpButton(_scrollController, 1360)
             ),
-            SizedBox(height: 160.0),
+            SizedBox(height: 80.0),
             Container(
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(left: 50),
@@ -291,7 +294,12 @@ class _FifthRouteState extends State<FifthRoute> {
             SizedBox(height:47.0),
             HashTagButtonListManager(
                 petCategoryListView: petCategoryListView),
-            SizedBox(height:192.0)
+            SizedBox(height: 25.0),
+            Container(
+              margin: EdgeInsets.only(left: 40, right: 40),
+                child: customPinkElevatedButton('입력 완료!',context,MyHomePage(title: appName))
+            ),
+            SizedBox(height: 80.0)
 
           ],),),
         ],
@@ -392,9 +400,9 @@ class HashTagInputButtonList extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              buildHashTagButton('#앵무새', context),
+              buildHashTagButton('#소화불량', context),
               Padding(padding: EdgeInsets.all(20)),
-              buildHashTagButton('#사자', context),
+              buildHashTagButton('#충치', context),
               Padding(padding: EdgeInsets.all(20)),
               buildHashTagButton('#호랑이', context),
             ],
@@ -416,13 +424,14 @@ class HashTagInputButtonSecondList extends StatelessWidget {
         onPressed: () {
           manager.getStateData().refresh(true);
           manager.petCategoryListView.getStateData().add(buttonText);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => FifthRoute(
-                      petCategoryStrList: manager.petCategoryListView
-                          .getStateData()
-                          .petCategoryStrList)));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => FifthRoute(
+          //             petCategoryStrList: manager.petCategoryListView
+          //                 .getStateData()
+          //                 .petCategoryStrList))
+          // );
         },
         style: ElevatedButton.styleFrom(
             primary: Color.fromRGBO(246, 246, 246, 1),
@@ -441,33 +450,33 @@ class HashTagInputButtonSecondList extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              buildHashTagButton('#말티즈', context),
+              buildHashTagButton('#비염', context),
               Padding(padding: EdgeInsets.all(20)),
-              buildHashTagButton('#웰시코기', context),
+              buildHashTagButton('#관절염', context),
               Padding(padding: EdgeInsets.all(20)),
-              buildHashTagButton('#치와와', context),
+              buildHashTagButton('#치주염', context),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              buildHashTagButton('#도베르만', context),
+              buildHashTagButton('#백내장', context),
               Padding(padding: EdgeInsets.all(20)),
-              buildHashTagButton('#시바견', context),
+              buildHashTagButton('#녹내장', context),
               Padding(padding: EdgeInsets.all(20)),
-              buildHashTagButton('#진돗개', context),
+              buildHashTagButton('#빈혈', context),
               Padding(padding: EdgeInsets.all(20)),
-              buildHashTagButton('#풍산개', context),
+              buildHashTagButton('#간질발작', context),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              buildHashTagButton('#시베리안 허스키', context),
+              buildHashTagButton('#소화불량', context),
               Padding(padding: EdgeInsets.all(20)),
-              buildHashTagButton('#푸들', context),
+              buildHashTagButton('#충치', context),
               Padding(padding: EdgeInsets.all(20)),
-              buildHashTagButton('#슈나우저', context),
+              buildHashTagButton('#호랑이', context),
             ],
           )
         ],

@@ -44,7 +44,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(height: 35),
                     Container(
                       margin: EdgeInsets.only(left:35, right: 35),
-                      child: customPinkElevatedButton('가입하기',context,MyHomePage(title: appName)),
+                      child: customPinkElevatedButton('가입하기',context,LogIn()),
                     ),
 
                     Container(
