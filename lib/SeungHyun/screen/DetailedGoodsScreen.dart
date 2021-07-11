@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pet_service_application/SeungHyun/screen/shopping_basket.dart';
 import 'package:pet_service_application/SquareCardPageView.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:pet_service_application/GoodsInfo.dart';
@@ -116,10 +117,10 @@ class _ContentDetailedGoods extends State<ContentDetailedGoods> {
                                 : Color.fromRGBO(217, 217, 217, 1),
                           ),
                           onTap: () {
-                            setState() {
+                            setState(() {
                               widget.goodsInfo.detailedInfo.isLike =
                                   !widget.goodsInfo.detailedInfo.isLike;
-                            }
+                            });
                           },
                         ),
 
@@ -605,7 +606,12 @@ class _IngredientList extends State<IngredientList> {
                     height: 70,
                     width: 200,
                     child: FlatButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Shopping_Basket()));
+                      },
                       child: Text(
                         '장바구니 넣기',
                         style:

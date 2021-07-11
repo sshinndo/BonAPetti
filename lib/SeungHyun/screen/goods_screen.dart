@@ -1,11 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/GoodsInfo.dart';
+import 'package:pet_service_application/GoodsWidget.dart';
 import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 
 class GoodsScreen extends StatefulWidget {
+  final List<GoodsInfo> goodsInfoList;
+
+  GoodsScreen(this.goodsInfoList);
+
   @override
   _GoodsScreen createState() => _GoodsScreen();
 }
@@ -14,13 +20,11 @@ class _GoodsScreen extends State<GoodsScreen> {
   @override
   Widget build(BuildContext context) {
     FilterTabWithListView filterTabWithListView = FilterTabWithListView(
-      goodsItemModelList: [
-        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, null),
-        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, null),
-        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, 26500),
-        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, null),
-        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, 18000),
-        GoodsItemModel('img', '피부모질 닥터독 사료 2kg', 29500, 20000),
+      goodsInfoList: [
+        widget.goodsInfoList[0],
+        widget.goodsInfoList[1],
+        widget.goodsInfoList[2],
+        widget.goodsInfoList[3],
       ],
     );
 
@@ -94,7 +98,7 @@ class SearchBar extends StatelessWidget {
                   onChanged: (text) {
                     filterTabWithListView
                         .getStateData()
-                        .goodsItemListView!
+                        .goodsWidgetListView!
                         .getStateData()
                         .applySearchData(text);
                   },
@@ -178,47 +182,47 @@ class _FilterTabWidget extends State<FilterTabWidget> {
   }
 }
 
-class GoodsItemListView extends StatefulWidget {
-  final List<GoodsItemModel> goodsItemModelList;
+class GoodsWidgetListView extends StatefulWidget {
+  final List<GoodsInfo> goodsInfoListView;
 
-  GoodsItemListView({Key? key, required this.goodsItemModelList})
+  GoodsWidgetListView({Key? key, required this.goodsInfoListView})
       : super(key: key);
 
-  final _cardNewsListView = _GoodsItemListView();
+  final _goodsWidgetListView = _GoodsWidgetListView();
 
-  _GoodsItemListView getStateData() => _cardNewsListView;
+  _GoodsWidgetListView getStateData() => _goodsWidgetListView;
 
   @override
-  _GoodsItemListView createState() => _cardNewsListView;
+  _GoodsWidgetListView createState() => _goodsWidgetListView;
 }
 
-class _GoodsItemListView extends State<GoodsItemListView> {
+class _GoodsWidgetListView extends State<GoodsWidgetListView> {
   // 부모한테 원본 데이터가 있고, 현재 리스트는 Filtering될 리스트
-  List<GoodsItemModel> filteredGoodsItemModelList = [];
+  List<GoodsInfo> filteredGoodsInfoModelList = [];
 
   @override
   void initState() {
     super.initState();
 
-    setGoodsItemModelListData(widget.goodsItemModelList);
+    setGoodsItemModelListData(widget.goodsInfoListView);
   }
 
-  void setGoodsItemModelListData(List<GoodsItemModel> _goodsItemDataList) {
-    filteredGoodsItemModelList.clear();
-    filteredGoodsItemModelList.addAll(_goodsItemDataList);
+  void setGoodsItemModelListData(List<GoodsInfo> _goodsInfoDataList) {
+    filteredGoodsInfoModelList.clear();
+    filteredGoodsInfoModelList.addAll(_goodsInfoDataList);
   }
 
   void applySearchData(String textFieldData) {
-    setGoodsItemModelListData(widget.goodsItemModelList);
+    setGoodsItemModelListData(widget.goodsInfoListView);
     setState(() {
-      filteredGoodsItemModelList.removeWhere(
-          (element) => !element.productName.contains(textFieldData));
+      filteredGoodsInfoModelList
+          .removeWhere((element) => !element.name.contains(textFieldData));
     });
   }
 
-  void changeOriginalData(List<GoodsItemModel> _goodsItemDataList) {
+  void changeOriginalData(List<GoodsInfo> _goodsInfoDataList) {
     setState(() {
-      setGoodsItemModelListData(_goodsItemDataList);
+      setGoodsItemModelListData(_goodsInfoDataList);
     });
   }
 
@@ -228,15 +232,15 @@ class _GoodsItemListView extends State<GoodsItemListView> {
       crossAxisCount: 2,
       childAspectRatio: 0.8,
       children: List.generate(
-        filteredGoodsItemModelList.length,
-        (index) => GoodsItem(
-          filteredGoodsItemModelList[index],
+        filteredGoodsInfoModelList.length,
+        (index) => GoodsCardWidget(
+          goodsInfo: filteredGoodsInfoModelList[index],
         ),
       ),
     );
   }
 }
-
+/*
 class GoodsItem extends StatefulWidget {
   final GoodsItemModel _goodsItemModel;
 
@@ -376,12 +380,12 @@ class _GoodsItem extends State<GoodsItem> {
 
     return priceTextSpan;
   }
-}
+}*/
 
 class FilterTabWithListView extends StatefulWidget {
-  final List<GoodsItemModel> goodsItemModelList;
+  final List<GoodsInfo> goodsInfoList;
 
-  FilterTabWithListView({Key? key, required this.goodsItemModelList})
+  FilterTabWithListView({Key? key, required this.goodsInfoList})
       : super(key: key);
 
   final _FilterTabWithListView _filterTabWithListView =
@@ -395,8 +399,7 @@ class FilterTabWithListView extends StatefulWidget {
 
 class _FilterTabWithListView extends State<FilterTabWithListView> {
   List<FilterTabWidget> filterTabList = [];
-  List<GoodsItemModel> filteredCardNewsModelList = [];
-  GoodsItemListView? goodsItemListView;
+  GoodsWidgetListView? goodsWidgetListView;
   List<String> tabName = ['가격낮은순 ▼', '리뷰많은순 ▼', '인기순 ▼', '종류 ▼'];
 
   @override
@@ -408,16 +411,16 @@ class _FilterTabWithListView extends State<FilterTabWithListView> {
 
   void changeTabName(int index, String tabName1, String tabName2) {
     setState(() {
-      if (tabName[0] == tabName1)
-        tabName[0] = tabName2;
+      if (tabName[index] == tabName1)
+        tabName[index] = tabName2;
       else
-        tabName[0] = tabName1;
+        tabName[index] = tabName1;
     });
   }
 
   void _initUIWidgets() {
-    goodsItemListView =
-        GoodsItemListView(goodsItemModelList: widget.goodsItemModelList);
+    goodsWidgetListView =
+        GoodsWidgetListView(goodsInfoListView: widget.goodsInfoList);
 
     filterTabList.clear();
 
@@ -497,7 +500,7 @@ class _FilterTabWithListView extends State<FilterTabWithListView> {
             flex: 5,
             child: Container(
               margin: EdgeInsets.only(left: 30, right: 30),
-              child: goodsItemListView!,
+              child: goodsWidgetListView!,
             ),
           ),
         ],
