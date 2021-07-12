@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/card_news/CardNewsListView.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
@@ -17,36 +18,38 @@ class CardNewsListRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     print(cardNewsModelList.toString());
     return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
-        crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
-        children: [
-          DrawerWithAlarmAppBar(nickName: UserInfo.userNickname),
-          Container(
-              margin: EdgeInsets.all(20),
-              child: Center(
-                  child: Text('오늘의 정보',
-                      style: TextStyle(
-                          fontSize: 17.0,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold)))),
-          Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: Divider(
-                color: Color.fromRGBO(0, 0, 0, 0.3),
-                height: 20,
-                thickness: 1.5,
-                indent: 15,
-                endIndent: 15,
-              )),
-          Expanded(
-              flex: 1,
-              child:
-                  FilterTabWithListView(cardNewsModelList: cardNewsModelList)),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
+          crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
+          children: [
+            DrawerWithAlarmAppBar(nickName: UserInfo.userNickname),
+            Container(
+                margin: EdgeInsets.all(20),
+                child: Center(
+                    child: Text('오늘의 정보',
+                        style: TextStyle(
+                            fontSize: 17.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold)))),
+            Container(
+                margin: EdgeInsets.only(left: 20, right: 20),
+                child: Divider(
+                  color: Color.fromRGBO(0, 0, 0, 0.3),
+                  height: 20,
+                  thickness: 1.5,
+                  indent: 15,
+                  endIndent: 15,
+                )),
+            Expanded(
+                flex: 1,
+                child: FilterTabWithListView(
+                    cardNewsModelList: cardNewsModelList)),
+          ],
+        ),
       ),
-    ));
+      bottomNavigationBar: MenuBottomBar(),
+    );
   }
 }
 

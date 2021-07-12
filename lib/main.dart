@@ -1011,6 +1011,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                     SizedBox(height: 20),
+                    /*
                     ListTile(
                       leading: Icon(
                         Icons.login_outlined,
@@ -1023,7 +1024,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             MaterialPageRoute(
                                 builder: (BuildContext context) => Splash()));
                       },
-                    ),
+                    ),*/
                   ],
                 ),
               ),

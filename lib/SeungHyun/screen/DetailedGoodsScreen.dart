@@ -4,6 +4,7 @@ import 'package:pet_service_application/SeungHyun/screen/shopping_basket.dart';
 import 'package:pet_service_application/SquareCardPageView.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:pet_service_application/GoodsInfo.dart';
+import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 
 class DetailedGoodsScreen extends StatelessWidget {
@@ -14,7 +15,7 @@ class DetailedGoodsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ContentDetailedGoods(goodsInfo),
-      //여기에 bottombar 추가하면됨
+      bottomNavigationBar: MenuBottomBar(),
     );
   }
 }
@@ -608,10 +609,12 @@ class _IngredientList extends State<IngredientList> {
                     width: 200,
                     child: FlatButton(
                       onPressed: () {
+                        /*
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Shopping_Basket()));
+                                */
                       },
                       child: Text(
                         '장바구니 넣기',

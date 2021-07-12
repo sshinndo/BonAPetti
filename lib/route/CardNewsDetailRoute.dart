@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:pet_service_application/card_news/detail/CardNewsRelatedProductsWidget.dart';
@@ -50,6 +51,7 @@ class CardNewsDetailRoute extends StatelessWidget {
           // 댓글 리스트
         ],
       ),
+      bottomNavigationBar: MenuBottomBar(),
     );
   }
 }
