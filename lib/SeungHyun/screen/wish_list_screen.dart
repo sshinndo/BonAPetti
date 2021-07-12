@@ -26,7 +26,7 @@ class _Wish_List_Screen extends State<Wish_List_Screen> {
                         color: Colors.black26, fontWeight: FontWeight.bold),
                   )),
               Padding(
-                padding: EdgeInsets.all(32),
+                padding: EdgeInsets.only(left: 15),
               ),
               TextButton(
                   onPressed: () {},
@@ -35,7 +35,7 @@ class _Wish_List_Screen extends State<Wish_List_Screen> {
                     style: TextStyle(
                         color: Colors.black26, fontWeight: FontWeight.bold),
                   )),
-              Padding(padding: EdgeInsets.fromLTRB(265, 0, 0, 0)),
+              Padding(padding: EdgeInsets.fromLTRB(255, 0, 0, 0)),
               IconButton(
                 onPressed: () {},
                 icon: ImageIcon(
@@ -46,6 +46,7 @@ class _Wish_List_Screen extends State<Wish_List_Screen> {
               ),
             ],
           ),
+          Padding(padding: EdgeInsets.only(top: 15)),
           Container(
             margin: EdgeInsets.only(left: 20, right: 20),
             child: Card(
@@ -86,7 +87,7 @@ class _Wish_List_Screen extends State<Wish_List_Screen> {
                                 flex: 1,
                                 child: Container(
                                   padding:
-                                      EdgeInsets.only(left: 380, right: 20),
+                                      EdgeInsets.only(left: 360, right: 20),
                                   child: Checkbox(
                                     checkColor: Colors.black12,
                                     value: isChecked,
@@ -122,24 +123,33 @@ class _Wish_List_Screen extends State<Wish_List_Screen> {
                                   child: Row(
                                     children: <Widget>[
                                       Expanded(
-                                        child: Container(),
-                                        flex: 5,
-                                      ),
-                                      Expanded(
-                                        child: Text('바로주문',
-                                            style: TextStyle(
-                                                color: Color.fromRGBO(
-                                                    168, 168, 168, 1))),
-                                        flex: 2,
-                                      ),
-                                      Expanded(
-                                        child: ImageIcon(
-                                            AssetImage(
-                                                "images/shopping_cart_figma.png"),
-                                            size: 20,
-                                            color: Color.fromRGBO(
-                                                217, 217, 217, 1)),
-                                        flex: 2,
+                                        flex: 1,
+                                        child: Container(
+                                          child: Row(
+                                            children: <Widget>[
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 245)),
+                                              Container(
+                                                child: Text('바로주문',
+                                                    style: TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            168, 168, 168, 1))),
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 50)),
+                                              Container(
+                                                child: ImageIcon(
+                                                    AssetImage(
+                                                        "images/shopping_cart_figma.png"),
+                                                    size: 20,
+                                                    color: Color.fromRGBO(
+                                                        217, 217, 217, 1)),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -195,7 +205,7 @@ class _Wish_List_Screen extends State<Wish_List_Screen> {
                                 flex: 1,
                                 child: Container(
                                   padding:
-                                      EdgeInsets.only(left: 380, right: 20),
+                                      EdgeInsets.only(left: 360, right: 20),
                                   child: Checkbox(
                                     checkColor: Colors.black12,
                                     value: isChecked,
@@ -230,25 +240,23 @@ class _Wish_List_Screen extends State<Wish_List_Screen> {
                                 child: Container(
                                   child: Row(
                                     children: <Widget>[
-                                      Expanded(
-                                        child: Container(),
-                                        flex: 5,
-                                      ),
-                                      Expanded(
+                                      Padding(
+                                          padding: EdgeInsets.only(left: 245)),
+                                      Container(
                                         child: Text('바로주문',
                                             style: TextStyle(
                                                 color: Color.fromRGBO(
                                                     168, 168, 168, 1))),
-                                        flex: 2,
                                       ),
-                                      Expanded(
+                                      Padding(
+                                          padding: EdgeInsets.only(left: 50)),
+                                      Container(
                                         child: ImageIcon(
                                             AssetImage(
                                                 "images/shopping_cart_figma.png"),
                                             size: 20,
                                             color: Color.fromRGBO(
                                                 217, 217, 217, 1)),
-                                        flex: 2,
                                       ),
                                     ],
                                   ),

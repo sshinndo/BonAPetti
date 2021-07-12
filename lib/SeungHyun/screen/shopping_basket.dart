@@ -99,42 +99,25 @@ class Shopping_Basket extends StatelessWidget {
             children: [
               Padding(padding: EdgeInsets.only(left: 25)),
               TextButton(
-                  onPressed: () {
-                    productListView.getStateData().refreshAllData();
-                  },
+                  onPressed: () {},
                   child: Text(
                     '전체선택',
                     style: TextStyle(
                         color: Colors.black26, fontWeight: FontWeight.bold),
                   )),
               Padding(
-                padding: EdgeInsets.all(32),
+                padding: EdgeInsets.only(left: 15),
               ),
               TextButton(
-                  onPressed: () {
-                    productListView.getStateData().selectedItemRemove();
-                  },
+                  onPressed: () {},
                   child: Text(
                     '선택 삭제',
                     style: TextStyle(
                         color: Colors.black26, fontWeight: FontWeight.bold),
                   )),
-              Padding(padding: EdgeInsets.fromLTRB(262, 0, 0, 0)),
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Shopping_Basket()));
-                },
-                icon: ImageIcon(
-                  AssetImage("images/shopping_cart_figma.png"),
-                  size: 20,
-                  color: Colors.black26,
-                ),
-              ),
             ],
           ),
+          Padding(padding: EdgeInsets.only(top: 15)),
           Expanded(
             flex: 5,
             child: productListView,

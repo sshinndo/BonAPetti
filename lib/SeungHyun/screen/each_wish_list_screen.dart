@@ -83,27 +83,23 @@ class EachWishList extends StatelessWidget {
             children: [
               Padding(padding: EdgeInsets.only(left: 25)),
               TextButton(
-                  onPressed: () {
-                    productListView.getStateData().refreshAllData();
-                  },
+                  onPressed: () {},
                   child: Text(
                     '전체선택',
                     style: TextStyle(
                         color: Colors.black26, fontWeight: FontWeight.bold),
                   )),
               Padding(
-                padding: EdgeInsets.all(32),
+                padding: EdgeInsets.only(left: 15),
               ),
               TextButton(
-                  onPressed: () {
-                    productListView.getStateData().selectedItemRemove();
-                  },
+                  onPressed: () {},
                   child: Text(
                     '선택 삭제',
                     style: TextStyle(
                         color: Colors.black26, fontWeight: FontWeight.bold),
                   )),
-              Padding(padding: EdgeInsets.fromLTRB(262, 0, 0, 0)),
+              Padding(padding: EdgeInsets.fromLTRB(255, 0, 0, 0)),
               IconButton(
                 onPressed: () {
                   Navigator.push(
@@ -119,6 +115,7 @@ class EachWishList extends StatelessWidget {
               ),
             ],
           ),
+          Padding(padding: EdgeInsets.only(top: 15)),
           Expanded(
             flex: 1,
             child: productListView,
@@ -241,10 +238,13 @@ class _ProductListItem extends State<ProductListItem> {
                             child: Container(
                               child: Row(
                                 children: <Widget>[
+
+
                                   Expanded(
                                     child: Text(widget.productModel.name),
-                                    flex: 6,
+                                    flex: 10,
                                   ),
+                                  Padding(padding: EdgeInsets.only(left: 20)),
                                   Expanded(
                                     child: Checkbox(
                                       activeColor:
@@ -258,8 +258,10 @@ class _ProductListItem extends State<ProductListItem> {
                                         });
                                       },
                                     ),
-                                    flex: 2,
+                                    flex: 1,
                                   ),
+
+
                                 ],
                               ),
                             ),
@@ -269,8 +271,9 @@ class _ProductListItem extends State<ProductListItem> {
                             child: Container(
                               child: Row(
                                 children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.only(right: 275),
+
+
+                                  Expanded(
                                     child: Text(
                                       (NumberFormat('###,###,###,###')
                                               .format(widget.productModel.price)
@@ -281,7 +284,12 @@ class _ProductListItem extends State<ProductListItem> {
                                         fontSize: 20,
                                       ),
                                     ),
+                                    flex: 10,
                                   ),
+                                  Expanded(child: Container(), flex: 1,),
+
+
+
                                 ],
                               ),
                             ),
@@ -289,11 +297,14 @@ class _ProductListItem extends State<ProductListItem> {
                           Expanded(
                             flex: 1,
                             child: Container(
+
+
+
                               child: Row(
                                 children: <Widget>[
                                   Container(
                                     padding:
-                                        EdgeInsets.only(left: 255, right: 20),
+                                        EdgeInsets.only(left: 220, right: 20),
                                     child: Text(
                                       '바로주문',
                                       style: TextStyle(
@@ -303,7 +314,7 @@ class _ProductListItem extends State<ProductListItem> {
                                   ),
                                   Container(
                                     padding:
-                                        EdgeInsets.only(left: 10, right: 20),
+                                        EdgeInsets.only(left: 10),
                                     child: ImageIcon(
                                         AssetImage(
                                             "images/shopping_cart_figma.png"),
@@ -313,6 +324,10 @@ class _ProductListItem extends State<ProductListItem> {
                                   )
                                 ],
                               ),
+
+
+
+
                             ),
                           ),
                         ],

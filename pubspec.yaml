@@ -29,6 +29,8 @@ dependencies:
   dio: ^3.0.1
   logger:
   json_annotation: ^3.0.1
+  webview_flutter: any
+  webview_windows: ^0.0.7
 
 
   # The following adds the Cupertino Icons font to your application.
