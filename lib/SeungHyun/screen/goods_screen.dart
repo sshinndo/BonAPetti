@@ -6,6 +6,7 @@ import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dar
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
+import 'package:pet_service_application/log_in/UserInfoClass.dart';
 
 class GoodsScreen extends StatefulWidget {
   final List<GoodsInfo> goodsInfoList;
@@ -31,7 +32,7 @@ class _GoodsScreen extends State<GoodsScreen> {
     return Scaffold(
       body: Column(
         children: [
-          DrawerWithAlarmAppBar(nickName: '닉네임'),
+          DrawerWithAlarmAppBar(nickName: UserInfo.userNickname),
           SearchBar(
             filterTabWithListView: filterTabWithListView,
           ),
