@@ -17,7 +17,7 @@ import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/wish_list_screen.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 
-void main() => runApp(MyApp());
+//void main() => runApp(MyApp());
 
 final String appName = "Pet App";
 
@@ -29,16 +29,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: appName),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  final String title;
   final List<CardNewsModel> cardNewsModelList = [];
-
-  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -48,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+
     loadData();
   }
 
@@ -574,7 +572,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
         crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
         children: <Widget>[
-          DrawerWithAlarmAppBar(nickName: '닉네임'),
+          DrawerWithAlarmAppBar(nickName: UserInfo.userNickname),
           Expanded(
             flex: 1,
             child: ListView(
@@ -654,7 +652,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        '사탕이',
+                        PetInfo.petName,
                         style: TextStyle(
                             color: Color.fromRGBO(255, 113, 113, 1),
                             decoration: TextDecoration.underline,
@@ -926,16 +924,17 @@ class _MyHomePageState extends State<MyHomePage> {
                             },
                         child: Container(
                             alignment: Alignment.centerRight,
-                            child: Icon(Icons.settings, color: Colors.grey[850]),
+                            child:
+                                Icon(Icons.settings, color: Colors.grey[850]),
                             margin: EdgeInsets.all(20.0))),
                   ],
                 ),
               ),
               Expanded(
-                flex:8,
+                flex: 8,
                 child: Column(
                   children: [
-                    SizedBox(height:20),
+                    SizedBox(height: 20),
                     CircleAvatar(
                       radius: 90.0,
                       backgroundColor: PINK,
@@ -947,7 +946,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     SizedBox(height: 30.0),
                     Text(
-                      '사탕이와 함께하는\n[닉네임]님',
+                      '${UserInfo.userNickname}와 함께하는\n[${PetInfo.petName}]님',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
