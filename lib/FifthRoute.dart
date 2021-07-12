@@ -149,7 +149,7 @@ class _FifthRouteState extends State<FifthRoute> {
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(left: 40),
                     // 닉네임을 변수로 수정해야함!
-                    child: customSemiTitleQuestion('', '닉네임의', ' 실루엣은?')),
+                    child: customSemiTitleQuestion('', '${PetInfo.petName}의', ' 실루엣은?')),
                 SizedBox(height: 10.0),
                 Container(
                   height: 530,
