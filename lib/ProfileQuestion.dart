@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/HashTagButtonList.dart';
-import 'package:pet_service_application/main.dart';
-import 'package:pet_service_application/log_in/LogIn.dart';
-import 'package:pet_service_application/log_in/SignUpPage.dart';
+import 'package:pet_service_application/log_in/UserInfoClass.dart';
 import 'package:pet_service_application/log_in/Splash.dart';
 import 'package:pet_service_application/FifthRoute.dart';
+import 'package:pet_service_application/main.dart';
 
 const Color PINK = const Color.fromRGBO(255, 113, 113, 1);
 const Color LIGHTPINK = const Color.fromRGBO(255, 113, 113, 0.3);
@@ -15,17 +14,13 @@ class ProfileQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FirstRoute(userNameStrList: [],),
+      body: FirstRoute(),
     );
   }
 }
 
 class FirstRoute extends StatefulWidget {
-
-  final List<String> userNameStrList;
-
-  const FirstRoute({Key? key, required this.userNameStrList})
-      : super(key: key);
+  const FirstRoute({Key? key}) : super(key: key);
 
   @override
   FirstRouteState createState() {
@@ -34,8 +29,7 @@ class FirstRoute extends StatefulWidget {
 }
 
 class FirstRouteState extends State<FirstRoute> {
-
-   TextEditingController userNickname = TextEditingController();
+  TextEditingController userNickname = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +53,12 @@ class FirstRouteState extends State<FirstRoute> {
               margin: EdgeInsets.only(top: 50, left: 40, right: 40),
               child: Column(
                 children: [
-                  customTextFormField(userNickname,'사용자의 이름을 입력해주세요.'),
+                  customTextFormField(userNickname, '사용자의 이름을 입력해주세요.'),
                   SizedBox(height: 20.0),
-                  customPinkElevatedButton("입력 완료!", context, SecondRoute()),
+                  customPinkElevatedButton(() {
+                    UserAccount.userInfo = UserInfo();
+                    UserInfo.userNickname = userNickname.text;
+                  }, "입력 완료!", context, SecondRoute()),
                 ],
               ),
             ),
@@ -74,7 +71,7 @@ class FirstRouteState extends State<FirstRoute> {
 
 // 두번째 라우트
 class SecondRoute extends StatelessWidget {
-  const SecondRoute({Key? key}) : super(key: key);
+  SecondRoute({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -113,10 +110,10 @@ class SecondRoute extends StatelessWidget {
               margin: EdgeInsets.all(50),
               child: Column(
                 children: [
-                  customPinkElevatedButton("네!", context, ThirdRoute()),
+                  customPinkElevatedButton(() {}, "네!", context, ThirdRoute()),
                   SizedBox(height: 20.0),
                   customPinkElevatedButton(
-                      "아니요..ㅠㅠ바로 앱으로!", context, MyHomePage(title: appName)),
+                      () {}, "아니요..ㅠㅠ바로 앱으로!", context, MyHomePage()),
                 ],
               ),
             ),
@@ -171,9 +168,18 @@ class _ThirdRouteState extends State<ThirdRoute> {
             margin: EdgeInsets.only(top: 50, left: 40, right: 40),
             child: Column(
               children: [
-                customTextFormField(_petName,'반려동물의 이름을 입력해주세요!'),
+                customTextFormField(_petName, '반려동물의 이름을 입력해주세요!'),
                 SizedBox(height: 20.0),
-                customPinkElevatedButton("입력 완료!", context, FourthRoute()),
+                customPinkElevatedButton(() {
+                  UserInfo.petInfo = PetInfo();
+                  PetInfo.petName = _petName.text;
+                  PetInfo.petTypeNameList = [];
+                  PetInfo.petAge = 0;
+                  PetInfo.petBodyLength = 0;
+                  PetInfo.petWeight = 0;
+                  PetInfo.petSilhouette = PetSilhouette.BCS1;
+                  PetInfo.petAllergyList = [];
+                }, "입력 완료!", context, FourthRoute()),
               ],
             ),
           ),
@@ -221,7 +227,8 @@ class _FourthRouteState extends State<FourthRoute> {
                       margin: EdgeInsets.only(left: 40, right: 40),
                       child: Card(
                         elevation: 10.0,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0)),
                         child: Container(
                             margin: EdgeInsets.only(left: 15, right: 15),
                             width: double.infinity,
@@ -308,6 +315,7 @@ class HashTagInputButtonList extends StatelessWidget {
           //Navigator.push(context, MaterialPageRoute(builder: (context) => FifthRoute()));
           manager.getStateData().refresh(true);
           manager.petCategoryListView.getStateData().add(buttonText);
+          PetInfo.petTypeNameList.add(buttonText);
         },
         style: ElevatedButton.styleFrom(
             primary: Color.fromRGBO(246, 246, 246, 1),
@@ -434,7 +442,8 @@ class HashTagInputButtonSecondList extends StatelessWidget {
 
 /////////////////////////////////////////////////////////////////////////
 
-GestureDetector animationUpButton(ScrollController _scrollController,double location) {
+GestureDetector animationUpButton(
+    ScrollController _scrollController, double location) {
   return GestureDetector(
     onTap: () => {
       _scrollController.animateTo(location,
@@ -455,7 +464,8 @@ GestureDetector animationUpButton(ScrollController _scrollController,double loca
   );
 }
 
-GestureDetector animationDownButton(ScrollController _scrollController,double location) {
+GestureDetector animationDownButton(
+    ScrollController _scrollController, double location) {
   return GestureDetector(
     onTap: () => {
       _scrollController.animateTo(location,
@@ -486,18 +496,17 @@ Card customTextFormField(TextEditingController editingController, String hint) {
       height: 52.0,
       padding: EdgeInsets.only(left: 20),
       child: TextFormField(
-        controller: editingController,
-        decoration: InputDecoration(
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            hintText: hint,
-            hintStyle: TextStyle(color: GREY)),
-        cursorColor: GREY,
-        //테스트용 코드
-        onChanged: (text){
-          print(text);
-        }
-      ),
+          controller: editingController,
+          decoration: InputDecoration(
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              hintText: hint,
+              hintStyle: TextStyle(color: GREY)),
+          cursorColor: GREY,
+          //테스트용 코드
+          onChanged: (text) {
+            print(text);
+          }),
     ),
   );
 }
@@ -517,7 +526,7 @@ GestureDetector customArrowBack(BuildContext context) {
 }
 
 Container customPinkElevatedButton(
-    String text, BuildContext context, Widget nextRoute) {
+    Function() function, String text, BuildContext context, Widget nextRoute) {
   return Container(
     //margin: EdgeInsets.only(left: 40, right: 40),
     child: SizedBox(
@@ -534,6 +543,7 @@ Container customPinkElevatedButton(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0))),
         onPressed: () {
+          function();
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => nextRoute));
         },
@@ -660,26 +670,29 @@ Text customSubtitleQuestion(String text) {
         color: Colors.black, fontSize: 12.0, fontWeight: FontWeight.bold),
   );
 }
+
 Text customSubtitleColor(String text, Color color) {
   return Text(
     text,
-    style: TextStyle(
-        color: color, fontSize: 12.0, fontWeight: FontWeight.bold),
+    style: TextStyle(color: color, fontSize: 12.0, fontWeight: FontWeight.bold),
   );
 }
+
 Text customSubtitleColorUnderline(String text, Color color) {
   return Text(
     text,
     style: TextStyle(
-        color: color, fontSize: 12.0, fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
+        color: color,
+        fontSize: 12.0,
+        fontWeight: FontWeight.bold,
+        decoration: TextDecoration.underline),
   );
 }
 
 Text customSubtitleQuestionColor(String text) {
   return Text(
     text,
-    style: TextStyle(
-        color: PINK, fontSize: 12.0, fontWeight: FontWeight.bold),
+    style: TextStyle(color: PINK, fontSize: 12.0, fontWeight: FontWeight.bold),
   );
 }
 
@@ -751,6 +764,7 @@ Card silhouetteCard(String imagePath, String bcsLevel, String bcsState) {
     ),
   );
 }
+
 // --------------------알러지 버튼 리스트 매니저-------------------------
 class AllergyButtonListManager extends StatefulWidget {
   final PetCategoryListView petCategoryListView;
@@ -793,10 +807,10 @@ class _AllergyButtonListManager extends State<AllergyButtonListManager> {
         margin: EdgeInsets.only(left: 20, right: 20, top: 50),
         child: Column(
           children: [
-            customPinkElevatedButton('네', context, MyHomePage(title: appName)),
+            customPinkElevatedButton(() {}, '네', context, MyHomePage()),
             SizedBox(height: 30.0),
             customPinkElevatedButton(
-                "아니요(잘 모르겠어요)", context, MyHomePage(title: appName)),
+                () {}, "아니요(잘 모르겠어요)", context, MyHomePage()),
           ],
         ),
       );
@@ -804,6 +818,7 @@ class _AllergyButtonListManager extends State<AllergyButtonListManager> {
       return AllergyInputButtonList(manager: widget);
   }
 }
+
 class AllergyInputButtonList extends StatelessWidget {
   final AllergyButtonListManager manager;
 
