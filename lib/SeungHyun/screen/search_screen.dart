@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
+import 'package:pet_service_application/log_in/UserInfoClass.dart';
 
 class SearchRoute extends StatefulWidget {
   @override
@@ -29,7 +30,7 @@ class _SearchArea extends State<SearchArea> {
 
     return Column(
       children: [
-        BackBtnAppBar(nickName: '닉네임'),
+        BackBtnAppBar(nickName: UserInfo.userNickname),
         Container(
           margin: EdgeInsets.only(bottom: 20),
           child: SearchBar(managerWidget: searchContentsManagerWidget),
