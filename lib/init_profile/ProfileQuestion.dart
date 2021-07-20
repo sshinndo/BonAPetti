@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/HashTagButtonList.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 import 'package:pet_service_application/log_in/Splash.dart';
-import 'package:pet_service_application/FifthRoute.dart';
+import 'package:pet_service_application/init_profile/FifthRoute.dart';
 import 'package:pet_service_application/main.dart';
 
-const Color PINK = const Color.fromRGBO(255, 113, 113, 1);
-const Color LIGHTPINK = const Color.fromRGBO(255, 113, 113, 0.3);
-const Color GREY = const Color.fromRGBO(185, 185, 185, 1);
+
 
 class ProfileQuestion extends StatelessWidget {
   @override
@@ -544,7 +542,7 @@ Container customPinkElevatedButton(
                 borderRadius: BorderRadius.circular(12.0))),
         onPressed: () {
           function();
-          Navigator.push(
+          Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => nextRoute));
         },
       ),

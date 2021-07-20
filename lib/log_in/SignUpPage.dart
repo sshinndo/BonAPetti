@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/ProfileQuestion.dart';
+import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/LogIn.dart';
 import 'package:pet_service_application/main.dart';
+import 'package:pet_service_application/log_in/UserInfoClass.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -27,7 +28,14 @@ class _SignUpState extends State<SignUp> {
                 child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 105, bottom: 35.0),
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn())),
+                icon: Icon(Icons.arrow_back,
+                    color: Colors.grey[850]),
+              )),
+            Container(
+              margin: EdgeInsets.only(top: 85, bottom: 35.0),
               child: customSubtitleColor('회원가입', PINK),
             ),
             //SizedBox(height: 25),

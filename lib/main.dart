@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/ProfileQuestion.dart';
+import 'package:pet_service_application/drawer/MainDrawer.dart';
+import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/GoodsInfo.dart';
 import 'package:pet_service_application/GoodsWidget.dart';
 import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
@@ -896,142 +897,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      drawer: ClipRRect(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(35),
-          bottomRight: Radius.circular(35),
-        ),
-        child: Drawer(
-          child: Column(
-            //padding: EdgeInsets.zero,
-            children: <Widget>[
-              SizedBox(height: 20.0),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: Container(
-                            alignment: Alignment.centerLeft,
-                            child:
-                                Icon(Icons.arrow_back, color: Colors.grey[850]),
-                            margin: EdgeInsets.all(20.0))),
-                    GestureDetector(
-                        onTap: () => {
-                              //Navigator.push(context,Setting); 추후 수정해야 할 것
-                            },
-                        child: Container(
-                            alignment: Alignment.centerRight,
-                            child:
-                                Icon(Icons.settings, color: Colors.grey[850]),
-                            margin: EdgeInsets.all(20.0))),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 8,
-                child: Column(
-                  children: [
-                    SizedBox(height: 20),
-                    CircleAvatar(
-                      radius: 90.0,
-                      backgroundColor: PINK,
-                      child: CircleAvatar(
-                        radius: 80.0,
-                        backgroundColor: Colors.white,
-                        backgroundImage: AssetImage('images/logo_main.png'),
-                      ),
-                    ),
-                    SizedBox(height: 30.0),
-                    Text(
-                      '${UserInfo.userNickname}와 함께하는\n[${PetInfo.petName}]님',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
-                      //'$PetName과 함께하는\n$NickName님'
-                    ),
-                  ],
-                ),
-              ),
-              //SizedBox(height: 50),
-              Expanded(
-                flex: 8,
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Text(
-                        '친구의 정보',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      onTap: () {
-                        print('Profile is clicked');
-                      },
-                      //trailing: Icon(Icons.add) : +키 생략
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    ListTile(
-                      // leading: Icon(
-                      //   Icons.check_box_outlined,
-                      //   color: Colors.grey[850],
-                      // ),
-                      title: Text(
-                        '찜 목록',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Wish_List_Screen()));
-                      },
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    ListTile(
-                      // leading: Icon(
-                      //   Icons.shopping_cart_outlined,
-                      //   color: Colors.grey[850],
-                      // ),
-                      title: Text(
-                        '장바구니',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      onTap: () {
-                        print('shopping_cart is clicked');
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    /*
-                    ListTile(
-                      leading: Icon(
-                        Icons.login_outlined,
-                        color: Colors.grey[850],
-                      ),
-                      title: Text('로그인 하기'),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => Splash()));
-                      },
-                    ),*/
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: MainDrawer()
     );
   }
 }

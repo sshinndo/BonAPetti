@@ -32,6 +32,18 @@ dependencies:
   webview_flutter: any
   webview_windows: ^0.0.7
 
+  # image_picker: 갤러리에서 이미지 가져오기
+#  image_picker: ^0.6.7+7
+
+#  # Check that you have this dependency (added in the previous step)
+#  firebase_core: ^0.4.0+9
+#  # Add the dependency for the FlutterFire plugin for Google Analytics
+#  firebase_analytics: ^5.0.2
+#  # Add the dependencies for any other Firebase products you want to use in your app
+#  # For example, to use Firebase Authentication and Cloud Firestore
+#  firebase_auth: ^0.14.0+5
+#  cloud_firestore: ^0.12.9+5
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -57,18 +69,18 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-      - images/back_arrow.png
-      - images/bell_icon.png
-      - images/bible_figma.png
-      - images/cart_icon.png
-      - images/goods_test_image.png
-      - images/home_image.png
-      - images/hamburger_icon.png
-      - images/heart_icon.png
-      - images/rectangle_icon.png
-      - images/shopping_cart_figma.png
-      - images/cancel_icon.png
-      - images/ingredient_bar.png
+#      - images/back_arrow.png
+#      - images/bell_icon.png
+#      - images/bible_figma.png
+#      - images/cart_icon.png
+#      - images/goods_test_image.png
+#      - images/home_image.png
+#      - images/hamburger_icon.png
+#      - images/heart_icon.png
+#      - images/rectangle_icon.png
+#      - images/shopping_cart_figma.png
+#      - images/cancel_icon.png
+#      - images/ingredient_bar.png
       - images/
       - images/loginIcon/
       - images/bcs/

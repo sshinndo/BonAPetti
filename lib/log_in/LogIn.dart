@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/ProfileQuestion.dart';
+import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 import 'package:pet_service_application/main.dart';
 import 'package:pet_service_application/log_in/SignUpPage.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:webview_windows/webview_windows.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -33,8 +31,8 @@ class _LogInState extends State<LogIn> {
             // 키보드 올라옴에 따라 스크린도 같이 올라가는 위젯
             child: SafeArea(
                 child: Column(
-          children: <Widget>[
-            Container(
+                children: <Widget>[
+                  Container(
               width: 150.0,
               height: 150.0,
               margin: EdgeInsets.only(left: 32, right: 32, top: 100),
@@ -107,8 +105,8 @@ class _LogInState extends State<LogIn> {
                 child: Container(
                   child: customSubtitleColor('문의하기', GREY),
                 ),
-                onTap: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignUp())),
+                // onTap: () => Navigator.push(
+                //     context, MaterialPageRoute(builder: (context) => ContactUs())),
               ),
             ])),
           ],
