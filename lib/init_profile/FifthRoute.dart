@@ -251,7 +251,15 @@ class _FifthRouteState extends State<FifthRoute> {
                       Container(
                         margin: EdgeInsets.only(left: 35, right: 35),
                         child: customPinkElevatedButton(
-                            () {}, "아니요(잘 모르겠어요)", context, MyHomePage()),
+                            "아니요(잘 모르겠어요)",
+                                () => Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        MyHomePage()),
+                                (Route<dynamic> route) => false)
+                            //MyHomePage()
+                        ),
                         // 아니요 버튼을 누름으로써, 모든 프로필 정보를 작성했다는
                         // bool 데이터 변수를 작성해서 메인으로 넘겨야 함!!!
                       ),
@@ -293,17 +301,39 @@ class _FifthRouteState extends State<FifthRoute> {
                 HashTagButtonListManager(
                     petCategoryListView: petCategoryListView),
                 SizedBox(height: 25.0),
-                Container(
-                    margin: EdgeInsets.only(left: 40, right: 40),
-                    child: customPinkElevatedButton(() {
-                      PetInfo.petAge = int.parse(_petAgeController.text);
+              Container(
+                  margin: EdgeInsets.only(left: 40, right: 40),
+                  child:
+                  customPinkElevatedButton(
+                      '입력 완료!',
+                          () {
+                        PetInfo.petAge = int.parse(_petAgeController.text);
 
-                      PetInfo.petBodyLength =
-                          double.parse(_petBodyLengthController.text);
+                        PetInfo.petBodyLength =
+                            double.parse(_petBodyLengthController.text);
 
-                      PetInfo.petWeight =
-                          double.parse(_petWeightController.text);
-                    }, '입력 완료!', context, MyHomePage())),
+                        PetInfo.petWeight =
+                            double.parse(_petWeightController.text);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    MyHomePage()),
+                                (route) => false
+                        );
+                      }
+                  )
+              ),
+
+                    // customPinkElevatedButton(() {
+                    //   PetInfo.petAge = int.parse(_petAgeController.text);
+                    //
+                    //   PetInfo.petBodyLength =
+                    //       double.parse(_petBodyLengthController.text);
+                    //
+                    //   PetInfo.petWeight =
+                    //       double.parse(_petWeightController.text);
+                    // }, '입력 완료!', context, MyHomePage())
                 SizedBox(height: 80.0)
               ],
             ),

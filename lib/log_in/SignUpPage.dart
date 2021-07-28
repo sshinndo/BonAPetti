@@ -26,14 +26,14 @@ class _SignUpState extends State<SignUp> {
             // 키보드 올라옴에 따라 스크린도 같이 올라가는 위젯
             child: SafeArea(
                 child: Column(
-          children: <Widget>[
+                  children: <Widget>[
             Container(
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn())),
-                icon: Icon(Icons.arrow_back,
-                    color: Colors.grey[850]),
-              )),
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LogIn())),
+                  icon: Icon(Icons.arrow_back, color: Colors.grey[850]),
+                )),
             Container(
               margin: EdgeInsets.only(top: 85, bottom: 35.0),
               child: customSubtitleColor('회원가입', PINK),
@@ -47,10 +47,10 @@ class _SignUpState extends State<SignUp> {
                 child: customPinkPasswordBox(cPasswordController, '비밀번호 확인')),
             SizedBox(height: 35),
             Container(
-              margin: EdgeInsets.only(left: 35, right: 35),
-              child: customPinkElevatedButton(() {}, '가입하기', context, LogIn()),
-            ),
-
+                margin: EdgeInsets.only(left: 35, right: 35),
+                child: customPinkElevatedButton('가입하기', () {
+                  Navigator.pop(context);
+                })),
             Container(
               margin: EdgeInsets.only(top: 45.0, bottom: 25.0),
               child: customSubtitleColor('소셜 회원가입', PINK),

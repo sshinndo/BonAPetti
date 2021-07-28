@@ -52,15 +52,48 @@ class _LogInState extends State<LogIn> {
             SizedBox(height: 20),
             Container(
               margin: EdgeInsets.only(left: 35, right: 35),
-              child: customPinkElevatedButton(
-                () {
-                  UserAccount.userEmail = emailController.text;
-                  UserAccount.userPassword = passwordController.text;
-                },
-                '로그인',
-                context,
-                ProfileQuestion(),
-              ),
+              child: Container(
+                //margin: EdgeInsets.only(left: 40, right: 40),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 52.0,
+                  child: ElevatedButton(
+                    child: Text('로그인'),
+                    style: ElevatedButton.styleFrom(
+                        primary: PINK,
+                        onPrimary: Colors.white,
+                        textStyle: TextStyle(fontSize: 14
+                          //fontWeight: FontWeight.bold
+                        ),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0))),
+                    onPressed: () {
+                      if (emailController.text == UserAccount.userEmail
+                          && passwordController.text == UserAccount.userPassword) {
+                        Navigator.pushReplacement(
+                            context, MaterialPageRoute(
+                            builder: (context) => ProfileQuestion()));
+                      }
+                      else{
+                        showSnackBarLoginFailed(context);
+                      }
+                    }
+                  ),
+                ),
+              )
+              // customPinkElevatedButton(
+              //   () {
+              //     if (emailController.text ==UserAccount.userEmail
+              //     && passwordController.text == UserAccount.userPassword){
+              //       Navigator.push()
+              //     }
+              //     UserAccount.userEmail = emailController.text;
+              //     UserAccount.userPassword = passwordController.text;
+              //   },
+              //   '로그인',
+              //   context,
+              //   ProfileQuestion(),
+              // ), // customPinkElevatedButton
             ),
             SizedBox(height: 20),
             Container(
@@ -90,7 +123,7 @@ class _LogInState extends State<LogIn> {
                   child: Container(
                     child: customSubtitleColor('회원가입', GREY),
                   ),
-                  onTap: () => Navigator.pushReplacement(
+                  onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) => SignUp()))),
@@ -138,8 +171,8 @@ class _LogInState extends State<LogIn> {
 }
 
 class LogInIcon extends StatelessWidget {
-  String imagePath;
 
+  String imagePath;
   LogInIcon(this.imagePath);
 
   @override
@@ -201,23 +234,23 @@ Card customPinkPasswordBox(TextEditingController controller, String text) {
           )));
 }
 
-void showSnackBarLogin(BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text('로그인 정보를 다시 확인하세요', textAlign: TextAlign.center),
-    duration: Duration(seconds: 2),
-  ));
+class ValidationMixin{
+  String? validateEmail(String value){
+    if (!value.contains('@')){
+      return '이메일을 양식에 맞게 입력해주세요!';
+    }
+    else return null;
+  }
+  String? validatePassword(String value){
+    if (value.length<6){
+      return '비밀번호를 6자리 이상으로 입력해주세요!';
+    }
+    else return null;
+  }
 }
-
-void showSnackBarPassword(BuildContext context) {
+void showSnackBarLoginFailed(BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text('비밀번호가 일치하지 않습니다', textAlign: TextAlign.center),
-    duration: Duration(seconds: 2),
-  ));
-}
-
-void showSnackBarEmail(BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text('이메일이 일치하지 않습니다', textAlign: TextAlign.center),
+    content: Text('이메일 또는 비밀번호가 일치하지 않습니다', textAlign: TextAlign.center),
     duration: Duration(seconds: 2),
   ));
 }

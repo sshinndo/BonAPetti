@@ -35,7 +35,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.pet_service_application"
-        minSdkVersion 16
+        minSdkVersion 19 // galaxyTab S6 Lite 기준, 16에서 19로 수정함.
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
