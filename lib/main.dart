@@ -17,7 +17,7 @@ import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/wish_list_screen.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 
-//void main() => runApp(MyApp());
+void main() => runApp(MyApp());
 
 final String appName = "Pet App";
 
@@ -590,7 +590,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             style:
                                 TextStyle(color: Colors.black, fontSize: 17)),
                         margin: EdgeInsets.only(
-                            top: 20.0, bottom: 20, left: 20, right: 50))),
+                            top: 20.0, bottom: 20, left: 20, right: 50))),  //더보기
                 Container(
                     height: 300,
                     child: CardNewsPageView(
@@ -634,7 +634,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-                ),
+                ),    //? (검색창으로 추측중)
+
                 Container(
                   margin: EdgeInsets.only(left: 50, top: 100),
                   child: Row(
@@ -646,7 +647,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                   ),
-                ),
+                ),    //당신과 함께하는
                 Container(
                   margin: EdgeInsets.only(left: 50),
                   child: Row(
@@ -668,7 +669,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                   ),
-                ),
+                ),    //[PetName]를 위한
                 Container(
                   margin: EdgeInsets.only(left: 50),
                   child: Row(
@@ -679,8 +680,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                   ),
-                ),
-
+                ),    //건강 식단
                 GestureDetector(
                     onTap: () => Navigator.push(
                           context,
@@ -707,7 +707,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             Ingredient('비타민 D3', null),
                                           ],
                                           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image1.png'),
-                                    ),
+                                    ),  //닭고기맛사료
                                     GoodsInfo(
                                       '훈제 사료',
                                       'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
@@ -729,7 +729,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             Ingredient('비타민 D3', null),
                                           ],
                                           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image2.png'),
-                                    ),
+                                    ),  //훈제 사료
                                     GoodsInfo(
                                       '유기농 개사료',
                                       'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
@@ -751,7 +751,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             Ingredient('비타민 D3', null),
                                           ],
                                           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image3.png'),
-                                    ),
+                                    ),  //유기농 개사료
                                     GoodsInfo(
                                       '순수 도그온',
                                       'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
@@ -773,8 +773,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                             Ingredient('비타민 D3', null),
                                           ],
                                           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image4.png'),
-                                    ),
-                                  ])),
+                                    ),  //순수 도그온
+                                  ])),  //사료 정보들
                         ),
                     child: Container(
                         alignment: Alignment.centerRight,
@@ -782,7 +782,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           "더보기 >",
                           style: TextStyle(color: Colors.black, fontSize: 17),
                         ),
-                        margin: EdgeInsets.only(top: 15, right: 50))),
+                        margin: EdgeInsets.only(top: 15, right: 50))),  //사료 더보기
                 Container(
                   height: 600,
                   margin:
@@ -814,7 +814,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ],
                               'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image1.png'),
                         ),
-                      ),
+                      ),  //닭고기맛 사료 카드
                       GoodsCardWidget(
                         goodsInfo: GoodsInfo(
                           '훈제 사료',
@@ -838,7 +838,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ],
                               'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image2.png'),
                         ),
-                      ),
+                      ),  //훈제 사료 카드
                       GoodsCardWidget(
                         goodsInfo: GoodsInfo(
                           '유기농 개사료',
@@ -862,7 +862,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ],
                               'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image3.png'),
                         ),
-                      ),
+                      ),  //유기농 개사료 카드
                       GoodsCardWidget(
                         goodsInfo: GoodsInfo(
                           '순수 도그온',
@@ -886,10 +886,50 @@ class _MyHomePageState extends State<MyHomePage> {
                               ],
                               'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image4.png'),
                         ),
-                      ),
+                      ),  //순수 도그온 카드
                     ],
                   ),
-                ),
+                ),  //사료 카드
+
+                Container(
+                  margin: EdgeInsets.only(left: 50, top: 100),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        '당신과 함께하는',
+                        style: TextStyle(fontSize: 32),
+                      ),       //당신과 함께하는
+                      Container(
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              PetInfo.petName,
+                              style: TextStyle(
+                                  color: Color.fromRGBO(255, 113, 113, 1),
+                                  decoration: TextDecoration.underline,
+                                  letterSpacing: 2.0,
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold),
+                            ),  //펫 이름
+                            Text(
+                              '를 위한',
+                              style: TextStyle(
+                                fontSize: 32,
+                              ),
+                            ),  //를 위한
+                          ],
+                        )
+                      ),  //PetName를 위한
+                      Text(
+                        '나눔!',
+                        style: TextStyle(fontSize: 32),
+                      ),       //나눔!
+                    ],
+                  ),  //문장 한줄씩 수직 정렬
+                ),    //나눔 텍스트
+
+
                 Padding(padding: EdgeInsets.only(top: 52)),
               ],
             ),
@@ -929,7 +969,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             margin: EdgeInsets.all(20.0))),
                   ],
                 ),
-              ),
+              ),  //? (아이콘으로 추측)
               Expanded(
                 flex: 8,
                 child: Column(
@@ -956,7 +996,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-              ),
+              ),  //이름 텍스트
               //SizedBox(height: 50),
               Expanded(
                 flex: 8,
@@ -1027,11 +1067,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),*/
                   ],
                 ),
-              ),
+              ),  //친구 정보, 찜목록, 장바구니
             ],
           ),
         ),
-      ),
+      ),  //내정보 사이드뷰
     );
   }
 }
