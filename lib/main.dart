@@ -892,7 +892,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),  //사료 카드
 
                 Container(
-                  margin: EdgeInsets.only(left: 50, top: 100),
+                  margin: EdgeInsets.only(left: 50),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -928,7 +928,455 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),  //문장 한줄씩 수직 정렬
                 ),    //나눔 텍스트
+                GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GoodsScreen([
+                            GoodsInfo(
+                              '닭고기맛 사료',
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+                              25000,
+                              null,
+                              GoodsDetailedInfo(
+                                  [
+                                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+                                  ],
+                                  false,
+                                  ['쌀', '대두', '연어'],
+                                  [
+                                    Ingredient('조지방', 77),
+                                    Ingredient('조단백질', 19),
+                                    Ingredient('칼슘', 2),
+                                    Ingredient('인', 1),
+                                    Ingredient('비타민 A', null),
+                                    Ingredient('비타민 E', null),
+                                    Ingredient('비타민 D3', null),
+                                  ],
+                                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image1.png'),
+                            ),  //닭고기맛사료
+                            GoodsInfo(
+                              '훈제 사료',
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
+                              32000,
+                              null,
+                              GoodsDetailedInfo(
+                                  [
+                                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
+                                  ],
+                                  false,
+                                  ['쌀', '대두', '연어'],
+                                  [
+                                    Ingredient('조지방', 77),
+                                    Ingredient('조단백질', 19),
+                                    Ingredient('칼슘', 2),
+                                    Ingredient('인', 1),
+                                    Ingredient('비타민 A', null),
+                                    Ingredient('비타민 E', null),
+                                    Ingredient('비타민 D3', null),
+                                  ],
+                                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image2.png'),
+                            ),  //훈제 사료
+                            GoodsInfo(
+                              '유기농 개사료',
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
+                              15000,
+                              null,
+                              GoodsDetailedInfo(
+                                  [
+                                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
+                                  ],
+                                  false,
+                                  ['쌀', '대두', '연어'],
+                                  [
+                                    Ingredient('조지방', 77),
+                                    Ingredient('조단백질', 19),
+                                    Ingredient('칼슘', 2),
+                                    Ingredient('인', 1),
+                                    Ingredient('비타민 A', null),
+                                    Ingredient('비타민 E', null),
+                                    Ingredient('비타민 D3', null),
+                                  ],
+                                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image3.png'),
+                            ),  //유기농 개사료
+                            GoodsInfo(
+                              '순수 도그온',
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
+                              67000,
+                              34000,
+                              GoodsDetailedInfo(
+                                  [
+                                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
+                                  ],
+                                  false,
+                                  ['쌀', '대두', '연어'],
+                                  [
+                                    Ingredient('조지방', 77),
+                                    Ingredient('조단백질', 19),
+                                    Ingredient('칼슘', 2),
+                                    Ingredient('인', 1),
+                                    Ingredient('비타민 A', null),
+                                    Ingredient('비타민 E', null),
+                                    Ingredient('비타민 D3', null),
+                                  ],
+                                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image4.png'),
+                            ),  //순수 도그온
+                          ])),  //사료 정보들
+                    ),
+                    child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "더보기 >",
+                          style: TextStyle(color: Colors.black, fontSize: 17),
+                        ),
+                        margin: EdgeInsets.only(top: 15, right: 50))),  //나눔 더보기 (작업전 임시)
+                Container(
+                  height: 600,
+                  margin:
+                  EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
+                  child: Column(
+                    /*children: <GoodsCardWidget>[
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                          '닭고기맛 사료',
+                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+                          25000,
+                          null,
+                          GoodsDetailedInfo(
+                              [
+                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+                              ],
+                              false,
+                              ['쌀', '대두', '연어'],
+                              [
+                                Ingredient('조지방', 77),
+                                Ingredient('조단백질', 19),
+                                Ingredient('칼슘', 2),
+                                Ingredient('인', 1),
+                                Ingredient('비타민 A', null),
+                                Ingredient('비타민 E', null),
+                                Ingredient('비타민 D3', null),
+                              ],
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image1.png'),
+                        ),
+                      ),  //닭고기맛 사료 카드
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                          '훈제 사료',
+                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
+                          32000,
+                          null,
+                          GoodsDetailedInfo(
+                              [
+                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
+                              ],
+                              false,
+                              ['쌀', '대두', '연어'],
+                              [
+                                Ingredient('조지방', 77),
+                                Ingredient('조단백질', 19),
+                                Ingredient('칼슘', 2),
+                                Ingredient('인', 1),
+                                Ingredient('비타민 A', null),
+                                Ingredient('비타민 E', null),
+                                Ingredient('비타민 D3', null),
+                              ],
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image2.png'),
+                        ),
+                      ),  //훈제 사료 카드
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                          '유기농 개사료',
+                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
+                          15000,
+                          null,
+                          GoodsDetailedInfo(
+                              [
+                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
+                              ],
+                              false,
+                              ['쌀', '대두', '연어'],
+                              [
+                                Ingredient('조지방', 77),
+                                Ingredient('조단백질', 19),
+                                Ingredient('칼슘', 2),
+                                Ingredient('인', 1),
+                                Ingredient('비타민 A', null),
+                                Ingredient('비타민 E', null),
+                                Ingredient('비타민 D3', null),
+                              ],
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image3.png'),
+                        ),
+                      ),  //유기농 개사료 카드
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                          '순수 도그온',
+                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
+                          67000,
+                          34000,
+                          GoodsDetailedInfo(
+                              [
+                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
+                              ],
+                              false,
+                              ['쌀', '대두', '연어'],
+                              [
+                                Ingredient('조지방', 77),
+                                Ingredient('조단백질', 19),
+                                Ingredient('칼슘', 2),
+                                Ingredient('인', 1),
+                                Ingredient('비타민 A', null),
+                                Ingredient('비타민 E', null),
+                                Ingredient('비타민 D3', null),
+                              ],
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image4.png'),
+                        ),
+                      ),  //순수 도그온 카드
+                    ],*/  //나눔 카드 위젯 작성 필요
+                  ),
+                ),  //나눔 카드(수정 필요)
 
+                Container(
+                  margin: EdgeInsets.only(left: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        '건강한 식단과',
+                        style: TextStyle(fontSize: 32),
+                      ),       //건강한 식단과
+                      Container(
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                '함께하는',
+                                style: TextStyle(
+                                  fontSize: 32,
+                                ),
+                              ),  //함께하는
+                              Text(
+                                '친구들',
+                                style: TextStyle(
+                                  color: Color.fromRGBO(255, 113, 113, 1),
+                                  decoration: TextDecoration.underline,
+                                  //letterSpacing: 2.0,
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),  //친구들
+                            ],
+                          )
+                      ),  //함께하는친구들
+                    ],
+                  ),  //문장 한줄씩 수직 정렬
+                ),    //친구들 텍스트
+                GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GoodsScreen([
+                            GoodsInfo(
+                              '닭고기맛 사료',
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+                              25000,
+                              null,
+                              GoodsDetailedInfo(
+                                  [
+                                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+                                  ],
+                                  false,
+                                  ['쌀', '대두', '연어'],
+                                  [
+                                    Ingredient('조지방', 77),
+                                    Ingredient('조단백질', 19),
+                                    Ingredient('칼슘', 2),
+                                    Ingredient('인', 1),
+                                    Ingredient('비타민 A', null),
+                                    Ingredient('비타민 E', null),
+                                    Ingredient('비타민 D3', null),
+                                  ],
+                                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image1.png'),
+                            ),  //닭고기맛사료
+                            GoodsInfo(
+                              '훈제 사료',
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
+                              32000,
+                              null,
+                              GoodsDetailedInfo(
+                                  [
+                                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
+                                  ],
+                                  false,
+                                  ['쌀', '대두', '연어'],
+                                  [
+                                    Ingredient('조지방', 77),
+                                    Ingredient('조단백질', 19),
+                                    Ingredient('칼슘', 2),
+                                    Ingredient('인', 1),
+                                    Ingredient('비타민 A', null),
+                                    Ingredient('비타민 E', null),
+                                    Ingredient('비타민 D3', null),
+                                  ],
+                                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image2.png'),
+                            ),  //훈제 사료
+                            GoodsInfo(
+                              '유기농 개사료',
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
+                              15000,
+                              null,
+                              GoodsDetailedInfo(
+                                  [
+                                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
+                                  ],
+                                  false,
+                                  ['쌀', '대두', '연어'],
+                                  [
+                                    Ingredient('조지방', 77),
+                                    Ingredient('조단백질', 19),
+                                    Ingredient('칼슘', 2),
+                                    Ingredient('인', 1),
+                                    Ingredient('비타민 A', null),
+                                    Ingredient('비타민 E', null),
+                                    Ingredient('비타민 D3', null),
+                                  ],
+                                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image3.png'),
+                            ),  //유기농 개사료
+                            GoodsInfo(
+                              '순수 도그온',
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
+                              67000,
+                              34000,
+                              GoodsDetailedInfo(
+                                  [
+                                    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
+                                  ],
+                                  false,
+                                  ['쌀', '대두', '연어'],
+                                  [
+                                    Ingredient('조지방', 77),
+                                    Ingredient('조단백질', 19),
+                                    Ingredient('칼슘', 2),
+                                    Ingredient('인', 1),
+                                    Ingredient('비타민 A', null),
+                                    Ingredient('비타민 E', null),
+                                    Ingredient('비타민 D3', null),
+                                  ],
+                                  'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image4.png'),
+                            ),  //순수 도그온
+                          ])),  //사료 정보들
+                    ),
+                    child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "더보기 >",
+                          style: TextStyle(color: Colors.black, fontSize: 17),
+                        ),
+                        margin: EdgeInsets.only(top: 15, right: 50))),  //친구들 더보기 (작업전 임시)
+                Container(
+                  height: 600,
+                  margin:
+                  EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
+                  child: Column(
+                    /*children: <GoodsCardWidget>[
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                          '닭고기맛 사료',
+                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+                          25000,
+                          null,
+                          GoodsDetailedInfo(
+                              [
+                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+                              ],
+                              false,
+                              ['쌀', '대두', '연어'],
+                              [
+                                Ingredient('조지방', 77),
+                                Ingredient('조단백질', 19),
+                                Ingredient('칼슘', 2),
+                                Ingredient('인', 1),
+                                Ingredient('비타민 A', null),
+                                Ingredient('비타민 E', null),
+                                Ingredient('비타민 D3', null),
+                              ],
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image1.png'),
+                        ),
+                      ),  //닭고기맛 사료 카드
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                          '훈제 사료',
+                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
+                          32000,
+                          null,
+                          GoodsDetailedInfo(
+                              [
+                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
+                              ],
+                              false,
+                              ['쌀', '대두', '연어'],
+                              [
+                                Ingredient('조지방', 77),
+                                Ingredient('조단백질', 19),
+                                Ingredient('칼슘', 2),
+                                Ingredient('인', 1),
+                                Ingredient('비타민 A', null),
+                                Ingredient('비타민 E', null),
+                                Ingredient('비타민 D3', null),
+                              ],
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image2.png'),
+                        ),
+                      ),  //훈제 사료 카드
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                          '유기농 개사료',
+                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
+                          15000,
+                          null,
+                          GoodsDetailedInfo(
+                              [
+                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
+                              ],
+                              false,
+                              ['쌀', '대두', '연어'],
+                              [
+                                Ingredient('조지방', 77),
+                                Ingredient('조단백질', 19),
+                                Ingredient('칼슘', 2),
+                                Ingredient('인', 1),
+                                Ingredient('비타민 A', null),
+                                Ingredient('비타민 E', null),
+                                Ingredient('비타민 D3', null),
+                              ],
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image3.png'),
+                        ),
+                      ),  //유기농 개사료 카드
+                      GoodsCardWidget(
+                        goodsInfo: GoodsInfo(
+                          '순수 도그온',
+                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
+                          67000,
+                          34000,
+                          GoodsDetailedInfo(
+                              [
+                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
+                              ],
+                              false,
+                              ['쌀', '대두', '연어'],
+                              [
+                                Ingredient('조지방', 77),
+                                Ingredient('조단백질', 19),
+                                Ingredient('칼슘', 2),
+                                Ingredient('인', 1),
+                                Ingredient('비타민 A', null),
+                                Ingredient('비타민 E', null),
+                                Ingredient('비타민 D3', null),
+                              ],
+                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image4.png'),
+                        ),
+                      ),  //순수 도그온 카드
+                    ],*/  //나눔 카드 위젯 작성 필요
+                  ),
+                ),  //친구 카드(수정 필요)
 
                 Padding(padding: EdgeInsets.only(top: 52)),
               ],
