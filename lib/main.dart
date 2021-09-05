@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/ProfileQuestion.dart';
 import 'package:pet_service_application/GoodsInfo.dart';
 import 'package:pet_service_application/GoodsWidget.dart';
+import 'package:pet_service_application/BargainCardWidget.dart';
 import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
@@ -634,7 +635,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-                ),    //? (검색창으로 추측중)
+                ),    //검색창
 
                 Container(
                   margin: EdgeInsets.only(left: 50, top: 100),
@@ -1035,8 +1036,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   margin:
                   EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
                   child: Column(
-                    /*children: <GoodsCardWidget>[
-                      GoodsCardWidget(
+                    children: [
+                      BargainCardWidget(
                         goodsInfo: GoodsInfo(
                           '닭고기맛 사료',
                           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
@@ -1060,7 +1061,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image1.png'),
                         ),
                       ),  //닭고기맛 사료 카드
-                      GoodsCardWidget(
+                      BargainCardWidget(
                         goodsInfo: GoodsInfo(
                           '훈제 사료',
                           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
@@ -1084,7 +1085,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image2.png'),
                         ),
                       ),  //훈제 사료 카드
-                      GoodsCardWidget(
+                      BargainCardWidget(
                         goodsInfo: GoodsInfo(
                           '유기농 개사료',
                           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
@@ -1108,7 +1109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image3.png'),
                         ),
                       ),  //유기농 개사료 카드
-                      GoodsCardWidget(
+                      BargainCardWidget(
                         goodsInfo: GoodsInfo(
                           '순수 도그온',
                           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
@@ -1132,9 +1133,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image4.png'),
                         ),
                       ),  //순수 도그온 카드
-                    ],*/  //나눔 카드 위젯 작성 필요
+                    ],
                   ),
-                ),  //나눔 카드(수정 필요)
+                ),  //나눔 카드(수정 중)
 
                 Container(
                   margin: EdgeInsets.only(left: 50),
