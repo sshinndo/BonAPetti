@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/drawer/MainDrawer.dart';
 import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/GoodsInfo.dart';
 import 'package:pet_service_application/GoodsWidget.dart';
@@ -17,6 +16,8 @@ import 'package:pet_service_application/SeungHyun/screen/search_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/wish_list_screen.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
+
+import 'drawer/MainDrawer.dart';
 
 //void main() => runApp(MyApp());
 
@@ -43,13 +44,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   @override
   void initState() {
     super.initState();
 
     loadData();
   }
-
   @override
   void didUpdateWidget(covariant MyHomePage oldWidget) {
     super.didUpdateWidget(oldWidget);

@@ -30,8 +30,7 @@ class _SignUpState extends State<SignUp> {
             Container(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                  onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LogIn())),
+                  onPressed: () => Navigator.pop(context),
                   icon: Icon(Icons.arrow_back, color: Colors.grey[850]),
                 )),
             Container(
@@ -40,12 +39,18 @@ class _SignUpState extends State<SignUp> {
             ),
             //SizedBox(height: 25),
             Container(child: customPinkEmailBox(emailController, '이메일')),
+
             SizedBox(height: 35),
+
             Container(child: customPinkPasswordBox(passwordController, '비밀번호')),
+
             SizedBox(height: 35),
+
             Container(
                 child: customPinkPasswordBox(cPasswordController, '비밀번호 확인')),
+
             SizedBox(height: 35),
+
             Container(
                 margin: EdgeInsets.only(left: 35, right: 35),
                 child: customPinkElevatedButton('가입하기', () {
@@ -62,10 +67,6 @@ class _SignUpState extends State<SignUp> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   LogInIcon('images/loginIcon/icon_kakao.png'),
-                  SizedBox(width: 34.0),
-                  LogInIcon('images/loginIcon/icon_naver.png'),
-                  SizedBox(width: 34.0),
-                  LogInIcon('images/loginIcon/icon_google.png'),
                 ],
               ),
             )
@@ -75,3 +76,36 @@ class _SignUpState extends State<SignUp> {
     );
   }
 }
+// class CheckValidate{
+//   String validateEmail(FocusNode focusNode, String value){
+//     if(value.isEmpty){
+//       focusNode.requestFocus();
+//       return '이메일을 입력하세요.';
+//     }
+//     else {
+//       Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+//       RegExp regExp = new RegExp(pattern);
+//       if(!regExp.hasMatch(value)){
+//         focusNode.requestFocus();	//포커스를 해당 textformfield에 맞춘다.
+//         return '잘못된 이메일 형식입니다.';
+//       }else{
+//         return null;
+//       }
+//     }
+//   }
+//   String validatePassword(FocusNode focusNode, String value){
+//     if(value.isEmpty){
+//       focusNode.requestFocus();
+//       return '비밀번호를 입력하세요.';
+//     }else {
+//       Pattern pattern = r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?~^<>,.&+=])[A-Za-z\d$@$!%*#?~^<>,.&+=]{8,15}$';
+//       RegExp regExp = new RegExp(pattern);
+//       if(!regExp.hasMatch(value)){
+//         focusNode.requestFocus();
+//         return '특수문자, 대소문자, 숫자 포함 8자 이상 15자 이내로 입력하세요.';
+//       }else{
+//         return null;
+//       }
+//     }
+//   }
+// }

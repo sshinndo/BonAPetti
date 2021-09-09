@@ -29,7 +29,7 @@ class _FifthRouteState extends State<FifthRoute> {
   @override
   Widget build(BuildContext context) {
     PetCategoryListView petCategoryListView =
-        PetCategoryListView(petCategoryStrList: []);
+    PetCategoryListView(petCategoryStrList: []);
 
     return Scaffold(
       body: ListView(
@@ -164,54 +164,54 @@ class _FifthRouteState extends State<FifthRoute> {
                               child: silhouetteCard('images/bcs/bcs1.png',
                                   'BCS 1,2단계(야윈상태)', '갈비뼈, 허리뼈, 골반뼈가 드러나 보임'),
                               onTap: () => {
-                                    PetInfo.petSilhouette = PetSilhouette.BCS1,
-                                    _scrollController.animateTo(1360,
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.fastOutSlowIn)
-                                  }),
+                                PetInfo.petSilhouette = PetSilhouette.BCS1,
+                                _scrollController.animateTo(1360,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.fastOutSlowIn)
+                              }),
                           GestureDetector(
                               child: silhouetteCard('images/bcs/bcs2.png',
                                   'BCS 3단계(저체중)', '갈비뼈가 쉽게 만져짐'),
                               onTap: () => {
-                                    PetInfo.petSilhouette = PetSilhouette.BCS2,
-                                    _scrollController.animateTo(1360,
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.fastOutSlowIn)
-                                  }),
+                                PetInfo.petSilhouette = PetSilhouette.BCS2,
+                                _scrollController.animateTo(1360,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.fastOutSlowIn)
+                              }),
                           GestureDetector(
                               child: silhouetteCard('images/bcs/bcs3.png',
                                   'BCS 4,5단계(이상적인 체중)', '갈비뼈가 안보이지만 살짝 만져짐'),
                               onTap: () => {
-                                    PetInfo.petSilhouette = PetSilhouette.BCS3,
-                                    _scrollController.animateTo(1360,
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.fastOutSlowIn)
-                                  }),
+                                PetInfo.petSilhouette = PetSilhouette.BCS3,
+                                _scrollController.animateTo(1360,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.fastOutSlowIn)
+                              }),
                           GestureDetector(
                               child: silhouetteCard('images/bcs/bcs4.png',
                                   'BCS 6단계(과체중)', '위에서 허리를 확인하기 힘듦'),
                               onTap: () => {
-                                    PetInfo.petSilhouette = PetSilhouette.BCS4,
-                                    _scrollController.animateTo(1360,
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.fastOutSlowIn)
-                                  }),
+                                PetInfo.petSilhouette = PetSilhouette.BCS4,
+                                _scrollController.animateTo(1360,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.fastOutSlowIn)
+                              }),
                           GestureDetector(
                               child: silhouetteCard('images/bcs/bcs5.png',
                                   'BCS 8,9단계(비만)', '손에 힘을 주고 만져야 갈비뼈가 만져짐'),
                               onTap: () => {
-                                    PetInfo.petSilhouette = PetSilhouette.BCS5,
-                                    _scrollController.animateTo(1360,
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.fastOutSlowIn)
-                                  })
+                                PetInfo.petSilhouette = PetSilhouette.BCS5,
+                                _scrollController.animateTo(1360,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.fastOutSlowIn)
+                              })
                         ],
                       ),
                       onTap: () => {
-                            _scrollController.animateTo(1360,
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.fastOutSlowIn)
-                          }),
+                        _scrollController.animateTo(1360,
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.fastOutSlowIn)
+                      }),
                 ),
                 SizedBox(height: 106.0),
               ],
@@ -257,8 +257,8 @@ class _FifthRouteState extends State<FifthRoute> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         MyHomePage()),
-                                (Route<dynamic> route) => false)
-                            //MyHomePage()
+                                    (Route<dynamic> route) => false)
+                          //MyHomePage()
                         ),
                         // 아니요 버튼을 누름으로써, 모든 프로필 정보를 작성했다는
                         // bool 데이터 변수를 작성해서 메인으로 넘겨야 함!!!
@@ -301,39 +301,39 @@ class _FifthRouteState extends State<FifthRoute> {
                 HashTagButtonListManager(
                     petCategoryListView: petCategoryListView),
                 SizedBox(height: 25.0),
-              Container(
-                  margin: EdgeInsets.only(left: 40, right: 40),
-                  child:
-                  customPinkElevatedButton(
-                      '입력 완료!',
-                          () {
-                        PetInfo.petAge = int.parse(_petAgeController.text);
+                Container(
+                    margin: EdgeInsets.only(left: 40, right: 40),
+                    child:
+                    customPinkElevatedButton(
+                        '입력 완료!',
+                            () {
+                          PetInfo.petAge = int.parse(_petAgeController.text);
 
-                        PetInfo.petBodyLength =
-                            double.parse(_petBodyLengthController.text);
+                          PetInfo.petBodyLength =
+                              double.parse(_petBodyLengthController.text);
 
-                        PetInfo.petWeight =
-                            double.parse(_petWeightController.text);
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    MyHomePage()),
-                                (route) => false
-                        );
-                      }
-                  )
-              ),
+                          PetInfo.petWeight =
+                              double.parse(_petWeightController.text);
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      MyHomePage()),
+                                  (route) => false
+                          );
+                        }
+                    )
+                ),
 
-                    // customPinkElevatedButton(() {
-                    //   PetInfo.petAge = int.parse(_petAgeController.text);
-                    //
-                    //   PetInfo.petBodyLength =
-                    //       double.parse(_petBodyLengthController.text);
-                    //
-                    //   PetInfo.petWeight =
-                    //       double.parse(_petWeightController.text);
-                    // }, '입력 완료!', context, MyHomePage())
+                // customPinkElevatedButton(() {
+                //   PetInfo.petAge = int.parse(_petAgeController.text);
+                //
+                //   PetInfo.petBodyLength =
+                //       double.parse(_petBodyLengthController.text);
+                //
+                //   PetInfo.petWeight =
+                //       double.parse(_petWeightController.text);
+                // }, '입력 완료!', context, MyHomePage())
                 SizedBox(height: 80.0)
               ],
             ),

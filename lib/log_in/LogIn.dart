@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
@@ -29,6 +31,7 @@ class _LogInState extends State<LogIn> {
       body: Builder(builder: (context) {
         return SingleChildScrollView(
             // 키보드 올라옴에 따라 스크린도 같이 올라가는 위젯
+          scrollDirection: Axis.vertical,
             child: SafeArea(
                 child: Column(
                 children: <Widget>[
@@ -108,10 +111,6 @@ class _LogInState extends State<LogIn> {
                     },
                     child: LogInIcon('images/loginIcon/icon_kakao.png'),
                   ),
-                  SizedBox(width: 34.0),
-                  LogInIcon('images/loginIcon/icon_naver.png'),
-                  SizedBox(width: 34.0),
-                  LogInIcon('images/loginIcon/icon_google.png'),
                 ],
               ),
             ),
@@ -169,7 +168,6 @@ class _LogInState extends State<LogIn> {
   //   }
   // }
 }
-
 class LogInIcon extends StatelessWidget {
 
   String imagePath;

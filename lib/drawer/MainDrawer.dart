@@ -61,7 +61,7 @@ class _MainDrawerState extends State<MainDrawer> {
                                 //Navigator.push(context,Setting); 추후 수정해야 할 것
                               },
                               icon:
-                                  Icon(Icons.settings, color: Colors.grey[850]),
+                              Icon(Icons.settings, color: Colors.grey[850]),
                             ),
                           ),
                         ),
@@ -77,9 +77,9 @@ class _MainDrawerState extends State<MainDrawer> {
                       backgroundColor: PINK,
                       child: GestureDetector(
                         child: CircleAvatar(
-                          radius: 80.0,
-                          backgroundColor: Colors.white,
-                          backgroundImage: AssetImage('images/logo_main.png')
+                            radius: 80.0,
+                            backgroundColor: Colors.white,
+                            backgroundImage: AssetImage('images/logo_main.png')
                         ),
                         // -----------------프로필 사진 추가 기능--------------------
                         // onTap: _getImage,
@@ -89,12 +89,12 @@ class _MainDrawerState extends State<MainDrawer> {
                     SizedBox(height: 30.0),
                     Center(
                       child: Text(
-                        '${UserInfo.userNickname}과(와) 함께하는\n${PetInfo.petName}님',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                        )
+                          '${UserInfo.userNickname}과(와) 함께하는\n${PetInfo.petName}님',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          )
                       ),
                     ),
                     // -------닉네임 밑줄 버전인데, 가운데 정렬이 안돼서 skip 해뒀습니다----------
@@ -208,12 +208,10 @@ class _MainDrawerState extends State<MainDrawer> {
       ),
     );
   }
-  // Future _getImage() async{
-  //   PickedFile image = await _picker.getImage(source: ImageSource.gallery);
-  //   setState(() {
-  //     _image = image;
-  //   });
-  // }
+// Future _getImage() async{
+//   PickedFile image = await _picker.getImage(source: ImageSource.gallery);
+//   setState(() {
+//     _image = image;
+//   });
+// }
 }
-
-

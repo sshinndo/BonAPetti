@@ -8,7 +8,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -22,6 +22,8 @@ if (flutterVersionName == null) {
 }
 
 apply plugin: 'com.android.application'
+//firebase plugin 1
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
@@ -37,6 +39,8 @@ android {
         applicationId "com.example.pet_service_application"
         minSdkVersion 19 // galaxyTab S6 Lite 기준, 16에서 19로 수정함.
         targetSdkVersion 30
+        // firebase setting 3 - multiDexEnabled true
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -56,4 +60,13 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // firebase plugin 2 :
+    // Import the firebase-bom : 앱애서 항상 호환되는 firebase 라이브러리 버전을 사용
+    implementation platform('com.google.firebase:firebase-bom:28.3.0')
+    // Add the dependency for the Firebase SDK for Google Analytics
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+
+
 }

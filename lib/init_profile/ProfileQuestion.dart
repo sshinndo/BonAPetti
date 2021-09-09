@@ -149,8 +149,6 @@ class _ThirdRouteState extends State<ThirdRoute> {
       body: Column(children: [
         Expanded(
             flex: 1,
-            child: Align(
-              alignment: Alignment.bottomLeft,
               child: Column(
                 children: [
                   Container(
@@ -172,7 +170,7 @@ class _ThirdRouteState extends State<ThirdRoute> {
                   )
                 ],
               ),
-            )),
+            ),
         Expanded(
           flex: 1,
           child: Container(
