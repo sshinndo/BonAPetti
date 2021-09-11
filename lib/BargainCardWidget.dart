@@ -22,12 +22,12 @@ class _BargainCardWidget extends State<BargainCardWidget> {
     const double GoodsNameSize = 20;
 
     return GestureDetector(
-      onTap: () {
-        /*Navigator.push(
+      /*onTap: () {
+        Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailedGoodsScreen(widget.goodsInfo)));  */ //터치시 굿즈 디테일 창으로 이동
-      },
+                builder: (context) => DetailedGoodsScreen(widget.goodsInfo)));   //터치시 굿즈 디테일 창으로 이동
+      },*/
       child: Card(
         elevation: 5,   //그림자
         semanticContainer: true,
@@ -43,14 +43,15 @@ class _BargainCardWidget extends State<BargainCardWidget> {
 
               child: Image.network(widget.goodsInfo.imgUrl),
             ),  //상품 이미지
-            Column(
-              children: [
-                Container(
+            Expanded(
+              child: Column(
+                children: [
+                    Container(
                   margin: EdgeInsets.only(left: 20),
                   alignment: Alignment.centerLeft,
                   child: Text(widget.goodsInfo.name)
                 ),  //커뮤니티 제목(임시로 상품이름)
-                Container(
+                    Container(
                     margin: EdgeInsets.only(left: 20),
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -60,9 +61,10 @@ class _BargainCardWidget extends State<BargainCardWidget> {
                       ),
                     )
                 ),  //상품 이름
-                Row(
-                  children: [
                     Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
                       flex: 9,
                       child: Container(
                           margin: EdgeInsets.only(left: 20, top: 5),
@@ -73,7 +75,7 @@ class _BargainCardWidget extends State<BargainCardWidget> {
                             ),
                           )),
                     ),  //상품 가격
-                    Expanded(
+                          Expanded(
                       flex: 1,
                       child: SizedBox(
                         width: heartAndCartSize,
@@ -94,10 +96,12 @@ class _BargainCardWidget extends State<BargainCardWidget> {
                         ),  //좋아요 값 변경
                       ),
                     ),  //좋아요
-                  ],
-                )        //상품 가격과 좋아요
-              ],
-            )      //상품 정보와 좋아요
+                        ],
+                      )
+                    )//상품 가격과 좋아요
+                ]
+              )
+            )//상품 정보와 좋아요
           ],
         ),
       ),
