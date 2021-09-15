@@ -31,15 +31,15 @@ class _BargainCardWidget extends State<BargainCardWidget> {
       child: Card(
         elevation: 5,   //그림자
         semanticContainer: true,
-        margin: EdgeInsets.all(15),
+        margin: EdgeInsets.all(10),
         shape: RoundedRectangleBorder(borderRadius: _baseBorderRadius),
         clipBehavior: Clip.antiAliasWithSaveLayer,
 
         child: Row(
           children: [
             Container(
-              width: heartAndCartSize * 5,
-              height: heartAndCartSize * 5,
+              width: heartAndCartSize * 6,
+              height: heartAndCartSize * 6,
 
               child: Image.network(widget.goodsInfo.imgUrl),
             ),  //상품 이미지
@@ -47,55 +47,55 @@ class _BargainCardWidget extends State<BargainCardWidget> {
               child: Column(
                 children: [
                     Container(
-                  margin: EdgeInsets.only(left: 20),
-                  alignment: Alignment.centerLeft,
-                  child: Text(widget.goodsInfo.name)
-                ),  //커뮤니티 제목(임시로 상품이름)
-                    Container(
-                    margin: EdgeInsets.only(left: 20),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
+                      margin: EdgeInsets.only(left: 10),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
                         widget.goodsInfo.name,
-                      style: TextStyle(
-                        fontSize: GoodsNameSize,
-                      ),
-                    )
-                ),  //상품 이름
+                        style: TextStyle(
+                          fontSize: GoodsNameSize,
+                        ),
+                      )
+                    ),  //커뮤니티 제목(임시로 상품이름)
+                    Container(
+                      margin: EdgeInsets.only(left: 10,bottom: 20),
+                      alignment: Alignment.centerLeft,
+                      child: Text(widget.goodsInfo.name)
+                    ),  //상품 이름
                     Expanded(
                       child: Row(
                         children: [
                           Expanded(
-                      flex: 9,
-                      child: Container(
-                          margin: EdgeInsets.only(left: 20, top: 5),
-                          alignment: Alignment.topLeft,
-                          child: RichText(
-                            text: TextSpan(
-                              children: getPriceTextSpan(widget.goodsInfo),
+                            flex: 1,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 10, top: 5),
+                              alignment: Alignment.topLeft,
+                              child: RichText(
+                                text: TextSpan(
+                                  children: getPriceTextSpan(widget.goodsInfo),
+                                ),
+                                )
                             ),
-                          )),
-                    ),  //상품 가격
+                          ),  //상품 가격
                           Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                        width: heartAndCartSize,
-                        height: heartAndCartSize,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              widget.goodsInfo.detailedInfo.isLike =
-                              !widget.goodsInfo.detailedInfo.isLike;
-                            });
-                          },
-                          child: Icon(
-                            Icons.favorite,
-                            color: widget.goodsInfo.detailedInfo.isLike
-                                ? Color.fromRGBO(255, 87, 87, 1)
-                                : Color.fromRGBO(217, 217, 217, 1),
-                          ),
-                        ),  //좋아요 값 변경
-                      ),
-                    ),  //좋아요
+                            flex: 1,
+                            child: SizedBox(
+                              width: heartAndCartSize,
+                              height: heartAndCartSize,
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.goodsInfo.detailedInfo.isLike =
+                                    !widget.goodsInfo.detailedInfo.isLike;
+                                  }
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.favorite,
+                                  color: widget.goodsInfo.detailedInfo.isLike ? Color.fromRGBO(255, 87, 87, 1) : Color.fromRGBO(217, 217, 217, 1),
+                                ),
+                              ),  //좋아요 값 변경
+                            ),
+                          ),  //좋아요
                         ],
                       )
                     )//상품 가격과 좋아요
