@@ -6,7 +6,7 @@ part 'HttpsRequest.g.dart';
 
 @RestApi(baseUrl: 'https://hacker-news.firebaseio.com/v0')
 abstract class HttpsRequest {
-  factory HttpsRequest(Dio dio, String baseUrl) = _HttpsRequest;
+  // factory HttpsRequest(Dio dio, String baseUrl) = _HttpsRequest;
 
   @GET('/topstories.json')
   Future<List<int>> getTopNewsId();

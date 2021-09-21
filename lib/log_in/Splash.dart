@@ -24,8 +24,9 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     Timer(
         Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) => LogIn())));
+            () =>
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (BuildContext context) => LogIn())));
 
     return Container(
       color: Colors.white,

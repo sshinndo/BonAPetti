@@ -26,30 +26,30 @@ Map<String, dynamic> _$NewsToJson(News instance) => <String, dynamic>{
 // RetrofitGenerator
 // **************************************************************************
 
-class _HttpsRequest implements HttpsRequest {
-  _HttpsRequest(this._dio, this.baseUrl) {
-    ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'https://hacker-news.firebaseio.com/v0';
-  }
-
-  final Dio _dio;
-
-  String baseUrl;
-
-  @override
-  Future<List<int>> getTopNewsId() async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    final _result = await _dio.request<List<dynamic>>('/topstories.json',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = _result.data.cast<int>();
-    return value;
-  }
-}
+// class _HttpsRequest implements HttpsRequest {
+//   _HttpsRequest(this._dio, this.baseUrl) {
+//     ArgumentError.checkNotNull(_dio, '_dio');
+//     baseUrl ??= 'https://hacker-news.firebaseio.com/v0';
+//   }
+//
+//   final Dio _dio;
+//
+//   String baseUrl;
+//
+//   @override
+//   Future<List<int>> getTopNewsId() async {
+//     const _extra = <String, dynamic>{};
+//     final queryParameters = <String, dynamic>{};
+//     final _data = <String, dynamic>{};
+//     final _result = await _dio.request<List<dynamic>>('/topstories.json',
+//         queryParameters: queryParameters,
+//         options: RequestOptions(
+//             method: 'GET',
+//             headers: <String, dynamic>{},
+//             extra: _extra,
+//             baseUrl: baseUrl),
+//         data: _data);
+//     final value = _result.data.cast<int>();
+//     return value;
+//   }
+// }

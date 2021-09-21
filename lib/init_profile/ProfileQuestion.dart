@@ -2,13 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/HashTagButtonList.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
-import 'package:pet_service_application/log_in/Splash.dart';
-import 'package:pet_service_application/FifthRoute.dart';
+import 'package:pet_service_application/init_profile/FifthRoute.dart';
 import 'package:pet_service_application/main.dart';
 
-const Color PINK = const Color.fromRGBO(255, 113, 113, 1);
-const Color LIGHTPINK = const Color.fromRGBO(255, 113, 113, 0.3);
-const Color GREY = const Color.fromRGBO(185, 185, 185, 1);
+
 
 class ProfileQuestion extends StatelessWidget {
   @override
@@ -52,14 +49,21 @@ class FirstRouteState extends State<FirstRoute> {
             child: Container(
               margin: EdgeInsets.only(top: 50, left: 40, right: 40),
               child: Column(
-                children: [
+                  children: [
                   customTextFormField(userNickname, '사용자의 이름을 입력해주세요.'),
                   SizedBox(height: 20.0),
-                  customPinkElevatedButton(() {
-                    UserAccount.userInfo = UserInfo();
-                    UserInfo.userNickname = userNickname.text;
-                  }, "입력 완료!", context, SecondRoute()),
-                ],
+                  customPinkElevatedButton(
+                     '입력 완료!',
+                         () {
+                        UserAccount.userInfo = UserInfo();
+                       UserInfo.userNickname = userNickname.text;
+                        Navigator.push(
+                           context,
+                            MaterialPageRoute(
+                               builder: (BuildContext context) => SecondRoute())
+                       );
+                     }),
+                   ]
               ),
             ),
           ),
@@ -110,10 +114,17 @@ class SecondRoute extends StatelessWidget {
               margin: EdgeInsets.all(50),
               child: Column(
                 children: [
-                  customPinkElevatedButton(() {}, "네!", context, ThirdRoute()),
+                  customPinkElevatedButton('네!', () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ThirdRoute()));
+                  }),
                   SizedBox(height: 20.0),
-                  customPinkElevatedButton(
-                      () {}, "아니요..ㅠㅠ바로 앱으로!", context, MyHomePage()),
+                  customPinkElevatedButton('아니요..ㅠㅠ바로 앱으로!', () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyHomePage()),
+                        (route) => false);
+                  }),
                 ],
               ),
             ),
@@ -138,8 +149,6 @@ class _ThirdRouteState extends State<ThirdRoute> {
       body: Column(children: [
         Expanded(
             flex: 1,
-            child: Align(
-              alignment: Alignment.bottomLeft,
               child: Column(
                 children: [
                   Container(
@@ -161,7 +170,7 @@ class _ThirdRouteState extends State<ThirdRoute> {
                   )
                 ],
               ),
-            )),
+            ),
         Expanded(
           flex: 1,
           child: Container(
@@ -170,16 +179,36 @@ class _ThirdRouteState extends State<ThirdRoute> {
               children: [
                 customTextFormField(_petName, '반려동물의 이름을 입력해주세요!'),
                 SizedBox(height: 20.0),
-                customPinkElevatedButton(() {
-                  UserInfo.petInfo = PetInfo();
-                  PetInfo.petName = _petName.text;
-                  PetInfo.petTypeNameList = [];
-                  PetInfo.petAge = 0;
-                  PetInfo.petBodyLength = 0;
-                  PetInfo.petWeight = 0;
-                  PetInfo.petSilhouette = PetSilhouette.BCS1;
-                  PetInfo.petAllergyList = [];
-                }, "입력 완료!", context, FourthRoute()),
+                customPinkElevatedButton(
+                    "입력 완료!",
+                        () {
+                      UserInfo.petInfo = PetInfo();
+                      PetInfo.petName = _petName.text;
+                      PetInfo.petTypeNameList = [];
+                      PetInfo.petAge = 0;
+                      PetInfo.petBodyLength = 0;
+                      PetInfo.petWeight = 0;
+                      PetInfo.petSilhouette = PetSilhouette.BCS1;
+                      PetInfo.petAllergyList = [];
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FourthRoute())
+                      );
+                    }
+                )
+                // customPinkElevatedButton(
+                //         () {
+                //   UserInfo.petInfo = PetInfo();
+                //   PetInfo.petName = _petName.text;
+                //   PetInfo.petTypeNameList = [];
+                //   PetInfo.petAge = 0;
+                //   PetInfo.petBodyLength = 0;
+                //   PetInfo.petWeight = 0;
+                //   PetInfo.petSilhouette = PetSilhouette.BCS1;
+                //   PetInfo.petAllergyList = [];
+                // }, "입력 완료!", context, FourthRoute()
+                // ),
               ],
             ),
           ),
@@ -526,7 +555,7 @@ GestureDetector customArrowBack(BuildContext context) {
 }
 
 Container customPinkElevatedButton(
-    Function() function, String text, BuildContext context, Widget nextRoute) {
+    String text, VoidCallback onPressed) {
   return Container(
     //margin: EdgeInsets.only(left: 40, right: 40),
     child: SizedBox(
@@ -542,11 +571,7 @@ Container customPinkElevatedButton(
                 ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0))),
-        onPressed: () {
-          function();
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => nextRoute));
-        },
+        onPressed: onPressed
       ),
     ),
   );
@@ -807,10 +832,33 @@ class _AllergyButtonListManager extends State<AllergyButtonListManager> {
         margin: EdgeInsets.only(left: 20, right: 20, top: 50),
         child: Column(
           children: [
-            customPinkElevatedButton(() {}, '네', context, MyHomePage()),
+            customPinkElevatedButton(
+                '네',
+                    () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyHomePage()
+                      ),
+                          (route) => false
+                  );
+                }
+            ),
+            // customPinkElevatedButton(() {}, '네', context, MyHomePage()),
             SizedBox(height: 30.0),
             customPinkElevatedButton(
-                () {}, "아니요(잘 모르겠어요)", context, MyHomePage()),
+                '아니요(잘 모르겠어요)',
+                    () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyHomePage()
+                      ),
+                          (route) => false
+                  );
+                }
+            )
+            // customPinkElevatedButton(() {}, "아니요(잘 모르겠어요)", context, MyHomePage()),
           ],
         ),
       );
