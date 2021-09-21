@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/main.dart';
 import '../SeungHyun/screen/wish_list_screen.dart';
 import '../log_in/UserInfoClass.dart';
+import '../drawer/Report.dart';
 // import 'dart:io';
 // import 'package:image_picker/image_picker.dart';
 
@@ -184,7 +185,28 @@ class _MainDrawerState extends State<MainDrawer> {
                         print('shopping_cart is clicked');
                       },
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(
+                        height: 20
+                    ),
+                    ListTile(
+                      title: Text(
+                        '신고하기',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: PINK,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Report()
+                            ),
+                        );
+                        print('report button is clicked');
+                      },
+                    ),
                     /*
                       ListTile(
                         leading: Icon(

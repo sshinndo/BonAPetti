@@ -38,6 +38,9 @@ dependencies:
   # kakao login version
   kakao_flutter_sdk: ^0.7.1
 
+  # svg 벡터 이미지 사용하기 위함
+  flutter_svg: ^0.22.0
+
   # image_picker: 갤러리에서 이미지 가져오기
 #  image_picker: ^0.6.7+7
 
@@ -78,6 +81,7 @@ flutter:
       - images/
       - images/loginIcon/
       - images/bcs/
+      - images/bottomBar/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

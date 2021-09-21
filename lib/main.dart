@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kakao_flutter_sdk/all.dart';
 import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/GoodsInfo.dart';
 import 'package:pet_service_application/GoodsWidget.dart';
@@ -19,7 +20,9 @@ import 'package:pet_service_application/log_in/UserInfoClass.dart';
 
 import 'drawer/MainDrawer.dart';
 
-//void main() => runApp(MyApp());
+void main(){
+  runApp(MyApp());
+}
 
 final String appName = "Pet App";
 
