@@ -49,9 +49,11 @@ class _GoodsScreen extends State<GoodsScreen> {
           Expanded(
             child: filterTabWithListView,
           ),
-          Container(child: MenuBottomBar()),
         ],
       ),
+      floatingActionButton: BackSpaceButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      bottomNavigationBar: MenuBottomBar(),
     );
   }
 }

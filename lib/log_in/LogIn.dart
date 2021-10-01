@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
+import '../init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 import 'package:pet_service_application/main.dart';
 import 'package:pet_service_application/log_in/SignUpPage.dart';
