@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/main.dart';
-import '../SeungHyun/screen/wish_list_screen.dart';
+import '../SeungHyun/screen/WishListScreen.dart';
 import '../log_in/UserInfoClass.dart';
 import '../drawer/Report.dart';
 // import 'dart:io';
@@ -163,7 +163,7 @@ class _MainDrawerState extends State<MainDrawer> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Wish_List_Screen()));
+                                builder: (context) => WishListScreen()));
                       },
                     ),
                     SizedBox(

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
 import 'package:pet_service_application/SeungHyun/screen/each_wish_list_screen.dart';
 
-class Wish_List_Screen extends StatefulWidget {
+class WishListScreen extends StatefulWidget {
   @override
-  _Wish_List_Screen createState() => _Wish_List_Screen();
+  _WishListScreen createState() => _WishListScreen();
 }
 
-class _Wish_List_Screen extends State<Wish_List_Screen> {
+class _WishListScreen extends State<WishListScreen> {
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
