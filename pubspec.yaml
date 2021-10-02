@@ -42,7 +42,7 @@ dependencies:
   flutter_svg: ^0.22.0
 
   # image_picker: 갤러리에서 이미지 가져오기
-  image_picker: ^0.8.4+2
+  # image_picker: ^0.8.4+2
 
 #  # Check that you have this dependency (added in the previous step)
 #  firebase_core: ^0.4.0+9

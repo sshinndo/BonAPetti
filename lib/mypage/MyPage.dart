@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/drawer/Report.dart';
@@ -144,29 +143,27 @@ class _MyPageState extends State<MyPage> {
             Card(
               // 프로필 편집 버튼
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
+                  borderRadius: BorderRadius.circular(12.0)),
               // 카드 테두리의 둥글기 설정값
-              elevation: 2.0,
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.01625,
-                bottom: MediaQuery.of(context).size.height * 0.01625,
-              ),
+              elevation: 4.0,
+              // margin: EdgeInsets.only(
+              //   top: MediaQuery.of(context).size.height * 0.01625,
+              //   bottom: MediaQuery.of(context).size.height * 0.01625,
+              // ),
               child: InkWell(
                   splashColor: Colors.grey.withAlpha(30),
                   child: Container(
                     // 카드 박스의 Size
                     width: MediaQuery.of(context).size.width * 0.91,
                     height: MediaQuery.of(context).size.height * 0.05,
-                    child: Column(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-                        Container(
-                          child: Text(
-                            '프로필 편집',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
+                        Text(
+                          '프로필 편집',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -308,6 +305,7 @@ class _MyPageState extends State<MyPage> {
             ]),
             SizedBox(height: 16),
             //---------------------------------------------
+            // 내 커뮤니티 / 내 중고장터 버튼
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
