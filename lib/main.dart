@@ -8,7 +8,7 @@ import 'package:pet_service_application/widgets/GoodsWidget.dart';
 import 'package:pet_service_application/widgets/BargainCardWidget.dart';
 import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
-import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
+import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
 import 'package:pet_service_application/community/screen/CommunityScreen.dart';
 import 'package:pet_service_application/log_in/LogIn.dart';
@@ -576,7 +576,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
         crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
         children: <Widget>[
-          DrawerWithAlarmAppBar(nickName: UserInfo.userNickname),
+          AppBarWithAlarm(nickName: UserInfo.userNickname),
           Expanded(
             flex: 1,
             child: ListView(
@@ -648,7 +648,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '당신과 함께하는',
+                        '오늘 당신과 함께하는',
                         style: TextStyle(fontSize: 32),
                       ),
                     ],
@@ -945,13 +945,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           MaterialPageRoute(
                               builder: (context) => GoodsScreen([
                                     GoodsInfo(
-                                      '닭고기맛 사료',
+                                      'ANF 6FREE PLUS 소고기연어 5.6kg 강아지사료, 1개',
+                                      //'닭고기맛 사료',
                                       'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
-                                      25000,
+                                      38550,
                                       null,
                                       GoodsDetailedInfo(
                                           [
-                                            'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+                                            'https://thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/45bc/8fb74123b56f027538b4f8be789bd5fbc5ae8573a52dcbff8a806aa71d78.jpg',
+                                            //'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
                                           ],
                                           false,
                                           ['쌀', '대두', '연어'],

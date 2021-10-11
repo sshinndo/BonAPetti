@@ -7,6 +7,7 @@ import 'package:pet_service_application/mypage/Report.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 import 'package:pet_service_application/mypage/EditPetProfile.dart';
 import 'package:pet_service_application/mypage/EditUserProfile.dart';
+import 'package:pet_service_application/mypage/Qna.dart';
 
 
 class MyPage extends StatefulWidget {
@@ -609,12 +610,12 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => QnA()
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Qna(nickName: "QnA")
+                  ),
+                );
                 // print('QnA Page is clicked');
               },
             ),
