@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/drawer/Report.dart';
+import 'package:pet_service_application/mypage/Report.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 import 'package:pet_service_application/mypage/EditPetProfile.dart';
 import 'package:pet_service_application/mypage/EditUserProfile.dart';
@@ -182,9 +182,9 @@ class _MyPageState extends State<MyPage> {
               Positioned(
                 child: Card(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
+                      borderRadius: BorderRadius.circular(12.0)),
                   // 카드 테두리의 둥글기 설정값
-                  elevation: 2.0,
+                  elevation: 4.0,
                   child: Container(
                     // 카드 박스의 Size
                     width: MediaQuery.of(context).size.width * 0.91,
@@ -307,16 +307,20 @@ class _MyPageState extends State<MyPage> {
             //---------------------------------------------
             // 내 커뮤니티 / 내 중고장터 버튼
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // 내 커뮤니티 버튼 Card
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius
                       .circular(12.0)), // 카드 테두리의 둥글기 설정값
                   elevation: 4.0,
+                  margin: EdgeInsets.only(left:MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.044),
                   child: InkWell(
                       splashColor: Colors.grey.withAlpha(30),
-                      child: SizedBox( // 카드 박스의 Size
+                      child: Container( // 카드 박스의 Size
                         width: MediaQuery
                             .of(context)
                             .size
@@ -352,6 +356,10 @@ class _MyPageState extends State<MyPage> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius
                       .circular(12.0)), // 카드 테두리의 둥글기 설정값
                   elevation: 4.0,
+                  margin: EdgeInsets.only(right:MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.044),
                   child: InkWell(
                       splashColor: Colors.grey.withAlpha(30),
                       child: SizedBox( // 카드 박스의 Size

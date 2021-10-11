@@ -94,7 +94,7 @@ class Shopping_Basket extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          BackBtnAppBar(nickName: '찜목록'),
+          NickNameAppBar(nickName: '찜목록'),
           Row(
             children: [
               Padding(padding: EdgeInsets.only(left: 25)),

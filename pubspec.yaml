@@ -41,8 +41,14 @@ dependencies:
   # svg 벡터 이미지 사용하기 위함
   flutter_svg: ^0.22.0
 
-  # image_picker: 갤러리에서 이미지 가져오기
-  # image_picker: ^0.8.4+2
+  # image_picker
+  image_picker: ^0.8.4
+
+  # csv file 읽어들이는데 필요한 library
+  csv: ^5.0.0
+  path_provider: ^2.0.2
+  permission_handler: ^7.1.0
+  file_picker: ^3.0.4
 
 #  # Check that you have this dependency (added in the previous step)
 #  firebase_core: ^0.4.0+9

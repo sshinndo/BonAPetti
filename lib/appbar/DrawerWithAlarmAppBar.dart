@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/TestUI.dart';
 
 class DrawerWithAlarmAppBar extends StatefulWidget {
@@ -41,7 +42,10 @@ class _DrawerWithAlarmAppBar extends State<DrawerWithAlarmAppBar> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => TestUI()));
                       },
-                      icon: Image.asset('images/bell_icon.png')))),
+                      icon: SvgPicture.asset('images/svg/bell.svg')
+                  )
+              )
+          ),
         ],
       ),
     ));

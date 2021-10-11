@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
+import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 
 class SearchRoute extends StatefulWidget {
@@ -13,6 +14,8 @@ class _SearchRoute extends State<SearchRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SearchArea(),
+      floatingActionButton: BackSpaceButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 }
@@ -30,7 +33,7 @@ class _SearchArea extends State<SearchArea> {
 
     return Column(
       children: [
-        BackBtnAppBar(nickName: UserInfo.userNickname),
+        NickNameAppBar(nickName: UserInfo.userNickname),
         Container(
           margin: EdgeInsets.only(bottom: 20),
           child: SearchBar(managerWidget: searchContentsManagerWidget),
@@ -55,7 +58,6 @@ class SearchBar extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: Card(
-        semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5.0,
         shape: RoundedRectangleBorder(
@@ -75,9 +77,8 @@ class SearchBar extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 1,
-                child: TextField(
-                  decoration: InputDecoration(border: InputBorder.none),
+
+                child: CupertinoTextField(
                   controller: textFieldController,
                   style: TextStyle(
                       fontSize: 17, color: Color.fromRGBO(0, 0, 0, 0.5)),
@@ -87,8 +88,21 @@ class SearchBar extends StatelessWidget {
                       managerWidget.getStateData().refresh(false);
                     else
                       managerWidget.getStateData().refresh(true);
-                  },
+                    },
                 ),
+                // TextField(
+                //   decoration: InputDecoration(border: InputBorder.none),
+                //   controller: textFieldController,
+                //   style: TextStyle(
+                //       fontSize: 17, color: Color.fromRGBO(0, 0, 0, 0.5)),
+                //   cursorColor: Color.fromRGBO(217, 217, 217, 1),
+                //   onChanged: (text) {
+                //     if (text.length <= 0)
+                //       managerWidget.getStateData().refresh(false);
+                //     else
+                //       managerWidget.getStateData().refresh(true);
+                //   },
+                // ),
               ),
             ],
           ),
@@ -130,6 +144,7 @@ class _SearchContentsManagerWidget extends State<SearchContentsManagerWidget> {
   }
 
   Widget getNotHaveTextUI() {
+    // 최근 검색어
     RecentSearchedWordsWidget recentWords = RecentSearchedWordsWidget([
       '#말티즈',
       '#웰시코기',
@@ -217,21 +232,23 @@ class _SearchContentsManagerWidget extends State<SearchContentsManagerWidget> {
     return Container(
         child: RelatedRecommentWordListView(
       initialWordList: [
-        '관련/추천검색어',
-        '관련/추천검색어',
-        '관련/추천검색어',
-        '관련/추천검색어',
-        '관련/추천검색어',
-        '관련/추천검색어',
-        '관련/추천검색어',
-        '관련/추천검색어',
-        '관련/추천검색어',
-        '관련/추천검색어',
+
+        // '관련/추천검색어',
+        // '관련/추천검색어',
+        // '관련/추천검색어',
+        // '관련/추천검색어',
+        // '관련/추천검색어',
+        // '관련/추천검색어',
+        // '관련/추천검색어',
+        // '관련/추천검색어',
+        // '관련/추천검색어',
+        // '관련/추천검색어',
       ],
     ));
   }
 }
 
+//관련 추천 단어 리스트
 class RelatedRecommentWordListView extends StatefulWidget {
   final List<String> initialWordList;
   RelatedRecommentWordListView({Key? key, required this.initialWordList})
@@ -270,6 +287,7 @@ class _RelatedRecommentWordListView
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: currentWordList.length,
       itemBuilder: (BuildContext context, int index) {
         return Container(

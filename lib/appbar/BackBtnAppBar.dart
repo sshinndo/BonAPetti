@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class BackBtnAppBar extends StatefulWidget {
+class NickNameAppBar extends StatefulWidget {
   final String nickName;
 
-  BackBtnAppBar({Key? key, required this.nickName}) : super(key: key);
+  NickNameAppBar({Key? key, required this.nickName}) : super(key: key);
 
   @override
-  _BackBtnAppBar createState() => _BackBtnAppBar();
+  _NickNameAppBar createState() => _NickNameAppBar();
 }
 
-class _BackBtnAppBar extends State<BackBtnAppBar> {
+class _NickNameAppBar extends State<NickNameAppBar> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -21,17 +21,17 @@ class _BackBtnAppBar extends State<BackBtnAppBar> {
         height: AppBar().preferredSize.height,
         child: Row(
           children: [
-            Expanded(
-              flex: 1,
-              child: Center(
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Image.asset('images/back_arrow.png'),
-                ),
-              ),
-            ),
+            // Expanded(
+            //   flex: 1,
+            //   child: Center(
+            //     child: IconButton(
+            //       onPressed: () {
+            //         Navigator.pop(context);
+            //       },
+            //       icon: Image.asset('images/back_arrow.png'),
+            //     ),
+            //   ),
+            // ),
             Expanded(
               flex: 3,
               child: Center(

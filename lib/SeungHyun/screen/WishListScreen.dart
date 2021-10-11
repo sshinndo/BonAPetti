@@ -14,7 +14,7 @@ class _WishListScreen extends State<WishListScreen> {
     return Scaffold(
       body: ListView(
         children: [
-          BackBtnAppBar(nickName: '찜목록'),
+          NickNameAppBar(nickName: '찜목록'),
           Row(
             children: [
               Padding(padding: EdgeInsets.only(left: 25)),
