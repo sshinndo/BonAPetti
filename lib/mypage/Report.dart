@@ -48,22 +48,36 @@ class _ReportState extends State<Report> {
                     style: TextStyle(color: Colors.black, fontWeight:FontWeight.bold,fontSize: 14)),
               ),
               SizedBox(height: 10.0),
-              DropdownButton(
-                value: _selectedReportValue,
-                items: _reportList.map(
-                      (value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(value),
-                    );
-                  },
-                ).toList(),
-                onChanged: (String? value) {
-                  setState(() {
-                    _selectedReportValue = value!;
-                  });
-                },
+
+              Card(
+                elevation: 3.0, // 카드박스 그림자 음영
+                margin: EdgeInsets.only(left:20, right: 20),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  padding: EdgeInsets.only(left: 22,right: 22),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      value: _selectedPageValue,
+                      items: _pageList.map(
+                            (value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Text(value),
+                          );
+                        },
+                      ).toList(),
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedPageValue = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ),
               ),
+
               SizedBox(height: 15),
               Container(
                 alignment: Alignment.centerLeft,
@@ -72,23 +86,39 @@ class _ReportState extends State<Report> {
                     '신고종목',
                     style: TextStyle(color: Colors.black, fontWeight:FontWeight.bold,fontSize: 14)),
               ),
+
               SizedBox(height: 10.0),
-              DropdownButton(
-                value: _selectedReportValue,
-                items: _reportList.map(
-                      (value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(value),
-                    );
-                  },
-                ).toList(),
-                onChanged: (String? value) {
-                  setState(() {
-                    _selectedReportValue = value!;
-                  });
-                },
+
+              Card(
+                elevation: 3.0, // 카드박스 그림자 음영
+                margin: EdgeInsets.only(left:20, right: 20),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                child: Container(
+                  width: double.infinity,
+                  height: 50.0,
+                  padding: EdgeInsets.only(left: 22,right: 22),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      value: _selectedReportValue,
+                      items: _reportList.map(
+                            (value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Text(value),
+                          );
+                        },
+                      ).toList(),
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedReportValue = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ),
               ),
+
+
               SizedBox(height: 15),
               Container(
                 alignment: Alignment.centerLeft,

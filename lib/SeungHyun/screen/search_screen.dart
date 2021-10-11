@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
@@ -33,7 +34,7 @@ class _SearchArea extends State<SearchArea> {
 
     return Column(
       children: [
-        NickNameAppBar(nickName: UserInfo.userNickname),
+        AppBarWithAlarm(nickName: UserInfo.userNickname),
         Container(
           margin: EdgeInsets.only(bottom: 20),
           child: SearchBar(managerWidget: searchContentsManagerWidget),

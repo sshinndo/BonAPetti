@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
 import 'package:pet_service_application/SeungHyun/screen/each_wish_list_screen.dart';
 
@@ -14,7 +15,7 @@ class _WishListScreen extends State<WishListScreen> {
     return Scaffold(
       body: ListView(
         children: [
-          NickNameAppBar(nickName: '찜목록'),
+          AppBarWithAlarm(nickName: '찜목록'),
           Row(
             children: [
               Padding(padding: EdgeInsets.only(left: 25)),

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class NickNameAppBar extends StatefulWidget {
+class BackBtnAppBar extends StatefulWidget {
   final String nickName;
 
-  NickNameAppBar({Key? key, required this.nickName}) : super(key: key);
+  BackBtnAppBar({Key? key, required this.nickName}) : super(key: key);
 
   @override
-  _NickNameAppBar createState() => _NickNameAppBar();
+  _BackBtnAppBar createState() => _BackBtnAppBar();
 }
 
-class _NickNameAppBar extends State<NickNameAppBar> {
+class _BackBtnAppBar extends State<BackBtnAppBar> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -21,17 +22,17 @@ class _NickNameAppBar extends State<NickNameAppBar> {
         height: AppBar().preferredSize.height,
         child: Row(
           children: [
-            // Expanded(
-            //   flex: 1,
-            //   child: Center(
-            //     child: IconButton(
-            //       onPressed: () {
-            //         Navigator.pop(context);
-            //       },
-            //       icon: Image.asset('images/back_arrow.png'),
-            //     ),
-            //   ),
-            // ),
+            Expanded(
+              flex: 1,
+              child: Center(
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: SvgPicture.asset('images/svg/arrow_back.svg'),
+                ),
+              ),
+            ),
             Expanded(
               flex: 3,
               child: Center(
@@ -45,8 +46,8 @@ class _NickNameAppBar extends State<NickNameAppBar> {
               ),
             ),
             Expanded(
-              flex: 1,
-              child: Container(),
+                flex: 1,
+                child: Container()
             ),
           ],
         ),
