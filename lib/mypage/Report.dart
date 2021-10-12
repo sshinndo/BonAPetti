@@ -172,7 +172,9 @@ class _ReportState extends State<Report> {
                         alignment: Alignment.center,
                         child: Text('+'),
                       ),
-                      onTap: (){}
+                      onTap: (){
+
+                      }
                     ),
                   ),
                   SizedBox(width: 15),
@@ -203,7 +205,6 @@ class _ReportState extends State<Report> {
                         child: Text('+'),
                       ),
                       onTap: (){
-
                       },
                     ),
                   ),

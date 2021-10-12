@@ -41,8 +41,10 @@ dependencies:
   # svg 벡터 이미지 사용하기 위함
   flutter_svg: ^0.22.0
 
-  # image_picker
+  # 갤러리/카메라 이미지 파일 추가에 필요한 라이브러리
   image_picker: ^0.8.4
+  image_cropper: ^1.4.1
+  get: ^4.3.8
 
   # csv file 읽어들이는데 필요한 library
   csv: ^5.0.0

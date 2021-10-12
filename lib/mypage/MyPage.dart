@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
+import 'package:pet_service_application/mypage/ActivityMedal.dart';
+import 'package:pet_service_application/mypage/Faq.dart';
 import 'package:pet_service_application/mypage/Report.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 import 'package:pet_service_application/mypage/EditPetProfile.dart';
@@ -563,13 +565,13 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => 내 리뷰 페이지()
-                //   ),
-                // );
-                // print('WishListScreen page is clicked');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ActivityMedal()
+                  ),
+                );
+                print('ActivityMedal page is clicked');
               },
             ),
             // 2-2. QnA
@@ -657,13 +659,13 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => 내 리뷰 페이지()
-                //   ),
-                // );
-                // print('FAQ page is clicked');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Faq(nickName: "FAQ")
+                  ),
+                );
+                print('FAQ page is clicked');
               },
             ),
             // 2-4. 카카오톡 친구초대
