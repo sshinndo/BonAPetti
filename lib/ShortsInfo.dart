@@ -1,17 +1,18 @@
-import 'package:flutter/cupertino.dart';
-
 class ShortsInfo {
-  Profile profile;
-  String VideoUrl;
+  //Profile profile;
+  String thumbnailUrl;
+  String videoUrl;
   bool isLike;
-
-  ShortsInfo(this.profile,this.VideoUrl,this.isLike);
-}
-
-class Profile {
   String profileImage;
   String nickName;
   String petName;
 
-  Profile(this.profileImage,this.nickName,this.petName);
+  ShortsInfo(this.profileImage,this.nickName,this.petName,this.thumbnailUrl,this.videoUrl,this.isLike);
+}
+
+class Profile {
+
+
+  //Profile(this.profileImage,this.nickName,this.petName);
+  // 'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project/images/
 }
