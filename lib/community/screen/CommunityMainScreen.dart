@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
+import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/community/CommunityInfo.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
@@ -24,7 +24,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
         mainAxisAlignment: MainAxisAlignment.start, //세로로 나열 기준은 시작점 (제일 위부터)
         crossAxisAlignment: CrossAxisAlignment.center, //가로 나열 기준은 중심 (중심기준)
         children: [
-          DrawerWithAlarmAppBar(nickName: UserInfo.userNickname),
+          AppBarWithAlarm(nickName: UserInfo.userNickname),
           Expanded(
             flex: 1,
             child: ListView(
@@ -164,9 +164,11 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
               ]
             )
           ),
-          Container(child: MenuBottomBar()),
         ],
       ),
+      floatingActionButton: BackSpaceButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      bottomNavigationBar: MenuBottomBar(),
     );
   }
 }

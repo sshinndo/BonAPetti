@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class BackBtnAppBar extends StatefulWidget {
   final String nickName;
@@ -28,7 +29,7 @@ class _BackBtnAppBar extends State<BackBtnAppBar> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Image.asset('images/back_arrow.png'),
+                  icon: SvgPicture.asset('images/svg/arrow_back.svg'),
                 ),
               ),
             ),
@@ -45,8 +46,8 @@ class _BackBtnAppBar extends State<BackBtnAppBar> {
               ),
             ),
             Expanded(
-              flex: 1,
-              child: Container(),
+                flex: 1,
+                child: Container()
             ),
           ],
         ),

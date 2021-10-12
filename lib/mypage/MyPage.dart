@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/drawer/Report.dart';
+import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
+import 'package:pet_service_application/mypage/ActivityMedal.dart';
+import 'package:pet_service_application/mypage/Faq.dart';
+import 'package:pet_service_application/mypage/Report.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 import 'package:pet_service_application/mypage/EditPetProfile.dart';
 import 'package:pet_service_application/mypage/EditUserProfile.dart';
+import 'package:pet_service_application/mypage/Qna.dart';
 
 
 class MyPage extends StatefulWidget {
@@ -144,29 +147,27 @@ class _MyPageState extends State<MyPage> {
             Card(
               // 프로필 편집 버튼
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
+                  borderRadius: BorderRadius.circular(12.0)),
               // 카드 테두리의 둥글기 설정값
-              elevation: 2.0,
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.01625,
-                bottom: MediaQuery.of(context).size.height * 0.01625,
-              ),
+              elevation: 4.0,
+              // margin: EdgeInsets.only(
+              //   top: MediaQuery.of(context).size.height * 0.01625,
+              //   bottom: MediaQuery.of(context).size.height * 0.01625,
+              // ),
               child: InkWell(
                   splashColor: Colors.grey.withAlpha(30),
                   child: Container(
                     // 카드 박스의 Size
                     width: MediaQuery.of(context).size.width * 0.91,
                     height: MediaQuery.of(context).size.height * 0.05,
-                    child: Column(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-                        Container(
-                          child: Text(
-                            '프로필 편집',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
+                        Text(
+                          '프로필 편집',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -185,9 +186,9 @@ class _MyPageState extends State<MyPage> {
               Positioned(
                 child: Card(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
+                      borderRadius: BorderRadius.circular(12.0)),
                   // 카드 테두리의 둥글기 설정값
-                  elevation: 2.0,
+                  elevation: 4.0,
                   child: Container(
                     // 카드 박스의 Size
                     width: MediaQuery.of(context).size.width * 0.91,
@@ -308,17 +309,22 @@ class _MyPageState extends State<MyPage> {
             ]),
             SizedBox(height: 16),
             //---------------------------------------------
+            // 내 커뮤니티 / 내 중고장터 버튼
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // 내 커뮤니티 버튼 Card
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius
                       .circular(12.0)), // 카드 테두리의 둥글기 설정값
                   elevation: 4.0,
+                  margin: EdgeInsets.only(left:MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.044),
                   child: InkWell(
                       splashColor: Colors.grey.withAlpha(30),
-                      child: SizedBox( // 카드 박스의 Size
+                      child: Container( // 카드 박스의 Size
                         width: MediaQuery
                             .of(context)
                             .size
@@ -345,7 +351,11 @@ class _MyPageState extends State<MyPage> {
                         ),
                       ),
                       onTap: () {
-                        // 재현님이 만든 커뮤니티 페이지로 이동하기 채우기
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context)=>
+                                CommunityMainScreen()));
                       }
                   ),
                 ),
@@ -354,6 +364,10 @@ class _MyPageState extends State<MyPage> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius
                       .circular(12.0)), // 카드 테두리의 둥글기 설정값
                   elevation: 4.0,
+                  margin: EdgeInsets.only(right:MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.044),
                   child: InkWell(
                       splashColor: Colors.grey.withAlpha(30),
                       child: SizedBox( // 카드 박스의 Size
@@ -556,13 +570,13 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => 내 리뷰 페이지()
-                //   ),
-                // );
-                // print('WishListScreen page is clicked');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ActivityMedal()
+                  ),
+                );
+                print('ActivityMedal page is clicked');
               },
             ),
             // 2-2. QnA
@@ -603,12 +617,12 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => QnA()
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Qna(nickName: "QnA")
+                  ),
+                );
                 // print('QnA Page is clicked');
               },
             ),
@@ -650,13 +664,13 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => 내 리뷰 페이지()
-                //   ),
-                // );
-                // print('FAQ page is clicked');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Faq(nickName: "FAQ")
+                  ),
+                );
+                print('FAQ page is clicked');
               },
             ),
             // 2-4. 카카오톡 친구초대

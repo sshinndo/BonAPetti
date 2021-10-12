@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class EachWishList extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          BackBtnAppBar(nickName: '찜목록'),
+          AppBarWithAlarm(nickName: '찜목록'),
           Row(
             children: [
               Padding(padding: EdgeInsets.only(left: 25)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
 import 'package:pet_service_application/mypage/MyPage.dart';
 import 'package:pet_service_application/SeungHyun/screen/shopping_basket.dart';
 import 'package:pet_service_application/main.dart';
@@ -103,8 +104,8 @@ class _MenuBottomBar extends State<MenuBottomBar> {
                 MaterialPageRoute(builder: (context) => WishListScreen()));
           }
           if (value == 3) { // 커뮤니티
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => Shopping_Basket()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CommunityMainScreen()));
           }
           if (value == 4) { // 마이페이지
              Navigator.push(context,
