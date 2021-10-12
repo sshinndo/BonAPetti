@@ -20,16 +20,7 @@ class _DrawerWithAlarmAppBar extends State<DrawerWithAlarmAppBar> {
       height: AppBar().preferredSize.height,
       child: Row(
         children: [
-          Expanded(
-              flex: 1,
-              child: Center(
-                  child: IconButton(
-                onPressed: () {
-                  // drawer open
-                  Scaffold.of(context).openDrawer();
-                },
-                icon: Image.asset('images/hamburger_icon.png'),
-              ))),
+          Expanded(flex: 1, child: Container()),
           Expanded(
               flex: 3,
               child: Center(
