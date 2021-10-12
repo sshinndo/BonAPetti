@@ -90,6 +90,9 @@ flutter:
       - images/loginIcon/
       - images/bcs/
       - images/bottomBar/
+      - images/shorts/
+      - images/profile/
+      - images/community/
       - images/svg/
 
   # An image asset can refer to one or more resolution-specific "variants", see

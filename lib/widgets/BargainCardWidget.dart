@@ -19,7 +19,7 @@ class _BargainCardWidget extends State<BargainCardWidget> {
   @override
   Widget build(BuildContext context) {
     final heartAndCartSize = MediaQuery.of(context).size.width * 0.04;  //좋아요,장바구니 아이콘 크기
-    const double GoodsNameSize = 20;
+    const double GoodsNameSize = 15;
 
     return GestureDetector(
       /*onTap: () {
@@ -31,7 +31,7 @@ class _BargainCardWidget extends State<BargainCardWidget> {
       child: Card(
         elevation: 5,   //그림자
         semanticContainer: true,
-        margin: EdgeInsets.all(10),
+        margin: EdgeInsets.only(left:5,right:5,top:10,bottom:10),
         shape: RoundedRectangleBorder(borderRadius: _baseBorderRadius),
         clipBehavior: Clip.antiAliasWithSaveLayer,
 
@@ -47,7 +47,7 @@ class _BargainCardWidget extends State<BargainCardWidget> {
               child: Column(
                 children: [
                     Container(
-                      margin: EdgeInsets.only(left: 10),
+                      margin: EdgeInsets.only(left: 10,top:10),
                       alignment: Alignment.centerLeft,
                       child: Text(
                         widget.goodsInfo.name,
