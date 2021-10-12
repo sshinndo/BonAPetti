@@ -10,7 +10,7 @@ import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dar
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
-import 'package:pet_service_application/community/screen/CommunityScreen.dart';
+import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
 import 'package:pet_service_application/log_in/LogIn.dart';
 import 'package:pet_service_application/log_in/Splash.dart';
 import 'package:pet_service_application/route/CardNewsListRoute.dart';
@@ -20,6 +20,8 @@ import 'package:pet_service_application/SeungHyun/screen/search_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/widgets/ShortsWidget.dart';
+import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'drawer/MainDrawer.dart';
 
 void main() => runApp(MyApp());
@@ -641,55 +643,43 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 //검색창
-
                 Container(
                   margin: EdgeInsets.only(left: 50, top: 100),
-                  child: Row(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         '당신과 함께하는',
                         style: TextStyle(fontSize: 32),
-                      ),
-                    ],
-                  ),
-                ),
-                //당신과 함께하는
-                Container(
-                  margin: EdgeInsets.only(left: 50),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        PetInfo.petName,
-                        style: TextStyle(
-                            color: Color.fromRGBO(255, 113, 113, 1),
-                            decoration: TextDecoration.underline,
-                            letterSpacing: 2.0,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        '를 위한',
-                        style: TextStyle(
-                          fontSize: 32,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                //[PetName]를 위한
-                Container(
-                  margin: EdgeInsets.only(left: 50),
-                  child: Row(
-                    children: <Widget>[
+                      ),  //당신과 함께하는
+                      Container(
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                PetInfo.petName,
+                                style: TextStyle(
+                                    color: Color.fromRGBO(255, 113, 113, 1),
+                                    decoration: TextDecoration.underline,
+                                    letterSpacing: 2.0,
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                '를 위한',
+                                style: TextStyle(
+                                  fontSize: 32,
+                                ),
+                              ), //를 위한
+                            ],
+                          )
+                      ),  //[petName]을 위한
                       Text(
                         '건강식단',
                         style: TextStyle(fontSize: 32),
-                      ),
+                      ),  //건강식단
                     ],
                   ),
-                ),
-                //건강 식단
+                ),    //사료 텍스트
                 GestureDetector(
                     onTap: () => Navigator.push(
                           context,
@@ -794,12 +784,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         margin: EdgeInsets.only(top: 15, right: 50))),
                 //사료 더보기
                 Container(
-                  height: 600,
+                  height: 500,
                   margin:
                       EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
                   child: GridView.count(
                     crossAxisCount: 2,
-                    childAspectRatio: 0.8,
+                    childAspectRatio: 0.75,
                     children: [
                       GoodsCardWidget(
                         goodsInfo: GoodsInfo(
@@ -1073,7 +1063,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ],
                               'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image1.png'),
                         ),
-                      ), //닭고기맛 사료 카드
+                      ),  //닭고기맛 나눔 카드
                       BargainCardWidget(
                         goodsInfo: GoodsInfo(
                           '훈제 사료',
@@ -1097,7 +1087,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ],
                               'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image2.png'),
                         ),
-                      ), //훈제 사료 카드
+                      ),  //훈제 나눔 카드
                       BargainCardWidget(
                         goodsInfo: GoodsInfo(
                           '유기농 개사료',
@@ -1121,7 +1111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ],
                               'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image3.png'),
                         ),
-                      ), //유기농 개사료 카드
+                      ),  //유기농 개사료 나눔 카드
                     ],
                   ),
                 ),
@@ -1138,34 +1128,36 @@ class _MyHomePageState extends State<MyHomePage> {
                       ), //건강한 식단과
                       Container(
                           child: Row(
-                        children: <Widget>[
-                          Text(
-                            '함께하는',
-                            style: TextStyle(
-                              fontSize: 32,
-                            ),
-                          ), //함께하는
-                          Text(
-                            '친구들',
-                            style: TextStyle(
-                                color: Color.fromRGBO(255, 113, 113, 1),
-                                decoration: TextDecoration.underline,
-                                //letterSpacing: 2.0,
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold),
-                          ), //친구들
-                        ],
-                      )), //함께하는친구들
+                            children: <Widget>[
+                              Text(
+                                '함께하는 ',
+                                style: TextStyle(
+                                  fontSize: 32,
+                                ),
+                              ),  //함께하는
+                              Text(
+                                '친구들',
+                                style: TextStyle(
+                                  color: Color.fromRGBO(255, 113, 113, 1),
+                                  decoration: TextDecoration.underline,
+                                  //letterSpacing: 2.0,
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),  //친구들
+                            ],
+                          )
+                      ),  //함께하는 친구들
                     ],
                   ), //문장 한줄씩 수직 정렬
                 ),
                 //친구들 텍스트
                 GestureDetector(
                     onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CommunityScreen()), //사료 정보들
-                        ),
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CommunityMainScreen()),  //사료 정보들
+                    ),
                     child: Container(
                         alignment: Alignment.centerRight,
                         child: Text(
@@ -1175,114 +1167,45 @@ class _MyHomePageState extends State<MyHomePage> {
                         margin: EdgeInsets.only(top: 15, right: 50))),
                 //친구들 더보기 (작업전 임시)
                 Container(
-                  height: 1600,
+                  height: 400,
                   margin:
-                      EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
-                  child: GridView.count(
-                    crossAxisCount: 1,
-                    childAspectRatio: 0.8,
-                    children: [
-                      GoodsCardWidget(
-                        goodsInfo: GoodsInfo(
-                          '닭고기맛 사료',
-                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
-                          25000,
-                          null,
-                          GoodsDetailedInfo(
-                              [
-                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
-                              ],
-                              false,
-                              ['쌀', '대두', '연어'],
-                              [
-                                Ingredient('조지방', 77),
-                                Ingredient('조단백질', 19),
-                                Ingredient('칼슘', 2),
-                                Ingredient('인', 1),
-                                Ingredient('비타민 A', null),
-                                Ingredient('비타민 E', null),
-                                Ingredient('비타민 D3', null),
-                              ],
-                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image1.png'),
-                        ),
-                      ), //닭고기맛 사료 카드
-                      GoodsCardWidget(
-                        goodsInfo: GoodsInfo(
-                          '훈제 사료',
-                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
-                          32000,
-                          null,
-                          GoodsDetailedInfo(
-                              [
-                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
-                              ],
-                              false,
-                              ['쌀', '대두', '연어'],
-                              [
-                                Ingredient('조지방', 77),
-                                Ingredient('조단백질', 19),
-                                Ingredient('칼슘', 2),
-                                Ingredient('인', 1),
-                                Ingredient('비타민 A', null),
-                                Ingredient('비타민 E', null),
-                                Ingredient('비타민 D3', null),
-                              ],
-                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image2.png'),
-                        ),
-                      ), //훈제 사료 카드
-                      GoodsCardWidget(
-                        goodsInfo: GoodsInfo(
-                          '유기농 개사료',
-                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
-                          15000,
-                          null,
-                          GoodsDetailedInfo(
-                              [
-                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_three.png',
-                              ],
-                              false,
-                              ['쌀', '대두', '연어'],
-                              [
-                                Ingredient('조지방', 77),
-                                Ingredient('조단백질', 19),
-                                Ingredient('칼슘', 2),
-                                Ingredient('인', 1),
-                                Ingredient('비타민 A', null),
-                                Ingredient('비타민 E', null),
-                                Ingredient('비타민 D3', null),
-                              ],
-                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image3.png'),
-                        ),
-                      ), //유기농 개사료 카드
-                      GoodsCardWidget(
-                        goodsInfo: GoodsInfo(
-                          '순수 도그온',
-                          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
-                          67000,
-                          34000,
-                          GoodsDetailedInfo(
-                              [
-                                'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_four.png',
-                              ],
-                              false,
-                              ['쌀', '대두', '연어'],
-                              [
-                                Ingredient('조지방', 77),
-                                Ingredient('조단백질', 19),
-                                Ingredient('칼슘', 2),
-                                Ingredient('인', 1),
-                                Ingredient('비타민 A', null),
-                                Ingredient('비타민 E', null),
-                                Ingredient('비타민 D3', null),
-                              ],
-                              'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image4.png'),
-                        ),
-                      ), //순수 도그온 카드
-                    ], //숏폼 카드 위젯 작성 필요
-                  ),
-                ),
-                //숏폼 카드(수정 필요)
-
+                    EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 10),
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      ShortsWidget(
+                        shortsInfo: ShortsInfo(
+                          'images/profile/profile_icon.png',
+                          '돌돌이님',
+                          '돌돌이님',
+                          'images/shorts/shorts_thumb.png',
+                          'images/shorts/shorts_thumb.png',
+                          false
+                        )
+                      ),
+                      ShortsWidget(
+                          shortsInfo: ShortsInfo(
+                              'images/profile/profile_icon.png',
+                              '돌돌이님',
+                              '돌돌이님',
+                              'images/shorts/shorts_thumb.png',
+                              'images/shorts/shorts_thumb.png',
+                              false
+                          )
+                      ),
+                      ShortsWidget(
+                          shortsInfo: ShortsInfo(
+                              'images/profile/profile_icon.png',
+                              '돌돌이님',
+                              '돌돌이님',
+                              'images/shorts/shorts_thumb.png',
+                              'images/shorts/shorts_thumb.png',
+                              false
+                          )
+                      )
+                    ],
+                  )
+                ),  //숏폼 카드
                 Padding(padding: EdgeInsets.only(top: 52)),
               ],
             ),

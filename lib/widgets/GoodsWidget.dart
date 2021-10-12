@@ -30,7 +30,7 @@ class _GoodsCardWidget extends State<GoodsCardWidget> {
       child: Card(
         elevation: 5,   //그림자
         semanticContainer: true,
-        margin: EdgeInsets.all(15),
+        margin: EdgeInsets.all(10),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(borderRadius: _baseBorderRadius),
         child: Column(
