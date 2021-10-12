@@ -646,49 +646,41 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 Container(
                   margin: EdgeInsets.only(left: 50, top: 100),
-                  child: Row(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         '당신과 함께하는',
                         style: TextStyle(fontSize: 32),
-                      ),
-                    ],
-                  ),
-                ),    //당신과 함께하는
-                Container(
-                  margin: EdgeInsets.only(left: 50),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        PetInfo.petName,
-                        style: TextStyle(
-                            color: Color.fromRGBO(255, 113, 113, 1),
-                            decoration: TextDecoration.underline,
-                            letterSpacing: 2.0,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        '를 위한',
-                        style: TextStyle(
-                          fontSize: 32,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),    //[PetName]를 위한
-                Container(
-                  margin: EdgeInsets.only(left: 50),
-                  child: Row(
-                    children: <Widget>[
+                      ),  //당신과 함께하는
+                      Container(
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                PetInfo.petName,
+                                style: TextStyle(
+                                    color: Color.fromRGBO(255, 113, 113, 1),
+                                    decoration: TextDecoration.underline,
+                                    letterSpacing: 2.0,
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                '를 위한',
+                                style: TextStyle(
+                                  fontSize: 32,
+                                ),
+                              ), //를 위한
+                            ],
+                          )
+                      ),  //[petName]을 위한
                       Text(
                         '건강식단',
                         style: TextStyle(fontSize: 32),
-                      ),
+                      ),  //건강식단
                     ],
                   ),
-                ),    //건강 식단
+                ),    //사료 텍스트
                 GestureDetector(
                     onTap: () => Navigator.push(
                           context,
@@ -792,12 +784,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         margin: EdgeInsets.only(top: 15, right: 50))),  //사료 더보기
                 Container(
-                  height: 600,
+                  height: 500,
                   margin:
                       EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
                   child: GridView.count(
                     crossAxisCount: 2,
-                    childAspectRatio: 0.8,
+                    childAspectRatio: 0.75,
                     children: [
                       GoodsCardWidget(
                         goodsInfo: GoodsInfo(
@@ -1135,7 +1127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                '함께하는',
+                                '함께하는 ',
                                 style: TextStyle(
                                   fontSize: 32,
                                 ),
@@ -1152,7 +1144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),  //친구들
                             ],
                           )
-                      ),  //함께하는친구들
+                      ),  //함께하는 친구들
                     ],
                   ),  //문장 한줄씩 수직 정렬
                 ),    //친구들 텍스트

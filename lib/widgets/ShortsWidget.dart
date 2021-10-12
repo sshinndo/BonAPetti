@@ -23,12 +23,12 @@ class _ShortsWidget extends State<ShortsWidget> {
     const double nameSize = 15;
 
     return GestureDetector(
-      onTap: () {
+      /*onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => ShortsScreen(widget.shortsInfo)));   //터치시 숏폼 창으로 이동
-      },
+      },*/
       child: Card(
         elevation: 2,   //그림자
         semanticContainer: true,
