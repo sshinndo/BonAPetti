@@ -1,28 +1,151 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 
+// class QnaDatas{
+//   final String questionTitle; // 질문 제목
+//   final String questionContents; // 질문 상세 내용
+//   final String userNickName; // 질문 유저 닉네임
+//   bool isUserNicknameSecret; // 닉네임 비공개 여부
+//   final String answerTitle; // 답변 제목
+//   final String answerContents; // 답변 상세 내용
+//
+//   // 생성자로 필드 초기화
+//   QnaDatas(this. questionTitle, this.questionContents, this. userNickName, this.isUserNicknameSecret, this.answerTitle, this.answerContents);
+// }
 
+// QnA_QnA상세 페이지
+class QnaDetails extends StatelessWidget {
+  // final qnaDummyDatas qnaDatas
+  // // 생성자로 아이템을 수신하여 필드에 저장
 
-// QnA_QnA상세
-class QnaDetails extends StatefulWidget {
   const QnaDetails({Key? key}) : super(key: key);
 
   @override
-  _QnaDetailsState createState() => _QnaDetailsState();
-}
-
-class _QnaDetailsState extends State<QnaDetails> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+        floatingActionButton: BackSpaceButton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        body: Column(
+      children: [
+        AppBarWithAlarm(nickName: "QnA"),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.03,
+        ),
+        // Question Container
+        Container(
+          width: MediaQuery.of(context).size.width * .7,
+          height: MediaQuery.of(context).size.height * .3,
+          margin: EdgeInsets.symmetric(
+            vertical: 68,
+            horizontal: MediaQuery.of(context).size.width * .1,
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .7,
+                  child: Row(
+                    children: [
+                      // 데이터 넣을 텍스트 공간
+                      Expanded(
+                        child: Text(
+                          "Q. 구매는 어떻게 하나요?",
+                          softWrap: true,
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              //SizedBox(height: MediaQuery.of(context).size.width * .035),
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .7,
+                  child: Row(
+                    children: [
+                      // 데이터 넣을 텍스트 공간
+                      Expanded(
+                        child: Text(
+                          "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문 드립니다.",
+                          textAlign: TextAlign.start,
+                          softWrap: true, // 텍스트가 영역을 넘어갈 경우 줄바꿈 여부
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+        // Answer Container
+        Container(
+          color: Color.fromRGBO(196, 196, 196, 0.12),
+          width: MediaQuery.of(context).size.width * .7,
+          height: MediaQuery.of(context).size.height * .3,
+          margin: EdgeInsets.symmetric(
+            vertical: 68,
+            horizontal: MediaQuery.of(context).size.width * .1,
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .7,
+                  child: Row(
+                    children: [
+                      // 데이터 넣을 텍스트 공간
+                      Expanded(
+                        child: Text(
+                          "A. 보나펫티를 사용해주셔서 감사합니다. 상품은 가격비교 페이지를 통해 구매하실 수 있습니다.",
+                          softWrap: true,
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              //SizedBox(height: MediaQuery.of(context).size.width * .035),
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .7,
+                  child: Row(
+                    children: [
+                      // 데이터 넣을 텍스트 공간
+                      Expanded(
+                        child: Text(
+                          "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매하실 수 있습니다.",
+                          textAlign: TextAlign.start,
+                          softWrap: true, // 텍스트가 영역을 넘어갈 경우 줄바꿈 여부
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 }
 
-//QnA_질문작성
+//QnA_질문작성 페이지
 class QnaWriteQna extends StatefulWidget {
   const QnaWriteQna({Key? key}) : super(key: key);
 
@@ -231,8 +354,12 @@ class _QnaWriteQnaState extends State<QnaWriteQna> {
   }
 }
 
+// QnA 메인 스크린
 class Qna extends StatefulWidget {
   final String nickName;
+  // final List<QnaDatas> qnaDatas; // qnaDatas 아이템 리스트
+
+  // 생성자에서 QnaDatas 아이템 리스트를 받아서 저장
   const Qna({Key? key, required this.nickName}) : super(key: key);
 
   @override
@@ -252,7 +379,7 @@ class _QnaState extends State<Qna> {
       {
         "questionTitle": "구매는 어떻게 하나요?",
         "questionContents": "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문드립니다.",
-        "userNickname": "찜목록",
+        "userNickname": "돌돌이님",
         "isUserNicknameSecret" : "닉네임 비공개",
         "answerTitle" : "보나펫티를 사용해주셔서 감사드립니다.",
         "answerContents" : "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매할 수 있습니다."
@@ -260,7 +387,7 @@ class _QnaState extends State<Qna> {
       {
         "questionTitle": "구매는 어떻게 하나요?",
         "questionContents": "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문드립니다.",
-        "userNickname": "찜목록",
+        "userNickname": "돌돌이님",
         "isUserNicknameSecret" : "닉네임 비공개",
         "answerTitle" : "보나펫티를 사용해주셔서 감사드립니다.",
         "answerContents" : "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매할 수 있습니다."
@@ -268,7 +395,63 @@ class _QnaState extends State<Qna> {
       {
         "questionTitle": "구매는 어떻게 하나요?",
         "questionContents": "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문드립니다.",
-        "userNickname": "찜목록",
+        "userNickname": "돌돌이님",
+        "isUserNicknameSecret" : "닉네임 비공개",
+        "answerTitle" : "보나펫티를 사용해주셔서 감사드립니다.",
+        "answerContents" : "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매할 수 있습니다."
+      },
+      {
+        "questionTitle": "구매는 어떻게 하나요?",
+        "questionContents": "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문드립니다.",
+        "userNickname": "돌돌이님",
+        "isUserNicknameSecret" : "닉네임 비공개",
+        "answerTitle" : "보나펫티를 사용해주셔서 감사드립니다.",
+        "answerContents" : "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매할 수 있습니다."
+      },
+      {
+        "questionTitle": "구매는 어떻게 하나요?",
+        "questionContents": "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문드립니다.",
+        "userNickname": "돌돌이님",
+        "isUserNicknameSecret" : "닉네임 비공개",
+        "answerTitle" : "보나펫티를 사용해주셔서 감사드립니다.",
+        "answerContents" : "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매할 수 있습니다."
+      },
+      {
+        "questionTitle": "구매는 어떻게 하나요?",
+        "questionContents": "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문드립니다.",
+        "userNickname": "돌돌이님",
+        "isUserNicknameSecret" : "닉네임 비공개",
+        "answerTitle" : "보나펫티를 사용해주셔서 감사드립니다.",
+        "answerContents" : "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매할 수 있습니다."
+      },
+      {
+        "questionTitle": "구매는 어떻게 하나요?",
+        "questionContents": "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문드립니다.",
+        "userNickname": "돌돌이님",
+        "isUserNicknameSecret" : "닉네임 비공개",
+        "answerTitle" : "보나펫티를 사용해주셔서 감사드립니다.",
+        "answerContents" : "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매할 수 있습니다."
+      },
+      {
+        "questionTitle": "구매는 어떻게 하나요?",
+        "questionContents": "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문드립니다.",
+        "userNickname": "돌돌이님",
+        "isUserNicknameSecret" : "닉네임 비공개",
+        "answerTitle" : "보나펫티를 사용해주셔서 감사드립니다.",
+        "answerContents" : "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매할 수 있습니다."
+      },
+      {
+        "questionTitle": "구매는 어떻게 하나요?",
+        "questionContents": "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문드립니다.",
+        "userNickname": "돌돌이님",
+        "isUserNicknameSecret" : "닉네임 비공개",
+        "answerTitle" : "보나펫티를 사용해주셔서 감사드립니다.",
+        "answerContents" : "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매할 수 있습니다."
+      },
+      {
+        "questionTitle": "구매는 어떻게 하나요?",
+        "questionContents": "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문드립니다.",
+        "userNickname": "돌돌이님",
         "isUserNicknameSecret" : "닉네임 비공개",
         "answerTitle" : "보나펫티를 사용해주셔서 감사드립니다.",
         "answerContents" : "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매할 수 있습니다."
@@ -277,6 +460,7 @@ class _QnaState extends State<Qna> {
   }
 
   Widget _bodyWidget() {
+    int size = qnaDummyDatas == null ? 0 : qnaDummyDatas.length;
     return SafeArea(
       child: ListView(children: [
         Column(
@@ -347,15 +531,69 @@ class _QnaState extends State<Qna> {
             ListView.separated(
                 shrinkWrap: true, // listview 안에 listview 넣기 위한 방법
                 padding: EdgeInsets.only(left: 16, right: 16),
-                itemCount: qnaDummyDatas.length,
+
                 itemBuilder: (BuildContext _context, int index) {
-                  return Container(
-                      child: Text(qnaDummyDatas[index]["questionTitle"]!)
-                  );
+                  if (qnaDummyDatas !=null && qnaDummyDatas.length>0){
+                    return GestureDetector(
+                      onTap: () {
+                         Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => QnaDetails())
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top:MediaQuery.of(context).size.height*.03,
+                            bottom: MediaQuery.of(context).size.height*.02
+                        ),
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*.05),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Q. ",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                    Text(
+                                      qnaDummyDatas[index]['questionTitle']!,
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            ),
+                            SizedBox(height: 8),
+                            Container(
+                              child: Text(
+                                qnaDummyDatas[index]["userNickname"]!,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  else{
+                   return Text("작성된 것이 없습니다.");
+                  }
                 },
+                itemCount: size,
                 separatorBuilder: (BuildContext _context, int index) {
                   return Container( // 작성 시작하기
                     height: 1,
+                    margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*.025),
                     color: Color.fromRGBO(185, 185, 185, 1),
                   );
                 }),
