@@ -31,118 +31,120 @@ class QnaDetails extends StatelessWidget {
     return Scaffold(
         floatingActionButton: BackSpaceButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        body: Column(
-      children: [
-        AppBarWithAlarm(nickName: "QnA"),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.03,
-        ),
-        // Question Container
-        Container(
-          width: MediaQuery.of(context).size.width * .7,
-          height: MediaQuery.of(context).size.height * .3,
-          margin: EdgeInsets.symmetric(
-            vertical: 68,
-            horizontal: MediaQuery.of(context).size.width * .1,
-          ),
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(
+        body: ListView(
+          children: [
+            Column(
+              children: [
+                AppBarWithAlarm(nickName: "QnA"),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
+                ),
+                // Question Container
+                Container(
                   width: MediaQuery.of(context).size.width * .7,
-                  child: Row(
+                  height: MediaQuery.of(context).size.height * .3,
+                  margin: EdgeInsets.symmetric(
+                    vertical: 68,
+                    horizontal: MediaQuery.of(context).size.width * .1,
+                  ),
+                  child: Column(
                     children: [
-                      // 데이터 넣을 텍스트 공간
                       Expanded(
-                        child: Text(
-                          "Q. 구매는 어떻게 하나요?",
-                          softWrap: true,
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .7,
+                          child: Row(
+                            children: [
+                              // 데이터 넣을 텍스트 공간
+                              Expanded(
+                                child: Text(
+                                  "Q. 구매는 어떻게 하나요?",
+                                  softWrap: true,
+                                  style: TextStyle(
+                                      fontSize: 30, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      //SizedBox(height: MediaQuery.of(context).size.width * .035),
+                      Expanded(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .7,
+                          child: Row(
+                            children: [
+                              // 데이터 넣을 텍스트 공간
+                              Expanded(
+                                child: Text(
+                                  "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문 드립니다.",
+                                  textAlign: TextAlign.start,
+                                  softWrap: true, // 텍스트가 영역을 넘어갈 경우 줄바꿈 여부
+                                  style: TextStyle(
+                                      fontSize: 20, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              //SizedBox(height: MediaQuery.of(context).size.width * .035),
-              Expanded(
-                child: Container(
+                // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                // Answer Container
+                Container(
+                  color: Color.fromRGBO(196, 196, 196, 0.12),
                   width: MediaQuery.of(context).size.width * .7,
-                  child: Row(
+                  height: MediaQuery.of(context).size.height * .3,
+                  margin: EdgeInsets.symmetric(
+                    vertical: 68,
+                    horizontal: MediaQuery.of(context).size.width * .1,
+                  ),
+                  child: Column(
                     children: [
-                      // 데이터 넣을 텍스트 공간
+                      Container(
+                        width: MediaQuery.of(context).size.width * .7,
+                        child: Row(
+                          children: [
+                            // 데이터 넣을 텍스트 공간
+                            Expanded(
+                              child: Text(
+                                "A. 보나펫티를 사용해주셔서 감사합니다. 상품은 가격비교 페이지를 통해 구매하실 수 있습니다.",
+                                softWrap: true,
+                                style: TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      //SizedBox(height: MediaQuery.of(context).size.width * .035),
                       Expanded(
-                        child: Text(
-                          "서비스를 사용한지 얼마 안돼서 조금 헷갈려서 질문 드립니다.",
-                          textAlign: TextAlign.start,
-                          softWrap: true, // 텍스트가 영역을 넘어갈 경우 줄바꿈 여부
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .7,
+                          child: Row(
+                            children: [
+                              // 데이터 넣을 텍스트 공간
+                              Expanded(
+                                child: Text(
+                                  "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매하실 수 있습니다.",
+                                  textAlign: TextAlign.start,
+                                  softWrap: true, // 텍스트가 영역을 넘어갈 경우 줄바꿈 여부
+                                  style: TextStyle(
+                                      fontSize: 20, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-        // Answer Container
-        Container(
-          color: Color.fromRGBO(196, 196, 196, 0.12),
-          width: MediaQuery.of(context).size.width * .7,
-          height: MediaQuery.of(context).size.height * .3,
-          margin: EdgeInsets.symmetric(
-            vertical: 68,
-            horizontal: MediaQuery.of(context).size.width * .1,
-          ),
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .7,
-                  child: Row(
-                    children: [
-                      // 데이터 넣을 텍스트 공간
-                      Expanded(
-                        child: Text(
-                          "A. 보나펫티를 사용해주셔서 감사합니다. 상품은 가격비교 페이지를 통해 구매하실 수 있습니다.",
-                          softWrap: true,
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              //SizedBox(height: MediaQuery.of(context).size.width * .035),
-              Expanded(
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .7,
-                  child: Row(
-                    children: [
-                      // 데이터 넣을 텍스트 공간
-                      Expanded(
-                        child: Text(
-                          "상품 상세페이지 하단에서 '가격비교' 페이지를 통해 구매하실 수 있습니다.",
-                          textAlign: TextAlign.start,
-                          softWrap: true, // 텍스트가 영역을 넘어갈 경우 줄바꿈 여부
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ));
+              ],
+            ),
+          ]
+        ));
   }
 }
 
