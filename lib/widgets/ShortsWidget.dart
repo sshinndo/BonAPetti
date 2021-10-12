@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:pet_service_application/ShortsInfo.dart';
+import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'package:pet_service_application/community/screen/ShortsScreen.dart';
 
 class ShortsWidget extends StatefulWidget {
@@ -63,7 +63,7 @@ class _ShortsWidget extends State<ShortsWidget> {
                       height: profileIconSize,
                       child: Image.asset(
                         widget.shortsInfo.profileImage,
-                        fit: BoxFit.cover
+                        fit: BoxFit.fitHeight
                       )
                     ),
                     Text(

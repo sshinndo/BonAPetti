@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kakao_flutter_sdk/all.dart';
-import 'package:pet_service_application/ShortsInfo.dart';
+import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/GoodsInfo.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
@@ -11,7 +11,7 @@ import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dar
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
-import 'package:pet_service_application/community/screen/CommunityScreen.dart';
+import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
 import 'package:pet_service_application/log_in/LogIn.dart';
 import 'package:pet_service_application/log_in/Splash.dart';
 import 'package:pet_service_application/route/CardNewsListRoute.dart';
@@ -22,7 +22,7 @@ import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/wish_list_screen.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
-import 'package:pet_service_application/ShortsInfo.dart';
+import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'drawer/MainDrawer.dart';
 
 void main() => runApp(MyApp());
@@ -1160,7 +1160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CommunityScreen()),  //사료 정보들
+                          builder: (context) => CommunityMainScreen()),  //사료 정보들
                     ),
                     child: Container(
                         alignment: Alignment.centerRight,

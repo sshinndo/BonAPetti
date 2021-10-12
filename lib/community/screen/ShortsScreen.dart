@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/ShortsInfo.dart';
+import 'package:pet_service_application/community/ShortsInfo.dart';
 
 
 class ShortsScreen extends StatefulWidget {

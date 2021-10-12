@@ -2,19 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
+import 'package:pet_service_application/community/CommunityInfo.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
-import 'package:pet_service_application/ShortsInfo.dart';
+import 'package:pet_service_application/community/ShortsInfo.dart';
+import 'package:pet_service_application/widgets/CommunityWidget.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 
-class CommunityScreen extends StatefulWidget {
+class CommunityMainScreen extends StatefulWidget {
 
-  CommunityScreen();
+  CommunityMainScreen();
 
   @override
-  _CommunityScreen createState() => _CommunityScreen();
+  _CommunityMainScreen createState() => _CommunityMainScreen();
 }
 
-class _CommunityScreen extends State<CommunityScreen> {
+class _CommunityMainScreen extends State<CommunityMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +28,7 @@ class _CommunityScreen extends State<CommunityScreen> {
           Expanded(
             flex: 1,
             child: ListView(
+              scrollDirection: Axis.vertical,
               children: <Widget>[
                 Container(
                   child: GestureDetector(
@@ -42,7 +45,7 @@ class _CommunityScreen extends State<CommunityScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      margin: EdgeInsets.only(left: 50, top: 20, right: 50, bottom: 30),
+                      margin: EdgeInsets.only(left: 30, top: 20, right: 30, bottom: 30),
                       child: SizedBox(
                         height: 50,
                         width: 100,
@@ -85,7 +88,7 @@ class _CommunityScreen extends State<CommunityScreen> {
                       ),//순수 도그온 카드
                     ],
                   ),  //전체-친구 필터 텍스트
-                ), //숏폼 필터 (제스쳐 추가 필요)
+                ),  //숏폼 필터 (제스쳐 추가 필요)
                 Container(
                     height: 400,
                     margin:
@@ -125,7 +128,39 @@ class _CommunityScreen extends State<CommunityScreen> {
                         )
                       ],
                     )
-                ),
+                ),  //숏폼 위젯 스크롤 뷰
+                Container(
+                  //height: 600,
+                  margin: EdgeInsets.only(top: 20,left:30,right:30),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      CommunityWidget(
+                        communityInfo: CommunityInfo(
+                          'images/profile/profile_icon.png',
+                          '돌돌이님',
+                          '돌돌이님',
+                          'images/community/community_image.png',
+                          ['#강아지 #귀여운'],
+                          ['최신 사진입니다\n','귀엽죠?\n'],
+                          false
+                        )
+                      ),
+                      CommunityWidget(
+                        communityInfo: CommunityInfo(
+                          'images/profile/profile_icon.png',
+                          '돌돌이님',
+                          '돌돌이님',
+                          'images/community/community_image.png',
+                          ['#강아지 #사료 #귀여운'],
+                          ['돌돌이님 사진입니다\n','귀여워요\n','정말 귀여워요\n','많이 귀여워요\n'],
+                          false
+                        )
+                      )
+                    ],
+                  ),
+                )
               ]
             )
           ),
