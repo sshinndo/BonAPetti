@@ -717,7 +717,7 @@ Text customSubtitleColorUnderline(String text, Color color) {
 Text customSubtitleQuestionColor(String text) {
   return Text(
     text,
-    style: TextStyle(color: PINK, fontSize: 12.0, fontWeight: FontWeight.bold),
+    style: TextStyle(color: PINK, fontSize: 14.0, fontWeight: FontWeight.bold),
   );
 }
 

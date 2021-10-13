@@ -78,7 +78,6 @@ class SearchBar extends StatelessWidget {
                 ),
               ),
               Expanded(
-
                 child: CupertinoTextField(
                   controller: textFieldController,
                   style: TextStyle(

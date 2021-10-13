@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
-import 'package:pet_service_application/mypage/ActivityMedal.dart';
-import 'package:pet_service_application/mypage/Faq.dart';
-import 'package:pet_service_application/mypage/Report.dart';
+import 'package:pet_service_application/mypage/screen/ActivityMedalScreen.dart';
+import 'package:pet_service_application/mypage/screen/FaqScreen.dart';
+import 'package:pet_service_application/mypage/screen/ReportScreen.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
-import 'package:pet_service_application/mypage/EditPetProfile.dart';
-import 'package:pet_service_application/mypage/EditUserProfile.dart';
-import 'package:pet_service_application/mypage/Qna.dart';
+import 'package:pet_service_application/mypage/screen/PetProfileScreen.dart';
+import 'package:pet_service_application/mypage/screen/EditUserProfileScreen.dart';
+import 'package:pet_service_application/mypage/screen/QnaScreen.dart';
+import 'package:pet_service_application/mypage/widget/UserProfileWidget.dart';
 
 
 class MyPage extends StatefulWidget {
@@ -69,76 +71,9 @@ class _MyPageState extends State<MyPage> {
                 .of(context)
                 .size
                 .height * 0.11),
-            // 프로필 사진, 닉네임, 등급, 자기소개를 감싸는 전체 Container
-            Container(
-              // color: Colors.blue,
-              padding: EdgeInsets.only(
-                  left: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.07),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      ClipRRect(
-                        // 프로필 이미지 설정란
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.asset(
-                          'images/loginIcon/icon_kakao.png',
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.2,
-                          height: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.2,
-                        ),
-                      ),
-                      Container(
-                        // color: Colors.red,
-                        margin: EdgeInsets.only(
-                            left: MediaQuery
-                                .of(context)
-                                .size
-                                .width * 0.05),
-                        child: Column(
-                          children: [
-                            Row(
-                              // <홍길동>님
-                              children: [
-                                Text(
-                                  UserInfo.userNickname,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  '님',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Text(
-                              "등급",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              // + 유저 프로필 상태메시지 위젯
-            ),
+            // 프로필 사진, 닉네임, 등급, 자기소개를 감싸는 전체 Widget
+            UserProfileWidget(),
+
             SizedBox(height: MediaQuery
                 .of(context)
                 .size
@@ -235,8 +170,9 @@ class _MyPageState extends State<MyPage> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
-                                    image: NetworkImage(
-                                        'https://googleflutter.com/sample_image.jpg'),
+                                    image:
+                                        AssetImage('images/profile/pet_profile_sample.png'),
+                                    // NetworkImage('https://googleflutter.com/sample_image.jpg'),
                                     fit: BoxFit.fill),
                               ),
                             ),
@@ -269,7 +205,7 @@ class _MyPageState extends State<MyPage> {
                                   ),
                                 ),
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>EditPetProfile()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>PetProfileScreen()));
                                 })
                           ],
                         ),
@@ -779,90 +715,3 @@ class _MyPageState extends State<MyPage> {
     );
   }
 }
-//RegistProfile Class 참고: https://kyungsnim.net/126
-
-// class RegistProfile extends StatefulWidget {
-//   const RegistProfile({Key? key}) : super(key: key);
-//   @override
-//   _RegistProfileState createState() => _RegistProfileState();
-// }
-//
-// class _RegistProfileState extends State<RegistProfile> {
-//   // 카메라로 찍거나 갤러리에서 가져온 사진 컨트롤하기 위한 변수
-//   PickedFile _imageFile; // 카메라/갤러리에서 사진 가져올 때 사용함(image_picker)
-//   final ImagePicker _picker = ImagePicker(); // 카메라/갤러리에서 사진 가져올 때 사용함(image_picker)
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: Stack(
-//         children: [
-//           //CircleAvatar : 프로필 사진 세팅부분
-//           CircleAvatar(
-//             radius: 5,
-//             backgroundImage: _imageFile == null
-//                 ? AssetImage('images/logo_main.png')
-//                 : FileImage(File(_imageFile.path)),
-//           ),
-//           Positioned(
-//               bottom: 20,
-//               right: 20,
-//               child: InkWell(
-//                 onTap: (){
-//                   showModalBottomSheet(context: context, builder: ((builder)=> bottomSheet()));
-//                 },
-//               )
-//           )
-//         ],
-//       ),
-//     );
-//   }
-//   //카메라 아이콘 클릭시 띄울 모달 팝업
-//   Widget bottomSheet(){
-//     return Container(
-//       height: 100,
-//       width: MediaQuery.of(context).size.width,
-//       margin: EdgeInsets.symmetric(
-//         horizontal: 20,
-//         vertical: 20,
-//       ),
-//       child: Column(
-//         children: [
-//           Text(
-//             '프로필 사진을 골라주세요',
-//             style: TextStyle(
-//               fontSize: 20,
-//             ),
-//           ),
-//           SizedBox(height: 20,),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               FlatButton.icon(
-//                 icon: Icon(Icons.camera, size: 50),
-//                 onPressed: (){
-//                   takePhoto(ImageSource.camera);
-//                 },
-//                 label: Text('카메라',style: TextStyle(fontSize: 20),),
-//               ),
-//               FlatButton.icon(
-//                 icon: Icon(Icons.camera, size: 50),
-//                 onPressed: (){
-//                   takePhoto(ImageSource.gallery);
-//                 },
-//                 label: Text('갤러리',style: TextStyle(fontSize: 20),),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-//   //카메라 찍거나 or 갤러리에서 가져오는 메소드
-//   takePhoto(ImageSource source) async{
-//     final pickedFile = await _picker.getImage(source:source);
-//     setState((){
-//       _imageFile = pickedFile;
-//     });
-//   }
-// }
