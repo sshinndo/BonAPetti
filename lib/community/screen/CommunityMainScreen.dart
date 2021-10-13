@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/community/CommunityInfo.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'package:pet_service_application/widgets/CommunityWidget.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
@@ -98,7 +98,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                       children: <Widget>[
                         ShortsWidget(
                             shortsInfo: ShortsInfo(
-                                'images/profile/profile_icon.png',
+                                'images/profile/sample_profile.png',
                                 '돌돌이님',
                                 '돌돌이님',
                                 'images/shorts/shorts_thumb.png',
@@ -108,7 +108,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                         ),
                         ShortsWidget(
                             shortsInfo: ShortsInfo(
-                                'images/profile/profile_icon.png',
+                                'images/profile/sample_profile.png',
                                 '돌돌이님',
                                 '돌돌이님',
                                 'images/shorts/shorts_thumb.png',
@@ -118,7 +118,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                         ),
                         ShortsWidget(
                             shortsInfo: ShortsInfo(
-                                'images/profile/profile_icon.png',
+                                'images/profile/sample_profile.png',
                                 '돌돌이님',
                                 '돌돌이님',
                                 'images/shorts/shorts_thumb.png',
@@ -138,7 +138,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                     children: <Widget>[
                       CommunityWidget(
                         communityInfo: CommunityInfo(
-                          'images/profile/profile_icon.png',
+                          'images/profile/sample_profile.png',
                           '돌돌이님',
                           '돌돌이님',
                           'images/community/community_image.png',
@@ -149,7 +149,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                       ),
                       CommunityWidget(
                         communityInfo: CommunityInfo(
-                          'images/profile/profile_icon.png',
+                          'images/profile/sample_profile.png',
                           '돌돌이님',
                           '돌돌이님',
                           'images/community/community_image.png',

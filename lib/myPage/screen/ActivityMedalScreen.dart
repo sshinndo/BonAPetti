@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+
+// Gridview 참고하기 : https://devmg.tistory.com/181
 
 // 활동메달(메달목록) 페이지
 class ActivityMedal extends StatefulWidget {

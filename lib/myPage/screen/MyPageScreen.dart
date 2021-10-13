@@ -4,15 +4,16 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
+import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
-import 'package:pet_service_application/mypage/screen/ActivityMedalScreen.dart';
-import 'package:pet_service_application/mypage/screen/FaqScreen.dart';
-import 'package:pet_service_application/mypage/screen/ReportScreen.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
-import 'package:pet_service_application/mypage/screen/PetProfileScreen.dart';
-import 'package:pet_service_application/mypage/screen/EditUserProfileScreen.dart';
-import 'package:pet_service_application/mypage/screen/QnaScreen.dart';
-import 'package:pet_service_application/mypage/widget/UserProfileWidget.dart';
+import 'package:pet_service_application/myPage/screen/ActivityMedalScreen.dart';
+import 'package:pet_service_application/myPage/screen/FaqScreen.dart';
+import 'package:pet_service_application/myPage/screen/ReportScreen.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/myPage/screen/PetProfileScreen.dart';
+import 'package:pet_service_application/myPage/screen/UserProfileScreen.dart';
+import 'package:pet_service_application/myPage/screen/QnaScreen.dart';
+import 'package:pet_service_application/myPage/widget/UserProfileWidget.dart';
 
 
 class MyPage extends StatefulWidget {
@@ -24,42 +25,42 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
-  List<Map<String, String>> categoryDatas = [];
-
-  @override
-  void initState() {
-    super.initState();
-    categoryDatas = [
-      {
-        "image": "images/svg/wish_list.svg",
-        "title": "찜목록"
-      },
-      {
-        "image": "images/svg/my_review.svg",
-        "title": "My리뷰"
-      },
-      {
-        "image": "images/svg/my_review.svg", // 이미지 수정 필요
-        "title": "활동메달"
-      },
-      {
-        "image": "images/svg/qna.svg",
-        "title": "QnA"
-      },
-      {
-        "image": "images/svg/faq.svg",
-        "title": "FAQ"
-      },
-      {
-        "image": "images/svg/kakao_invite.svg",
-        "title": "카카오톡 친구초대"
-      },
-      {
-        "image": "images/svg/report.svg",
-        "title": "신고하기"
-      },
-    ];
-  }
+  // List<Map<String, String>> categoryDatas = [];
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   categoryDatas = [
+  //     {
+  //       "image": "images/svg/wish_list.svg",
+  //       "title": "찜목록"
+  //     },
+  //     {
+  //       "image": "images/svg/my_review.svg",
+  //       "title": "My 활동 리뷰"
+  //     },
+  //     {
+  //       "image": "images/svg/my_review.svg", // 이미지 수정 필요
+  //       "title": "활동메달"
+  //     },
+  //     {
+  //       "image": "images/svg/qna.svg",
+  //       "title": "QnA"
+  //     },
+  //     {
+  //       "image": "images/svg/faq.svg",
+  //       "title": "FAQ"
+  //     },
+  //     {
+  //       "image": "images/svg/kakao_invite.svg",
+  //       "title": "카카오톡 친구초대"
+  //     },
+  //     {
+  //       "image": "images/svg/report.svg",
+  //       "title": "신고하기"
+  //     },
+  //   ];
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +112,7 @@ class _MyPageState extends State<MyPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EditUserProfile()));
+                            builder: (context) => UserProfileScreen()));
                   }),
             ),
             SizedBox(height: 16),
@@ -245,7 +246,7 @@ class _MyPageState extends State<MyPage> {
             ]),
             SizedBox(height: 16),
             //---------------------------------------------
-            // 내 커뮤니티 / 내 중고장터 버튼
+            // 내 커뮤니티 / 내 알뜰장터 버튼
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -273,7 +274,7 @@ class _MyPageState extends State<MyPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SvgPicture.asset(
-                              'images/bottomBar/icon_community.svg', // 커뮤니티 이미지
+                              'images/svg/community.svg', // 커뮤니티 이미지
                               width: 16,
                               height: 16, // 크기는 폰트 사이즈와 맞게
                             ),
@@ -295,7 +296,7 @@ class _MyPageState extends State<MyPage> {
                       }
                   ),
                 ),
-                // 내 중고장터 버튼 Card
+                // 내 알뜰장터 버튼 Card
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius
                       .circular(12.0)), // 카드 테두리의 둥글기 설정값
@@ -319,13 +320,13 @@ class _MyPageState extends State<MyPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SvgPicture.asset(
-                              'images/bottomBar/icon_shopping_list.svg',
-                              // 중고장터 이미지
+                              'images/svg/shopping_list.svg',
+                              // 알뜰장터 이미지
                               width: 16,
                               height: 16, // 크기는 폰트 사이즈와 맞게
                             ),
                             SizedBox(width: 8),
-                            Text('내 중고장터',
+                            Text('내 알뜰장터',
                               style: TextStyle(
                                   fontSize: 16
                               ),
@@ -357,7 +358,7 @@ class _MyPageState extends State<MyPage> {
               ),
             ),
             SizedBox(height: 20),
-            // 1-1. 찜목록
+            // 1-1. 쇼핑 pick
             ListTile(
               minVerticalPadding: MediaQuery
                   .of(context)
@@ -385,7 +386,7 @@ class _MyPageState extends State<MyPage> {
                     ),
                     SizedBox(width: 42.5),
                     Text(
-                      '찜목록',
+                      '쇼핑 Pick',
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontSize: 16.0,
@@ -404,7 +405,7 @@ class _MyPageState extends State<MyPage> {
                 print('WishListScreen page is clicked');
               },
             ),
-            // 1-2. My리뷰
+            // 1-2. My 쇼핑 리뷰
             ListTile(
               minVerticalPadding: MediaQuery
                   .of(context)
@@ -432,7 +433,7 @@ class _MyPageState extends State<MyPage> {
                     ),
                     SizedBox(width: 42.5),
                     Text(
-                      'My리뷰', // 2. list에 넣을 변수 값
+                      'My 쇼핑 리뷰', // 2. list에 넣을 변수 값
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontSize: 16.0,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/class/colorCustomClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/mypage/screen/EditPetProfileScreen.dart';
 import 'package:pet_service_application/mypage/widget/PetProfileWidget.dart';
 

@@ -6,7 +6,7 @@ import 'package:pet_service_application/card_news/detail/CardNewsRelatedProducts
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
 import 'package:pet_service_application/card_news/detail/EventDetailWidget.dart';
 import 'package:pet_service_application/card_news/detail/TopPetsWidget.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class CardNewsDetailRoute extends StatelessWidget {
   final CardNewsModel cardNewsModel;

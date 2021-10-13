@@ -3,9 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:pet_service_application/SeungHyun/screen/shopping_basket.dart';
 import 'package:pet_service_application/SquareCardPageView.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
-import 'package:pet_service_application/GoodsInfo.dart';
+import 'package:pet_service_application/class/GoodsInfo.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class DetailedGoodsScreen extends StatelessWidget {
   final GoodsInfo goodsInfo;

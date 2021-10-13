@@ -67,8 +67,8 @@ class _MenuBottomBar extends State<MenuBottomBar> {
           backgroundColor: Color.fromRGBO(244, 244, 244, 1),
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset('images/bottomBar/icon_shopping_list.svg',color: Colors.black54,width: 25,height: 25),
-          label: '중고장터',
+          icon: SvgPicture.asset('images/svg/shopping_list.svg',color: Colors.black54,width: 25,height: 25),
+          label: '알뜰장터',
           backgroundColor: Color.fromRGBO(244, 244, 244, 1),
         ),
         BottomNavigationBarItem(
@@ -77,7 +77,7 @@ class _MenuBottomBar extends State<MenuBottomBar> {
           backgroundColor: Color.fromRGBO(244, 244, 244, 1),
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset('images/bottomBar/icon_community.svg',color: Colors.black54,width: 25,height: 25,),
+          icon: SvgPicture.asset('images/svg/community.svg',color: Colors.black54,width: 25,height: 25,),
           label: '커뮤니티',
           backgroundColor: Color.fromRGBO(244, 244, 244, 1),
         ),
@@ -97,13 +97,13 @@ class _MenuBottomBar extends State<MenuBottomBar> {
           }
           if (value == 1) { // 중고장터
             // Navigator.push(
-            //     context, MaterialPageRoute(builder: (context) => MyApp()));
+            //     context, MaterialPageRoute(builder: (context) => UsedMarket()));
           }
           if (value == 2) { // 관심리스트
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => WishListScreen()));
           }
-          if (value == 3) { // 커뮤니티
+          if (value == 3) { // 메인 커뮤니티
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => CommunityMainScreen()));
           }

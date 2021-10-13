@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/log_in/LogIn.dart';
+import 'package:pet_service_application/log_in/screen/LogIn.dart';
 
 void main() => runApp(MyAppSplash());
 

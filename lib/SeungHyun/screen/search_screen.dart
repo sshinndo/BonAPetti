@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class SearchRoute extends StatefulWidget {
   @override

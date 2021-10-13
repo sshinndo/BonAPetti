@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class PetProfileWidget extends StatefulWidget {
   final PetInfo petInfo; // 펫 정보 객체
