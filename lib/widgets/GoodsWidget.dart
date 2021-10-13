@@ -7,6 +7,10 @@ import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dar
 class GoodsCardWidget extends StatefulWidget {
   final GoodsInfo goodsInfo;  //굿즈 정보 객체
 
+
+
+
+
   GoodsCardWidget({Key? key, required this.goodsInfo}) : super(key: key); //생성자
 
   @override
