@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
+import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class Report extends StatefulWidget {
   const Report({Key? key}) : super(key: key);
@@ -117,7 +118,39 @@ class _ReportState extends State<Report> {
                   ),
                 ),
               ),
+              SizedBox(height: 15),
 
+              // 제목
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(left:31.0),
+                child: Text(
+                    '제목',
+                    style: TextStyle(color: Colors.black, fontWeight:FontWeight.bold,fontSize: 14)),
+              ),
+              SizedBox(height: 10.0),
+              Card(
+                elevation: 3.0, // 카드박스 그림자 음영
+                margin: EdgeInsets.only(left:20, right: 20),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                child: Container(
+                  width: double.infinity,
+                  height: 50.0,
+                  padding: EdgeInsets.only(left: 20),
+                  child: TextFormField(
+                      controller: reportText,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          hintText: '제목을 작성해 주세요',
+                          hintStyle: TextStyle(color: GREY)),
+                      cursorColor: GREY,
+                      //테스트용 코드
+                      onChanged: (text) {
+                        print(text);
+                      }),
+                ),
+              ),
 
               SizedBox(height: 15),
               Container(

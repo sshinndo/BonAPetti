@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/GoodsInfo.dart';
+import 'package:pet_service_application/class/GoodsInfo.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
 import 'package:pet_service_application/widgets/BargainCardWidget.dart';
 import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
@@ -11,7 +11,7 @@ import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
-import 'package:pet_service_application/log_in/LogIn.dart';
+import 'package:pet_service_application/log_in/screen/LogIn.dart';
 import 'package:pet_service_application/log_in/Splash.dart';
 import 'package:pet_service_application/route/CardNewsListRoute.dart';
 import 'package:pet_service_application/card_news/CardNewsPageView.dart';
@@ -19,7 +19,7 @@ import 'package:pet_service_application/card_news/CardNewsPageView.dart';
 import 'package:pet_service_application/SeungHyun/screen/search_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'drawer/MainDrawer.dart';
@@ -1177,7 +1177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: <Widget>[
                       ShortsWidget(
                         shortsInfo: ShortsInfo(
-                          'images/profile/profile_icon.png',
+                          'images/profile/sample_profile.png',
                           '돌돌이님',
                           '돌돌이님',
                           'images/shorts/shorts_thumb.png',
@@ -1187,7 +1187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       ShortsWidget(
                           shortsInfo: ShortsInfo(
-                              'images/profile/profile_icon.png',
+                              'images/profile/sample_profile.png',
                               '돌돌이님',
                               '돌돌이님',
                               'images/shorts/shorts_thumb.png',
@@ -1197,7 +1197,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       ShortsWidget(
                           shortsInfo: ShortsInfo(
-                              'images/profile/profile_icon.png',
+                              'images/profile/sample_profile.png',
                               '돌돌이님',
                               '돌돌이님',
                               'images/shorts/shorts_thumb.png',

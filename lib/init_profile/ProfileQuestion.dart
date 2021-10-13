@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/HashTagButtonList.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/class/colorCustomClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/init_profile/FifthRoute.dart';
 import 'package:pet_service_application/main.dart';
 

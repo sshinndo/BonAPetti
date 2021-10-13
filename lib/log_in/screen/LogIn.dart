@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../init_profile/ProfileQuestion.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/class/colorCustomClass.dart';
+import '../../init_profile/ProfileQuestion.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/main.dart';
-import 'package:pet_service_application/log_in/SignUpPage.dart';
+import 'package:pet_service_application/log_in/screen/SignUpPage.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
 

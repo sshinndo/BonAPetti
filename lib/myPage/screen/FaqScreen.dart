@@ -1,11 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
 
 // FAQ_FAQ상세 페이지
 class FaqDetails extends StatelessWidget {

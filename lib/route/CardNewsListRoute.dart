@@ -3,7 +3,7 @@ import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/card_news/CardNewsListView.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 final double leftRightMarginSize = 50;
 
