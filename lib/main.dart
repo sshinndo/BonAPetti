@@ -10,7 +10,7 @@ import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dar
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
-import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
+import 'package:pet_service_application/community/pages/CommunityMainPage.dart';
 import 'package:pet_service_application/log_in/LogIn.dart';
 import 'package:pet_service_application/log_in/Splash.dart';
 import 'package:pet_service_application/route/CardNewsListRoute.dart';
@@ -1156,7 +1156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CommunityMainScreen()),  //커뮤니티 페이지
+                          builder: (context) => CommunityMainPage()),  //커뮤니티 페이지
                     ),
                     child: Container(
                         alignment: Alignment.centerRight,

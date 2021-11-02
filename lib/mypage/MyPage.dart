@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
+import 'package:pet_service_application/community/pages/MyCommunityPage.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/drawer/Report.dart';
 import 'package:pet_service_application/log_in/UserInfoClass.dart';
@@ -346,6 +347,7 @@ class _MyPageState extends State<MyPage> {
                       ),
                       onTap: () {
                         // 재현님이 만든 커뮤니티 페이지로 이동하기 채우기
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>MyCommunityPage()));
                       }
                   ),
                 ),

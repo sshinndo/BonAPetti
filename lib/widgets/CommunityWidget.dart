@@ -64,7 +64,7 @@ class _CommunityWidget extends State<CommunityWidget> {
                                   fontSize: nameSize,
                                   fontWeight: FontWeight.bold
                               )
-                          ),
+                          ),  //유저 닉네임
                           Text(
                               widget.communityInfo.petName,
                               style: TextStyle(
@@ -72,10 +72,10 @@ class _CommunityWidget extends State<CommunityWidget> {
                                   fontSize: nameSize - 2,
                                   fontWeight: FontWeight.bold
                               )
-                          )
+                          ) //펫 이름
 
                         ],
-                      )
+                      ) //유저&펫 네임
                     ) //Profile Name
                   ],
                 )

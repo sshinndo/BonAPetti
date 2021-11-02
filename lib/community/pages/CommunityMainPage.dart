@@ -8,15 +8,15 @@ import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'package:pet_service_application/widgets/CommunityWidget.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 
-class CommunityMainScreen extends StatefulWidget {
+class CommunityMainPage extends StatefulWidget {
 
-  CommunityMainScreen();
+  CommunityMainPage();
 
   @override
-  _CommunityMainScreen createState() => _CommunityMainScreen();
+  _CommunityMainPage createState() => _CommunityMainPage();
 }
 
-class _CommunityMainScreen extends State<CommunityMainScreen> {
+class _CommunityMainPage extends State<CommunityMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
