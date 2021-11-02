@@ -166,7 +166,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             left: width*0.06
                         ),
                         child: TextFormField(
-                          // controller: editingController,
+                          //   onSaved: (val),
+                          //   validator: ,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -179,10 +180,47 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             })
                     ),
                     onTap:(){
-                      // 사진촬영 기능으로 이동
+                      //
                     }
                 ),
               ),
+              SizedBox(height: height*0.03),
+              Card(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)), // 카드 테두리의 둥글기 설정값
+                elevation: 2.0,
+                child: InkWell(
+                    splashColor: Colors.grey.withAlpha(30),
+                    child: SizedBox(
+                      width: width*0.9,
+                      height: 52.0,
+                      child: ElevatedButton(
+                          child: Text("저장 하기"),
+                          style: ElevatedButton.styleFrom(
+                              primary: PINK,
+                              onPrimary: Colors.white,
+                              textStyle: TextStyle(fontSize: 14
+                                //fontWeight: FontWeight.bold
+                              ),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0))),
+                          onPressed: () async{
+                            // if (this.formKey.currentState.validate()){
+                            //   // validation 이 성공하면 true 가 리턴돼요!
+                            //   Get.snackbar(
+                            //     '저장완료!',
+                            //     '폼 저장이 완료되었습니다!',
+                            //     backgroundColor: Colors.white,
+                            //   );
+                            // }
+                          }
+                      ),
+                    ),
+                    onTap:(){
+                      // 대표활동메달 팝업 페이지로 이동
+                    }
+                ),
+              ),
+
             ],
           ),
         ),

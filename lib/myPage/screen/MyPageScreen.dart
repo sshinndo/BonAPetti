@@ -25,42 +25,6 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
-  // List<Map<String, String>> categoryDatas = [];
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   categoryDatas = [
-  //     {
-  //       "image": "images/svg/wish_list.svg",
-  //       "title": "찜목록"
-  //     },
-  //     {
-  //       "image": "images/svg/my_review.svg",
-  //       "title": "My 활동 리뷰"
-  //     },
-  //     {
-  //       "image": "images/svg/my_review.svg", // 이미지 수정 필요
-  //       "title": "활동메달"
-  //     },
-  //     {
-  //       "image": "images/svg/qna.svg",
-  //       "title": "QnA"
-  //     },
-  //     {
-  //       "image": "images/svg/faq.svg",
-  //       "title": "FAQ"
-  //     },
-  //     {
-  //       "image": "images/svg/kakao_invite.svg",
-  //       "title": "카카오톡 친구초대"
-  //     },
-  //     {
-  //       "image": "images/svg/report.svg",
-  //       "title": "신고하기"
-  //     },
-  //   ];
-  // }
 
   @override
   Widget build(BuildContext context) {

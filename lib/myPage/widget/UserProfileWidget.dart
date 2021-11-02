@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
-import 'package:pet_service_application/mypage/widget/PetProfileWidget.dart';
+import 'package:pet_service_application/myPage/widget/PetProfileWidget.dart';
 
 class UserProfileWidget extends StatefulWidget {
   const UserProfileWidget({Key? key}) : super(key: key);
