@@ -10,7 +10,7 @@ import 'package:pet_service_application/widgets/ShortsWidget.dart';
 
 class CommunityMainScreen extends StatefulWidget {
 
-  CommunityMainScreen();
+  //CommunityMainScreen.CommunityMainScreen();
 
   @override
   _CommunityMainScreen createState() => _CommunityMainScreen();

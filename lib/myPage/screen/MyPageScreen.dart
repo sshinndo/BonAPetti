@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
+import 'package:pet_service_application/community/screen/MyCommunityScreen.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
@@ -252,11 +253,8 @@ class _MyPageState extends State<MyPage> {
                         ),
                       ),
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context)=>
-                                CommunityMainScreen()));
+                        // 재현님이 만든 커뮤니티 페이지로 이동하기 채우기
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>MyCommunityScreen()));
                       }
                   ),
                 ),

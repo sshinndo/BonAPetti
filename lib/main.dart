@@ -1158,7 +1158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CommunityMainScreen()),  //사료 정보들
+                          builder: (context) => CommunityMainScreen()),  //커뮤니티 페이지
                     ),
                     child: Container(
                         alignment: Alignment.centerRight,
