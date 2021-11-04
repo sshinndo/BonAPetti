@@ -41,5 +41,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+    <string>프로필 이미지를 제공할 목적으로 카메라에 접근합니다.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>프로필 이미지를 제공할 목적으로 사진첩에 접근합니다.</string>
 </dict>
 </plist>

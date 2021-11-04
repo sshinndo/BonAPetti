@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/GoodsInfo.dart';
+import 'package:pet_service_application/class/GoodsInfo.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
 import 'package:pet_service_application/widgets/BargainCardWidget.dart';
 import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
-import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
+import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
-import 'package:pet_service_application/community/pages/CommunityMainPage.dart';
-import 'package:pet_service_application/log_in/LogIn.dart';
+import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
+import 'package:pet_service_application/log_in/screen/LogIn.dart';
 import 'package:pet_service_application/log_in/Splash.dart';
 import 'package:pet_service_application/route/CardNewsListRoute.dart';
 import 'package:pet_service_application/card_news/CardNewsPageView.dart';
@@ -19,7 +19,7 @@ import 'package:pet_service_application/card_news/CardNewsPageView.dart';
 import 'package:pet_service_application/SeungHyun/screen/search_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'drawer/MainDrawer.dart';
@@ -578,7 +578,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
         crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
         children: <Widget>[
-          DrawerWithAlarmAppBar(nickName: UserInfo.userNickname),
+          AppBarWithAlarm(nickName: UserInfo.userNickname),
           Expanded(
             flex: 1,
             child: ListView(
@@ -649,7 +649,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '당신과 함께하는',
+                        '오늘 당신과 함께하는',
                         style: TextStyle(fontSize: 32),
                       ),  //당신과 함께하는
                       Container(
@@ -935,13 +935,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           MaterialPageRoute(
                               builder: (context) => GoodsScreen([
                                     GoodsInfo(
-                                      '닭고기맛 사료',
+                                      'ANF 6FREE PLUS 소고기연어 5.6kg 강아지사료, 1개',
+                                      //'닭고기맛 사료',
                                       'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
-                                      25000,
+                                      38550,
                                       null,
                                       GoodsDetailedInfo(
                                           [
-                                            'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
+                                            'https://thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/45bc/8fb74123b56f027538b4f8be789bd5fbc5ae8573a52dcbff8a806aa71d78.jpg',
+                                            //'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
                                           ],
                                           false,
                                           ['쌀', '대두', '연어'],
@@ -1156,7 +1158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CommunityMainPage()),  //커뮤니티 페이지
+                          builder: (context) => CommunityMainScreen()),  //커뮤니티 페이지
                     ),
                     child: Container(
                         alignment: Alignment.centerRight,
@@ -1175,7 +1177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: <Widget>[
                       ShortsWidget(
                         shortsInfo: ShortsInfo(
-                          'images/profile/profile_icon.png',
+                          'images/profile/sample_profile.png',
                           '돌돌이님',
                           '돌돌이님',
                           'images/shorts/shorts_thumb.png',
@@ -1185,7 +1187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       ShortsWidget(
                           shortsInfo: ShortsInfo(
-                              'images/profile/profile_icon.png',
+                              'images/profile/sample_profile.png',
                               '돌돌이님',
                               '돌돌이님',
                               'images/shorts/shorts_thumb.png',
@@ -1195,7 +1197,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       ShortsWidget(
                           shortsInfo: ShortsInfo(
-                              'images/profile/profile_icon.png',
+                              'images/profile/sample_profile.png',
                               '돌돌이님',
                               '돌돌이님',
                               'images/shorts/shorts_thumb.png',

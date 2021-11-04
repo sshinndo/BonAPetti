@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/HashTagButtonList.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/class/colorCustomClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/init_profile/FifthRoute.dart';
 import 'package:pet_service_application/main.dart';
 
@@ -717,7 +718,7 @@ Text customSubtitleColorUnderline(String text, Color color) {
 Text customSubtitleQuestionColor(String text) {
   return Text(
     text,
-    style: TextStyle(color: PINK, fontSize: 12.0, fontWeight: FontWeight.bold),
+    style: TextStyle(color: PINK, fontSize: 14.0, fontWeight: FontWeight.bold),
   );
 }
 

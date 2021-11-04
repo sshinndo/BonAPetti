@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../init_profile/ProfileQuestion.dart';
-import 'package:pet_service_application/log_in/LogIn.dart';
+import 'package:pet_service_application/class/colorCustomClass.dart';
+import '../../init_profile/ProfileQuestion.dart';
+import 'package:pet_service_application/log_in/screen/LogIn.dart';
 import 'package:pet_service_application/main.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/mypage/MyPage.dart';
+import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
+import 'package:pet_service_application/mypage/screen/MyPageScreen.dart';
 import 'package:pet_service_application/SeungHyun/screen/shopping_basket.dart';
 import 'package:pet_service_application/main.dart';
 import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pet_service_application/community/pages/CommunityMainPage.dart';
+import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
 // 호출하는 방법
 
 /*
@@ -67,8 +68,8 @@ class _MenuBottomBar extends State<MenuBottomBar> {
           backgroundColor: Color.fromRGBO(244, 244, 244, 1),
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset('images/bottomBar/icon_shopping_list.svg',color: Colors.black54,width: 25,height: 25),
-          label: '중고장터',
+          icon: SvgPicture.asset('images/svg/shopping_list.svg',color: Colors.black54,width: 25,height: 25),
+          label: '알뜰장터',
           backgroundColor: Color.fromRGBO(244, 244, 244, 1),
         ),
         BottomNavigationBarItem(
@@ -77,7 +78,7 @@ class _MenuBottomBar extends State<MenuBottomBar> {
           backgroundColor: Color.fromRGBO(244, 244, 244, 1),
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset('images/bottomBar/icon_community.svg',color: Colors.black54,width: 25,height: 25,),
+          icon: SvgPicture.asset('images/svg/community.svg',color: Colors.black54,width: 25,height: 25,),
           label: '커뮤니티',
           backgroundColor: Color.fromRGBO(244, 244, 244, 1),
         ),
@@ -97,7 +98,7 @@ class _MenuBottomBar extends State<MenuBottomBar> {
           }
           if (value == 1) { // 중고장터
             // Navigator.push(
-            //     context, MaterialPageRoute(builder: (context) => MyApp()));
+            //     context, MaterialPageRoute(builder: (context) => UsedMarket()));
           }
           if (value == 2) { // 관심리스트
             Navigator.push(context,
@@ -105,7 +106,7 @@ class _MenuBottomBar extends State<MenuBottomBar> {
           }
           if (value == 3) { // 커뮤니티
             Navigator.push(context,
-                 MaterialPageRoute(builder: (context) => CommunityMainPage()));
+                 MaterialPageRoute(builder: (context) => CommunityMainScreen()));
           }
           if (value == 4) { // 마이페이지
              Navigator.push(context,

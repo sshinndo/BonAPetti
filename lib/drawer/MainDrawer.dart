@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/main.dart';
 import '../SeungHyun/screen/WishListScreen.dart';
-import '../log_in/UserInfoClass.dart';
-import '../drawer/Report.dart';
+import '../log_in/class/UserInfoClass.dart';
+import '../mypage/screen/ReportScreen.dart';
 // import 'dart:io';
 // import 'package:image_picker/image_picker.dart';
 

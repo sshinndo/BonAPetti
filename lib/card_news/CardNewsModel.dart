@@ -1,4 +1,4 @@
-import 'package:pet_service_application/GoodsInfo.dart';
+import 'package:pet_service_application/class/GoodsInfo.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
 
 class CardNewsModel {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/card_news/CardNewsListView.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
-import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 final double leftRightMarginSize = 50;
 
@@ -23,7 +23,7 @@ class CardNewsListRoute extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
           crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
           children: [
-            DrawerWithAlarmAppBar(nickName: UserInfo.userNickname),
+            AppBarWithAlarm(nickName: UserInfo.userNickname),
             Container(
                 margin: EdgeInsets.all(20),
                 child: Center(

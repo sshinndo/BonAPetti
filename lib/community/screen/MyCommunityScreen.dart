@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
-import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 
-class MyCommunityPage extends StatefulWidget {
-  const MyCommunityPage({Key? key}) : super(key: key);
+class MyCommunityScreen extends StatefulWidget {
+  const MyCommunityScreen({Key? key}) : super(key: key);
   @override
-  _MyCommunityPageState createState() => _MyCommunityPageState();
+  _MyCommunityScreenState createState() => _MyCommunityScreenState();
 }
 
-class _MyCommunityPageState extends State<MyCommunityPage> {
+class _MyCommunityScreenState extends State<MyCommunityScreen> {
 
   //initState()
 
@@ -22,7 +22,7 @@ class _MyCommunityPageState extends State<MyCommunityPage> {
     return Scaffold(
       body: ListView(
         children : [
-          DrawerWithAlarmAppBar(nickName: UserInfo.userNickname), //닉네임 & 알림
+          AppBarWithAlarm(nickName: UserInfo.userNickname), //닉네임 & 알림
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,

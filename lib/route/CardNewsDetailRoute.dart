@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
-import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
+import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/card_news/detail/CardNewsRelatedProductsWidget.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
 import 'package:pet_service_application/card_news/detail/EventDetailWidget.dart';
 import 'package:pet_service_application/card_news/detail/TopPetsWidget.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class CardNewsDetailRoute extends StatelessWidget {
   final CardNewsModel cardNewsModel;
@@ -21,7 +21,7 @@ class CardNewsDetailRoute extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          DrawerWithAlarmAppBar(nickName: UserInfo.userNickname),
+          AppBarWithAlarm(nickName: UserInfo.userNickname),
           Expanded(
               child: ListView(children: [
             Container(

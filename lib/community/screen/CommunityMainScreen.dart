@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
+import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/community/CommunityInfo.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'package:pet_service_application/widgets/CommunityWidget.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 
-class CommunityMainPage extends StatefulWidget {
+class CommunityMainScreen extends StatefulWidget {
 
-  CommunityMainPage();
+  //CommunityMainScreen.CommunityMainScreen();
 
   @override
-  _CommunityMainPage createState() => _CommunityMainPage();
+  _CommunityMainScreen createState() => _CommunityMainScreen();
 }
 
-class _CommunityMainPage extends State<CommunityMainPage> {
+class _CommunityMainScreen extends State<CommunityMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,7 @@ class _CommunityMainPage extends State<CommunityMainPage> {
         mainAxisAlignment: MainAxisAlignment.start, //세로로 나열 기준은 시작점 (제일 위부터)
         crossAxisAlignment: CrossAxisAlignment.center, //가로 나열 기준은 중심 (중심기준)
         children: [
-          DrawerWithAlarmAppBar(nickName: UserInfo.userNickname),
+          AppBarWithAlarm(nickName: UserInfo.userNickname),
           Expanded(
             flex: 1,
             child: ListView(
@@ -98,7 +98,7 @@ class _CommunityMainPage extends State<CommunityMainPage> {
                       children: <Widget>[
                         ShortsWidget(
                             shortsInfo: ShortsInfo(
-                                'images/profile/profile_icon.png',
+                                'images/profile/sample_profile.png',
                                 '돌돌이님',
                                 '돌돌이님',
                                 'images/shorts/shorts_thumb.png',
@@ -108,7 +108,7 @@ class _CommunityMainPage extends State<CommunityMainPage> {
                         ),
                         ShortsWidget(
                             shortsInfo: ShortsInfo(
-                                'images/profile/profile_icon.png',
+                                'images/profile/sample_profile.png',
                                 '돌돌이님',
                                 '돌돌이님',
                                 'images/shorts/shorts_thumb.png',
@@ -118,7 +118,7 @@ class _CommunityMainPage extends State<CommunityMainPage> {
                         ),
                         ShortsWidget(
                             shortsInfo: ShortsInfo(
-                                'images/profile/profile_icon.png',
+                                'images/profile/sample_profile.png',
                                 '돌돌이님',
                                 '돌돌이님',
                                 'images/shorts/shorts_thumb.png',
@@ -138,7 +138,7 @@ class _CommunityMainPage extends State<CommunityMainPage> {
                     children: <Widget>[
                       CommunityWidget(
                         communityInfo: CommunityInfo(
-                          'images/profile/profile_icon.png',
+                          'images/profile/sample_profile.png',
                           '돌돌이님',
                           '돌돌이님',
                           'images/community/community_image.png',
@@ -149,7 +149,7 @@ class _CommunityMainPage extends State<CommunityMainPage> {
                       ),
                       CommunityWidget(
                         communityInfo: CommunityInfo(
-                          'images/profile/profile_icon.png',
+                          'images/profile/sample_profile.png',
                           '돌돌이님',
                           '돌돌이님',
                           'images/community/community_image.png',
@@ -164,9 +164,11 @@ class _CommunityMainPage extends State<CommunityMainPage> {
               ]
             )
           ),
-          Container(child: MenuBottomBar()),
         ],
       ),
+      floatingActionButton: BackSpaceButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      bottomNavigationBar: MenuBottomBar(),
     );
   }
 }

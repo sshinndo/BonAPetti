@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/TestUI.dart';
 
-class DrawerWithAlarmAppBar extends StatefulWidget {
+class AppBarWithAlarm extends StatefulWidget {
   final String nickName;
 
-  DrawerWithAlarmAppBar({Key? key, required this.nickName}) : super(key: key);
+  AppBarWithAlarm({Key? key, required this.nickName}) : super(key: key);
 
   @override
-  _DrawerWithAlarmAppBar createState() => _DrawerWithAlarmAppBar();
+  _AppBarWithAlarm createState() => _AppBarWithAlarm();
 }
 
-class _DrawerWithAlarmAppBar extends State<DrawerWithAlarmAppBar> {
+class _AppBarWithAlarm extends State<AppBarWithAlarm> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -41,7 +42,7 @@ class _DrawerWithAlarmAppBar extends State<DrawerWithAlarmAppBar> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => TestUI()));
                       },
-                      icon: Image.asset('images/bell_icon.png')))),
+                      icon: SvgPicture.asset('images/svg/bell.svg')))),
         ],
       ),
     ));

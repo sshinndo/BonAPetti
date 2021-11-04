@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/GoodsInfo.dart';
+import 'package:pet_service_application/class/GoodsInfo.dart';
+import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
 import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
-import 'package:pet_service_application/appbar/DrawerWithAlarmAppBar.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/log_in/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class GoodsScreen extends StatefulWidget {
   final List<GoodsInfo> goodsInfoList;
@@ -32,7 +32,7 @@ class _GoodsScreen extends State<GoodsScreen> {
     return Scaffold(
       body: Column(
         children: [
-          DrawerWithAlarmAppBar(nickName: UserInfo.userNickname),
+          AppBarWithAlarm(nickName: UserInfo.userNickname),
           SearchBar(
             filterTabWithListView: filterTabWithListView,
           ),

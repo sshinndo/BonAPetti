@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 
 
-class ShortsPage extends StatefulWidget {
+class ShortsScreen extends StatefulWidget {
   final ShortsInfo shortsInfo;
-  ShortsPage(this.shortsInfo);
+  ShortsScreen(this.shortsInfo);
 
   @override
-  _ShortsPage createState() => _ShortsPage();
+  _ShortsScreen createState() => _ShortsScreen();
 }
 
-class _ShortsPage extends State<ShortsPage> {
+class _ShortsScreen extends State<ShortsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
