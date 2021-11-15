@@ -1,10 +1,15 @@
+//import 'dart:html';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/HashTagButtonList.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/init_profile/FifthRoute.dart';
 import 'package:pet_service_application/main.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 
 
@@ -28,6 +33,34 @@ class FirstRoute extends StatefulWidget {
 
 class FirstRouteState extends State<FirstRoute> {
   TextEditingController userNickname = TextEditingController();
+  //파이어베이스 스테이트
+  bool _initialized = false;
+  bool _error = false;
+
+  //파이어베이스 이니셜
+  void initializeFlutterFire() async
+  {
+    try {
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    }
+    catch(e)
+    {
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState()
+  {
+    initializeFlutterFire();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +89,17 @@ class FirstRouteState extends State<FirstRoute> {
                   customPinkElevatedButton(
                      '입력 완료!',
                          () {
-                        UserAccount.userInfo = UserInfo();
-                       UserInfo.userNickname = userNickname.text;
+                       //중복 여부 등등 확인
+                       UserData(userNickname.text); //UserData클래스 생성
+                       CollectionReference users = FirebaseFirestore.instance.collection('UserData');
+                        users.add({'AccountInfo' : UserData.AccountInfo,
+                                  'Name' : UserData.Name,
+                                  'Description' : UserData.Description,
+                                  'Commuity' : [],
+                                  'Shorts' : [],
+                                  'MedalImage' : "",
+                                  'MyImage' : "",
+                                  'MyPets' : []});
                         Navigator.push(
                            context,
                             MaterialPageRoute(
@@ -74,7 +116,7 @@ class FirstRouteState extends State<FirstRoute> {
   }
 }
 
-// 두번째 라우트
+// 두번째 라우트 및 계정 전송
 class SecondRoute extends StatelessWidget {
   SecondRoute({Key? key}) : super(key: key);
 

@@ -14,7 +14,7 @@ class UserInfo {
 
 class PetInfo {
   static String petName = ""; // 펫 이름
-  static List<String> petTypeNameList = [];
+  static List<String> petTypeNameList = [];   //x
   static int petAge = 0;
   static double petBodyLength = 0;
   static double petWeight = 0;
