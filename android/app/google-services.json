@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "562827101437",
-    "project_id": "pet-service-application",
-    "storage_bucket": "pet-service-application.appspot.com"
+    "project_number": "604282368311",
+    "firebase_url": "https://bonapetti-715a9-default-rtdb.firebaseio.com",
+    "project_id": "bonapetti-715a9",
+    "storage_bucket": "bonapetti-715a9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:562827101437:android:b6854157c0d0c023c4ea94",
+        "mobilesdk_app_id": "1:604282368311:android:311ec2aa614d76327a6ab2",
         "android_client_info": {
-          "package_name": "com.example.pet_service_application"
+          "package_name": "com.example.untitled2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "562827101437-ijbarvopig73nlqnu1n10h4jbeqdpg32.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.pet_service_application",
-            "certificate_hash": "1da6309442430e02666fbbc30c48a16d5cdc0ebd"
-          }
-        },
-        {
-          "client_id": "562827101437-ggehos9pogaq99bfimpsl31t0espl35m.apps.googleusercontent.com",
+          "client_id": "604282368311-iaqusf9j9i2icu1ofodvgjfqlfem94na.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDHvF2nFUZq3omgVJVwBuWiYnfx4fdJdp8"
+          "current_key": "AIzaSyBjNJTYjONBUHFpuvzI7TRaci7gWpeJ-c8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "562827101437-ggehos9pogaq99bfimpsl31t0espl35m.apps.googleusercontent.com",
+              "client_id": "604282368311-iaqusf9j9i2icu1ofodvgjfqlfem94na.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
