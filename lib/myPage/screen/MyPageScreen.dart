@@ -7,6 +7,7 @@ import 'package:pet_service_application/community/screen/MyCommunityScreen.dart'
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
+import 'package:pet_service_application/myPage/class/MyPageInfo.dart';
 import 'package:pet_service_application/myPage/screen/ActivityMedalScreen.dart';
 import 'package:pet_service_application/myPage/screen/FaqScreen.dart';
 import 'package:pet_service_application/myPage/screen/ReportScreen.dart';
@@ -38,7 +39,7 @@ class _MyPageState extends State<MyPage> {
                 .size
                 .height * 0.11),
             // 프로필 사진, 닉네임, 등급, 자기소개를 감싸는 전체 Widget
-            UserProfileWidget(),
+            // 이거 수정해야 함 UserProfileWidget(),
 
             SizedBox(height: MediaQuery
                 .of(context)

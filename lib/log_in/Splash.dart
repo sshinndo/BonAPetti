@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pet_service_application/log_in/screen/LogIn.dart';
 
 void main() => runApp(MyAppSplash());
@@ -32,7 +33,7 @@ class Splash extends StatelessWidget {
       color: Colors.white,
       alignment: Alignment.center,
       child: Container(
-        child: Image.asset('images/logo_main.png'),
+        child: SvgPicture.asset('images/logo_main.svg'),
         width: 192,
         height: 192,
       ),

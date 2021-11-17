@@ -7,6 +7,7 @@ import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/main.dart';
 
 import 'package:pet_service_application/log_in/screen/LogIn.dart';
+import 'package:pet_service_application/myPage/class/MyPageInfo.dart';
 
 class FifthRoute extends StatefulWidget {
   final List<String> petCategoryStrList;
@@ -163,7 +164,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               child: silhouetteCard('images/bcs/bcs1.png',
                                   'BCS 1,2단계(야윈상태)', '갈비뼈, 허리뼈, 골반뼈가 드러나 보임'),
                               onTap: () => {
-                                PetInfo.petSilhouette = PetSilhouette.BCS1,
+                                PetProfileInfo.petSilhouette = PetSilhouette.BCS1,
                                 _scrollController.animateTo(1360,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.fastOutSlowIn)
@@ -172,7 +173,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               child: silhouetteCard('images/bcs/bcs2.png',
                                   'BCS 3단계(저체중)', '갈비뼈가 쉽게 만져짐'),
                               onTap: () => {
-                                PetInfo.petSilhouette = PetSilhouette.BCS2,
+                                PetProfileInfo.petSilhouette = PetSilhouette.BCS2,
                                 _scrollController.animateTo(1360,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.fastOutSlowIn)
@@ -181,7 +182,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               child: silhouetteCard('images/bcs/bcs3.png',
                                   'BCS 4,5단계(이상적인 체중)', '갈비뼈가 안보이지만 살짝 만져짐'),
                               onTap: () => {
-                                PetInfo.petSilhouette = PetSilhouette.BCS3,
+                                PetProfileInfo.petSilhouette = PetSilhouette.BCS3,
                                 _scrollController.animateTo(1360,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.fastOutSlowIn)
@@ -190,7 +191,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               child: silhouetteCard('images/bcs/bcs4.png',
                                   'BCS 6단계(과체중)', '위에서 허리를 확인하기 힘듦'),
                               onTap: () => {
-                                PetInfo.petSilhouette = PetSilhouette.BCS4,
+                                PetProfileInfo.petSilhouette = PetSilhouette.BCS4,
                                 _scrollController.animateTo(1360,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.fastOutSlowIn)
@@ -199,7 +200,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               child: silhouetteCard('images/bcs/bcs5.png',
                                   'BCS 8,9단계(비만)', '손에 힘을 주고 만져야 갈비뼈가 만져짐'),
                               onTap: () => {
-                                PetInfo.petSilhouette = PetSilhouette.BCS5,
+                                PetProfileInfo.petSilhouette = PetSilhouette.BCS5,
                                 _scrollController.animateTo(1360,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.fastOutSlowIn)

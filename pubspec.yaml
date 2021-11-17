@@ -31,7 +31,7 @@ dependencies:
   webview_flutter: any
   webview_windows: ^0.0.7
 
-  # firebase version
+  # firebase version // cloud_firestore: firestore 데이터관리
   firebase_auth: ^3.0.1
   firebase_core: ^1.6.0
   cloud_firestore: ^3.1.0
@@ -51,6 +51,12 @@ dependencies:
   path_provider: ^2.0.2
   permission_handler: ^7.1.0
   file_picker: ^3.0.4
+
+  # 브라우저 launcher
+  url_launcher: ^6.0.0
+
+  # 서버 통신을 위한
+  http: ^0.13.3
 
 #  # Check that you have this dependency (added in the previous step)
 #  firebase_core: ^0.4.0+9
@@ -86,13 +92,14 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+      - lib/
       - images/
-      - images/loginIcon/
       - images/bcs/
       - images/bottomBar/
-      - images/shorts/
-      - images/profile/
       - images/community/
+      - images/loginIcon/
+      - images/profile/
+      - images/shorts/
       - images/svg/
 
   # An image asset can refer to one or more resolution-specific "variants", see
