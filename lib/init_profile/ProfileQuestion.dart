@@ -5,7 +5,8 @@ import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/init_profile/FifthRoute.dart';
 import 'package:pet_service_application/main.dart';
-
+import 'package:pet_service_application/myPage/class/MyPageInfo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class ProfileQuestion extends StatelessWidget {
@@ -21,18 +22,17 @@ class FirstRoute extends StatefulWidget {
   const FirstRoute({Key? key}) : super(key: key);
 
   @override
-  FirstRouteState createState() {
-    return FirstRouteState();
+  _FirstRoute createState() {
+    return _FirstRoute();
   }
 }
 
-class FirstRouteState extends State<FirstRoute> {
+class _FirstRoute extends State<FirstRoute> {
   TextEditingController userNickname = TextEditingController();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
-    // 폼 위젯 생성
-    // 폼 위젯은 컨테이너처럼 동작하면서, 복수의 폼 필드를 그룹화하고 적합성을 확인함
     return Scaffold(
       body: Column(
         // 컬럼내 위젯들을 가운데로 정렬함
@@ -51,13 +51,15 @@ class FirstRouteState extends State<FirstRoute> {
               margin: EdgeInsets.only(top: 50, left: 40, right: 40),
               child: Column(
                   children: [
-                  customTextFormField(userNickname, '사용자의 이름을 입력해주세요.'),
+                  customTextFormField(userNickname, '회원님의 닉네임을 입력해주세요!(2-8자 이내)'),
                   SizedBox(height: 20.0),
                   customPinkElevatedButton(
                      '입력 완료!',
                          () {
-                        UserAccount.userInfo = UserInfo();
+                       UserAccount.userInfo = UserInfo();
                        UserInfo.userNickname = userNickname.text;
+                       // firestore.collection('UserData').document(UserInfo.userNickname).setData("AccountInfo":nickName)
+                       // 작성중인 firebase fireStore 데이터 전달 블로그 참고: https://medium.com/flutter-korea/flutter%EC%97%90%EC%84%9C-firestore%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-2-92d17e5925cc
                         Navigator.push(
                            context,
                             MaterialPageRoute(
