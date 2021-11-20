@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
+import 'package:pet_service_application/product/screen/WishListScreen.dart';
 import 'package:pet_service_application/community/screen/MyCommunityScreen.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';

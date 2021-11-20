@@ -32,7 +32,7 @@ class FirstRoute extends StatefulWidget {
 }
 
 class FirstRouteState extends State<FirstRoute> {
-  TextEditingController userNickname = TextEditingController();
+  TextEditingController inputController = TextEditingController();
   //파이어베이스 스테이트
   bool _initialized = false;
   bool _error = false;
@@ -104,18 +104,22 @@ class FirstRouteState extends State<FirstRoute> {
               margin: EdgeInsets.only(top: 50, left: 40, right: 40),
               child: Column(
                   children: [
-                  customTextFormField(userNickname, '사용자의 이름을 입력해주세요.'),
+                  customTextFormField(inputController, '사용자의 이름을 입력해주세요.'),
                   SizedBox(height: 20.0),
                   customPinkElevatedButton(
                      '입력 완료!',
                          () {
                        //해당 닉네임이 이미 존재할 때 제외시키기
-
+                           // 디바이스 계정-이름에 입력값 저장
+                           UserData.Name = inputController.text;
                        //첫 유저 데이터 생성 시에 한해서 계정 생성
                        if(UserData.Name != "") {
-                         UserData(userNickname.text); //UserData클래스 생성
+                         UserData(inputController.text); //UserData클래스 생성
+                         // 생성된 계정을 서버로 전송
                          initialUserData();
+
                        }
+
                        Navigator.push(
                          context,
                           MaterialPageRoute(

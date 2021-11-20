@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
 import 'package:pet_service_application/mypage/screen/MyPageScreen.dart';
-import 'package:pet_service_application/SeungHyun/screen/shopping_basket.dart';
+import 'package:pet_service_application/product/screen/shopping_basket.dart';
 import 'package:pet_service_application/main.dart';
-import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
+import 'package:pet_service_application/product/screen/WishListScreen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
 // 호출하는 방법

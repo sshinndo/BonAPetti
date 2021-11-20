@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -46,11 +45,12 @@ class _LogInState extends State<LogIn> {
             child: SafeArea(
                 child: Column(
               children: <Widget>[
+                // 보나펫티 로고
                 Container(
-                  margin: EdgeInsets.only(left: 32, right: 32, top: 100),
-                  child: SvgPicture.asset('images/svg/logo_main.svg',
-                      width: width * 0.266, height: height * 0.12
-                  ),
+                  margin: EdgeInsets.only(left: 32, right: 32, top: 100)
+                ),
+                Image.asset('images/logo.png',
+                    width: width * 0.266, height: height * 0.12
                 ),
                 SizedBox(height: 20),
                 Text.rich(TextSpan(children: [
@@ -68,9 +68,8 @@ class _LogInState extends State<LogIn> {
                           fontWeight: FontWeight.w900))
                 ])),
                 SizedBox(height: 35),
-                SvgPicture.asset('images/svg/character.svg',
+                Image.asset('images/loginCharacter.png',
                   width: width * 210 / 360, height: height * 208 / 800,
-                  allowDrawingOutsideViewBox: true
                 ),
                 SizedBox(height: 33),
                 KakaoLogin(),

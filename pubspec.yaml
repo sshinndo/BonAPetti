@@ -47,16 +47,17 @@ dependencies:
   get: ^4.3.8
 
   # csv file 읽어들이는데 필요한 library
-  csv: ^5.0.0
   path_provider: ^2.0.2
   permission_handler: ^7.1.0
   file_picker: ^3.0.4
-
-  # 브라우저 launcher
+  csv: ^5.0.0
   url_launcher: ^6.0.0
 
   # 서버 통신을 위한
   http: ^0.13.3
+
+  # 여러 이미지 나열 swiper
+  flutter_swiper: ^1.1.6
 
 #  # Check that you have this dependency (added in the previous step)
 #  firebase_core: ^0.4.0+9
@@ -92,7 +93,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-      - lib/
       - images/
       - images/bcs/
       - images/bottomBar/

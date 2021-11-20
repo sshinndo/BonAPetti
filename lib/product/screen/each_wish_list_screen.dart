@@ -4,7 +4,7 @@ import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pet_service_application/SeungHyun/screen/shopping_basket.dart';
+import 'package:pet_service_application/product/screen/shopping_basket.dart';
 import 'package:pet_service_application/class/GoodsInfo.dart';
 
 /*

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/class/GoodsInfo.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
-import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
+import 'package:pet_service_application/product/screen/DetailedGoodsScreen.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
