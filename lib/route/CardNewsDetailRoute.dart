@@ -6,7 +6,7 @@ import 'package:pet_service_application/card_news/detail/CardNewsRelatedProducts
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
 import 'package:pet_service_application/card_news/detail/EventDetailWidget.dart';
 import 'package:pet_service_application/card_news/detail/TopPetsWidget.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 
 class CardNewsDetailRoute extends StatelessWidget {
   final CardNewsModel cardNewsModel;
@@ -21,7 +21,7 @@ class CardNewsDetailRoute extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          AppBarWithAlarm(nickName: UserInfo.userNickname),
+          AppBarWithAlarm(nickName: Logger().userData.Name),
           Expanded(
               child: ListView(children: [
             Container(

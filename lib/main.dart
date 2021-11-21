@@ -1,32 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:kakao_flutter_sdk/all.dart';
+//import 'package:flutter_svg/flutter_svg.dart';
+//import 'package:kakao_flutter_sdk/all.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/GoodsInfo.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
 import 'package:pet_service_application/widgets/BargainCardWidget.dart';
-import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
+//import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
-import 'package:pet_service_application/log_in/screen/LogIn.dart';
-import 'package:pet_service_application/log_in/Splash.dart';
+//import 'package:pet_service_application/log_in/screen/LogIn.dart';
+//import 'package:pet_service_application/log_in/Splash.dart';
 import 'package:pet_service_application/route/CardNewsListRoute.dart';
 import 'package:pet_service_application/card_news/CardNewsPageView.dart';
 
 import 'package:pet_service_application/SeungHyun/screen/search_screen.dart';
 import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
-import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+//import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
-import 'drawer/MainDrawer.dart';
 
 void main() => runApp(MyApp());
 
 final String appName = "Pet App";
+final UserData myInfo = Logger().userData;
 
 class MyApp extends StatelessWidget {
   @override
@@ -65,43 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // 남아있는 데이터 모두 제거
     widget.cardNewsModelList.clear();
 
-    // 서버에서 데이터 불러오고 cardNewsModelList에 추가
-    // 현재는 더미데이터
-    /*
-    CardNewsModel _cardNewsEventItem = CardNewsModel(
-        CardNewsType.CARDNEWS,
-        'https://picsum.photos/250?image=9',
-        "과연 고양이는 생선만\n먹어도 괜찮을까?",
-        null,
-        null,
-        List.filled(
-            5,
-            DetailCardNewsModel('https://picsum.photos/250?image=9',
-                "과연 고양이는 생선만\n먹어도 괜찮을까? 2")),
-        List.filled(
-            4,
-            GoodsInfo(
-                '피부모질 닥터독 사료 2kg',
-                'imgUrl',
-                29500,
-                null,
-                GoodsDetailedInfo(
-                    ['imgUrl', 'imgUrl'],
-                    false,
-                    ['쌀', '대두', '연어'],
-                    [
-                      Ingredient('조단백질', 77),
-                      Ingredient('조지방', 19),
-                      Ingredient('칼슘', 2),
-                      Ingredient('인', 1),
-                      Ingredient('비타민 A', null),
-                      Ingredient('비타민 E', null),
-                      Ingredient('비타민 D3', null),
-                    ],
-                    'bannerUrl'))),
-        null);*/
-    //for (int i = 0; i < 10; i++)
-    //  widget.cardNewsModelList.add(_cardNewsEventItem);
     widget.cardNewsModelList.add(
       CardNewsModel(
           CardNewsType.CARDNEWS,
@@ -573,12 +536,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    PetInfo firstPet;
+    firstPet = Logger().myDefaultPet();
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
         crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
         children: <Widget>[
-          AppBarWithAlarm(nickName: UserInfo.userNickname),
+          AppBarWithAlarm(nickName: myInfo.Name),
           Expanded(
             flex: 1,
             child: ListView(
@@ -634,29 +600,28 @@ class _MyHomePageState extends State<MyHomePage> {
                                 size: 30,
                                 color: Color.fromRGBO(217, 217, 217, 1),
                               ),
-                              //ImageIcon(AssetImage('images/barbar.png')),
+                              //ImageIcon(AssetImage('images/bar.png')),
                             ],
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                //검색창
+                ),  //검색창
                 Container(
                   margin: EdgeInsets.only(left: 50, top: 100),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '오늘 당신과 함께하는',
+                        '당신과 함께하는',
                         style: TextStyle(fontSize: 32),
                       ),  //당신과 함께하는
                       Container(
                           child: Row(
                             children: <Widget>[
                               Text(
-                                PetInfo.petName,
+                                firstPet.petName,
                                 style: TextStyle(
                                     color: Color.fromRGBO(255, 113, 113, 1),
                                     decoration: TextDecoration.underline,
@@ -905,7 +870,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Row(
                         children: <Widget>[
                           Text(
-                            PetInfo.petName,
+                            firstPet.petName,
                             style: TextStyle(
                                 color: Color.fromRGBO(255, 113, 113, 1),
                                 decoration: TextDecoration.underline,
@@ -920,11 +885,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ), //를 위한
                         ],
-                      )), //PetName를 위한
+                      )), //PetName 위한
                       Text(
-                        '나눔!',
+                        '알뜰장터!',
                         style: TextStyle(fontSize: 32),
-                      ), //나눔!
+                      ), //알뜰장터!
                     ],
                   ), //문장 한줄씩 수직 정렬
                 ),

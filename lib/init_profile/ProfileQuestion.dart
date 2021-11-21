@@ -11,8 +11,6 @@ import 'package:pet_service_application/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-
-
 class ProfileQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -33,6 +31,8 @@ class FirstRoute extends StatefulWidget {
 
 class FirstRouteState extends State<FirstRoute> {
   TextEditingController userNickname = TextEditingController();
+  //유저 정보
+  UserData myData = Logger().userData;
   //파이어베이스 스테이트
   bool _initialized = false;
   bool _error = false;
@@ -64,19 +64,21 @@ class FirstRouteState extends State<FirstRoute> {
   //생성된 계정을 서버로 전송
   void initialUserData()
   {
-    if (UserData.Name != "")
+    if (myData.Name != "")
     {
       CollectionReference users = FirebaseFirestore.instance.collection(
           'UserData');
       users.add({
-        'AccountInfo': UserData.AccountInfo,
-        'Name': UserData.Name,
-        'Description': UserData.Description,
-        'Commuity': [],
-        'Shorts': [],
-        'MedalImage': "",
-        'MyImage': "",
-        'MyPets': []
+        'AccountInfo': myData.AccountInfo,
+        'Name': myData.Name,
+        'Description': myData.Description,
+        'following' : myData.following,
+        'follower' : myData.follower,
+        'Commuity': myData.Community,
+        'Shorts': myData.Shorts,
+        'MedalImage': myData.MedalImage,
+        'MyImage': myData.MyImage,
+        'MyPets': myData.MyPets
       });
     }
   }
@@ -126,7 +128,7 @@ class FirstRouteState extends State<FirstRoute> {
                            }
                          else {       //유저 정보 없음, 계정 생성 후 다음으로 이동
                            debugPrint('User doesnt Exist, initiate user');
-                           UserData(userNickname.text);
+                           Logger().userData.Name = userNickname.text;
                            initialUserData();
                            Navigator.push(context,
                                MaterialPageRoute(builder: (context) => SecondRoute()));
@@ -282,14 +284,14 @@ class _ThirdRouteState extends State<ThirdRoute> {
                 customPinkElevatedButton(
                     "입력 완료!",
                         () {
-                      UserInfo.petInfo = PetInfo();
+                      /*UserInfo.petInfo = PetInfo();
                       PetInfo.petName = _petName.text;
                       PetInfo.petTypeNameList = [];
                       PetInfo.petAge = 0;
                       PetInfo.petBodyLength = 0;
                       PetInfo.petWeight = 0;
                       PetInfo.petSilhouette = PetSilhouette.BCS1;
-                      PetInfo.petAllergyList = [];
+                      PetInfo.petAllergyList = [];*/
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -297,18 +299,6 @@ class _ThirdRouteState extends State<ThirdRoute> {
                       );
                     }
                 )
-                // customPinkElevatedButton(
-                //         () {
-                //   UserInfo.petInfo = PetInfo();
-                //   PetInfo.petName = _petName.text;
-                //   PetInfo.petTypeNameList = [];
-                //   PetInfo.petAge = 0;
-                //   PetInfo.petBodyLength = 0;
-                //   PetInfo.petWeight = 0;
-                //   PetInfo.petSilhouette = PetSilhouette.BCS1;
-                //   PetInfo.petAllergyList = [];
-                // }, "입력 완료!", context, FourthRoute()
-                // ),
               ],
             ),
           ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
-import 'package:pet_service_application/main.dart';
+//import 'package:pet_service_application/main.dart';
 import '../SeungHyun/screen/WishListScreen.dart';
-import '../log_in/class/UserInfoClass.dart';
+import '../log_in/class/UserData.dart';
 import '../mypage/screen/ReportScreen.dart';
 // import 'dart:io';
 // import 'package:image_picker/image_picker.dart';
@@ -18,6 +18,7 @@ class _MainDrawerState extends State<MainDrawer> {
 
   // final ImagePicker _picker = ImagePicker();
   // late PickedFile _image;
+  var myInfo = Logger().userData;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     SizedBox(height: 30.0),
                     Center(
                       child: Text(
-                          '${UserInfo.userNickname}과(와) 함께하는\n${PetInfo.petName}님',
+                          '${Logger().myDefaultPet().petName}과(와) 함께하는\n${myInfo.Name}님',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
