@@ -81,6 +81,16 @@ class FirstRouteState extends State<FirstRoute> {
     }
   }
 
+  //중복 계정 여부 확인 함수
+  Future<bool> isUserExist(String _name) async
+  {
+    var documentSnapshot = await FirebaseFirestore.instance.collection("UserData").where('Name', isEqualTo: _name).get();
+    if (documentSnapshot.docs.isEmpty)
+      return false;
+    else
+      return true;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -109,18 +119,19 @@ class FirstRouteState extends State<FirstRoute> {
                   customPinkElevatedButton(
                      '입력 완료!',
                          () {
-                       //해당 닉네임이 이미 존재할 때 제외시키기
-
-                       //첫 유저 데이터 생성 시에 한해서 계정 생성
-                       if(UserData.Name != "") {
-                         UserData(userNickname.text); //UserData클래스 생성
-                         initialUserData();
-                       }
-                       Navigator.push(
-                         context,
-                          MaterialPageRoute(
-                           builder: (BuildContext context) => SecondRoute())
-                       );
+                       Future<bool> userExist = isUserExist(userNickname.text);
+                       userExist.then((val) {
+                         if (val == true) {   //닉네임 중복(유저 이미 존재)
+                             debugPrint('User Already Exist : $userNickname.text');
+                           }
+                         else {       //유저 정보 없음, 계정 생성 후 다음으로 이동
+                           debugPrint('User doesnt Exist, initiate user');
+                           UserData(userNickname.text);
+                           initialUserData();
+                           Navigator.push(context,
+                               MaterialPageRoute(builder: (context) => SecondRoute()));
+                         }
+                       });
                      }),
                    ]
               ),
@@ -138,6 +149,8 @@ class SecondRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //다음 페이지로 넘어갈때 데이터 전송
+    //initialUserData();
     return Scaffold(
       body: Column(
         children: [
