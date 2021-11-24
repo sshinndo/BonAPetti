@@ -6,7 +6,11 @@ import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 class Logger {
   static final Logger _logger = Logger._internals();
 
+  String userID = "";
   UserData userData = UserData();
+  String userEmail = ""; // 사용자 이메일
+  String userPassword = ""; // 사용자 비밀번호
+
   PetInfo myDefaultPet()
   {
     if (userData.MyPets.isNotEmpty)
@@ -60,7 +64,9 @@ class UserData
 
 class PetInfo {
   String petName = ""; // 펫 이름
-  List<String> petTypeNameList = [];   //x
+  String petID = "";
+  static List<String> petTypeNameList = [];   //x
+  int petType = 0;
   int petAge = 0;
   double petBodyLength = 0;
   double petWeight = 0;

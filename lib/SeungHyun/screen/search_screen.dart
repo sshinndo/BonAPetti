@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 
 class SearchRoute extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ class _SearchArea extends State<SearchArea> {
 
     return Column(
       children: [
-        AppBarWithAlarm(nickName: UserInfo.userNickname),
+        AppBarWithAlarm(nickName: Logger().userData.Name),
         Container(
           margin: EdgeInsets.only(bottom: 20),
           child: SearchBar(managerWidget: searchContentsManagerWidget),
