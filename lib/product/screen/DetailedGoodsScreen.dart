@@ -9,6 +9,7 @@ import 'package:pet_service_application/class/GoodsInfo.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:pet_service_application/product/widget/CategoryWidget.dart';
 
 // 상품 이미지 리스트
 final List<String> goodsImgList = [
@@ -25,6 +26,8 @@ class DetailedGoodsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ContentDetailedGoods(goodsInfo),
+      floatingActionButton: BackSpaceButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       bottomNavigationBar: MenuBottomBar(),
     );
   }
@@ -32,6 +35,7 @@ class DetailedGoodsScreen extends StatelessWidget {
 
 class ContentDetailedGoods extends StatefulWidget {
   final GoodsInfo goodsInfo;
+
   ContentDetailedGoods(this.goodsInfo);
 
   @override
@@ -41,150 +45,144 @@ class ContentDetailedGoods extends StatefulWidget {
 class _ContentDetailedGoods extends State<ContentDetailedGoods> {
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width/360;
-    var height = MediaQuery.of(context).size.height/800;
+    var width = MediaQuery.of(context).size.width / 360;
+    var height = MediaQuery.of(context).size.height / 800;
 
     SquareCardPageView squareCardPageView = SquareCardPageView(
         imgUrlList: widget.goodsInfo.detailedInfo.imageUrlList);
 
-    return Column(
+    return ListView(
       children: [
-      AppBarWithAlarm(
+        AppBarWithAlarm(
           nickName: UserData.Name,
         ),
-        Expanded(
-          child: ListView(
-            children: <Widget>[
-              Container(
-                  // 상품 관련된 컨테이너
-                  child: Column(
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(top: 20)),
+        Padding(padding: EdgeInsets.only(top: 20)),
 
-                  Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(left: 45, right: 45, top: 30),
-                      child: Text(
-                        widget.goodsInfo.name,
-                        style: TextStyle(
-                            fontSize: 25.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+        Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(left: 45, right: 45, top: 30),
+            child: Text(
+              widget.goodsInfo.name,
+              style: TextStyle(
+                  fontSize: 25.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            )),
+        SizedBox(height: 30),
+
+        // 상품 이미지 슬라이드
+        Container(
+          height: 290,
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Swiper(
+              pagination: SwiperPagination(
+                  // 쪽매김
+                  margin: EdgeInsets.only(top: 20),
+                  alignment: Alignment.bottomCenter,
+                  // 나머지 점(dots) 재설정
+                  builder: DotSwiperPaginationBuilder(
+                      space: 6,
+                      // 점 사이 공간
+                      color: GREY,
+                      size: 6,
+                      // 나머지 점
+                      activeColor: GREY,
+                      activeSize: 12 // 강조 점
                       )),
-                  SizedBox(height:30),
 
-                  // 상품 이미지 슬라이드
+              viewportFraction: 0.5,
+              // 사진 간의 간격
+              loop: false,
+              // 슬라이드 재 반복 여부
+              itemCount: goodsImgList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Image.network(goodsImgList[index]);
+              },
+            ),
+          ),
+        ),
+
+        SizedBox(height: 50),
+        // 좋아요 및 최저가 Row 묶음
+        Container(
+          //color: Colors.blue,
+          margin: EdgeInsets.symmetric(horizontal: width * 40),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              // 좋아요 버튼
+              GestureDetector(
+                child: Icon(
+                  Icons.favorite,
+                  size: 30,
+                  color: widget.goodsInfo.detailedInfo.isLike
+                      ? Color.fromRGBO(255, 87, 87, 1)
+                      : Color.fromRGBO(217, 217, 217, 1),
+                ),
+                onTap: () {
+                  setState(() {
+                    widget.goodsInfo.detailedInfo.isLike =
+                        !widget.goodsInfo.detailedInfo.isLike;
+                  });
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Container(
-                    height: 290,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Swiper(
-                        pagination: SwiperPagination(// 쪽매김
-                          margin: EdgeInsets.only(top: 20),
-                          alignment: Alignment.bottomCenter,
-                          // 나머지 점(dots) 재설정
-                          builder: DotSwiperPaginationBuilder(
-                              space: 6, // 점 사이 공간
-                              color: GREY, size: 6, // 나머지 점
-                              activeColor: GREY, activeSize: 12 // 강조 점
-                          )
-                        ),
-
-                        viewportFraction: 0.5, // 사진 간의 간격
-                        loop: false, // 슬라이드 재 반복 여부
-                        itemCount: goodsImgList.length,
-                        itemBuilder: (BuildContext context, int index){
-                          return Image.network(goodsImgList[index]);
-                        },
+                    margin: EdgeInsets.only(top: 10),
+                    child: Text(
+                      "최저가",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
                       ),
                     ),
                   ),
-
-                  SizedBox(height:50),
-
-                  // 좋아요 및 최저가 Row 묶음
-                  Container(
-                    color: Colors.blue,
-                    margin: EdgeInsets.symmetric(horizontal: width*40),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        // 좋아요 버튼
-                        GestureDetector(
-                          child: Icon(
-                            Icons.favorite,
-                            size: 30,
-                            color: widget.goodsInfo.detailedInfo.isLike
-                                ? Color.fromRGBO(255, 87, 87, 1)
-                                : Color.fromRGBO(217, 217, 217, 1),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              widget.goodsInfo.detailedInfo.isLike =
-                                  !widget.goodsInfo.detailedInfo.isLike;
-                            });
-                          },
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 10),
-                              child: Text("최저가",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize:20,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 20),
-                            Text(
-                              NumberFormat('###,###,###,###')
-                                  .format(widget.goodsInfo.price)
-                                  .replaceAll(' ', '') +
-                                  '원',
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        // 가격은 일단 전역변수로 설정했는데 나중에 모델 불러올때 전역변수 자리에 모델.price 넣어주면 될거같음
-                      ],
-                    ),
+                  SizedBox(width: 20),
+                  Text(
+                    NumberFormat('###,###,###,###')
+                            .format(widget.goodsInfo.price)
+                            .replaceAll(' ', '') +
+                        '원',
+                    style: TextStyle(
+                        fontSize: 30, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height:60),
-
-                  // 카테고리 메뉴
-                  CategoryWidget(),
-
-
-                  Padding(padding: EdgeInsets.only(top: 70)),
-
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '알러지 요소',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              color: Color.fromRGBO(0, 0, 0, 1)),
-                        )
-                      ],
-                    ),
-                  ),
-
-                  IngredientList(widget.goodsInfo), // 상품 알러지 밑 성분표 같은거 밑으로 빼놓음
                 ],
-              )),
+              ),
+              // 가격은 일단 전역변수로 설정했는데 나중에 모델 불러올때 전역변수 자리에 모델.price 넣어주면 될거같음
             ],
           ),
         ),
+        SizedBox(height: 60),
+
+        // 카테고리 메뉴
+        // CategoryTabcontroller(),
+
+        Padding(padding: EdgeInsets.only(top: 70)),
+
+        Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '알러지 요소',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                    color: Color.fromRGBO(0, 0, 0, 1)),
+              )
+            ],
+          ),
+        ),
+
+        IngredientList(widget.goodsInfo),
       ],
     );
   }
 }
+
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({
     Key? key,
@@ -192,50 +190,58 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width/360;
-    var height = MediaQuery.of(context).size.height/800;
-
+    var width = MediaQuery.of(context).size.width / 360;
+    var height = MediaQuery.of(context).size.height / 800;
     return Container(
-      width: width*330,
-      height: height*60,
-      child: GestureDetector(
-        onTap: () {
-          // 클릭 이벤트
-        },
-        child: Card(
-          semanticContainer: true,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          elevation: 5.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          margin: EdgeInsets.only(left: 50, top: 20, right: 50),
-          child: SizedBox(
-            height: 50,
-            width: 100,
-            child: Container(
-              color: Color.fromRGBO(254, 254, 254, 1),
-              child: Row(
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(left: 10)),
-                  Icon(
-                    Icons.search,
-                    size: 30,
-                    color: Color.fromRGBO(217, 217, 217, 1),
-                  ),
-                  //ImageIcon(AssetImage('images/barbar.png')),
-                ],
-              ),
-            ),
+      height: height * 50,
+      width: width * 330,
+      child:
+      Card(
+        //semanticContainer: false, // card 안에 단일 기능일 시 true, 여러 개의 기능인 경우 false
+        clipBehavior: Clip.antiAliasWithSaveLayer, // 둥근 모서리 부분의 음영 또한 둥글지게 함
+        elevation: 2.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Container(
+          color: Colors.blue,
+          //color: Color.fromRGBO(138, 149, 146, 0.2),
+          margin: EdgeInsets.symmetric(horizontal: width*26),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                color: Colors.red,
+                  child: categoryMenu("상품설명",(){})),
+              categoryMenu("성분",(){}),
+              categoryMenu("리뷰",(){}),
+              categoryMenu("가격비교",(){}),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  Expanded categoryMenu(String name, VoidCallback voidCallback) {
+    return Expanded(
+      flex: 1,
+      child: GestureDetector(
+                onTap: voidCallback,
+                child: Text(name,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
     );
   }
 }
 
 class IngredientList extends StatefulWidget {
   final GoodsInfo goodsInfo;
+
   IngredientList(this.goodsInfo);
 
   @override

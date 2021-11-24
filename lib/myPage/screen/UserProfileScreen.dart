@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -12,6 +13,7 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
 
+  TextEditingController descriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -166,6 +168,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             left: width*0.06
                         ),
                         child: TextFormField(
+                          controller: descriptionController,
                             // onSaved: (val),
                             // validator: ,
                             decoration: InputDecoration(
@@ -203,15 +206,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               ),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12.0))),
-                          onPressed: () async{
-                            // if (this.formKey.currentState.validate()){
-                            //   // validation 이 성공하면 true 가 리턴돼요!
-                            //   Get.snackbar(
-                            //     '저장완료!',
-                            //     '폼 저장이 완료되었습니다!',
-                            //     backgroundColor: Colors.white,
-                            //   );
-                            // }
+                          onPressed: () {
+                            if(descriptionController.text.isNotEmpty){
+                              //소개 한 마디 초기화 후 새로 대입
+                              UserData.Description[0] = '';
+                              UserData.Description[0] = descriptionController.text;
+                            }
+                            Navigator.pop(context);
                           }
                       ),
                     ),

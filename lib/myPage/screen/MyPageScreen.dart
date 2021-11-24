@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/product/screen/WishListScreen.dart';
 import 'package:pet_service_application/community/screen/MyCommunityScreen.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
@@ -39,7 +40,7 @@ class _MyPageState extends State<MyPage> {
                 .size
                 .height * 0.11),
             // 프로필 사진, 닉네임, 등급, 자기소개를 감싸는 전체 Widget
-            // 이거 수정해야 함 UserProfileWidget(),
+            UserProfileWidget(),
 
             SizedBox(height: MediaQuery
                 .of(context)

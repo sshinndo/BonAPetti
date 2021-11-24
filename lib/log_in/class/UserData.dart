@@ -32,7 +32,6 @@ class UserData
   UserData(String _name)
   {
     Name = _name;
-    Description.add("안녕하세요.");
-    Description.add(Name+"입니다.");
+    Description.add("안녕하세요. " + Name + "입니다.");
   }
 }
