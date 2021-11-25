@@ -209,8 +209,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           onPressed: () {
                             if(descriptionController.text.isNotEmpty){
                               //소개 한 마디 초기화 후 새로 대입
-                              UserData.Description[0] = '';
-                              UserData.Description[0] = descriptionController.text;
+                              Logger().userData.Description.clear();
+                              Logger().userData.Description.add(descriptionController.text);
                             }
                             Navigator.pop(context);
                           }

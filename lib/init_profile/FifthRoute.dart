@@ -24,6 +24,8 @@ class _FifthRouteState extends State<FifthRoute> {
   TextEditingController _petWeightController = TextEditingController();
 
   final _scrollController = ScrollController();
+  //유저 디폴트 정보
+  PetInfo myPet = Logger().getDefaultPet();
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +161,7 @@ class _FifthRouteState extends State<FifthRoute> {
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(left: 40),
                     // 닉네임을 변수로 수정해야함!
-                    child: customSemiTitleQuestion('', '${PetInfo.petName}의', ' 실루엣은?')),
+                    child: customSemiTitleQuestion('', '${myPet.petName}의', ' 실루엣은?')),
                 SizedBox(height: 10.0),
                 Container(
                   height: 530,
@@ -174,7 +176,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               child: silhouetteCard('images/bcs/bcs1.png',
                                   'BCS 1,2단계(야윈상태)', '갈비뼈, 허리뼈, 골반뼈가 드러나 보임'),
                               onTap: () => {
-                                PetInfo.petSilhouette = PetSilhouette.BCS1,
+                                myPet.petSilhouette = PetSilhouette.BCS1,
                                 _scrollController.animateTo(1360,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.fastOutSlowIn)
@@ -183,7 +185,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               child: silhouetteCard('images/bcs/bcs2.png',
                                   'BCS 3단계(저체중)', '갈비뼈가 쉽게 만져짐'),
                               onTap: () => {
-                                PetInfo.petSilhouette = PetSilhouette.BCS2,
+                                myPet.petSilhouette = PetSilhouette.BCS2,
                                 _scrollController.animateTo(1360,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.fastOutSlowIn)
@@ -192,7 +194,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               child: silhouetteCard('images/bcs/bcs3.png',
                                   'BCS 4,5단계(이상적인 체중)', '갈비뼈가 안보이지만 살짝 만져짐'),
                               onTap: () => {
-                                PetInfo.petSilhouette = PetSilhouette.BCS3,
+                                myPet.petSilhouette = PetSilhouette.BCS3,
                                 _scrollController.animateTo(1360,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.fastOutSlowIn)
@@ -201,7 +203,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               child: silhouetteCard('images/bcs/bcs4.png',
                                   'BCS 6단계(과체중)', '위에서 허리를 확인하기 힘듦'),
                               onTap: () => {
-                                PetInfo.petSilhouette = PetSilhouette.BCS4,
+                                myPet.petSilhouette = PetSilhouette.BCS4,
                                 _scrollController.animateTo(1360,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.fastOutSlowIn)
@@ -210,7 +212,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               child: silhouetteCard('images/bcs/bcs5.png',
                                   'BCS 8,9단계(비만)', '손에 힘을 주고 만져야 갈비뼈가 만져짐'),
                               onTap: () => {
-                                PetInfo.petSilhouette = PetSilhouette.BCS5,
+                                myPet.petSilhouette = PetSilhouette.BCS5,
                                 _scrollController.animateTo(1360,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.fastOutSlowIn)
@@ -317,12 +319,12 @@ class _FifthRouteState extends State<FifthRoute> {
                     customPinkElevatedButton(
                         '입력 완료!',
                             () {
-                          PetInfo.petAge = int.parse(_petAgeController.text);
+                          myPet.petAge = int.parse(_petAgeController.text);
 
-                          PetInfo.petBodyLength =
+                          myPet.petBodyLength =
                               double.parse(_petBodyLengthController.text);
 
-                          PetInfo.petWeight =
+                          myPet.petWeight =
                               double.parse(_petWeightController.text);
                           Navigator.pushAndRemoveUntil(
                               context,
@@ -407,7 +409,7 @@ class HashTagInputButtonList extends StatelessWidget {
           //Navigator.push(context, MaterialPageRoute(builder: (context) => FifthRoute()));
           manager.getStateData().refresh(true);
           manager.petCategoryListView.getStateData().add(buttonText);
-          PetInfo.petAllergyList!.add(buttonText);
+          Logger().getDefaultPet().petAllergyList!.add(buttonText);
         },
         style: ElevatedButton.styleFrom(
             primary: Color.fromRGBO(246, 246, 246, 1),

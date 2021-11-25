@@ -19,7 +19,7 @@ class _PetProfileWidgetState extends State<PetProfileWidget> {
       child: Column(
         children: [
           //펫 이름 : 현재 Logger상 내 펫 이름으로 임시 적용
-          Text(Logger().myDefaultPet().petName,
+          Text(Logger().getDefaultPet().petName,
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,

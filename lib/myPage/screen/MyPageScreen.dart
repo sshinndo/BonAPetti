@@ -8,7 +8,6 @@ import 'package:pet_service_application/community/screen/MyCommunityScreen.dart'
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
-import 'package:pet_service_application/myPage/class/MyPageInfo.dart';
 import 'package:pet_service_application/myPage/screen/ActivityMedalScreen.dart';
 import 'package:pet_service_application/myPage/screen/FaqScreen.dart';
 import 'package:pet_service_application/myPage/screen/ReportScreen.dart';
@@ -149,7 +148,7 @@ class _MyPageState extends State<MyPage> {
                                     MediaQuery.of(context).size.height * 0.02),
                             //펫 이름
                             Text(
-                              PetInfo.petName,
+                              Logger().getDefaultPet().petName,
                               style: TextStyle(
                                 fontSize: 18,
                               ),

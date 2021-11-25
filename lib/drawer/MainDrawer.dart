@@ -93,7 +93,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     SizedBox(height: 30.0),
                     Center(
                       child: Text(
-                          '${Logger().myDefaultPet().petName}과(와) 함께하는\n${myInfo.Name}님',
+                          '${Logger().getDefaultPet().petName}과(와) 함께하는\n${myInfo.Name}님',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,

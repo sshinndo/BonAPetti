@@ -10,7 +10,7 @@ class Logger {
   String userEmail = ""; // 사용자 이메일
   String userPassword = ""; // 사용자 비밀번호
 
-  PetInfo myDefaultPet()
+  PetInfo getDefaultPet()
   {
     if (userData.MyPets.isNotEmpty)
       return userData.MyPets.first;

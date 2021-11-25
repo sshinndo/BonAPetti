@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
-import 'package:pet_service_application/myPage/class/MyPageInfo.dart';
 //import 'package:url_launcher/url_launcher.dart';
 import '../../init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
