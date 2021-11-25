@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 
 class PetProfileWidget extends StatefulWidget {
   final PetInfo petInfo; // 펫 정보 객체
@@ -11,14 +11,15 @@ class PetProfileWidget extends StatefulWidget {
 }
 
 class _PetProfileWidgetState extends State<PetProfileWidget> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
       child: Column(
         children: [
-          //펫 이름
-          Text(PetInfo.petName,
+          //펫 이름 : 현재 Logger상 내 펫 이름으로 임시 적용
+          Text(Logger().myDefaultPet().petName,
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,

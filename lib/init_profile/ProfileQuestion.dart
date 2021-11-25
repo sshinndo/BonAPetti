@@ -11,8 +11,6 @@ import 'package:pet_service_application/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-
-
 class ProfileQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -33,6 +31,8 @@ class FirstRoute extends StatefulWidget {
 
 class FirstRouteState extends State<FirstRoute> {
   TextEditingController userNickname = TextEditingController();
+  //유저 정보
+  UserData myData = Logger().userData;
   //파이어베이스 스테이트
   bool _initialized = false;
   bool _error = false;
@@ -61,24 +61,52 @@ class FirstRouteState extends State<FirstRoute> {
     super.initState();
   }
 
-  //생성된 계정을 서버로 전송
-  void initialUserData()
+  //생성된 계정을 서버로 전송 (자동 ID)
+  String initialUserData()
   {
-    if (UserData.Name != "")
+    if (myData.Name != "")
     {
       CollectionReference users = FirebaseFirestore.instance.collection(
           'UserData');
-      users.add({
-        'AccountInfo': UserData.AccountInfo,
-        'Name': UserData.Name,
-        'Description': UserData.Description,
-        'Commuity': [],
-        'Shorts': [],
-        'MedalImage': "",
-        'MyImage': "",
-        'MyPets': []
+      var UiD = users.add({
+        'AccountInfo': myData.AccountInfo,
+        'Name': myData.Name,
+        'Description': myData.Description,
+        'following' : myData.following,
+        'follower' : myData.follower,
+        'Commuity': myData.Community,
+        'Shorts': myData.Shorts,
+        'MedalImage': myData.MedalImage,
+        'MyImage': myData.MyImage,
+        'MyPets': myData.MyPets
       });
+      return UiD.toString();
     }
+    return "";
+  }
+
+  //생성된 계정을 서버로 전송
+  String sendUserData()
+  {
+    if (myData.Name != "")
+    {
+      CollectionReference users = FirebaseFirestore.instance.collection(
+          'UserData');
+      users.doc(myData.Name).set({
+        'AccountInfo': myData.AccountInfo,
+        'Name': myData.Name,
+        'Description': myData.Description,
+        'following' : myData.following,
+        'follower' : myData.follower,
+        'Commuity': myData.Community,
+        'Shorts': myData.Shorts,
+        'MedalImage': myData.MedalImage,
+        'MyImage': myData.MyImage,
+        'MyPets': myData.MyPets
+      });
+      return myData.Name;
+    }
+    return "";
   }
 
   //중복 계정 여부 확인 함수
@@ -126,8 +154,9 @@ class FirstRouteState extends State<FirstRoute> {
                            }
                          else {       //유저 정보 없음, 계정 생성 후 다음으로 이동
                            debugPrint('User doesnt Exist, initiate user');
-                           UserData(userNickname.text);
-                           initialUserData();
+                           Logger().userData.Name = userNickname.text;
+                           Logger().userID = initialUserData();
+                           debugPrint('User ID : '+Logger().userID);
                            Navigator.push(context,
                                MaterialPageRoute(builder: (context) => SecondRoute()));
                          }
@@ -236,6 +265,28 @@ class _ThirdRouteState extends State<ThirdRoute> {
     }
   }
 
+  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 = 펫 ID)
+  void sendPetData(PetInfo petData) {
+    //펫 정보 없을 바로 종료
+    if(petData.petName == "")
+      return;
+
+    if (Logger().userID != "") {
+      UserData myData = Logger().userData;
+      CollectionReference pets = FirebaseFirestore.instance.collection(
+          'UserData').doc(Logger().userID).collection('Pets');
+      pets.doc(petData.petName).set({
+        'Name': petData.petName,
+        'Age': petData.petAge,
+        'Type' : petData.petType,
+        'BodyLength': petData.petBodyLength,
+        'Weight': petData.petWeight,
+        'Silhouette': petData.petSilhouette,
+        'AllergyList': petData.petAllergyList,
+      });
+    }
+  }
+
   @override
   void initState()
   {
@@ -282,14 +333,10 @@ class _ThirdRouteState extends State<ThirdRoute> {
                 customPinkElevatedButton(
                     "입력 완료!",
                         () {
-                      UserInfo.petInfo = PetInfo();
-                      PetInfo.petName = _petName.text;
-                      PetInfo.petTypeNameList = [];
-                      PetInfo.petAge = 0;
-                      PetInfo.petBodyLength = 0;
-                      PetInfo.petWeight = 0;
-                      PetInfo.petSilhouette = PetSilhouette.BCS1;
-                      PetInfo.petAllergyList = [];
+                      //펫 이름으로 새 데이터 생성 후 현재 앱 유저에 삽입
+                      PetInfo myPet = PetInfo(_petName.text);
+                      Logger().userData.MyPets.clear();
+                      Logger().userData.MyPets.add(myPet);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -297,18 +344,6 @@ class _ThirdRouteState extends State<ThirdRoute> {
                       );
                     }
                 )
-                // customPinkElevatedButton(
-                //         () {
-                //   UserInfo.petInfo = PetInfo();
-                //   PetInfo.petName = _petName.text;
-                //   PetInfo.petTypeNameList = [];
-                //   PetInfo.petAge = 0;
-                //   PetInfo.petBodyLength = 0;
-                //   PetInfo.petWeight = 0;
-                //   PetInfo.petSilhouette = PetSilhouette.BCS1;
-                //   PetInfo.petAllergyList = [];
-                // }, "입력 완료!", context, FourthRoute()
-                // ),
               ],
             ),
           ),
@@ -444,6 +479,7 @@ class HashTagInputButtonList extends StatelessWidget {
           //Navigator.push(context, MaterialPageRoute(builder: (context) => FifthRoute()));
           manager.getStateData().refresh(true);
           manager.petCategoryListView.getStateData().add(buttonText);
+          //펫 타입 이름 리스트에 저장 -> 로그인 유저 정보의 펫 타입으로 전환 (해시 방식 지정 필요)
           PetInfo.petTypeNameList.add(buttonText);
         },
         style: ElevatedButton.styleFrom(

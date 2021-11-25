@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/community/CommunityInfo.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'package:pet_service_application/widgets/CommunityWidget.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
@@ -17,6 +17,7 @@ class CommunityMainScreen extends StatefulWidget {
 }
 
 class _CommunityMainScreen extends State<CommunityMainScreen> {
+  UserData myInfo = Logger().userData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +25,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
         mainAxisAlignment: MainAxisAlignment.start, //세로로 나열 기준은 시작점 (제일 위부터)
         crossAxisAlignment: CrossAxisAlignment.center, //가로 나열 기준은 중심 (중심기준)
         children: [
-          AppBarWithAlarm(nickName: UserInfo.userNickname),
+          AppBarWithAlarm(nickName: myInfo.Name),
           Expanded(
             flex: 1,
             child: ListView(

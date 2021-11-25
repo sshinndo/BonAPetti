@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import '../../init_profile/ProfileQuestion.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/main.dart';
 import 'package:pet_service_application/log_in/screen/SignUpPage.dart';
 import 'package:kakao_flutter_sdk/all.dart';
@@ -76,9 +76,10 @@ class _LogInState extends State<LogIn> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12.0))),
                           onPressed: () {
-                            if (emailController.text == UserAccount.userEmail &&
+                            //로그인 함수인거 같은데 후에 수정 필요 : 임시로 현재 앱 내 계정 정보와 대조
+                            if (emailController.text == Logger().userEmail &&
                                 passwordController.text ==
-                                    UserAccount.userPassword) {
+                                    Logger().userPassword) {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/myPage/widget/PetProfileWidget.dart';
 
 class UserProfileWidget extends StatefulWidget {
@@ -42,7 +42,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                       // <홍길동>님
                       children: [
                         Text(
-                          UserInfo.userNickname,
+                          Logger().userData.Name,
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,

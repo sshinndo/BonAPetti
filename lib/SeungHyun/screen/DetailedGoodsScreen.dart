@@ -5,7 +5,7 @@ import 'package:pet_service_application/SquareCardPageView.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/class/GoodsInfo.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 
 class DetailedGoodsScreen extends StatelessWidget {
   final GoodsInfo goodsInfo;
@@ -37,7 +37,7 @@ class _ContentDetailedGoods extends State<ContentDetailedGoods> {
     return Column(
       children: [
       AppBarWithAlarm(
-          nickName: UserInfo.userNickname,
+          nickName: Logger().userData.Name,
         ),
         Expanded(
           child: ListView(

@@ -6,7 +6,7 @@ import 'package:pet_service_application/widgets/GoodsWidget.dart';
 import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 
 class GoodsScreen extends StatefulWidget {
   final List<GoodsInfo> goodsInfoList;
@@ -32,7 +32,7 @@ class _GoodsScreen extends State<GoodsScreen> {
     return Scaffold(
       body: Column(
         children: [
-          AppBarWithAlarm(nickName: UserInfo.userNickname),
+          AppBarWithAlarm(nickName: Logger().userData.Name),
           SearchBar(
             filterTabWithListView: filterTabWithListView,
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 
@@ -11,6 +11,7 @@ class MyCommunityScreen extends StatefulWidget {
 }
 
 class _MyCommunityScreenState extends State<MyCommunityScreen> {
+  UserData myInfo = Logger().userData;
 
   //initState()
 
@@ -22,7 +23,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
     return Scaffold(
       body: ListView(
         children : [
-          AppBarWithAlarm(nickName: UserInfo.userNickname), //닉네임 & 알림
+          AppBarWithAlarm(nickName: myInfo.Name), //닉네임 & 알림
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,8 +40,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
                     .width * 0.2,
               ),  //프로필 아이콘
               Text(
-                //UserInfo.userNickname,
-                '돌돌이',
+                myInfo.Name,
                 style: TextStyle(
                   fontSize: nameSize,
                   fontWeight: FontWeight.bold
@@ -54,8 +54,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
                   color: Colors.grey
                 ),
                 child: Text(
-                  //'팔로잉 '+UserInfo.following.toString()+' · 팔로워 '+UserInfo.follower.toString(),
-                  '팔로잉 50 · 팔로워 50',
+                  '팔로잉 '+myInfo.following.toString()+' · 팔로워 '+myInfo.follower.toString(),
                   style: TextStyle(
                     fontSize: textSize,
                     fontWeight: FontWeight.bold

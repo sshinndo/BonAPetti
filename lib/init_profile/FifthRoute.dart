@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:pet_service_application/HashTagButtonList.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/main.dart';
 
 import 'package:pet_service_application/log_in/screen/LogIn.dart';
@@ -27,6 +27,7 @@ class _FifthRouteState extends State<FifthRoute> {
 
   @override
   Widget build(BuildContext context) {
+    var myInfo = Logger().userData;
     PetCategoryListView petCategoryListView =
     PetCategoryListView(petCategoryStrList: []);
 
