@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/appbar/BackBtnAppBar.dart';
-import 'package:pet_service_application/SeungHyun/screen/each_wish_list_screen.dart';
+import 'package:pet_service_application/product/screen/each_wish_list_screen.dart';
 
 class WishListScreen extends StatefulWidget {
   @override

@@ -12,7 +12,6 @@ class ShortsInfo {
 
 class Profile {
 
-
   //Profile(this.profileImage,this.nickName,this.petName);
   // 'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project/images/
 }

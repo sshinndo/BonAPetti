@@ -7,16 +7,14 @@ import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/init_profile/FifthRoute.dart';
+import 'package:pet_service_application/init_profile/widget/AlertDuplicateMessage.dart';
 import 'package:pet_service_application/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 
 class ProfileQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FirstRoute(),
-    );
+    return FirstRoute();
   }
 }
 
@@ -31,23 +29,24 @@ class FirstRoute extends StatefulWidget {
 
 class FirstRouteState extends State<FirstRoute> {
   TextEditingController userNickname = TextEditingController();
+
   //유저 정보
   UserData myData = Logger().userData;
+  // 닉네임 중복 여부 컨테이너 bool 값
+  bool _offstage = true;
+
   //파이어베이스 스테이트
   bool _initialized = false;
   bool _error = false;
 
   //파이어베이스 이니셜
-  void initializeFlutterFire() async
-  {
+  void initializeFlutterFire() async {
     try {
       await Firebase.initializeApp();
       setState(() {
         _initialized = true;
       });
-    }
-    catch(e)
-    {
+    } catch (e) {
       setState(() {
         _error = true;
       });
@@ -55,8 +54,7 @@ class FirstRouteState extends State<FirstRoute> {
   }
 
   @override
-  void initState()
-  {
+  void initState() {
     initializeFlutterFire();
     super.initState();
   }
@@ -110,20 +108,19 @@ class FirstRouteState extends State<FirstRoute> {
   }
 
   //중복 계정 여부 확인 함수
-  Future<bool> isUserExist(String _name) async
-  {
-    var documentSnapshot = await FirebaseFirestore.instance.collection("UserData").where('Name', isEqualTo: _name).get();
+  Future<bool> isUserExist(String _name) async {
+    var documentSnapshot = await FirebaseFirestore.instance
+        .collection("UserData")
+        .where('Name', isEqualTo: _name)
+        .get();
     if (documentSnapshot.docs.isEmpty)
       return false;
     else
       return true;
   }
 
-
   @override
   Widget build(BuildContext context) {
-    // 폼 위젯 생성
-    // 폼 위젯은 컨테이너처럼 동작하면서, 복수의 폼 필드를 그룹화하고 적합성을 확인함
     return Scaffold(
       body: Column(
         // 컬럼내 위젯들을 가운데로 정렬함
@@ -140,30 +137,43 @@ class FirstRouteState extends State<FirstRoute> {
             flex: 1,
             child: Container(
               margin: EdgeInsets.only(top: 50, left: 40, right: 40),
-              child: Column(
-                  children: [
-                  customTextFormField(userNickname, '사용자의 이름을 입력해주세요.'),
-                  SizedBox(height: 20.0),
-                  customPinkElevatedButton(
-                     '입력 완료!',
-                         () {
-                       Future<bool> userExist = isUserExist(userNickname.text);
-                       userExist.then((val) {
-                         if (val == true) {   //닉네임 중복(유저 이미 존재)
-                             debugPrint('User Already Exist : $userNickname.text');
-                           }
-                         else {       //유저 정보 없음, 계정 생성 후 다음으로 이동
-                           debugPrint('User doesnt Exist, initiate user');
-                           Logger().userData.Name = userNickname.text;
-                           Logger().userID = initialUserData();
-                           debugPrint('User ID : '+Logger().userID);
-                           Navigator.push(context,
-                               MaterialPageRoute(builder: (context) => SecondRoute()));
-                         }
-                       });
-                     }),
-                   ]
-              ),
+              child: Column(children: [
+                //
+                Offstage(
+                  offstage: _offstage,
+                    child: AlertDuplicateMessage()
+                ),
+                SizedBox(height: 15),
+                customTextFormField(userNickname, '사용자의 이름을 입력해주세요! (2-8자 이내)'),
+                SizedBox(height: 20.0),
+                customPinkElevatedButton('입력 완료!', () {
+                  Future<bool> userExist = isUserExist(userNickname.text);
+                  userExist.then((val) {
+                    if (val == true) {
+                      setState(() {
+                        // 닉네임 중복 bool 값을 true->false로 변경
+                        _offstage = false;
+                      });
+                      //닉네임 중복(유저 이미 존재)
+                      debugPrint('User Already Exist : $userNickname.text');
+                    } else {
+                      // 닉네임 중복 bool 값을 false-> true로 변경
+                      setState(() {
+                        _offstage = true;
+                      });
+                      //유저 정보 없음, 계정 생성 후 다음으로 이동
+                      debugPrint('User doesnt Exist, initiate user');
+                      Logger().userData.Name = userNickname.text;
+                      Logger().userID = initialUserData();
+                      debugPrint('User ID : '+Logger().userID);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SecondRoute()));
+                    }
+                  });
+                }),
+              ]),
             ),
           ),
         ],
@@ -173,64 +183,122 @@ class FirstRouteState extends State<FirstRoute> {
 }
 
 // 두번째 라우트 및 계정 전송
-class SecondRoute extends StatelessWidget {
-  SecondRoute({Key? key}) : super(key: key);
+
+class SecondRoute extends StatefulWidget {
+  const SecondRoute({Key? key}) : super(key: key);
+
+  @override
+  _SecondRouteState createState() => _SecondRouteState();
+}
+
+class _SecondRouteState extends State<SecondRoute> {
+  @override
+  initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width/360;
+    var height = MediaQuery.of(context).size.height/800;
+
     //다음 페이지로 넘어갈때 데이터 전송
     //initialUserData();
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 25.0, top: 50.0),
-                      child: customArrowBack(context),
+      body: SafeArea(
+        child: WillPopScope(
+          // <- 뒤로가기 기능 방지 (이미 계정을 생성했기 때문)
+          onWillPop: () {
+            // _msg : 뒤로가기 버튼 누를 시 메시지
+            final _msg = '프로필 작성을 마무리 해주세요!';
+            final snackBar = SnackBar(content: Text(_msg));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            // 필수 인자
+            return Future(() => false);
+          },
+          child: Column(
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top:30, right: 30),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  width: 180,
+                                  height: 30,
+                                  color: Color.fromRGBO(166, 0, 0, 0.04),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("계정 생성 완료!  ✔",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color.fromRGBO(242, 128, 128, 1)
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 60),
+                        Container(
+                          margin: EdgeInsets.only(left: 25.0, top: 50.0),
+                          child: customArrowBack(context),
+                        ),
+                        SizedBox(height: 25.0),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(left: 40, right: 40),
+                          child: customTitleQuestion(
+                              "함께하고 계신 ", "친구들에 대해\n", "이야기 해 주실 수 있으신가요?"),
+                        ),
+                        SizedBox(height: 26.0),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(left: 40, right: 40),
+                          child:
+                              customSubtitleQuestion("추후 마이페이지에서 다시 설정 가능합니다."),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 25.0),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(left: 40, right: 40),
-                      child: customTitleQuestion(
-                          "함께하고 계신 ", "친구들에 대해\n", "이야기 해 주실 수 있으신가요?"),
-                    ),
-                    SizedBox(height: 26.0),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(left: 40, right: 40),
-                      child: customSubtitleQuestion("추후 마이페이지에서 다시 설정 가능합니다."),
-                    ),
-                  ],
+                  )),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  margin: EdgeInsets.all(50),
+                  child: Column(
+                    children: [
+                      customPinkElevatedButton('네!', () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ThirdRoute()));
+                      }),
+                      SizedBox(height: 20.0),
+                      customPinkElevatedButton('아니요..ㅠㅠ바로 앱으로!', () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyHomePage()),
+                            (route) => false);
+                      }),
+                    ],
+                  ),
                 ),
-              )),
-          Expanded(
-            flex: 1,
-            child: Container(
-              margin: EdgeInsets.all(50),
-              child: Column(
-                children: [
-                  customPinkElevatedButton('네!', () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ThirdRoute()));
-                  }),
-                  SizedBox(height: 20.0),
-                  customPinkElevatedButton('아니요..ㅠㅠ바로 앱으로!', () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => MyHomePage()),
-                        (route) => false);
-                  }),
-                ],
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -249,16 +317,13 @@ class _ThirdRouteState extends State<ThirdRoute> {
   bool _error = false;
 
   //파이어베이스 이니셜
-  void initializeFlutterFire() async
-  {
+  void initializeFlutterFire() async {
     try {
       await Firebase.initializeApp();
       setState(() {
         _initialized = true;
       });
-    }
-    catch(e)
-    {
+    } catch (e) {
       setState(() {
         _error = true;
       });
@@ -288,8 +353,7 @@ class _ThirdRouteState extends State<ThirdRoute> {
   }
 
   @override
-  void initState()
-  {
+  void initState() {
     initializeFlutterFire();
     super.initState();
   }
@@ -299,36 +363,36 @@ class _ThirdRouteState extends State<ThirdRoute> {
     return Scaffold(
       body: Column(children: [
         Expanded(
-            flex: 1,
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 25.0, top: 110.0),
-                    child: customArrowBack(context),
-                  ),
-                  SizedBox(height: 25.0),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(left: 50, right: 50),
-                    child: customTitleQuestion("친구의 ", "이름은?", ""),
-                  ),
-                  SizedBox(height: 26.0),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(left: 50, right: 50),
-                    child: customSubtitleQuestion(
-                        "2마리 이상일 시,\n마이페이지에서 친구를 추가할 수 있습니다."),
-                  )
-                ],
+          flex: 1,
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: 25.0, top: 110.0),
+                child: customArrowBack(context),
               ),
-            ),
+              SizedBox(height: 25.0),
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(left: 50, right: 50),
+                child: customTitleQuestion("친구의 ", "이름은?", ""),
+              ),
+              SizedBox(height: 26.0),
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(left: 50, right: 50),
+                child: customSubtitleQuestion(
+                    "2마리 이상일 시,\n마이페이지에서 친구를 추가할 수 있습니다."),
+              )
+            ],
+          ),
+        ),
         Expanded(
           flex: 1,
           child: Container(
             margin: EdgeInsets.only(top: 50, left: 40, right: 40),
             child: Column(
               children: [
-                customTextFormField(_petName, '반려동물의 이름을 입력해주세요!'),
+                customTextFormField(_petName, '반려동물의 이름을 입력해주세요! ( 8자 이내 )'),
                 SizedBox(height: 20.0),
                 customPinkElevatedButton(
                     "입력 완료!",
@@ -370,7 +434,7 @@ class _FourthRouteState extends State<FourthRoute> {
       body: Column(
         children: [
           Expanded(
-              flex: 3,
+              flex: 1,
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Column(
@@ -404,7 +468,7 @@ class _FourthRouteState extends State<FourthRoute> {
                 ),
               )),
           Expanded(
-              flex: 2,
+              flex: 1,
               child: Column(children: [
                 Container(
                   alignment: Alignment.center,
@@ -690,25 +754,23 @@ GestureDetector customArrowBack(BuildContext context) {
   );
 }
 
-Container customPinkElevatedButton(
-    String text, VoidCallback onPressed) {
+Container customPinkElevatedButton(String text, VoidCallback onPressed) {
   return Container(
     //margin: EdgeInsets.only(left: 40, right: 40),
     child: SizedBox(
       width: double.infinity,
       height: 52.0,
       child: ElevatedButton(
-        child: Text(text),
-        style: ElevatedButton.styleFrom(
-            primary: PINK,
-            onPrimary: Colors.white,
-            textStyle: TextStyle(fontSize: 14
-                //fontWeight: FontWeight.bold
-                ),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0))),
-        onPressed: onPressed
-      ),
+          child: Text(text),
+          style: ElevatedButton.styleFrom(
+              primary: PINK,
+              onPrimary: Colors.white,
+              textStyle: TextStyle(fontSize: 14
+                  //fontWeight: FontWeight.bold
+                  ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0))),
+          onPressed: onPressed),
     ),
   );
 }
@@ -968,32 +1030,20 @@ class _AllergyButtonListManager extends State<AllergyButtonListManager> {
         margin: EdgeInsets.only(left: 20, right: 20, top: 50),
         child: Column(
           children: [
-            customPinkElevatedButton(
-                '네',
-                    () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MyHomePage()
-                      ),
-                          (route) => false
-                  );
-                }
-            ),
+            customPinkElevatedButton('네', () {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                  (route) => false);
+            }),
             // customPinkElevatedButton(() {}, '네', context, MyHomePage()),
             SizedBox(height: 30.0),
-            customPinkElevatedButton(
-                '아니요(잘 모르겠어요)',
-                    () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MyHomePage()
-                      ),
-                          (route) => false
-                  );
-                }
-            )
+            customPinkElevatedButton('아니요(잘 모르겠어요)', () {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                  (route) => false);
+            })
             // customPinkElevatedButton(() {}, "아니요(잘 모르겠어요)", context, MyHomePage()),
           ],
         ),

@@ -6,7 +6,6 @@ import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/GoodsInfo.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
 import 'package:pet_service_application/widgets/BargainCardWidget.dart';
-//import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
@@ -15,13 +14,15 @@ import 'package:pet_service_application/community/screen/CommunityMainScreen.dar
 //import 'package:pet_service_application/log_in/Splash.dart';
 import 'package:pet_service_application/route/CardNewsListRoute.dart';
 import 'package:pet_service_application/card_news/CardNewsPageView.dart';
-
-import 'package:pet_service_application/SeungHyun/screen/search_screen.dart';
-import 'package:pet_service_application/SeungHyun/screen/goods_screen.dart';
-//import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
-import 'package:pet_service_application/log_in/class/UserData.dart';
+import 'package:pet_service_application/product/screen/DetailedGoodsScreen.dart';
+import 'package:pet_service_application/product/screen/search_screen.dart';
+import 'package:pet_service_application/product/screen/goods_screen.dart';
+import 'package:pet_service_application/product/screen/WishListScreen.dart';
+import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
+import 'drawer/MainDrawer.dart';
+import 'log_in/class/UserData.dart';
 
 void main() => runApp(MyApp());
 
@@ -544,7 +545,10 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
         crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
         children: <Widget>[
-          AppBarWithAlarm(nickName: myInfo.Name),
+          AppBarWithAlarm(
+            nickName: myInfo.Name
+            // nickName: UserInfo.userNickname
+          ),
           Expanded(
             flex: 1,
             child: ListView(

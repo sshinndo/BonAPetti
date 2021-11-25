@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_service_application/class/GoodsInfo.dart';
-import 'package:pet_service_application/SeungHyun/screen/DetailedGoodsScreen.dart';
+import 'package:pet_service_application/product/screen/DetailedGoodsScreen.dart';
 
 class BargainCardWidget extends StatefulWidget {
   final GoodsInfo goodsInfo;  //굿즈 정보 객체
