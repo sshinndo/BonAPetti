@@ -1,6 +1,5 @@
 import 'package:pet_service_application/community/CommunityInfo.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 //사용자의 유저 정보 싱글톤
 class Logger {
