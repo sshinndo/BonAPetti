@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
 import 'package:pet_service_application/mypage/screen/MyPageScreen.dart';
-import 'package:pet_service_application/SeungHyun/screen/shopping_basket.dart';
+import 'package:pet_service_application/product/screen/shopping_basket.dart';
 import 'package:pet_service_application/main.dart';
-import 'package:pet_service_application/SeungHyun/screen/WishListScreen.dart';
+import 'package:pet_service_application/product/screen/WishListScreen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
 // 호출하는 방법
-
 /*
 body : Container(), // body 밑부분에
-bottomNavigationBar :MenuBottomBar(), 하면 됩니다.
- */
+      //BackSpaceButton : 원형의 뒤로 가기 floating 버튼
 
-//BackSpaceButton : 원형의 뒤로 가기 버튼
+      floatingActionButton: BackSpaceButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      bottomNavigationBar: MenuBottomBar(),
+하시면 됩니다.
+*/
 class BackSpaceButton extends StatelessWidget {
   const BackSpaceButton({Key? key}) : super(key: key);
 

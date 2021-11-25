@@ -117,12 +117,22 @@ class _FifthRouteState extends State<FifthRoute> {
                   ]),
                 ),
 
-                //입력하는 부분 -----------------------------------------------
-
-                SizedBox(height: 40.0), // 공백처리
-
-                // 버튼이 이런식으로 되어있긴 한데 수정할뜻
-
+                SizedBox(height: 40.0),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  child: Container(
+                    margin: EdgeInsets.only(left: 35, right: 35),
+                    child: customPinkElevatedButton(
+                        "나중에 입력할래요!",
+                            () => Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyHomePage()),
+                                (Route<dynamic> route) => false)
+                    ),
+                    // 아니요 버튼을 누름으로써, 모든 프로필 정보를 작성했다는
+                    // bool 데이터 변수를 작성해서 메인으로 넘겨야 함!!!
+                  ),
+                ),
                 Container(
                     width: 40.0,
                     height: 40.0,

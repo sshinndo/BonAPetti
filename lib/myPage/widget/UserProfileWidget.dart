@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
+import 'package:pet_service_application/myPage/class/MyPageInfo.dart';
 import 'package:pet_service_application/myPage/widget/PetProfileWidget.dart';
 
 class UserProfileWidget extends StatefulWidget {
-  const UserProfileWidget({Key? key}) : super(key: key);
+
+  // final UserData userProfileInfo; //사용자 정보 객체
+  const UserProfileWidget({Key? key}) : super(key: key); // 생성자
 
   @override
   _UserProfileWidgetState createState() => _UserProfileWidgetState();
 }
 
 class _UserProfileWidgetState extends State<UserProfileWidget> {
+
+  // formKey 작성하던 것 마무리 해야함함
+  // 참고 블로그 : https://blog.codefactory.ai/flutter/form/
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -42,7 +51,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                       // <홍길동>님
                       children: [
                         Text(
-                          UserInfo.userNickname,
+                          UserData.Name,
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -68,8 +77,9 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
               )
             ],
           ),
+          // Description : 자기 소개
           Row(
-              children: [TextWidget(text: "안녕하세요! 세종이 입니다.")]
+              children: [TextWidget(text: UserData.Description[0])]
           )
         ],
       ),
