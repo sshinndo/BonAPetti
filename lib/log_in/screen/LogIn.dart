@@ -121,28 +121,6 @@ class _LogInState extends State<LogIn> {
       }),
     );
   }
-
-// void _loginCheck() async{
-//   print('emailController.text: %{emailController}');
-//   print('passwordController.text: %{passwordController}');
-//   final storage = FlutterSecureStorage();
-//   String storagePass = await storage.read(key: emailController.text);
-//   if (storagePass != null &&
-//       storagePass != '' &&
-//       storagePass == passwordController.text) {
-//     print('storagePass: $storagePass');
-//     String userNickName = await storage.read(key: '${emailController.text}');
-//     storage.write(key: userNickName, value: STATUS_LOGIN);
-//     print('로그인 성공!');
-//     Navigator.pushReplacement(context,
-//         MaterialPageRoute(builder: (BuildContext context) =>
-//             MyHomePage(title: userNickName)));
-//   }
-//   else{
-//     print('로그인 실패');
-//     showToast('아이디가 존재하지 않거나 비밀번호가 맞지 않습니다.');
-//   }
-// }
 }
 
 class LogInIcon extends StatelessWidget {
