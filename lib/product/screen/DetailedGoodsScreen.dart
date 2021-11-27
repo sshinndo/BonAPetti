@@ -11,7 +11,7 @@ import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:pet_service_application/product/widget/CategoryWidget.dart';
 
-// 상품 이미지 리스트
+// 상품 이미지   리스트
 final List<String> goodsImgList = [
   "https://github.com/DragonTrainerTristana/Food_App_Project_Image_Asset/blob/main/Dog_Detail_Image/4/1.png?raw=true",
   "https://github.com/DragonTrainerTristana/Food_App_Project_Image_Asset/blob/main/Dog_Detail_Image/4/2.png?raw=true",
