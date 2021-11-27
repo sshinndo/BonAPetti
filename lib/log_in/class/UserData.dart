@@ -5,7 +5,6 @@ import 'package:pet_service_application/community/ShortsInfo.dart';
 class Logger {
   static final Logger _logger = Logger._internals();
 
-  String userID = "";
   UserData userData = UserData();
   String userEmail = ""; // 사용자 이메일
   String userPassword = ""; // 사용자 비밀번호
@@ -31,6 +30,8 @@ class UserData
 {
   //유저 계정 정보 (카카오 계정 정보 하나)
   String AccountInfo = "";
+  //유저 ID
+  String UID = "";
 
   //유저 이름과 설명
   String Name = "";
@@ -46,6 +47,8 @@ class UserData
 
   //친구 유저들의 이름
   List<String> Friends = [];
+  //차단 유저 정보
+  List<String> Blocks = [];
   //유저가 작성한 쇼츠 게시물들
   List<ShortsInfo> Shorts = [];
   //유저가 작성한 커뮤니티 게시글들
@@ -65,7 +68,10 @@ class PetInfo {
   String petName = ""; // 펫 이름
   String petID = "";
   static List<String> petTypeNameList = [];   //x
-  int petType = 0;
+  //펫 종류
+  String petType = "";
+  //펫 상세 종
+  int petSpecies = 0;
   int petAge = 0;
   double petBodyLength = 0;
   double petWeight = 0;

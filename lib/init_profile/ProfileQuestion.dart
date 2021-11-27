@@ -1,10 +1,8 @@
-//import 'dart:html';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/HashTagButtonList.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/init_profile/FifthRoute.dart';
 import 'package:pet_service_application/init_profile/widget/AlertDuplicateMessage.dart';
@@ -164,8 +162,8 @@ class FirstRouteState extends State<FirstRoute> {
                       //유저 정보 없음, 계정 생성 후 다음으로 이동
                       debugPrint('User doesnt Exist, initiate user');
                       Logger().userData.Name = userNickname.text;
-                      Logger().userID = initialUserData();
-                      debugPrint('User ID : '+Logger().userID);
+                      Logger().userData.UID = initialUserData();
+                      debugPrint('User ID : '+Logger().userData.UID);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -336,14 +334,14 @@ class _ThirdRouteState extends State<ThirdRoute> {
     if(petData.petName == "")
       return;
 
-    if (Logger().userID != "") {
-      UserData myData = Logger().userData;
+    if (Logger().userData.UID != "") {
       CollectionReference pets = FirebaseFirestore.instance.collection(
-          'UserData').doc(Logger().userID).collection('Pets');
+          'UserData').doc(Logger().userData.UID).collection('Pets');
       pets.doc(petData.petName).set({
         'Name': petData.petName,
         'Age': petData.petAge,
         'Type' : petData.petType,
+        'Species' : petData.petType,
         'BodyLength': petData.petBodyLength,
         'Weight': petData.petWeight,
         'Silhouette': petData.petSilhouette,
