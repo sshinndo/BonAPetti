@@ -41,7 +41,7 @@ class _BargainCardWidget extends State<BargainCardWidget> {
               width: heartAndCartSize * 6,
               height: heartAndCartSize * 6,
 
-              child: Image.network(widget.goodsInfo.imgUrl),
+              child: Image.network(widget.goodsInfo.thumbnailUrl),
             ),  //상품 이미지
             Expanded(
               child: Column(
@@ -84,14 +84,14 @@ class _BargainCardWidget extends State<BargainCardWidget> {
                               child: GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    widget.goodsInfo.detailedInfo.isLike =
-                                    !widget.goodsInfo.detailedInfo.isLike;
+                                    widget.goodsInfo.goodsDetailedInfo.isLike =
+                                    !widget.goodsInfo.goodsDetailedInfo.isLike;
                                   }
                                   );
                                 },
                                 child: Icon(
                                   Icons.favorite,
-                                  color: widget.goodsInfo.detailedInfo.isLike ? Color.fromRGBO(255, 87, 87, 1) : Color.fromRGBO(217, 217, 217, 1),
+                                  color: widget.goodsInfo.goodsDetailedInfo.isLike ? Color.fromRGBO(255, 87, 87, 1) : Color.fromRGBO(217, 217, 217, 1),
                                 ),
                               ),  //좋아요 값 변경
                             ),
@@ -110,46 +110,16 @@ class _BargainCardWidget extends State<BargainCardWidget> {
 
   List<TextSpan> getPriceTextSpan(GoodsInfo goodsInfo) {
     List<TextSpan> priceTextSpan = [];
-    if (goodsInfo.discountedPrice == null) {
-      priceTextSpan.add(
-        TextSpan(
-          text: NumberFormat('###,###,###,###')
-              .format(goodsInfo.price)
-              .replaceAll(' ', '') +
-              '원',
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-      );
-    } else {
-      priceTextSpan.add(
-        TextSpan(
-          text: (NumberFormat('###,###,###,###')
-              .format(goodsInfo.price)
-              .replaceAll(' ', '')),
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.normal,
-            color: Color.fromRGBO(175, 173, 173, 1),
-            decoration: TextDecoration.lineThrough,
-          ),
-        ),
-      );
-      priceTextSpan.add(
-        TextSpan(
-          text: ' ' +
-              (NumberFormat('###,###,###,###')
-                  .format(goodsInfo.discountedPrice)
-                  .replaceAll(' ', '') +
-                  '원'),
-          style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color.fromRGBO(255, 87, 87, 1)),
-        ),
-      );
-    }
-
+    priceTextSpan.add(
+      TextSpan(
+        text: NumberFormat('###,###,###,###')
+            .format(goodsInfo.price)
+            .replaceAll(' ', '') +
+            '원',
+        style: TextStyle(
+            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+      ),
+    );
     return priceTextSpan;
   } //상품 가격 불러오는 함수
 }

@@ -16,6 +16,7 @@ import 'package:pet_service_application/myPage/screen/PetProfileScreen.dart';
 import 'package:pet_service_application/myPage/screen/UserProfileScreen.dart';
 import 'package:pet_service_application/myPage/screen/QnaScreen.dart';
 import 'package:pet_service_application/myPage/widget/UserProfileWidget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class MyPage extends StatefulWidget {
@@ -28,9 +29,26 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
 
+  Future<void>? _launched;
+  Future<void> _launchInBrowser(String url) async {
+    if (!await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    //구글 설문지 링크
+    const String _url = 'https://docs.google.com/forms/d/e/1FAIpQLSffJTPtzolI8Yg2gnCa1HSNW-RYGY2-YNks0BXfMvoZqmRLig/viewform';
+
     return Scaffold(
+      floatingActionButton: BackSpaceButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      bottomNavigationBar: MenuBottomBar(),
       body: ListView(children: [
         Column(
           children: [
@@ -667,15 +685,52 @@ class _MyPageState extends State<MyPage> {
                 print('Report Page is clicked');
               },
             ),
+            ListTile(
+              minVerticalPadding: MediaQuery
+                  .of(context)
+                  .size
+                  .height * .02,
+              //contentPadding: EdgeInsets.only(left: MediaQuery.of(context).size.width*.12), // 전체 내부 패딩 균등 설정
+              title: Container(
+                padding: EdgeInsets.only(left: MediaQuery
+                    .of(context)
+                    .size
+                    .width * .08),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 30,
+                      height: 30,
+                      child: SvgPicture.asset(
+                        'images/svg/my_review.svg', // 1. list에 넣을 변수 값
+                        width: 25.5, // 아이콘 가로 고정 상수값
+                        height: 28, // 아이콘 세로 고정 상수값
+                        alignment: Alignment.center,
+                      ),
+                    ),
+                    SizedBox(width: 42.5),
+                    Text(
+                      '피드백 보내기', // 2. list에 넣을 변수 값
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              onTap: () {
+                setState(() {
+                  _launched = _launchInBrowser(_url);
+                });
+              },
+            ),
             SizedBox(height: 45),
 
 
           ],
         ),
       ]),
-      floatingActionButton: BackSpaceButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      bottomNavigationBar: MenuBottomBar(),
     );
   }
 }
