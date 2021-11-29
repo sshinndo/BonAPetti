@@ -46,6 +46,9 @@ class _MyPageState extends State<MyPage> {
     const String _url = 'https://docs.google.com/forms/d/e/1FAIpQLSffJTPtzolI8Yg2gnCa1HSNW-RYGY2-YNks0BXfMvoZqmRLig/viewform';
 
     return Scaffold(
+      floatingActionButton: BackSpaceButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      bottomNavigationBar: MenuBottomBar(),
       body: ListView(children: [
         Column(
           children: [
@@ -707,7 +710,7 @@ class _MyPageState extends State<MyPage> {
                     ),
                     SizedBox(width: 42.5),
                     Text(
-                      '문의하기', // 2. list에 넣을 변수 값
+                      '피드백 보내기', // 2. list에 넣을 변수 값
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontSize: 16.0,
@@ -728,9 +731,6 @@ class _MyPageState extends State<MyPage> {
           ],
         ),
       ]),
-      floatingActionButton: BackSpaceButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      bottomNavigationBar: MenuBottomBar(),
     );
   }
 }

@@ -1,31 +1,31 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
+import 'package:pet_service_application/product/model/IngredientModel.dart';
 import 'package:pet_service_application/product/screen/shopping_basket.dart';
 import 'package:pet_service_application/SquareCardPageView.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/class/GoodsInfo.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/log_in/class/UserData.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:pet_service_application/product/widget/CategoryWidget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-// 상품 이미지   리스트
-final List<String> goodsImgList = [
-  "https://github.com/DragonTrainerTristana/Food_App_Project_Image_Asset/blob/main/Dog_Detail_Image/4/1.png?raw=true",
-  "https://github.com/DragonTrainerTristana/Food_App_Project_Image_Asset/blob/main/Dog_Detail_Image/4/2.png?raw=true",
-  "https://github.com/DragonTrainerTristana/Food_App_Project_Image_Asset/blob/main/Dog_Detail_Image/4/3.png?raw=true"
-];
-
-class DetailedGoodsScreen extends StatelessWidget {
+// 상품 이미지 리스트
+class DetailedGoodsScreen extends StatefulWidget {
   final GoodsInfo goodsInfo;
   DetailedGoodsScreen(this.goodsInfo);
 
   @override
+  _DetailedGoodsScreenState createState() => _DetailedGoodsScreenState();
+}
+
+class _DetailedGoodsScreenState extends State<DetailedGoodsScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ContentDetailedGoods(goodsInfo),
+      body: ContentDetailedGoods(widget.goodsInfo),
       floatingActionButton: BackSpaceButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       bottomNavigationBar: MenuBottomBar(),
@@ -43,677 +43,433 @@ class ContentDetailedGoods extends StatefulWidget {
 }
 
 class _ContentDetailedGoods extends State<ContentDetailedGoods> {
+
+  int currentState = 1; // 카테고리 탭 이동 변수 controller
+  int lowestPrice = 0; // 상품 최저가
+
+  BorderRadius _baseBorderRadius = BorderRadius.circular(15); //테두리 반지름
+
+  Future<void>? _launched;
+  Future<void> _launchInBrowser(String url) async {
+    if (!await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width / 360;
     var height = MediaQuery.of(context).size.height / 800;
 
-    SquareCardPageView squareCardPageView = SquareCardPageView(
-        imgUrlList: widget.goodsInfo.detailedInfo.imageUrlList);
+    // 오픈마켓 상품 최저가를 lowestPrice에 대입
+    lowestPrice = [
+      widget.goodsInfo.goodsDetailedInfo.coupang.price,
+      widget.goodsInfo.goodsDetailedInfo.gmarket.price,
+      widget.goodsInfo.goodsDetailedInfo.eleventhStreet.price].reduce(min);
+
+    String thisAllergyImageUrl='';
+    String thisAllergyContents='';
+    switch(widget.goodsInfo.goodsDetailedInfo.allergicIngredients){
+      case ('닭'):
+        thisAllergyImageUrl = 'images/allergyIcon/chicken.png';
+        thisAllergyContents = '닭고기';
+        break;
+      case ('닭,연어'):
+        thisAllergyImageUrl = 'images/allergyIcon/chicken.png';
+        thisAllergyContents = '닭고기, 생선';
+        break;
+      case ('대두(콩)'):
+        thisAllergyImageUrl = 'images/allergyIcon/soybean.png';
+        thisAllergyContents = '대두(콩)';
+        break;
+      case ('생선'):
+        thisAllergyImageUrl = 'images/allergyIcon/fish.png';
+        thisAllergyContents = '생선';
+        break;
+      case ('소'):
+        thisAllergyImageUrl = 'images/allergyIcon/cow.png';
+        thisAllergyContents = '소고기';
+        break;
+      case ('양'):
+        thisAllergyImageUrl = 'images/allergyIcon/lamb.png';
+        thisAllergyContents = '양고기';
+        break;
+      case ('연어'):
+        thisAllergyImageUrl = 'images/allergyIcon/fish.png';
+        thisAllergyContents = '생선';
+        break;
+      case ('오리'):
+        thisAllergyImageUrl = 'images/allergyIcon/wheat.png';
+        thisAllergyContents = '오리고기';
+        break;
+      default:
+        break;
+    }
 
     return ListView(
       children: [
-        AppBarWithAlarm(
-          nickName: Logger().userData.Name,
-        ),
-        Padding(padding: EdgeInsets.only(top: 20)),
-
-        Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 45, right: 45, top: 30),
-            child: Text(
-              widget.goodsInfo.name,
-              style: TextStyle(
-                  fontSize: 25.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            )),
-        SizedBox(height: 30),
-
-        // 상품 이미지 슬라이드
-        Container(
-          height: 290,
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: Swiper(
-              pagination: SwiperPagination(
-                  // 쪽매김
-                  margin: EdgeInsets.only(top: 20),
-                  alignment: Alignment.bottomCenter,
-                  // 나머지 점(dots) 재설정
-                  builder: DotSwiperPaginationBuilder(
-                      space: 6,
-                      // 점 사이 공간
-                      color: GREY,
-                      size: 6,
-                      // 나머지 점
-                      activeColor: GREY,
-                      activeSize: 12 // 강조 점
-                      )),
-
-              viewportFraction: 0.5,
-              // 사진 간의 간격
-              loop: false,
-              // 슬라이드 재 반복 여부
-              itemCount: goodsImgList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Image.network(goodsImgList[index]);
-              },
+        Column(
+          children: [
+            AppBarWithAlarm(
+              nickName: Logger().userData.Name,
             ),
-          ),
-        ),
+            Padding(padding: EdgeInsets.only(top: 20)),
 
-        SizedBox(height: 50),
-        // 좋아요 및 최저가 Row 묶음
-        Container(
-          //color: Colors.blue,
-          margin: EdgeInsets.symmetric(horizontal: width * 40),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              // 좋아요 버튼
-              GestureDetector(
-                child: Icon(
-                  Icons.favorite,
-                  size: 30,
-                  color: widget.goodsInfo.detailedInfo.isLike
-                      ? Color.fromRGBO(255, 87, 87, 1)
-                      : Color.fromRGBO(217, 217, 217, 1),
-                ),
-                onTap: () {
-                  setState(() {
-                    widget.goodsInfo.detailedInfo.isLike =
-                        !widget.goodsInfo.detailedInfo.isLike;
-                  });
-                },
+            Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(left: 45, right: 45, top: 30),
+                child: Text(
+                  widget.goodsInfo.name,
+                  style: TextStyle(
+                      fontSize: 25.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                )),
+            SizedBox(height: 30),
+
+            // 상품 이미지 썸네일
+            Container(
+              width: width * 250,
+              height: width * 250,
+              margin: EdgeInsets.symmetric(horizontal: 35),
+              child: Card(
+                elevation: 3,
+                semanticContainer: true,
+                shape: RoundedRectangleBorder(borderRadius: _baseBorderRadius),
+                child:
+                    Image.network(widget.goodsInfo.thumbnailUrl, fit: BoxFit.fill),
               ),
-              Row(
+            ),
+            SizedBox(height: 50),
+            // 좋아요 및 최저가 Row 묶음
+            Container(
+              //color: Colors.blue,
+              margin: EdgeInsets.symmetric(horizontal: width * 40),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: Text(
-                      "최저가",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
+                children: <Widget>[
+                  // 좋아요 버튼
+                  GestureDetector(
+                    child: Icon(
+                      Icons.favorite,
+                      size: 30,
+                      color: widget.goodsInfo.goodsDetailedInfo.isLike
+                          ? Color.fromRGBO(255, 87, 87, 1)
+                          : Color.fromRGBO(217, 217, 217, 1),
                     ),
+                    onTap: () {
+                      setState(() {
+                        widget.goodsInfo.goodsDetailedInfo.isLike =
+                            !widget.goodsInfo.goodsDetailedInfo.isLike;
+                      });
+                    },
                   ),
-                  SizedBox(width: 20),
-                  Text(
-                    NumberFormat('###,###,###,###')
-                            .format(widget.goodsInfo.price)
-                            .replaceAll(' ', '') +
-                        '원',
-                    style: TextStyle(
-                        fontSize: 30, fontWeight: FontWeight.bold),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text(
+                          "최저가",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        NumberFormat('###,###,###,###')
+                                .format(lowestPrice)
+                                .replaceAll(' ', '') +
+                            '원',
+                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
+                  // 가격은 일단 전역변수로 설정했는데 나중에 모델 불러올때 전역변수 자리에 모델.price 넣어주면 될거같음
                 ],
               ),
-              // 가격은 일단 전역변수로 설정했는데 나중에 모델 불러올때 전역변수 자리에 모델.price 넣어주면 될거같음
-            ],
-          ),
+            ),
+            SizedBox(height: 60),
+            categoryBanner(), // 카테고리 커스텀 배너
+            if (currentState == 1) ProductDescriptionWidget(),
+            if (currentState == 2) IngredientWidget(thisAllergyImageUrl,thisAllergyContents),
+            if (currentState == 3) ReviewWidget(),
+            if (currentState == 4) PriceCompareWidget(),
+          ],
         ),
-        SizedBox(height: 60),
-
-        // 카테고리 메뉴
-        // CategoryTabcontroller(),
-
-        Padding(padding: EdgeInsets.only(top: 70)),
-
-        Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                '알러지 요소',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                    color: Color.fromRGBO(0, 0, 0, 1)),
-              )
-            ],
-          ),
-        ),
-
-        IngredientList(widget.goodsInfo),
       ],
     );
   }
-}
 
-class CategoryWidget extends StatelessWidget {
-  const CategoryWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width / 360;
-    var height = MediaQuery.of(context).size.height / 800;
-    return Container(
-      height: height * 50,
-      width: width * 330,
-      child:
-      Card(
-        //semanticContainer: false, // card 안에 단일 기능일 시 true, 여러 개의 기능인 경우 false
+  Widget categoryBanner(){
+    return SizedBox(
+      width: MediaQuery.of(context).size.width*0.8,
+      height: 70,
+      child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer, // 둥근 모서리 부분의 음영 또한 둥글지게 함
-        elevation: 2.0,
+        elevation: 1.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         child: Container(
-          color: Colors.blue,
-          //color: Color.fromRGBO(138, 149, 146, 0.2),
-          margin: EdgeInsets.symmetric(horizontal: width*26),
+          //margin: EdgeInsets.symmetric(horizontal: 26.0),
+          padding: EdgeInsets.only(top: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                color: Colors.red,
-                  child: categoryMenu("상품설명",(){})),
-              categoryMenu("성분",(){}),
-              categoryMenu("리뷰",(){}),
-              categoryMenu("가격비교",(){}),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  height: 70,
+                  //padding: EdgeInsets.only(top: 20),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    onTap: (){
+                      setState(() {
+                        this.currentState = 1;
+                      });
+                    },
+                    child: Text("상품설명",textAlign:TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,
+                      decoration: currentState == 1 ? TextDecoration.underline: null,
+                      decorationThickness: 4,
+                    )),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex:1,
+                child: Container(
+                  height: 70,
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    onTap: (){
+                      setState(() {
+                        this.currentState = 2;
+                      });
+                    },
+                    child: Text("성분",textAlign:TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,
+                        decoration: currentState == 2? TextDecoration.underline: null,
+                        decorationThickness: 4,
+                    )),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  height: 70,
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    onTap: (){
+                      setState(() {
+                        this.currentState = 3;
+                      });
+                    },
+                    child: Text("리뷰",textAlign:TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,
+                      decoration: currentState == 3? TextDecoration.underline: null,
+                      decorationThickness: 4,
+                    )),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  height: 70,
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    onTap: (){
+                      setState(() {
+                        this.currentState = 4;
+                      });
+                    },
+                    child: Text("가격비교",textAlign:TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,
+                      decoration: currentState == 4? TextDecoration.underline: null,
+                      decorationThickness: 4,
+                    )),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
-  Expanded categoryMenu(String name, VoidCallback voidCallback) {
-    return Expanded(
-      flex: 1,
-      child: GestureDetector(
-                onTap: voidCallback,
-                child: Text(name,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-              ),
+  ProductDescriptionWidget(){
+    return Container(
+        width:MediaQuery.of(context).size.width*0.7,
+        //margin: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.only(top: 30),
+        child: Column(
+          children: [
+            Image.network(widget.goodsInfo.goodsDetailedInfo.detailDescriptionUrl1),
+            SizedBox(height: 10),
+            Image.network(widget.goodsInfo.goodsDetailedInfo.detailDescriptionUrl2),
+            SizedBox(height: 10),
+            Image.network(widget.goodsInfo.goodsDetailedInfo.detailDescriptionUrl3),
+            SizedBox(height: 10),
+            Image.network(widget.goodsInfo.goodsDetailedInfo.detailDescriptionUrl4),
+            SizedBox(height: 10),
+          ],
+        )
     );
   }
-}
-
-class IngredientList extends StatefulWidget {
-  final GoodsInfo goodsInfo;
-
-  IngredientList(this.goodsInfo);
-
-  @override
-  _IngredientList createState() => _IngredientList();
-}
-
-class _IngredientList extends State<IngredientList> {
-  List<Ingredient> barList = [];
-  List<Ingredient> circleList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    widget.goodsInfo.detailedInfo.ingredientList.forEach((element) {
-      if (element.amount != null)
-        barList.add(element);
-      else
-        circleList.add(element);
-    });
+  // 알러지 요소 이미지 위젯
+  IngredientWidget(String url, String text){
+    return Container(
+        width:MediaQuery.of(context).size.width*0.7,
+        //margin: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.only(top: 30),
+        child: Column(
+          children: [
+            Text("알러지 요소",
+                textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height:40),
+            //--------------------------
+            Container(
+              width:MediaQuery.of(context).size.width*0.7,
+              child: allergyIcon(url, text)
+            ),
+            //--------------------------
+            SizedBox(height: 30),
+            Text("영양 정보",
+                textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 30),
+            Image.network(widget.goodsInfo.goodsDetailedInfo.ingredientImageUrl),
+            SizedBox(height: 30),
+          ],
+        )
+    );
   }
-
-  Widget getRowIngredientBar() {
-    List<Widget> tmpWidgetList = [];
-    List<Color> colorList = [
-      Color.fromRGBO(255, 113, 113, 1),
-      Color.fromRGBO(255, 152, 152, 1),
-      Color.fromRGBO(255, 184, 184, 1),
-      Color.fromRGBO(255, 217, 217, 1)
-    ];
-    int i = 0;
-    barList.forEach((element) {
-      tmpWidgetList.add(Expanded(
-        child: Container(
-          color: colorList[i],
-          child: i == 0
-              ? Center(
-                  child: Text(
-                    '${element.name} (${element.amount}%)',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              : Container(),
-        ),
-        flex: element.amount!,
-      ));
-      i++;
-    });
-
-    return Row(children: tmpWidgetList);
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  allergyIcon(String url, String text){
     return Container(
       child: Column(
-        children: <Widget>[
-          Padding(padding: EdgeInsets.only(top: 20)),
-          Container(
-            child: Row(
-              children: <Widget>[
-                Padding(padding: EdgeInsets.only(left: 55)),
-                Card(
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(150),
-                  ),
-                  child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            //dummyIngredientModelList[0].Allergy_Factor[0],
-                            widget.goodsInfo.detailedInfo.allergyFactorList[0],
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                            ),
-                          ),
-                        ],
-                      ),
-                      width: 110,
-                      height: 110,
-                      decoration: BoxDecoration(
-                        // The child of a round Card should be in round shape
-                        shape: BoxShape.circle,
-                        color: Color.fromRGBO(255, 193, 193, 1),
-                      )),
-                ),
-                Padding(padding: EdgeInsets.only(left: 15)),
-                Card(
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(150),
-                  ),
-                  child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            widget.goodsInfo.detailedInfo.allergyFactorList[1],
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                            ),
-                          ),
-                        ],
-                      ),
-                      width: 110,
-                      height: 110,
-                      decoration: BoxDecoration(
-                        // The child of a round Card should be in round shape
-                        shape: BoxShape.circle,
-                        color: Color.fromRGBO(255, 193, 193, 1),
-                      )),
-                ),
-                Padding(padding: EdgeInsets.only(left: 15)),
-                Card(
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(150),
-                  ),
-                  child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            widget.goodsInfo.detailedInfo.allergyFactorList[2],
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                            ),
-                          ),
-                        ],
-                      ),
-                      width: 110,
-                      height: 110,
-                      decoration: BoxDecoration(
-                        // The child of a round Card should be in round shape
-                        shape: BoxShape.circle,
-                        color: Color.fromRGBO(255, 193, 193, 1),
-                      )),
-                ),
-              ],
-            ),
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+              child: Image.asset(url, fit: BoxFit.fill)
           ),
-
-          Container(
-            child: Column(
-              children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 120)),
-                Text(
-                  '성분표',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                      color: Color.fromRGBO(0, 0, 0, 1)),
-                ),
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.only(left: 360)),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              barList[1].name.toString(),
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  color: Color.fromRGBO(255, 113, 113, 1)),
-                            ),
-                            Text('${barList[1].amount}%',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(255, 113, 113, 1))),
-                          ],
-                        ),
-                      ),
-                      Padding(padding: EdgeInsets.only(left: 25)),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Text(barList[2].name.toString(),
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(255, 113, 113, 1))),
-                            Text('${barList[2].amount}%',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(255, 113, 113, 1))),
-                          ],
-                        ),
-                      ),
-                      Padding(padding: EdgeInsets.only(left: 3)),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Text(barList[3].name.toString(),
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(255, 113, 113, 1))),
-                            Text('${barList[3].amount}%',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(255, 113, 113, 1))),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 40,
-                  width: 400,
-                  child: getRowIngredientBar(),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.only(left: 90)),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              barList[0].name.toString(),
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(0, 0, 0, 1)),
-                            ),
-                            Padding(padding: EdgeInsets.only(top: 10)),
-                            Text('${barList[0].amount}%',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(255, 113, 113, 1))),
-                          ],
-                        ),
-                      ),
-                      Padding(padding: EdgeInsets.only(left: 65)),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Text(barList[1].name.toString(),
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromRGBO(0, 0, 0, 1))),
-                            Padding(padding: EdgeInsets.only(top: 10)),
-                            Text('${barList[1].amount}%',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(255, 113, 113, 1))),
-                          ],
-                        ),
-                      ),
-                      Padding(padding: EdgeInsets.only(left: 65)),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Text(barList[2].name.toString(),
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromRGBO(0, 0, 0, 1))),
-                            Padding(padding: EdgeInsets.only(top: 10)),
-                            Text('${barList[2].amount}%',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(255, 113, 113, 1))),
-                          ],
-                        ),
-                      ),
-                      Padding(padding: EdgeInsets.only(left: 65)),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Text(barList[3].name.toString(),
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromRGBO(0, 0, 0, 1))),
-                            Padding(padding: EdgeInsets.only(top: 10)),
-                            Text('${barList[3].amount}%',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(255, 113, 113, 1))),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-              ],
-            ),
-          ),
-
-          //비타민
-          Container(
-            child: Row(
-              children: <Widget>[
-                Padding(padding: EdgeInsets.only(left: 100)),
-                Card(
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(150),
-                  ),
-                  child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            circleList[0].name,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                            ),
-                          ),
-                        ],
-                      ),
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        // The child of a round Card should be in round shape
-                        shape: BoxShape.circle,
-                        color: Color.fromRGBO(255, 193, 193, 1),
-                      )),
-                ),
-                Padding(padding: EdgeInsets.only(left: 20)),
-                Card(
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(150),
-                  ),
-                  child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            circleList[1].name,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                            ),
-                          ),
-                        ],
-                      ),
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        // The child of a round Card should be in round shape
-                        shape: BoxShape.circle,
-                        color: Color.fromRGBO(255, 193, 193, 1),
-                      )),
-                ),
-                Padding(padding: EdgeInsets.only(left: 20)),
-                Card(
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(150),
-                  ),
-                  child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            circleList[2].name,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                            ),
-                          ),
-                        ],
-                      ),
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        // The child of a round Card should be in round shape
-                        shape: BoxShape.circle,
-                        color: Color.fromRGBO(255, 193, 193, 1),
-                      )),
-                ),
-              ],
-            ),
-          ),
-          //비타민
-
-          Padding(padding: EdgeInsets.only(top: 120)),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  '상품 상세',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                      color: Color.fromRGBO(0, 0, 0, 1)),
-                ),
-                Padding(padding: EdgeInsets.only(top: 20)),
-                SizedBox(
-                  width: 400,
-                  height: 400,
-                  child: Image.network(widget.goodsInfo.detailedInfo.bannerUrl),
-                ),
-              ],
-            ),
-          ),
-
-          Container(
-            margin: EdgeInsets.only(top: 30, bottom: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Card(
-                  margin: EdgeInsets.only(right: 10),
-                  color: Color.fromRGBO(255, 113, 113, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: SizedBox(
-                    height: 70,
-                    width: 200,
-                    child: FlatButton(
-                      onPressed: () {
-                        /*
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Shopping_Basket()));
-                                */
-                      },
-                      child: Text(
-                        '장바구니 넣기',
-                        style:
-                            TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-                      ),
-                    ),
-                  ),
-                ),
-                Card(
-                  margin: EdgeInsets.only(left: 10),
-                  color: Color.fromRGBO(255, 113, 113, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: SizedBox(
-                    height: 70,
-                    width: 200,
-                    child: FlatButton(
-                      onPressed: () {},
-                      child: Text(
-                        '바로 주문',
-                        style:
-                            TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          SizedBox(height: 8),
+          Text(text,style: TextStyle(fontWeight: FontWeight.bold))
         ],
       ),
+    );
+  }
+  ReviewWidget(){
+    return Container(
+        padding: EdgeInsets.only(top:50),
+        child: Text("리뷰 구현 준비 중 입니다.")
+    );
+  }
+  PriceCompareWidget(){
+    return Container(
+        width:MediaQuery.of(context).size.width*0.7,
+        //margin: EdgeInsets.symmetric(horizontal: 15),
+        //padding: EdgeInsets.only(top: 60),
+        child: Column(
+          children: [
+            SizedBox(height: 50,),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("사이트",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                  Text("가격",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                  Text("배송비",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                ],
+              ),
+            ),
+            SizedBox(height: 25,),
+
+            ListTile(
+              onTap: () {
+                setState(() {
+                  _launched = _launchInBrowser(widget.goodsInfo.goodsDetailedInfo.coupang.goodsUrl);
+                });
+              },
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              tileColor: WHITE_GREY,
+                  leading: Image.asset('images/product/logo_coupang.png',fit: BoxFit.fill,width:50,height:10),
+                  title: Text(
+                    NumberFormat('###,###,###,###')
+                        .format(widget.goodsInfo.goodsDetailedInfo.coupang.price)
+                        .replaceAll(' ', '') +
+                        '원',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),
+                  ),
+                  trailing: Text(
+                    NumberFormat('###,###,###,###')
+                        .format(widget.goodsInfo.goodsDetailedInfo.coupang.shippingFee)
+                        .replaceAll(' ', '') +
+                        '원',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),
+                  ),
+            ),
+            ListTile(
+              onTap: () {
+                setState(() {
+                  _launched = _launchInBrowser(widget.goodsInfo.goodsDetailedInfo.gmarket.goodsUrl);
+                });
+              },
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              leading: Image.asset('images/product/logo_gmarket.png',fit: BoxFit.fill,width:50,height:10),
+              title: Text(
+                NumberFormat('###,###,###,###')
+                    .format(widget.goodsInfo.goodsDetailedInfo.gmarket.price)
+                    .replaceAll(' ', '') +
+                    '원',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),
+              ),
+              trailing: Text(
+                NumberFormat('###,###,###,###')
+                    .format(widget.goodsInfo.goodsDetailedInfo.gmarket.shippingFee)
+                    .replaceAll(' ', '') +
+                    '원',
+                textAlign: TextAlign.left,
+                style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                setState(() {
+                  _launched = _launchInBrowser(widget.goodsInfo.goodsDetailedInfo.eleventhStreet.goodsUrl);
+                });
+              },
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              tileColor: WHITE_GREY,
+              leading: Image.asset('images/product/logo_11st.png',fit: BoxFit.fill,width:50,height:10),
+              title: Text(
+                NumberFormat('###,###,###,###')
+                    .format(widget.goodsInfo.goodsDetailedInfo.eleventhStreet.price)
+                    .replaceAll(' ', '') +
+                    '원',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),
+              ),
+              trailing: Text(
+                NumberFormat('###,###,###,###')
+                    .format(widget.goodsInfo.goodsDetailedInfo.eleventhStreet.shippingFee)
+                    .replaceAll(' ', '') +
+                    '원',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(height: 50)
+          ],
+        )
     );
   }
 }
