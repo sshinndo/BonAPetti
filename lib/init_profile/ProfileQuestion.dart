@@ -252,10 +252,10 @@ class _SecondRouteState extends State<SecondRoute> {
                           ],
                         ),
                         SizedBox(height: 60),
-                        Container(
-                          margin: EdgeInsets.only(left: 25.0, top: 50.0),
-                          child: customArrowBack(context),
-                        ),
+                        // Container(
+                        //   margin: EdgeInsets.only(left: 25.0, top: 50.0),
+                        //   child: customArrowBack(context),
+                        // ),
                         SizedBox(height: 25.0),
                         Container(
                           alignment: Alignment.centerLeft,

@@ -376,13 +376,32 @@ class _ContentDetailedGoods extends State<ContentDetailedGoods> {
         //padding: EdgeInsets.only(top: 60),
         child: Column(
           children: [
+            SizedBox(height: 25),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                height: 30,
+                color: Color.fromRGBO(166, 0, 0, 0.04),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("아래 버튼을 누르면, 판매처로 이동이 가능합니다!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Color.fromRGBO(242, 128, 128, 1)
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
             SizedBox(height: 50,),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 25),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("사이트",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                  Text("판매처",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                   Text("가격",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                   Text("배송비",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                 ],
