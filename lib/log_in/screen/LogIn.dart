@@ -3,11 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
-//import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/main.dart';
-import 'package:pet_service_application/log_in/screen/SignUpPage.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
 class LogIn extends StatefulWidget {
@@ -20,6 +19,7 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  Future<void>? _launched;
 
   @override
   void initState() {
@@ -28,8 +28,21 @@ class _LogInState extends State<LogIn> {
     passwordController = TextEditingController(text: '');
   }
 
+  Future<void> _launchInBrowser(String url) async {
+    if (!await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    //구글 설문지 링크
+    const String _url = 'https://docs.google.com/forms/d/e/1FAIpQLSffJTPtzolI8Yg2gnCa1HSNW-RYGY2-YNks0BXfMvoZqmRLig/viewform';
+
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
@@ -82,13 +95,9 @@ class _LogInState extends State<LogIn> {
                           child: customSubtitleColor('문의하기', GREY),
                         ),
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) =>
-                          //         WebViewPage 구현하기
-                          //   ),
-                          // );
+                          setState(() {
+                            _launched = _launchInBrowser(_url);
+                          });
                         }
                       ),
                           SizedBox(width: 30),
@@ -112,27 +121,6 @@ class _LogInState extends State<LogIn> {
       }),
     );
   }
-// void _loginCheck() async{
-//   print('emailController.text: %{emailController}');
-//   print('passwordController.text: %{passwordController}');
-//   final storage = FlutterSecureStorage();
-//   String storagePass = await storage.read(key: emailController.text);
-//   if (storagePass != null &&
-//       storagePass != '' &&
-//       storagePass == passwordController.text) {
-//     print('storagePass: $storagePass');
-//     String userNickName = await storage.read(key: '${emailController.text}');
-//     storage.write(key: userNickName, value: STATUS_LOGIN);
-//     print('로그인 성공!');
-//     Navigator.pushReplacement(context,
-//         MaterialPageRoute(builder: (BuildContext context) =>
-//             MyHomePage(title: userNickName)));
-//   }
-//   else{
-//     print('로그인 실패');
-//     showToast('아이디가 존재하지 않거나 비밀번호가 맞지 않습니다.');
-//   }
-// }
 }
 
 class LogInIcon extends StatelessWidget {

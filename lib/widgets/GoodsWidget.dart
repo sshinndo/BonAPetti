@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -22,10 +24,12 @@ class _GoodsCardWidget extends State<GoodsCardWidget> {
 
     return GestureDetector(
       onTap: () {
+        // 터치시 굿즈 디테일 창으로 이동
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailedGoodsScreen(widget.goodsInfo)));  //터치시 굿즈 디테일 창으로 이동
+                builder: (context) =>
+              DetailedGoodsScreen(widget.goodsInfo)));
       },
       child: Card(
         elevation: 5,   //그림자
@@ -49,13 +53,13 @@ class _GoodsCardWidget extends State<GoodsCardWidget> {
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
-                              widget.goodsInfo.detailedInfo.isLike =
-                                  !widget.goodsInfo.detailedInfo.isLike;
+                              widget.goodsInfo.goodsDetailedInfo.isLike =
+                                  !widget.goodsInfo.goodsDetailedInfo.isLike;
                             });
                           },
                           child: Icon(
                             Icons.favorite,
-                            color: widget.goodsInfo.detailedInfo.isLike
+                            color: widget.goodsInfo.goodsDetailedInfo.isLike
                                 ? Color.fromRGBO(255, 87, 87, 1)
                                 : Color.fromRGBO(217, 217, 217, 1),
                           ),
@@ -73,10 +77,7 @@ class _GoodsCardWidget extends State<GoodsCardWidget> {
                         )), //바로주문
                     Expanded(
                         flex: 1,
-                        child: SizedBox(
-                            width: heartAndCartSize,
-                            height: heartAndCartSize,
-                            child: Image.asset('images/cart_icon.png')))  //장바구니
+                        child: SizedBox())
                   ],
                 ),
               ),
@@ -87,7 +88,7 @@ class _GoodsCardWidget extends State<GoodsCardWidget> {
                 child: Container(
                   width: heartAndCartSize * 5,
                   height: heartAndCartSize * 5,
-                  child: Image.network(widget.goodsInfo.imgUrl),
+                  child: Image.network(widget.goodsInfo.thumbnailUrl),
                 ),
               ),
             ),  //굿즈 이미지
@@ -116,46 +117,24 @@ class _GoodsCardWidget extends State<GoodsCardWidget> {
   }
 
   List<TextSpan> getPriceTextSpan(GoodsInfo goodsInfo) {
+
+    // 오픈마켓 상품 최저가를 lowestPrice에 대입
+    int lowestPrice = [
+      widget.goodsInfo.goodsDetailedInfo.coupang.price,
+      widget.goodsInfo.goodsDetailedInfo.gmarket.price,
+      widget.goodsInfo.goodsDetailedInfo.eleventhStreet.price].reduce(min);
+
     List<TextSpan> priceTextSpan = [];
-    if (goodsInfo.discountedPrice == null) {
-      priceTextSpan.add(
-        TextSpan(
-          text: NumberFormat('###,###,###,###')
-                  .format(goodsInfo.price)
-                  .replaceAll(' ', '') +
-              '원',
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-      );
-    } else {
-      priceTextSpan.add(
-        TextSpan(
-          text: (NumberFormat('###,###,###,###')
-              .format(goodsInfo.price)
-              .replaceAll(' ', '')),
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.normal,
-            color: Color.fromRGBO(175, 173, 173, 1),
-            decoration: TextDecoration.lineThrough,
-          ),
-        ),
-      );
-      priceTextSpan.add(
-        TextSpan(
-          text: ' ' +
-              (NumberFormat('###,###,###,###')
-                      .format(goodsInfo.discountedPrice)
-                      .replaceAll(' ', '') +
-                  '원'),
-          style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color.fromRGBO(255, 87, 87, 1)),
-        ),
-      );
-    }
+    priceTextSpan.add(
+      TextSpan(
+        text: NumberFormat('###,###,###,###')
+            .format(lowestPrice)
+            .replaceAll(' ', '') +
+            '원',
+        style: TextStyle(
+            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+      ),
+    );
 
     return priceTextSpan;
   } //상품 가격 불러오는 함수

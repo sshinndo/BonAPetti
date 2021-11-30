@@ -15,60 +15,40 @@ class EachWishList extends StatefulWidget{
 
 List<GoodsInfo> dummyGoodsModelList = [
   GoodsInfo(
-    '닭고기맛 사료',
-    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
-    25000,
-    null,
-    GoodsDetailedInfo(
-        [
-          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_one.png',
-        ],
+      product[0]["name"],
+      product[0]["thumbnailUrl"],
+      product[0]["price1"],
+      product[0]["category"],
+      GoodsDetailedInfo(
         false,
-        ['쌀', '대두', '연어'],
-        [
-          Ingredient('조지방', 77),
-          Ingredient('조단백질', 19),
-          Ingredient('칼슘', 2),
-          Ingredient('인', 1),
-          Ingredient('비타민 A', null),
-          Ingredient('비타민 E', null),
-          Ingredient('비타민 D3', null),
-        ],
-        'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image1.png'),
+        product[0]["grade"],
+        product[0]["detailDescriptionUrl1"],
+        product[0]["detailDescriptionUrl2"],
+        product[0]["detailDescriptionUrl3"],
+        product[0]["detailDescriptionUrl4"],
+        product[0]["allergicIngredients"], product[0]["ingredientImageUrl"],
+        GoodsVendor(product[0]["siteName1"],product[0]["price1"],product[0]["shippingFee1"],product[0]["goodsUrl1"]),
+        GoodsVendor(product[0]["siteName2"],product[0]["price2"],product[0]["shippingFee2"],product[0]["goodsUrl2"]),
+        GoodsVendor(product[0]["siteName3"],product[0]["price3"],product[0]["shippingFee3"],product[0]["goodsUrl3"]),)
   ),
   GoodsInfo(
-    '훈제 사료',
-    'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
-    32000,
-    null,
-    GoodsDetailedInfo(
-        [
-          'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/dog_food_two.png',
-        ],
+      product[0]["name"],
+      product[0]["thumbnailUrl"],
+      product[0]["price1"],
+      product[0]["category"],
+      GoodsDetailedInfo(
         false,
-        ['쌀', '대두', '연어'],
-        [
-          Ingredient('조지방', 77),
-          Ingredient('조단백질', 19),
-          Ingredient('칼슘', 2),
-          Ingredient('인', 1),
-          Ingredient('비타민 A', null),
-          Ingredient('비타민 E', null),
-          Ingredient('비타민 D3', null),
-        ],
-        'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/detailed_food_image/detail_food_image2.png'),
+        product[0]["grade"],
+        product[0]["detailDescriptionUrl1"],
+        product[0]["detailDescriptionUrl2"],
+        product[0]["detailDescriptionUrl3"],
+        product[0]["detailDescriptionUrl4"],
+        product[0]["allergicIngredients"], product[0]["ingredientImageUrl"],
+        GoodsVendor(product[0]["siteName1"],product[0]["price1"],product[0]["shippingFee1"],product[0]["goodsUrl1"]),
+        GoodsVendor(product[0]["siteName2"],product[0]["price2"],product[0]["shippingFee2"],product[0]["goodsUrl2"]),
+        GoodsVendor(product[0]["siteName3"],product[0]["price3"],product[0]["shippingFee3"],product[0]["goodsUrl3"]),)
   ),
 ];
-
-/*
-List<ProductModel> dummyProductModelList = [
-  ProductModel('개구리', 'abc', 200, false),
-  ProductModel('지렁이', 'abc', 200, false),
-  ProductModel('타란튤라', 'abc', 200, false),
-  ProductModel('전갈', 'abc', 200, false),
-  ProductModel('지네', 'abc', 200, false),
-];
- */
 
 class EachWishList extends StatelessWidget {
   @override
@@ -165,14 +145,14 @@ class _ProductListView extends State<ProductListView> {
   void selectedItemRemove() {
     setState(() {
       _loadData(widget.productModelList);
-      productModelList.removeWhere((element) => element.detailedInfo.isLike);
+      productModelList.removeWhere((element) => element.goodsDetailedInfo.isLike);
     });
   }
 
   void refreshAllData() {
     setState(() {
       dummyGoodsModelList.forEach((element) {
-        element.detailedInfo.isLike = !element.detailedInfo.isLike;
+        element.goodsDetailedInfo.isLike = !element.goodsDetailedInfo.isLike;
       });
     });
   }
@@ -226,7 +206,7 @@ class _ProductListItem extends State<ProductListItem> {
                         child: SizedBox(
                           height: 300,
                           width: 400,
-                          child: Image.network(widget.productModel.imgUrl),
+                          child: Image.network(widget.productModel.thumbnailUrl),
                         ),
                       ),
                     ),
@@ -251,10 +231,10 @@ class _ProductListItem extends State<ProductListItem> {
                                       activeColor:
                                           Color.fromRGBO(255, 113, 113, 1),
                                       value: widget
-                                          .productModel.detailedInfo.isLike,
+                                          .productModel.goodsDetailedInfo.isLike,
                                       onChanged: (bool? value) {
                                         setState(() {
-                                          widget.productModel.detailedInfo
+                                          widget.productModel.goodsDetailedInfo
                                               .isLike = value!;
                                         });
                                       },

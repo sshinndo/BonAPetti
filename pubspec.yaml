@@ -26,7 +26,7 @@ dependencies:
   intl: ^0.17.0
   retrofit: ^2.0.1
   dio: ^4.0.0
-  logger:
+  logger: ^1.1.0
   json_annotation: ^4.0.1
   webview_flutter: any
   webview_windows: ^0.0.7
@@ -51,6 +51,8 @@ dependencies:
   permission_handler: ^7.1.0
   file_picker: ^3.0.4
   csv: ^5.0.0
+  flutter_secure_storage: ^5.0.2
+
   url_launcher: ^6.0.0
 
   # 서버 통신을 위한
@@ -101,6 +103,8 @@ flutter:
       - images/profile/
       - images/shorts/
       - images/svg/
+      - images/product/
+      - images/allergyIcon/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
