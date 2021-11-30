@@ -21,7 +21,7 @@ class CardNewsDetailRoute extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          AppBarWithAlarm(nickName: Logger().userData.Name),
+          AppBarWithAlarm(nickName: Logger().userData.name),
           Expanded(
               child: ListView(children: [
             Container(
