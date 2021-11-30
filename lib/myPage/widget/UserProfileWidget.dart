@@ -49,7 +49,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                       // <홍길동>님
                       children: [
                         Text(
-                          Logger().userData.Name,
+                          Logger().userData.name,
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
           ),
           // Description : 자기 소개
           Row(
-              children: [TextWidget(text: Logger().userData.Description[0])]
+              children: [TextWidget(text: Logger().userData.description)]
           )
         ],
       ),

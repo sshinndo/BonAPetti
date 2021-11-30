@@ -23,7 +23,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
     return Scaffold(
       body: ListView(
         children : [
-          AppBarWithAlarm(nickName: myInfo.Name), //닉네임 & 알림
+          AppBarWithAlarm(nickName: myInfo.name), //닉네임 & 알림
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,7 +40,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
                     .width * 0.2,
               ),  //프로필 아이콘
               Text(
-                myInfo.Name,
+                myInfo.name,
                 style: TextStyle(
                   fontSize: nameSize,
                   fontWeight: FontWeight.bold

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pet_service_application/HashTagButtonList.dart';
@@ -26,6 +28,54 @@ class _FifthRouteState extends State<FifthRoute> {
   final _scrollController = ScrollController();
   //유저 디폴트 정보
   PetInfo myPet = Logger().getDefaultPet();
+
+  //파이어베이스 스테이트
+  bool _initialized = false;
+  bool _error = false;
+
+  //파이어베이스 이니셜
+  void initializeFlutterFire() async {
+    try {
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 = 펫 ID)
+  void sendPetData(PetInfo petData) {
+    //펫 정보 없을 바로 종료
+    if(petData.petName == "")
+      return;
+
+    if (Logger().userData.uid != 0) {
+      CollectionReference pets = FirebaseFirestore.instance.collection(
+          'UserData').doc(Logger().userData.uid.toString()).collection('Pets');
+      pets.doc(petData.petName).set({
+        'Name': petData.petName,
+        'Age': petData.petAge,
+        'Type' : petData.petType,
+        'Species' : petData.petType,
+        'BodyLength': petData.petBodyLength,
+        'Weight': petData.petWeight,
+        'Silhouette': petData.petSilhouette,
+        'AllergyList': petData.petAllergyList,
+      });
+    }
+    else
+      throw Exception('Login Data Not Exist');
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -264,6 +314,7 @@ class _FifthRouteState extends State<FifthRoute> {
                         margin: EdgeInsets.only(left: 35, right: 35),
                         child: customPinkElevatedButton(
                             "아니요(잘 모르겠어요)",
+                                //서버로 펫 데이터 전송
                                 () => Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(

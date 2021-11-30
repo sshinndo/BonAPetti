@@ -1,10 +1,8 @@
-//import 'dart:html';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/HashTagButtonList.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/init_profile/FifthRoute.dart';
 import 'package:pet_service_application/init_profile/widget/AlertDuplicateMessage.dart';
@@ -18,6 +16,8 @@ class ProfileQuestion extends StatelessWidget {
   }
 }
 
+//첫 계정 생성 및 초기 설정 데이터 동기화
+//펫 리스트, 유저 UID,
 class FirstRoute extends StatefulWidget {
   const FirstRoute({Key? key}) : super(key: key);
 
@@ -59,52 +59,50 @@ class FirstRouteState extends State<FirstRoute> {
     super.initState();
   }
 
-  //생성된 계정을 서버로 전송 (자동 ID)
-  String initialUserData()
-  {
-    if (myData.Name != "")
+  //생성된 계정을 서버로 전송
+  void sendUserData() async  {
+    if (myData.name != "")
     {
-      CollectionReference users = FirebaseFirestore.instance.collection(
-          'UserData');
-      var UiD = users.add({
-        'AccountInfo': myData.AccountInfo,
-        'Name': myData.Name,
-        'Description': myData.Description,
-        'following' : myData.following,
-        'follower' : myData.follower,
-        'Commuity': myData.Community,
-        'Shorts': myData.Shorts,
-        'MedalImage': myData.MedalImage,
-        'MyImage': myData.MyImage,
-        'MyPets': myData.MyPets
+      Future<int> curUserCount = allocUserID();
+      curUserCount.then((value) {
+        debugPrint("Allocate New UID : $value");
+        if(value > 0)
+          {
+            CollectionReference users = FirebaseFirestore.instance.collection(
+                'UserData');
+            users.doc(value.toString()).set({
+              'AccountInfo': myData.accountInfo,
+              'Name': myData.name,
+              'Description': myData.description,
+              'following' : myData.following,
+              'follower' : myData.follower,
+              'Community': myData.posts,
+              'Shorts': myData.shorts,
+              'MedalImage': myData.medalImage,
+              'MyImage': myData.myImage,
+              'MyPets': myData.myPets
+            });
+          }
+        Logger().userData.uid = value;
       });
-      return UiD.toString();
     }
-    return "";
+    else
+      throw Exception('Login Data Already Exist');
   }
 
-  //생성된 계정을 서버로 전송
-  String sendUserData()
-  {
-    if (myData.Name != "")
-    {
-      CollectionReference users = FirebaseFirestore.instance.collection(
-          'UserData');
-      users.doc(myData.Name).set({
-        'AccountInfo': myData.AccountInfo,
-        'Name': myData.Name,
-        'Description': myData.Description,
-        'following' : myData.following,
-        'follower' : myData.follower,
-        'Commuity': myData.Community,
-        'Shorts': myData.Shorts,
-        'MedalImage': myData.MedalImage,
-        'MyImage': myData.MyImage,
-        'MyPets': myData.MyPets
+  //새 UID 할당받기 - 서버와 동기화
+  Future<int> allocUserID() async {
+    //현재 유저 수 확인 후 UID 배정받기
+    int newUID = await FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore.instance.collection('Manage').doc('Users'));
+      if (!snapshot.exists) {
+        throw Exception('Server Manager Connect Fail');
+      }
+        int curUserCount = snapshot.get('Count') + 1;
+        transaction.update(FirebaseFirestore.instance.collection('Manage').doc('Users'), {'Count' : curUserCount});
+        return curUserCount;
       });
-      return myData.Name;
-    }
-    return "";
+    return newUID;
   }
 
   //중복 계정 여부 확인 함수
@@ -163,9 +161,9 @@ class FirstRouteState extends State<FirstRoute> {
                       });
                       //유저 정보 없음, 계정 생성 후 다음으로 이동
                       debugPrint('User doesnt Exist, initiate user');
-                      Logger().userData.Name = userNickname.text;
-                      Logger().userID = initialUserData();
-                      debugPrint('User ID : '+Logger().userID);
+                      Logger().userData.name = userNickname.text;
+                      sendUserData();
+                      debugPrint('User ID : '+Logger().userData.uid.toString());
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -182,8 +180,7 @@ class FirstRouteState extends State<FirstRoute> {
   }
 }
 
-// 두번째 라우트 및 계정 전송
-
+// 두번째 라우트
 class SecondRoute extends StatefulWidget {
   const SecondRoute({Key? key}) : super(key: key);
 
@@ -202,8 +199,6 @@ class _SecondRouteState extends State<SecondRoute> {
     var width = MediaQuery.of(context).size.width/360;
     var height = MediaQuery.of(context).size.height/800;
 
-    //다음 페이지로 넘어갈때 데이터 전송
-    //initialUserData();
     return Scaffold(
       body: SafeArea(
         child: WillPopScope(
@@ -304,6 +299,7 @@ class _SecondRouteState extends State<SecondRoute> {
   }
 }
 
+//펫 이름 입력
 class ThirdRoute extends StatefulWidget {
   @override
   _ThirdRouteState createState() => _ThirdRouteState();
@@ -311,52 +307,6 @@ class ThirdRoute extends StatefulWidget {
 
 class _ThirdRouteState extends State<ThirdRoute> {
   TextEditingController _petName = TextEditingController();
-
-  //파이어베이스 스테이트
-  bool _initialized = false;
-  bool _error = false;
-
-  //파이어베이스 이니셜
-  void initializeFlutterFire() async {
-    try {
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (e) {
-      setState(() {
-        _error = true;
-      });
-    }
-  }
-
-  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 = 펫 ID)
-  void sendPetData(PetInfo petData) {
-    //펫 정보 없을 바로 종료
-    if(petData.petName == "")
-      return;
-
-    if (Logger().userID != "") {
-      UserData myData = Logger().userData;
-      CollectionReference pets = FirebaseFirestore.instance.collection(
-          'UserData').doc(Logger().userID).collection('Pets');
-      pets.doc(petData.petName).set({
-        'Name': petData.petName,
-        'Age': petData.petAge,
-        'Type' : petData.petType,
-        'BodyLength': petData.petBodyLength,
-        'Weight': petData.petWeight,
-        'Silhouette': petData.petSilhouette,
-        'AllergyList': petData.petAllergyList,
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    initializeFlutterFire();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -399,8 +349,8 @@ class _ThirdRouteState extends State<ThirdRoute> {
                         () {
                       //펫 이름으로 새 데이터 생성 후 현재 앱 유저에 삽입
                       PetInfo myPet = PetInfo(_petName.text);
-                      Logger().userData.MyPets.clear();
-                      Logger().userData.MyPets.add(myPet);
+                      Logger().userData.myPets = [];
+                      Logger().userData.myPets!.add(myPet);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -417,6 +367,7 @@ class _ThirdRouteState extends State<ThirdRoute> {
   }
 }
 
+//펫 타입 입력
 class FourthRoute extends StatefulWidget {
   const FourthRoute({Key? key}) : super(key: key);
 
@@ -490,6 +441,7 @@ class _FourthRouteState extends State<FourthRoute> {
   }
 }
 
+//펫 정보 입력용 버튼 리스트 매니저
 class HashTagButtonListManager extends StatefulWidget {
   final PetCategoryListView petCategoryListView;
 
@@ -499,18 +451,12 @@ class HashTagButtonListManager extends StatefulWidget {
   final _HashTagButtonListManager listManager = _HashTagButtonListManager();
 
   _HashTagButtonListManager getStateData() => listManager;
-
   @override
   _HashTagButtonListManager createState() => listManager;
 }
 
 class _HashTagButtonListManager extends State<HashTagButtonListManager> {
   bool isCategorySelected = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -531,6 +477,7 @@ class _HashTagButtonListManager extends State<HashTagButtonListManager> {
   }
 }
 
+//펫 타입 선택 버튼 리스트
 class HashTagInputButtonList extends StatelessWidget {
   final HashTagButtonListManager manager;
 
@@ -544,7 +491,7 @@ class HashTagInputButtonList extends StatelessWidget {
           manager.getStateData().refresh(true);
           manager.petCategoryListView.getStateData().add(buttonText);
           //펫 타입 이름 리스트에 저장 -> 로그인 유저 정보의 펫 타입으로 전환 (해시 방식 지정 필요)
-          PetInfo.petTypeNameList.add(buttonText);
+          //PetInfo.petTypeNameList.add(buttonText);
         },
         style: ElevatedButton.styleFrom(
             primary: Color.fromRGBO(246, 246, 246, 1),

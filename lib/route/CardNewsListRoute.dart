@@ -23,7 +23,7 @@ class CardNewsListRoute extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
           crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
           children: [
-            AppBarWithAlarm(nickName: Logger().userData.Name),
+            AppBarWithAlarm(nickName: Logger().userData.name),
             Container(
                 margin: EdgeInsets.all(20),
                 child: Center(

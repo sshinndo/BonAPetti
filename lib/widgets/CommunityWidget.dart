@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:pet_service_application/community/CommunityInfo.dart';
 
 
@@ -48,7 +47,7 @@ class _CommunityWidget extends State<CommunityWidget> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                        widget.communityInfo.profileImage,
+                        widget.communityInfo.user.myImage,
                         fit: BoxFit.fill,
                         height: iconSize * profileIconMultiplier,
                         width: iconSize * profileIconMultiplier
@@ -58,7 +57,7 @@ class _CommunityWidget extends State<CommunityWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              widget.communityInfo.nickName,
+                              widget.communityInfo.user.name,
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: nameSize,
@@ -66,7 +65,7 @@ class _CommunityWidget extends State<CommunityWidget> {
                               )
                           ),  //유저 닉네임
                           Text(
-                              widget.communityInfo.petName,
+                              widget.communityInfo.pet.petName,
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: nameSize - 2,
@@ -85,8 +84,9 @@ class _CommunityWidget extends State<CommunityWidget> {
                   margin: EdgeInsets.only(top:10,bottom:20),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
+                  //이미지 파이어베이스로 수정 필요
                   child: Image.asset(
-                      widget.communityInfo.imageUrl,
+                      widget.communityInfo.imageUrls.first,
                       fit: BoxFit.fill
                   ),
                 )
@@ -122,8 +122,7 @@ class _CommunityWidget extends State<CommunityWidget> {
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
-                            widget.communityInfo.isLike =
-                            !widget.communityInfo.isLike;
+                            widget.communityInfo.setLike(!widget.communityInfo.isLike);
                           }
                           );
                         },
@@ -197,4 +196,4 @@ List<TextSpan> getDialogueSpan(CommunityInfo communityInfo) {
   }
 
   return dialogueSpan;
-} //상품 가격 불러오는 함수
+}
