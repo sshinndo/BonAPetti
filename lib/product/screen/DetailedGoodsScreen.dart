@@ -54,7 +54,7 @@ class _ContentDetailedGoods extends State<ContentDetailedGoods> {
     return ListView(
       children: [
         AppBarWithAlarm(
-          nickName: Logger().userData.Name,
+          nickName: Logger().userData.name,
         ),
         Padding(padding: EdgeInsets.only(top: 20)),
 

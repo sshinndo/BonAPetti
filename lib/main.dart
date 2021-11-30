@@ -546,7 +546,7 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
         children: <Widget>[
           AppBarWithAlarm(
-            nickName: myInfo.Name
+            nickName: myInfo.name
             // nickName: UserInfo.userNickname
           ),
           Expanded(

@@ -34,7 +34,7 @@ class _SearchArea extends State<SearchArea> {
 
     return Column(
       children: [
-        AppBarWithAlarm(nickName: Logger().userData.Name),
+        AppBarWithAlarm(nickName: Logger().userData.name),
         Container(
           margin: EdgeInsets.only(bottom: 20),
           child: SearchBar(managerWidget: searchContentsManagerWidget),

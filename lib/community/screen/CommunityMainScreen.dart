@@ -18,14 +18,34 @@ class CommunityMainScreen extends StatefulWidget {
 
 class _CommunityMainScreen extends State<CommunityMainScreen> {
   UserData myInfo = Logger().userData;
+
+  //커뮤니티 위젯 만큼 랜덤 유저 커뮤니티 페이지 불러옴
+  Future<List<CommunityInfo>> initialPosts(int count) async {
+    List<CommunityInfo> randomPosts = [];
+    for(int i = 0; i<count; i++)
+    {
+      var randomPostID = CommunityInfo.getRandomPost();
+      randomPostID.then((idValue) {
+        debugPrint(idValue.toString());
+        var randomPostData = CommunityInfo.getCommunityData(idValue);
+        randomPostData.then((postValue)
+        {
+          randomPosts.add(postValue);
+        });
+      });
+    }
+    return randomPosts;
+  }
+
   @override
   Widget build(BuildContext context) {
+    var postData = initialPosts(2);
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start, //세로로 나열 기준은 시작점 (제일 위부터)
         crossAxisAlignment: CrossAxisAlignment.center, //가로 나열 기준은 중심 (중심기준)
         children: [
-          AppBarWithAlarm(nickName: myInfo.Name),
+          AppBarWithAlarm(nickName: myInfo.name),
           Expanded(
             flex: 1,
             child: ListView(
@@ -60,7 +80,6 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                                 size: 30,
                                 color: Color.fromRGBO(217, 217, 217, 1),
                               ),
-                              //ImageIcon(AssetImage('images/barbar.png')),
                             ],
                           ),
                         ),
@@ -68,6 +87,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                     ),
                   ),
                 ),  //검색창
+
                 Container(
                   margin: EdgeInsets.only(bottom: 20,left: 10),
                   child:  Row(
@@ -90,6 +110,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                     ],
                   ),  //전체-친구 필터 텍스트
                 ),  //숏폼 필터 (제스쳐 추가 필요)
+
                 Container(
                     height: 400,
                     margin:
@@ -130,6 +151,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                       ],
                     )
                 ),  //숏폼 위젯 스크롤 뷰
+
                 Container(
                   //height: 600,
                   margin: EdgeInsets.only(top: 20,left:30,right:30),
@@ -137,28 +159,30 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      CommunityWidget(
-                        communityInfo: CommunityInfo(
-                          'images/profile/sample_profile.png',
-                          '돌돌이님',
-                          '돌돌이님',
-                          'images/community/community_image.png',
-                          ['#강아지 #귀여운'],
-                          ['최신 사진입니다\n','귀엽죠?\n'],
-                          false
-                        )
-                      ),
-                      CommunityWidget(
-                        communityInfo: CommunityInfo(
-                          'images/profile/sample_profile.png',
-                          '돌돌이님',
-                          '돌돌이님',
-                          'images/community/community_image.png',
-                          ['#강아지 #사료 #귀여운'],
-                          ['돌돌이님 사진입니다\n','귀여워요\n','정말 귀여워요\n','많이 귀여워요\n'],
-                          false
-                        )
+                      FutureBuilder(
+                          future: postData,
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            //데이터를 아직 받아 오지 못했을 시
+                          if(snapshot.hasData == false)
+                              return CircularProgressIndicator();
+                          else if (snapshot.hasError) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Error: ${snapshot.error}',
+                              style: TextStyle(fontSize: 15),
+                              )
+                            );  //오류 발생 반환 패딩
+                          }
+                          else
+                          {
+                            //데이터를 정상적으로 받아왔을 시
+                            return CommunityWidget(communityInfo: snapshot.data)
+                          }
+                        }
                       )
+                      //커뮤니티 페이지 불러오기
+
                     ],
                   ),
                 )
