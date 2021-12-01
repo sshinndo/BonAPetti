@@ -274,8 +274,8 @@ class PetInfo {
     return result;
   }
 
-  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 = 펫 ID)
-  void sendPetData() {
+  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 = 펫 개수)
+  void sendPetData() async {
     //펫 정보 없을 바로 종료
     if(petName == "")
       throw Exception('Empty Pet Data');
@@ -283,7 +283,11 @@ class PetInfo {
     if (Logger().userData.uid != 0) {
       CollectionReference pets = FirebaseFirestore.instance.collection(
           'UserData').doc(Logger().userData.uid.toString()).collection('Pets');
-      pets.doc(petName).set({
+      var petDocs = await pets.get();
+
+      int petCount = petDocs.docs.length;
+      petID = petCount.toString();
+      pets.doc(petCount.toString()).set({
         //pet id 설정 후 입력
         'Name': petName,
         'Type' : petType,
