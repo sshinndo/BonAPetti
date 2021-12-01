@@ -177,7 +177,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                           else
                           {
                             //데이터를 정상적으로 받아왔을 시
-                            return CommunityWidget(communityInfo: snapshot.data[0]);
+                            return CircularProgressIndicator();//CommunityWidget(communityInfo: snapshot.data[0]);
                           }
                         }
                       )
