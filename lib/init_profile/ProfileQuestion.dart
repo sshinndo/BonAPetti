@@ -321,9 +321,16 @@ class ThirdRoute extends StatefulWidget {
   @override
   _ThirdRouteState createState() => _ThirdRouteState();
 }
-//펫 이름 입력 페이지
+//펫 생성 시작 및 펫 이름 입력 페이지
 class _ThirdRouteState extends State<ThirdRoute> {
   TextEditingController _petName = TextEditingController();
+
+  @override
+  void initState() {
+    //펫정보 입력을 위한 데이터 수신
+    PetInfo.initialPetListData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -386,8 +393,6 @@ class FourthRoute extends StatefulWidget {
 }
 // 4번째 라우터 - 펫 타입 입력
 class _FourthRouteState extends State<FourthRoute> {
-  //서버에서 펫 리스트 받아오기 : Map<String,List<String>>
-  Map<String,List<String>> petTypeList = {};
   List _dogSpecies = [
     '말티즈',
     '웰시코기',
@@ -403,10 +408,12 @@ class _FourthRouteState extends State<FourthRoute> {
   List _catSpecies = ['프시티시 숏헤어', '페르시안', '메인쿤', '샴', '렉돌', '스핑크스',
     '벵골', '버먼','아메리칸 숏헤어','코리안 숏헤어', '러시안 블루',
     '스코리시 폴드','터키시 앙고라','히말리안','봄베이','먼치킨', '기타'];
+
+
+
   String selectedPetType = '';
   int selectedPetSpecies = -1;
 
-  // 카테고리 선택 여부 : 강아지 or 고양이
   int isDogSelected = 0;
   int isCatSelected = 0;
 
@@ -449,7 +456,7 @@ class _FourthRouteState extends State<FourthRoute> {
                 child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30.0),
                     child: Row(children: [
-                      /*Offstage(
+                      Offstage(
                           offstage: (currentState > 1 && selectedPetType != ''),
                           child: Row(
                             children: [
@@ -463,36 +470,7 @@ class _FourthRouteState extends State<FourthRoute> {
                                   style: TextStyle(
                                       color: Color.fromRGBO(0, 0, 0, 0.3))),
                             ],
-                          )),*/
-                      Offstage(
-                          offstage: isDogSelected==0,
-                          child: Row(
-                            children: [
-                              Text(
-                                "# 강아지",
-                                style: TextStyle(
-                                    color: Color.fromRGBO(255, 113, 113, 0.6)),
-                              ),
-                              SizedBox(width: 15.0),
-                              Text("|  ",
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(0, 0, 0, 0.3))),
-                            ],
-                          )), //강아지 텍스트
-                      Offstage(
-                        offstage: isCatSelected==0,
-                        child: Row(
-                          children: [
-                            Text("# 고양이",
-                                style: TextStyle(
-                                    color: Color.fromRGBO(255, 113, 113, 0.6))),
-                            SizedBox(width: 15.0),
-                            Text("|  ",
-                                style: TextStyle(
-                                    color: Color.fromRGBO(0, 0, 0, 0.3)))
-                          ],
-                        ),
-                      ),  //고양이 텍스트
+                          )),
 
                     ])),  //선택한 펫 종류
               ),  //텍스트창
@@ -953,12 +931,12 @@ class _FifthRouteState extends State<FifthRoute> {
                       customPinkElevatedButton(
                           '입력 완료!',
                               () {
-                            myPet.petAge = int.parse(_petAgeController.text);
+                            widget.newPet.petAge = int.parse(_petAgeController.text);
 
-                            myPet.petBodyLength =
+                            widget.newPet.petBodyLength =
                                 double.parse(_petBodyLengthController.text);
 
-                            myPet.petWeight =
+                            widget.newPet.petWeight =
                                 double.parse(_petWeightController.text);
                             Navigator.pushAndRemoveUntil(
                                 context,
