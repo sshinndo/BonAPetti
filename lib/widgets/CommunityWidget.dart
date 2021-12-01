@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/community/CommunityInfo.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 
 
 class CommunityWidget extends StatefulWidget {
@@ -46,8 +47,8 @@ class _CommunityWidget extends State<CommunityWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                        widget.communityInfo.user.myImage,
+                    Image.network(
+                        Logger.storageUrl + widget.communityInfo.user.myImage,
                         fit: BoxFit.fill,
                         height: iconSize * profileIconMultiplier,
                         width: iconSize * profileIconMultiplier
@@ -84,25 +85,24 @@ class _CommunityWidget extends State<CommunityWidget> {
                   margin: EdgeInsets.only(top:10,bottom:20),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  //이미지 파이어베이스로 수정 필요
-                  child: Image.asset(
-                      widget.communityInfo.imageUrls.first,
+                  child: Image.network(
+                      Logger.storageUrl + widget.communityInfo.imageUrls.first,
                       fit: BoxFit.fill
                   ),
                 )
-            ),  //Image
+            ),  //커뮤니티 대표 이미지 (0번지)
               Container(
                 alignment: Alignment.centerLeft,
                 margin: EdgeInsets.only(left:20),
                 child: Text(
-                  widget.communityInfo.hashTags.toString(),
+                  widget.communityInfo.hashTags,
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: hashTagFontSize,
                       fontWeight: FontWeight.bold
                   ),
                 ),
-              ),  //hash tags(수정 필요)
+              ),  //hashtags
               Container(
                 child: Stack(
                   //mainAxisAlignment: MainAxisAlignment.spaceBetween,

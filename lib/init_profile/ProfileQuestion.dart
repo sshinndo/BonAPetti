@@ -350,7 +350,7 @@ class _ThirdRouteState extends State<ThirdRoute> {
                       //펫 이름으로 새 데이터 생성 후 현재 앱 유저에 삽입
                       PetInfo myPet = PetInfo(_petName.text);
                       Logger().userData.myPets = [];
-                      Logger().userData.myPets!.add(myPet);
+                      Logger().userData.myPets.add(myPet);
                       Navigator.push(
                           context,
                           MaterialPageRoute(

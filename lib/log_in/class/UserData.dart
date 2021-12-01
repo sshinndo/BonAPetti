@@ -10,12 +10,14 @@ class Logger {
   UserData userData = UserData();
   String userEmail = ""; // 사용자 이메일
   String userPassword = ""; // 사용자 비밀번호
+  //스토리지 불러오기용 링크 주소
+  static const String storageUrl = 'gs://bonapetti-715a9.appspot.com';
 
   PetInfo getDefaultPet() {
     if(userData.myPets == null)
       return PetInfo('???');
-    else if (userData.myPets!.isNotEmpty)
-      return userData.myPets!.first;
+    else if (userData.myPets.isNotEmpty)
+      return userData.myPets.first;
     else
       return PetInfo('???');
   }
@@ -149,7 +151,7 @@ class UserData
   List<String> posts = [];
 
   //UserInfo 펫 클래스 참조
-  List<PetInfo>? myPets;
+  List<PetInfo> myPets = [];
 
   UserData()
   {
