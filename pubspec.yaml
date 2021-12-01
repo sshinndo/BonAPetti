@@ -31,6 +31,12 @@ dependencies:
   webview_flutter: any
   webview_windows: ^0.0.7
 
+  # 라우터 간 화면 전환 효과
+  page_transition: ^2.0.4
+
+  # 해시태그 버튼 관리
+  flutter_tags: ^0.4.9+1
+
   # firebase version // cloud_firestore: firestore 데이터관리
   firebase_auth: ^3.0.1
   firebase_core: ^1.6.0
