@@ -11,9 +11,9 @@ class AlertDuplicateMessage extends StatelessWidget {
     var height = MediaQuery.of(context).size.height/800;
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10.84),
+      borderRadius: BorderRadius.circular(15),
       child: Container(
-        width: width*150,
+        width: width*300,
         height: height*20,
         color: Color.fromRGBO(115, 89, 89, 0.12),
         child: Row(

@@ -115,7 +115,7 @@ class _ContentDetailedGoods extends State<ContentDetailedGoods> {
         Column(
           children: [
             AppBarWithAlarm(
-              nickName: Logger().userData.Name,
+              nickName: Logger().userData.name,
             ),
             Padding(padding: EdgeInsets.only(top: 20)),
 
@@ -366,7 +366,24 @@ class _ContentDetailedGoods extends State<ContentDetailedGoods> {
   ReviewWidget(){
     return Container(
         padding: EdgeInsets.only(top:50),
-        child: Text("리뷰 구현 준비 중 입니다.")
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            height: 30,
+            color: Color.fromRGBO(166, 0, 0, 0.04),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("리뷰 페이지 구현 예정입니다 !",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Color.fromRGBO(242, 128, 128, 1)
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
     );
   }
   PriceCompareWidget(){

@@ -31,7 +31,7 @@ class _GoodsScreen extends State<GoodsScreen> {
     return Scaffold(
       body: Column(
         children: [
-          AppBarWithAlarm(nickName: Logger().userData.Name),
+          AppBarWithAlarm(nickName: Logger().userData.name),
           // SearchBar(
           //   filterTabWithListView: filterTabWithListView,
           // ),
