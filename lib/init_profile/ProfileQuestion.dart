@@ -22,8 +22,7 @@ class ProfileQuestion extends StatelessWidget {
   }
 }
 
-//첫 계정 생성 및 초기 설정 데이터 동기화
-//펫 리스트, 유저 UID,
+
 class FirstRoute extends StatefulWidget {
   const FirstRoute({Key? key}) : super(key: key);
 
@@ -32,7 +31,7 @@ class FirstRoute extends StatefulWidget {
     return FirstRouteState();
   }
 }
-
+//이름 입력 및 계정 생성
 class FirstRouteState extends State<FirstRoute> {
   TextEditingController userNickname = TextEditingController();
 
@@ -209,14 +208,14 @@ class FirstRouteState extends State<FirstRoute> {
   }
 }
 
-// 두번째 라우트
+
 class SecondRoute extends StatefulWidget {
   const SecondRoute({Key? key}) : super(key: key);
 
   @override
   _SecondRouteState createState() => _SecondRouteState();
 }
-
+//펫 데이터 추가 입력 여부 선택
 class _SecondRouteState extends State<SecondRoute> {
   @override
   initState() {
@@ -317,12 +316,12 @@ class _SecondRouteState extends State<SecondRoute> {
   }
 }
 
-// 3번째 라우터 - 펫 이름 입력 페이지
+
 class ThirdRoute extends StatefulWidget {
   @override
   _ThirdRouteState createState() => _ThirdRouteState();
 }
-
+//펫 이름 입력 페이지
 class _ThirdRouteState extends State<ThirdRoute> {
   TextEditingController _petName = TextEditingController();
 
@@ -360,14 +359,12 @@ class _ThirdRouteState extends State<ThirdRoute> {
               SizedBox(height: 20.0),
               customPinkElevatedButton("입력 완료!", () {
                 //펫 이름으로 새 데이터 생성 후 현재 앱 유저에 삽입
-                PetInfo myPet = PetInfo(_petName.text);
-                Logger().userData.myPets = [];
-                Logger().userData.myPets.add(myPet);
+                PetInfo createPet = PetInfo(_petName.text);
                 // 화면 전환 애니메이션 효과
                 Navigator.push(
                     context,
                     PageTransition(
-                        child: FourthRoute(),
+                        child: FourthRoute(newPet: createPet),
                         type: PageTransitionType.rightToLeft));
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: (context) => FourthRoute()));
@@ -380,15 +377,17 @@ class _ThirdRouteState extends State<ThirdRoute> {
   }
 }
 
-// 4번째 라우터 - 펫 타입 입력
 class FourthRoute extends StatefulWidget {
-  const FourthRoute({Key? key}) : super(key: key);
+  final PetInfo newPet;
+  const FourthRoute({Key? key, required this.newPet}) : super(key: key);
 
   @override
   _FourthRouteState createState() => _FourthRouteState();
 }
-
+// 4번째 라우터 - 펫 타입 입력
 class _FourthRouteState extends State<FourthRoute> {
+  //서버에서 펫 리스트 받아오기 : Map<String,List<String>>
+  Map<String,List<String>> petTypeList = {};
   List _dogSpecies = [
     '말티즈',
     '웰시코기',
@@ -404,13 +403,15 @@ class _FourthRouteState extends State<FourthRoute> {
   List _catSpecies = ['프시티시 숏헤어', '페르시안', '메인쿤', '샴', '렉돌', '스핑크스',
     '벵골', '버먼','아메리칸 숏헤어','코리안 숏헤어', '러시안 블루',
     '스코리시 폴드','터키시 앙고라','히말리안','봄베이','먼치킨', '기타'];
+  String selectedPetType = '';
+  int selectedPetSpecies = -1;
 
   // 카테고리 선택 여부 : 강아지 or 고양이
   int isDogSelected = 0;
   int isCatSelected = 0;
 
   // 1 : 첫번째 카테고리, 2: 두번째 카테고리, 3: 다음 라우터 이동용 인덱스
-  int currentIndex = 1;
+  int currentState = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -448,6 +449,21 @@ class _FourthRouteState extends State<FourthRoute> {
                 child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30.0),
                     child: Row(children: [
+                      /*Offstage(
+                          offstage: (currentState > 1 && selectedPetType != ''),
+                          child: Row(
+                            children: [
+                              Text(
+                                "# " + selectedPetType,
+                                style: TextStyle(
+                                    color: Color.fromRGBO(255, 113, 113, 0.6)),
+                              ),
+                              SizedBox(width: 15.0),
+                              Text("|  ",
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(0, 0, 0, 0.3))),
+                            ],
+                          )),*/
                       Offstage(
                           offstage: isDogSelected==0,
                           child: Row(
@@ -462,7 +478,7 @@ class _FourthRouteState extends State<FourthRoute> {
                                   style: TextStyle(
                                       color: Color.fromRGBO(0, 0, 0, 0.3))),
                             ],
-                          )),
+                          )), //강아지 텍스트
                       Offstage(
                         offstage: isCatSelected==0,
                         child: Row(
@@ -476,25 +492,27 @@ class _FourthRouteState extends State<FourthRoute> {
                                     color: Color.fromRGBO(0, 0, 0, 0.3)))
                           ],
                         ),
-                      ),
+                      ),  //고양이 텍스트
 
-                    ])),
-              ),
+                    ])),  //선택한 펫 종류
+              ),  //텍스트창
             ),
-            SizedBox(height: 24),
-            if (currentIndex == 1) firstCategory(),
-            if (currentIndex == 2) secondCategory(),
-            if (currentIndex == 3) moveToFifthRoute()
+            SizedBox(height: 24), //공백
+            //버튼 패널
+            if (currentState == 1) firstCategory(),
+            if (currentState == 2) secondCategory(),
+            if (currentState == 3) moveToFifthRoute()
           ],
         ),
       ),
     );
   }
 
+  //펫 종류 선택
   firstCategory() {
     var height = MediaQuery.of(context).size.height / 800;
     return Offstage(
-      offstage: currentIndex!=1,
+      offstage: currentState!=1,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -506,31 +524,32 @@ class _FourthRouteState extends State<FourthRoute> {
                 text: "강아지",
                 onPressed: () {
                   setState(() {
-                    currentIndex++; // 다음 화면으로 넘어가기위한 인덱스 ++
+                    currentState++; // 다음 화면으로 넘어가기위한 인덱스 ++
                     isDogSelected++; // 강아지 선택함으로써, 0 -> 1 (+1)
 
                   });
-                }),
+                }), //강아지 버튼
             HashTagButton(
                 // width: 87, height: 30,
                 text: "고양이",
                 onPressed: () {
                   setState(() {
-                    currentIndex++; // 다음 화면으로 넘어가기위한 인덱스 ++
+                    currentState++; // 다음 화면으로 넘어가기위한 인덱스 ++
                     isCatSelected++; // 고양이 선택함으로써, 0 -> 1 (+1)
                   });
-                }),
+                }), //고양이 버튼
           ]),
         ],
       ),
     );
   }
 
+  //펫 세부 종 선택
   secondCategory() {
     var width = MediaQuery.of(context).size.width / 360;
     var height = MediaQuery.of(context).size.height / 800;
     return Offstage(
-      offstage: currentIndex!=2,
+      offstage: currentState!=2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -556,7 +575,7 @@ class _FourthRouteState extends State<FourthRoute> {
                           ? _dogSpecies[i] : _catSpecies[i],
                       onPressed: (){
                         setState(() {
-                          currentIndex++; // index : 3,
+                          currentState++; // index : 3,
                           //-----선택한 반려동물 세부 종을 서버로 전송하는 코드-----------
 
                           //-----선택한 반려동물 세부 종을 서버로 전송하는 코드-----------
@@ -570,29 +589,31 @@ class _FourthRouteState extends State<FourthRoute> {
       ),
     );
   }
+
+  //펫 세부 정보 입력 페이지로 이동
   moveToFifthRoute(){
+    //widget.newPet.petType
+    //widget.newPet.petSpecies
     return Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => FifthRoute()));
+        MaterialPageRoute(builder: (context) => FifthRoute(newPet : widget.newPet)));
   }
 }
 
-// 다섯번째 스크린
 class FifthRoute extends StatefulWidget {
-  // const FifthRoute({Key? key}) : super(key: key);
+  final PetInfo newPet;
+  const FifthRoute({Key? key, required this.newPet}) : super(key: key);
 
   @override
   _FifthRouteState createState() => _FifthRouteState();
 }
-
+// 펫 세부 정보 입력 (마지막 페이지)
 class _FifthRouteState extends State<FifthRoute> {
   TextEditingController _petAgeController = TextEditingController();
   TextEditingController _petBodyLengthController = TextEditingController();
   TextEditingController _petWeightController = TextEditingController();
 
   final _scrollController = ScrollController();
-  //유저 디폴트 정보
-  PetInfo myPet = Logger().getDefaultPet();
 
   //파이어베이스 스테이트
   bool _initialized = false;
@@ -622,14 +643,16 @@ class _FifthRouteState extends State<FifthRoute> {
       CollectionReference pets = FirebaseFirestore.instance.collection(
           'UserData').doc(Logger().userData.uid.toString()).collection('Pets');
       pets.doc(petData.petName).set({
+        //pet id 설정 후 입력
         'Name': petData.petName,
-        'Age': petData.petAge,
         'Type' : petData.petType,
-        'Species' : petData.petType,
+        'Species' : petData.petSpecies,
+        'Age': petData.petAge,
         'BodyLength': petData.petBodyLength,
         'Weight': petData.petWeight,
         'Silhouette': petData.petSilhouette,
         'AllergyList': petData.petAllergyList,
+        'DiseaseList' : petData.petDiseaseList
       });
     }
     else
@@ -773,7 +796,7 @@ class _FifthRouteState extends State<FifthRoute> {
                       alignment: Alignment.centerLeft,
                       margin: EdgeInsets.only(left: 40),
                       // 닉네임을 변수로 수정해야함!
-                      child: customSemiTitleQuestion('', '${myPet.petName}의', ' 실루엣은?')),
+                      child: customSemiTitleQuestion('', '${widget.newPet.petName}의', ' 실루엣은?')),
                   SizedBox(height: 10.0),
                   Container(
                     height: 530,
@@ -788,7 +811,7 @@ class _FifthRouteState extends State<FifthRoute> {
                                 child: silhouetteCard('images/bcs/bcs1.png',
                                     'BCS 1,2단계(야윈상태)', '갈비뼈, 허리뼈, 골반뼈가 드러나 보임'),
                                 onTap: () => {
-                                  myPet.petSilhouette = PetSilhouette.BCS1,
+                                  widget.newPet.petSilhouette = PetSilhouette.BCS1,
                                   _scrollController.animateTo(1360,
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.fastOutSlowIn)
@@ -797,7 +820,7 @@ class _FifthRouteState extends State<FifthRoute> {
                                 child: silhouetteCard('images/bcs/bcs2.png',
                                     'BCS 3단계(저체중)', '갈비뼈가 쉽게 만져짐'),
                                 onTap: () => {
-                                  myPet.petSilhouette = PetSilhouette.BCS2,
+                                  widget.newPet.petSilhouette = PetSilhouette.BCS2,
                                   _scrollController.animateTo(1360,
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.fastOutSlowIn)
@@ -806,7 +829,7 @@ class _FifthRouteState extends State<FifthRoute> {
                                 child: silhouetteCard('images/bcs/bcs3.png',
                                     'BCS 4,5단계(이상적인 체중)', '갈비뼈가 안보이지만 살짝 만져짐'),
                                 onTap: () => {
-                                  myPet.petSilhouette = PetSilhouette.BCS3,
+                                  widget.newPet.petSilhouette = PetSilhouette.BCS3,
                                   _scrollController.animateTo(1360,
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.fastOutSlowIn)
@@ -815,7 +838,7 @@ class _FifthRouteState extends State<FifthRoute> {
                                 child: silhouetteCard('images/bcs/bcs4.png',
                                     'BCS 6단계(과체중)', '위에서 허리를 확인하기 힘듦'),
                                 onTap: () => {
-                                  myPet.petSilhouette = PetSilhouette.BCS4,
+                                  widget.newPet.petSilhouette = PetSilhouette.BCS4,
                                   _scrollController.animateTo(1360,
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.fastOutSlowIn)
@@ -824,7 +847,7 @@ class _FifthRouteState extends State<FifthRoute> {
                                 child: silhouetteCard('images/bcs/bcs5.png',
                                     'BCS 8,9단계(비만)', '손에 힘을 주고 만져야 갈비뼈가 만져짐'),
                                 onTap: () => {
-                                  myPet.petSilhouette = PetSilhouette.BCS5,
+                                  widget.newPet.petSilhouette = PetSilhouette.BCS5,
                                   _scrollController.animateTo(1360,
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.fastOutSlowIn)

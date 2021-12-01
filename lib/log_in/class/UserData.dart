@@ -13,6 +13,7 @@ class Logger {
   //스토리지 불러오기용 링크 주소
   static const String storageUrl = 'gs://bonapetti-715a9.appspot.com';
 
+  //디폴트 펫 데이터 불러오기
   PetInfo getDefaultPet() {
     if(userData.myPets == null)
       return PetInfo('???');
@@ -75,7 +76,7 @@ class Logger {
     return newUID;
   }
 
-  //중복 계정 여부 확인 함수
+  //중복 이름 여부 확인 함수
   Future<bool> isUserExist(String _name) async {
     var documentSnapshot = await FirebaseFirestore.instance
         .collection("UserData")
@@ -87,6 +88,7 @@ class Logger {
       return true;
   }
 
+  //uid 존재 여부
   Future<bool> isDocExist(int uid) async {
     var collectionRef = FirebaseFirestore.instance
         .collection("UserData");
@@ -185,7 +187,7 @@ class UserData
     }
     return result;
   }
-
+  //랜덤 유저 정보 불러오기
   static Future<int> getRandomUserID() async {
     try {
       await Firebase.initializeApp();
@@ -220,7 +222,8 @@ class PetInfo {
   double petBodyLength = 0;
   double petWeight = 0;
   PetSilhouette petSilhouette = PetSilhouette.BCS1;
-  List<String>? petAllergyList;
+  List<String> petAllergyList = [];
+  List<String> petDiseaseList = [];
 
   PetInfo(this.petName);
 
