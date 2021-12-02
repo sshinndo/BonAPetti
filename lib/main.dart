@@ -20,7 +20,7 @@ import 'package:pet_service_application/product/screen/WishListScreen.dart';
 import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
-import '../log_in/class/UserData.dart';
+import 'log_in/class/UserData.dart';
 
 void main() => runApp(MyApp());
 

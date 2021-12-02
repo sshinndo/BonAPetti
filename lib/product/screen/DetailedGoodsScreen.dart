@@ -369,6 +369,7 @@ class _ContentDetailedGoods extends State<ContentDetailedGoods> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Container(
+            width: MediaQuery.of(context).size.width*280/360,
             height: 30,
             color: Color.fromRGBO(166, 0, 0, 0.04),
             child: Row(
