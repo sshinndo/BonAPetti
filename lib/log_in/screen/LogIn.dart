@@ -219,22 +219,17 @@ class _KakaoLoginState extends State<KakaoLogin> {
 
   _issueAccessToken(String authCode) async {
     try {
+      //엑세스 토큰 받기
       var token = await AuthApi.instance.issueAccessToken(authCode);
+      //엑세스 토큰을 통한 인증
       AccessTokenStore.instance.toStore(token);
-      print(token);
       validateToken = await AccessTokenStore.instance.fromStore();
-
-
-      if (validateToken.refreshToken == null){
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(),
-          ));}
+      //토큰 인증 오류
+      if (validateToken.refreshToken == null) {
+        throw Exception('LogIn Token Auth Error');
+      }
+      //카카오 로그인 성공, 유저 ID 불러오기
       else{
-        // User kakaoUser = await UserApi.instance.me();
-        /// 카카오 로그인 성공할 경우
-
         User kakaoUser = await UserApi.instance.me();
         print('> kakao id : ${kakaoUser.id.toString()}');
 
