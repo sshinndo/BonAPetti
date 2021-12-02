@@ -1,7 +1,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pet_service_application">
    <application
-        android:label="pet_service_application"
+        android:label="보나펫티"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name="com.example.pet_service_application.MainActivity"
@@ -43,4 +43,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
