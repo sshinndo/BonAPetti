@@ -8,15 +8,11 @@ class Logger {
   static final Logger _logger = Logger._internals();
 
   UserData userData = UserData();
-  String userEmail = ""; // 사용자 이메일
-  String userPassword = ""; // 사용자 비밀번호
   //스토리지 불러오기용 링크 주소
   static const String storageUrl = 'gs://bonapetti-715a9.appspot.com';
 
   PetInfo getDefaultPet() {
-    if(userData.myPets == null)
-      return PetInfo('???');
-    else if (userData.myPets.isNotEmpty)
+    if (userData.myPets.isNotEmpty)
       return userData.myPets.first;
     else
       return PetInfo('???');
@@ -25,7 +21,6 @@ class Logger {
   factory Logger() {
     return _logger;
   }
-
   //초기화 코드
   Logger._internals();
 
@@ -46,7 +41,7 @@ class Logger {
             'Description': userData.description,
             'following' : userData.following,
             'follower' : userData.follower,
-            'Community': userData.posts,
+            'Posts': userData.posts,
             'Shorts': userData.shorts,
             'MedalImage': userData.medalImage,
             'MyImage': userData.myImage,
@@ -87,7 +82,7 @@ class Logger {
       return true;
   }
 
-  Future<bool> iskakaoUserExist(int _tokenID) async {
+  Future<dynamic> isKakaoUserExist(int _tokenID) async {
     var documentSnapshot = await FirebaseFirestore.instance
         .collection("UserData")
         .where('AccountInfo', isEqualTo: _tokenID)
@@ -95,7 +90,7 @@ class Logger {
     if (documentSnapshot.docs.isEmpty)
       return false;
     else
-      return true;
+      return documentSnapshot.docs.first.id.toString();
   }
 
   Future<bool> isDocExist(int uid) async {
