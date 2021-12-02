@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pet_service_application/HashTagButtonList.dart';
+import 'package:pet_service_application/myPage/HashTagButtonList.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/init_profile/widget/HashTagWidget.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/init_profile/FifthRoute.dart';
 import 'package:pet_service_application/init_profile/widget/AlertDuplicateMessage.dart';
-import 'package:pet_service_application/main.dart';
+import 'package:pet_service_application/widgets/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 
 class ProfileQuestion extends StatelessWidget {
   @override
@@ -393,29 +392,30 @@ class FourthRoute extends StatefulWidget {
 }
 // 4번째 라우터 - 펫 타입 입력
 class _FourthRouteState extends State<FourthRoute> {
-  List _dogSpecies = [
-    '말티즈',
-    '웰시코기',
-    '치와와',
-    '도베르만',
-    '시바견',
-    '진돗개',
-    '풍산개',
-    '시베리안 허스키',
-    '푸들',
-    '슈나우저', '기타'
-  ];
-  List _catSpecies = ['프시티시 숏헤어', '페르시안', '메인쿤', '샴', '렉돌', '스핑크스',
-    '벵골', '버먼','아메리칸 숏헤어','코리안 숏헤어', '러시안 블루',
-    '스코리시 폴드','터키시 앙고라','히말리안','봄베이','먼치킨', '기타'];
+  // List _dogSpecies = [
+  //   '말티즈',
+  //   '웰시코기',
+  //   '치와와',
+  //   '도베르만',
+  //   '시바견',
+  //   '진돗개',
+  //   '풍산개',
+  //   '시베리안 허스키',
+  //   '푸들',
+  //   '슈나우저', '기타'
+  // ];
+  // List _catSpecies = ['프시티시 숏헤어', '페르시안', '메인쿤', '샴', '렉돌', '스핑크스',
+  //   '벵골', '버먼','아메리칸 숏헤어','코리안 숏헤어', '러시안 블루',
+  //   '스코리시 폴드','터키시 앙고라','히말리안','봄베이','먼치킨', '기타'];
 
 
 
-  String selectedPetType = '';
-  int selectedPetSpecies = -1;
+  String selectedPetTypeName = '';
+  int selectedPetTypeIndex = -1;
+  int selectedPetSpeciesIndex = -1;
 
-  int isDogSelected = 0;
-  int isCatSelected = 0;
+  // int isDogSelected = 0;
+  // int isCatSelected = 0;
 
   // 1 : 첫번째 카테고리, 2: 두번째 카테고리, 3: 다음 라우터 이동용 인덱스
   int currentState = 1;
@@ -457,11 +457,11 @@ class _FourthRouteState extends State<FourthRoute> {
                     padding: EdgeInsets.symmetric(horizontal: 30.0),
                     child: Row(children: [
                       Offstage(
-                          offstage: (currentState > 1 && selectedPetType != ''),
+                          offstage: (currentState > 1 && selectedPetTypeName != ''),
                           child: Row(
                             children: [
                               Text(
-                                "# " + selectedPetType,
+                                "# " + selectedPetTypeName,
                                 style: TextStyle(
                                     color: Color.fromRGBO(255, 113, 113, 0.6)),
                               ),
@@ -496,27 +496,53 @@ class _FourthRouteState extends State<FourthRoute> {
         children: [
           Text("반려동물의 종류를 선택해주세요 !", style: TextStyle(fontSize: 14)),
           SizedBox(height: height * 90),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            HashTagButton(
-              // width: 87, height: 30,
-                text: "강아지",
-                onPressed: () {
-                  setState(() {
-                    currentState++; // 다음 화면으로 넘어가기위한 인덱스 ++
-                    isDogSelected++; // 강아지 선택함으로써, 0 -> 1 (+1)
+          Container(
+            height: 80.0,
+            child: CupertinoScrollbar(
+              thickness: 5.0, // 일반 스크롤 두께
+              thicknessWhileDragging: 8.0, // 드래그할 때 스크롤 두께
+              radius: Radius.circular(34.0), // 스크롤바 둥글게
+              isAlwaysShown: true, // 스크롤바 항상 노출
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal, // scrollDirection: 가로 스크롤 생성
+                  itemCount: widget.newPet.petType.length,
+                  itemBuilder: (context, i) =>
+                      HashTagButton(
+                          text: widget.newPet.petType[i],
+                          onPressed: (){
+                            setState(() {
+                              currentState++;
+                              selectedPetTypeName = widget.newPet.petType[i]; // 선택한 petType name string을 selectedPetTypeName에 대입
+                              selectedPetTypeIndex = i; // // 선택한 petType의 index값을 selectedPetTypeIndex에 대입
+                              //-----선택한 반려동물 세부 종을 서버로 전송하는 코드-----------
 
-                  });
-                }), //강아지 버튼
-            HashTagButton(
-                // width: 87, height: 30,
-                text: "고양이",
-                onPressed: () {
-                  setState(() {
-                    currentState++; // 다음 화면으로 넘어가기위한 인덱스 ++
-                    isCatSelected++; // 고양이 선택함으로써, 0 -> 1 (+1)
-                  });
-                }), //고양이 버튼
-          ]),
+                              //-----선택한 반려동물 세부 종을 서버로 전송하는 코드-----------
+                            });
+                          })
+              ),
+            ),
+          ),
+          // Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          //   HashTagButton(
+          //     // width: 87, height: 30,
+          //       text: "강아지",
+          //       onPressed: () {
+          //         setState(() {
+          //           currentState++; // 다음 화면으로 넘어가기위한 인덱스 ++
+          //           isDogSelected++; // 강아지 선택함으로써, 0 -> 1 (+1)
+          //
+          //         });
+          //       }), //강아지 버튼
+          //   HashTagButton(
+          //       // width: 87, height: 30,
+          //       text: "고양이",
+          //       onPressed: () {
+          //         setState(() {
+          //           currentState++; // 다음 화면으로 넘어가기위한 인덱스 ++
+          //           isCatSelected++; // 고양이 선택함으로써, 0 -> 1 (+1)
+          //         });
+          //       }), //고양이 버튼
+          // ]),
         ],
       ),
     );
@@ -544,20 +570,20 @@ class _FourthRouteState extends State<FourthRoute> {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal, // scrollDirection: 가로 스크롤 생성
                   // 1 > 0 이면 강아지 선택한 것이고, 0 < 1 이면 고양이 선택한 것
-                  itemCount: isDogSelected > isCatSelected
-                      ? _dogSpecies.length : _catSpecies.length,
+                  itemCount: widget.newPet.petType[selectedPetTypeIndex].length,
+                  // isDogSelected > isCatSelected
+                  //     ? _dogSpecies.length : _catSpecies.length,
                   itemBuilder: (context, i) =>
                       HashTagButton(
                         // 1 > 0 이면 강아지 선택한 것이고, 0 < 1 이면 고양이 선택한 것
-                      text: (isDogSelected > isCatSelected)
-                          ? _dogSpecies[i] : _catSpecies[i],
+                      text: widget.newPet.petType[selectedPetTypeIndex][i],
+                      // (isDogSelected > isCatSelected)
+                      //     ? _dogSpecies[i] : _catSpecies[i],
                       onPressed: (){
                         setState(() {
-                          currentState++; // index : 3,
-                          //-----선택한 반려동물 세부 종을 서버로 전송하는 코드-----------
-
-                          //-----선택한 반려동물 세부 종을 서버로 전송하는 코드-----------
-
+                          currentState++; // index : 2 -> 3,
+                          widget.newPet.petSpecies
+                          = widget.newPet.petType[selectedPetTypeIndex][i]; // 선택한 펫 세부 종 버튼 값을 newPet.petSpecies 변수에 대입
                         });
                       })
               ),

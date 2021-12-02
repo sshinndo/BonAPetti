@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../init_profile/ProfileQuestion.dart';
+import '../../init_profile/ProfileQuestion.dart';
 
 /*
 Container(

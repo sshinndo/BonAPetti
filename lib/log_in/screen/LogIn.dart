@@ -6,7 +6,7 @@ import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
-import 'package:pet_service_application/main.dart';
+import 'package:pet_service_application/widgets/main.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
 class LogIn extends StatefulWidget {

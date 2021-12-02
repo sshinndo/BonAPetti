@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/class/GoodsInfo.dart';
+import 'package:pet_service_application/product/GoodsInfo.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
 import 'package:pet_service_application/widgets/BargainCardWidget.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';
@@ -20,7 +20,7 @@ import 'package:pet_service_application/product/screen/WishListScreen.dart';
 import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
-import 'log_in/class/UserData.dart';
+import '../log_in/class/UserData.dart';
 
 void main() => runApp(MyApp());
 

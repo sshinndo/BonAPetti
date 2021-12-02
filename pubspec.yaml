@@ -35,7 +35,7 @@ dependencies:
   page_transition: ^2.0.4
 
   # 해시태그 버튼 관리
-  flutter_tags: ^0.4.9+1
+  # flutter_tags: ^0.4.9+1
 
   # firebase version // cloud_firestore: firestore 데이터관리
   firebase_auth: ^3.0.1

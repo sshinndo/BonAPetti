@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import '../../init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/screen/LogIn.dart';
-import 'package:pet_service_application/main.dart';
+import 'package:pet_service_application/widgets/main.dart';
 import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class SignUp extends StatefulWidget {
