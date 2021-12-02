@@ -46,7 +46,8 @@ class _LogInState extends State<LogIn> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-    KakaoContext.clientId = 'fe61cb956b6b20c465dbdde018008754';
+    KakaoContext.clientId = '9562e3633088ea0ac9cd1f627011bf87';
+    KakaoContext.javascriptClientId = "369339f74ffc0e1f44389458d0bbc7e6";
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -235,6 +236,7 @@ class _KakaoLoginState extends State<KakaoLogin> {
       await _issueAccessToken(code);
     } catch (e) {
       print(e.toString());
+      debugPrint("test");
     }
   }
 
@@ -245,6 +247,7 @@ class _KakaoLoginState extends State<KakaoLogin> {
       await _issueAccessToken(code);
     } catch (e) {
       print(e.toString());
+      debugPrint("test222");
     }
   }
 
