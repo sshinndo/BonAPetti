@@ -87,6 +87,17 @@ class Logger {
       return true;
   }
 
+  Future<bool> iskakaoUserExist(int _tokenID) async {
+    var documentSnapshot = await FirebaseFirestore.instance
+        .collection("UserData")
+        .where('AccountInfo', isEqualTo: _tokenID)
+        .get();
+    if (documentSnapshot.docs.isEmpty)
+      return false;
+    else
+      return true;
+  }
+
   Future<bool> isDocExist(int uid) async {
     var collectionRef = FirebaseFirestore.instance
         .collection("UserData");
@@ -123,10 +134,9 @@ class Logger {
 }
 
 //유저가 가지는 정보 클래스
-class UserData
-{
+class UserData {
   //유저 계정 정보 (카카오 계정 정보 하나)
-  String accountInfo = "";
+  int accountInfo = 0;
   //유저 ID
   int uid = 0;
 

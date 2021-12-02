@@ -10,6 +10,7 @@ import 'package:pet_service_application/main.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -200,11 +201,17 @@ class KakaoLogin extends StatefulWidget {
 class _KakaoLoginState extends State<KakaoLogin> {
   bool _isKakaoTalkInstalled = false;
 
-  var validateToken;
+  var validateToken; // 인증용 토큰
+  //var userReference = FirebaseFirestore.instance.collection("UserData");
+
   @override
   void initState() {
     super.initState();
+
+    ///카톡 깔려있는지 확인합니다. 안깔려있으면 깔라고함
     _initKakaoTalkInstalled();
+    /// 자동로그인 체크
+    checkLoggedInKakaoState();
   }
 
   // 카카오톡이 설치되었는지 확인 코드
@@ -231,6 +238,27 @@ class _KakaoLoginState extends State<KakaoLogin> {
       //카카오 로그인 성공, 유저 ID 불러오기
       else{
         User kakaoUser = await UserApi.instance.me();
+
+        var userDataCheck = Logger().iskakaoUserExist(kakaoUser.id);
+        userDataCheck.then((value) {
+          if (value)  //계정 존재
+            {
+
+
+
+            }
+          else{
+            Logger().userData.accountInfo = kakaoUser.id;
+
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileQuestion()),
+                    (route) => false);
+
+          }
+        });
+
+
         print('> kakao id : ${kakaoUser.id.toString()}');
 
       }
@@ -277,6 +305,23 @@ class _KakaoLoginState extends State<KakaoLogin> {
     );
   }
 }
+
+void checkLoggedInKakaoState() async {
+
+  var userReference = FirebaseFirestore.instance.collection("UserData");
+
+  /// 저장해둔 카카오로그인 아이디가 있는지 체크
+  final kakaoUserUid = await FlutterSecureStorage().read(key: "AccountInfo");
+
+  /// 저장해둔 아이디가 있다면
+  if (kakaoUserUid != null) {
+    /// 해당 DB정보 가져오기
+    DocumentSnapshot documentSnapshot =
+    await userReference.doc(kakaoUserUid).get();
+
+  }
+}
+
 
 /*
 class KakaoWebView extends StatefulWidget {
