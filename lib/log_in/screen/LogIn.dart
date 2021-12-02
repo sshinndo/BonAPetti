@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +8,8 @@ import '../../init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/main.dart';
 import 'package:kakao_flutter_sdk/all.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -198,6 +200,7 @@ class KakaoLogin extends StatefulWidget {
 class _KakaoLoginState extends State<KakaoLogin> {
   bool _isKakaoTalkInstalled = false;
 
+  var validateToken;
   @override
   void initState() {
     super.initState();
@@ -219,11 +222,23 @@ class _KakaoLoginState extends State<KakaoLogin> {
       var token = await AuthApi.instance.issueAccessToken(authCode);
       AccessTokenStore.instance.toStore(token);
       print(token);
+      validateToken = await AccessTokenStore.instance.fromStore();
+
+
+      if (validateToken.refreshToken == null){
       Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => MyHomePage(),
-          ));
+          ));}
+      else{
+        // User kakaoUser = await UserApi.instance.me();
+        /// 카카오 로그인 성공할 경우
+
+        User kakaoUser = await UserApi.instance.me();
+        print('> kakao id : ${kakaoUser.id.toString()}');
+
+      }
     } catch (e) {
       print(e.toString());
     }
