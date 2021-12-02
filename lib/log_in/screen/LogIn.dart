@@ -1,7 +1,6 @@
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../init_profile/ProfileQuestion.dart';
@@ -24,8 +23,27 @@ class _LogInState extends State<LogIn> {
   TextEditingController passwordController = TextEditingController();
   Future<void>? _launched;
 
+  //파이어베이스 스테이트
+  bool _initialized = false;
+  bool _error = false;
+
+  //파이어베이스 이니셜
+  void initializeFlutterFire() async {
+    try {
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
   @override
   void initState() {
+    initializeFlutterFire();
     super.initState();
     emailController = TextEditingController(text: '');
     passwordController = TextEditingController(text: '');
@@ -38,7 +56,7 @@ class _LogInState extends State<LogIn> {
       forceWebView: false,
       headers: <String, String>{'my_header_key': 'my_header_value'},
     )) {
-      throw 'Could not launch $url';
+      throw Exception('Could not launch $url');
     }
   }
   @override
@@ -128,7 +146,7 @@ class _LogInState extends State<LogIn> {
 }
 
 class LogInIcon extends StatelessWidget {
-  String imagePath;
+  final String imagePath;
 
   LogInIcon(this.imagePath);
 
@@ -144,77 +162,25 @@ class LogInIcon extends StatelessWidget {
   }
 }
 
-Card customPinkEmailBox(TextEditingController controller, String text) {
-  return Card(
-      margin: EdgeInsets.only(left: 35.0, right: 35.0),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: BorderSide(width: 1, color: PINK)),
-      child: Container(
-          margin: EdgeInsets.only(left: 35.0, right: 35.0),
-          width: double.infinity,
-          height: 55.0,
-          child: TextFormField(
-            controller: controller,
-            cursorColor: GREY,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 12.0),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                hintText: text,
-                hintStyle: TextStyle(color: Color.fromRGBO(179, 179, 179, 1))),
-          )));
-}
-
-Card customPinkPasswordBox(TextEditingController controller, String text) {
-  return Card(
-      margin: EdgeInsets.only(left: 35.0, right: 35.0),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: BorderSide(width: 1, color: PINK)),
-      child: Container(
-          margin: EdgeInsets.only(left: 35.0, right: 35.0),
-          width: double.infinity,
-          height: 55.0,
-          child: TextFormField(
-            controller: controller,
-            cursorColor: GREY,
-            keyboardType: TextInputType.text,
-            obscureText: true,
-            decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 12.0),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                hintText: text,
-                hintStyle: TextStyle(color: Color.fromRGBO(179, 179, 179, 1))),
-          )));
-}
-
 class KakaoLogin extends StatefulWidget {
   const KakaoLogin({Key? key}) : super(key: key);
 
   @override
   _KakaoLoginState createState() => _KakaoLoginState();
 }
-
+//카카오톡을 통한 계정 로그인
 class _KakaoLoginState extends State<KakaoLogin> {
+
   bool _isKakaoTalkInstalled = false;
-
   var validateToken; // 인증용 토큰
-  //var userReference = FirebaseFirestore.instance.collection("UserData");
-
   @override
   void initState() {
     super.initState();
-
-    ///카톡 깔려있는지 확인합니다. 안깔려있으면 깔라고함
+    //카톡 설치 여부 확인
     _initKakaoTalkInstalled();
-    /// 자동로그인 체크
-    checkLoggedInKakaoState();
   }
 
-  // 카카오톡이 설치되었는지 확인 코드
+  // 카카오톡 설치확인 코드
   _initKakaoTalkInstalled() async {
     final installed = await isKakaoTalkInstalled();
     // print("kakao Install : " + installed.toString());
@@ -223,7 +189,7 @@ class _KakaoLoginState extends State<KakaoLogin> {
       _isKakaoTalkInstalled = installed;
     });
   }
-
+  //유저 ID 불러와서 인증
   _issueAccessToken(String authCode) async {
     try {
       //엑세스 토큰 받기
@@ -239,28 +205,30 @@ class _KakaoLoginState extends State<KakaoLogin> {
       else{
         User kakaoUser = await UserApi.instance.me();
 
-        var userDataCheck = Logger().iskakaoUserExist(kakaoUser.id);
+        //계정 존재 여부 체크
+        var userDataCheck = Logger().isKakaoUserExist(kakaoUser.id);
         userDataCheck.then((value) {
-          if (value)  //계정 존재
+          if (value != false)  //계정 존재
             {
-
-
-
+              var getAccountData = UserData.getUserData(value.toString());
+              getAccountData.then((value) {
+                Logger().userData = value;
+              });
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                      (route) => false);
             }
+          //계정 첫 생성 후 페이지 넘김
           else{
             Logger().userData.accountInfo = kakaoUser.id;
-
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => ProfileQuestion()),
                     (route) => false);
-
           }
         });
-
-
         print('> kakao id : ${kakaoUser.id.toString()}');
-
       }
     } catch (e) {
       print(e.toString());
@@ -274,7 +242,6 @@ class _KakaoLoginState extends State<KakaoLogin> {
       await _issueAccessToken(code);
     } catch (e) {
       print(e.toString());
-      debugPrint("test");
     }
   }
 
@@ -285,7 +252,6 @@ class _KakaoLoginState extends State<KakaoLogin> {
       await _issueAccessToken(code);
     } catch (e) {
       print(e.toString());
-      debugPrint("test222");
     }
   }
 
@@ -305,183 +271,3 @@ class _KakaoLoginState extends State<KakaoLogin> {
     );
   }
 }
-
-void checkLoggedInKakaoState() async {
-
-  var userReference = FirebaseFirestore.instance.collection("UserData");
-
-  /// 저장해둔 카카오로그인 아이디가 있는지 체크
-  final kakaoUserUid = await FlutterSecureStorage().read(key: "AccountInfo");
-
-  /// 저장해둔 아이디가 있다면
-  if (kakaoUserUid != null) {
-    /// 해당 DB정보 가져오기
-    DocumentSnapshot documentSnapshot =
-    await userReference.doc(kakaoUserUid).get();
-
-  }
-}
-
-
-/*
-class KakaoWebView extends StatefulWidget {
-  final String initialUrl;
-  KakaoWebView({Key? key, required this.initialUrl}) : super(key: key);
-
-  @override
-  _KakaoWebView createState() => _KakaoWebView();
-}
-
-class _KakaoWebView extends State<KakaoWebView> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: WebView(
-          initialUrl: widget.initialUrl,
-          javascriptMode: JavascriptMode.unrestricted,
-        ),
-      ),
-    );
-  }
-}
-*/
-/*
-final navigatorKey = GlobalKey<NavigatorState>();
-
-class KakaoWebView extends StatefulWidget {
-  final String initialUrl;
-  KakaoWebView({Key? key, required this.initialUrl});
-
-  @override
-  _KakaoWebView createState() => _KakaoWebView();
-}
-
-class _KakaoWebView extends State<KakaoWebView> {
-  final _controller = WebviewController();
-  final _textController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    initPlatformState();
-  }
-
-  Future<void> initPlatformState() async {
-    // Optionally initialize the webview environment using
-    // a custom user data directory and/or custom chromium command line flags
-    //await WebviewController.initializeEnvironment(
-    //    additionalArguments: '--show-fps-counter');
-
-    await _controller.initialize();
-    _controller.url.listen((url) {
-      _textController.text = url;
-    });
-
-    await _controller.setBackgroundColor(Colors.transparent);
-    await _controller.loadUrl(widget.initialUrl);
-
-    if (!mounted) return;
-
-    setState(() {});
-  }
-
-  Widget compositeView() {
-    if (!_controller.value.isInitialized) {
-      return const Text(
-        'Not Initialized',
-        style: TextStyle(
-          fontSize: 24.0,
-          fontWeight: FontWeight.w900,
-        ),
-      );
-    } else {
-      return Container(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Card(
-              elevation: 0,
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: 'URL',
-                    contentPadding: EdgeInsets.all(10.0),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.refresh),
-                      onPressed: () {
-                        _controller.reload();
-                      },
-                    )),
-                textAlignVertical: TextAlignVertical.center,
-                controller: _textController,
-                onSubmitted: (val) {
-                  _controller.loadUrl(val);
-                },
-              ),
-            ),
-            Expanded(
-                child: Card(
-                    color: Colors.transparent,
-                    elevation: 0,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: Stack(
-                      children: [
-                        Webview(
-                          _controller,
-                          permissionRequested: _onPermissionRequested,
-                        ),
-                        StreamBuilder<LoadingState>(
-                            stream: _controller.loadingState,
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData &&
-                                  snapshot.data == LoadingState.loading) {
-                                return LinearProgressIndicator();
-                              } else {
-                                return Container();
-                              }
-                            }),
-                      ],
-                    ))),
-          ],
-        ),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: navigatorKey,
-      home: Scaffold(
-        body: Center(
-          child: compositeView(),
-        ),
-      ),
-    );
-  }
-
-  Future<WebviewPermissionDecision> _onPermissionRequested(
-      String url, WebviewPermissionKind kind, bool isUserInitiated) async {
-    final decision = await showDialog<WebviewPermissionDecision>(
-      context: navigatorKey.currentContext!,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('WebView permission requested'),
-        content: Text('WebView has requested permission \'$kind\''),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () =>
-                Navigator.pop(context, WebviewPermissionDecision.deny),
-            child: const Text('Deny'),
-          ),
-          TextButton(
-            onPressed: () =>
-                Navigator.pop(context, WebviewPermissionDecision.allow),
-            child: const Text('Allow'),
-          ),
-        ],
-      ),
-    );
-
-    return decision ?? WebviewPermissionDecision.none;
-  }*/
