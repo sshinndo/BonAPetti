@@ -213,10 +213,11 @@ class UserData
 }
 
 class PetInfo {
+  //------  펫이 가지는 속성들-------------
   String petName = ""; // 펫 이름
   String petID = "";  //펫 ID
 
-  String petType = "";  //펫 종류
+  String petType = '';  //펫 종류
   String petSpecies = ''; //펫 상세 종
   int petAge = 0;
   double petBodyLength = 0;

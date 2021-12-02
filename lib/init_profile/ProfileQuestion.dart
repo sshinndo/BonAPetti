@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pet_service_application/myPage/HashTagButtonList.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/init_profile/widget/HashTagWidget.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
-import 'package:pet_service_application/init_profile/FifthRoute.dart';
 import 'package:pet_service_application/init_profile/widget/AlertDuplicateMessage.dart';
 import 'package:pet_service_application/widgets/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -409,14 +407,6 @@ class _FourthRouteState extends State<FourthRoute> {
   //   '스코리시 폴드','터키시 앙고라','히말리안','봄베이','먼치킨', '기타'];
 
 
-
-  String selectedPetTypeName = '';
-  int selectedPetTypeIndex = -1;
-  int selectedPetSpeciesIndex = -1;
-
-  // int isDogSelected = 0;
-  // int isCatSelected = 0;
-
   // 1 : 첫번째 카테고리, 2: 두번째 카테고리, 3: 다음 라우터 이동용 인덱스
   int currentState = 1;
 
@@ -424,9 +414,6 @@ class _FourthRouteState extends State<FourthRoute> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width / 360;
     var height = MediaQuery.of(context).size.height / 800;
-
-    PetCategoryListView petCategoryListView =
-        PetCategoryListView(petCategoryStrList: []);
 
     return Scaffold(
       body: SafeArea(
@@ -457,11 +444,11 @@ class _FourthRouteState extends State<FourthRoute> {
                     padding: EdgeInsets.symmetric(horizontal: 30.0),
                     child: Row(children: [
                       Offstage(
-                          offstage: (currentState > 1 && selectedPetTypeName != ''),
+                          offstage: (currentState == 1 || widget.newPet.petType == ''),
                           child: Row(
                             children: [
                               Text(
-                                "# " + selectedPetTypeName,
+                                "# " + widget.newPet.petType,
                                 style: TextStyle(
                                     color: Color.fromRGBO(255, 113, 113, 0.6)),
                               ),
@@ -469,6 +456,18 @@ class _FourthRouteState extends State<FourthRoute> {
                               Text("|  ",
                                   style: TextStyle(
                                       color: Color.fromRGBO(0, 0, 0, 0.3))),
+                            ],
+                          )),
+                      Offstage(
+                          offstage: (currentState == 1 || currentState == 2),
+                          child: Row(
+                            children: [
+                              SizedBox(width: 15.0),
+                              Text(
+                                "# " + widget.newPet.petSpecies,
+                                style: TextStyle(
+                                    color: Color.fromRGBO(255, 113, 113, 0.6)),
+                              ),
                             ],
                           )),
 
@@ -479,7 +478,7 @@ class _FourthRouteState extends State<FourthRoute> {
             //버튼 패널
             if (currentState == 1) firstCategory(),
             if (currentState == 2) secondCategory(),
-            if (currentState == 3) moveToFifthRoute()
+            if (currentState == 3) thirdCategory()
           ],
         ),
       ),
@@ -490,7 +489,7 @@ class _FourthRouteState extends State<FourthRoute> {
   firstCategory() {
     var height = MediaQuery.of(context).size.height / 800;
     return Offstage(
-      offstage: currentState!=1,
+      offstage: currentState != 1, // offstage : true 이면 위젯이 사라짐.
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -499,50 +498,51 @@ class _FourthRouteState extends State<FourthRoute> {
           Container(
             height: 80.0,
             child: CupertinoScrollbar(
-              thickness: 5.0, // 일반 스크롤 두께
-              thicknessWhileDragging: 8.0, // 드래그할 때 스크롤 두께
-              radius: Radius.circular(34.0), // 스크롤바 둥글게
-              isAlwaysShown: true, // 스크롤바 항상 노출
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal, // scrollDirection: 가로 스크롤 생성
-                  itemCount: widget.newPet.petType.length,
+              // 스크롤 바 쓸때만 주석해제하기
+              // thickness: 5.0, // 일반 스크롤 두께
+              // thicknessWhileDragging: 8.0, // 드래그할 때 스크롤 두께
+              // radius: Radius.circular(34.0), // 스크롤바 둥글게
+              // isAlwaysShown: true, // 스크롤바 항상 노출
+              child:
+              //서버로부터 전송받은 리스트
+              ListView.builder(
+                scrollDirection: Axis.horizontal, // ListView 가로 설정
+                  itemCount: PetInfo.petTypes.keys.toList().length, // petTypes의 각 key의 List 순회
                   itemBuilder: (context, i) =>
                       HashTagButton(
-                          text: widget.newPet.petType[i],
+                          text: PetInfo.petTypes.keys.toList()[i],
                           onPressed: (){
                             setState(() {
                               currentState++;
-                              selectedPetTypeName = widget.newPet.petType[i]; // 선택한 petType name string을 selectedPetTypeName에 대입
-                              selectedPetTypeIndex = i; // // 선택한 petType의 index값을 selectedPetTypeIndex에 대입
-                              //-----선택한 반려동물 세부 종을 서버로 전송하는 코드-----------
-
-                              //-----선택한 반려동물 세부 종을 서버로 전송하는 코드-----------
+                              widget.newPet.petType = PetInfo.petTypes.keys.toList()[i]; // 선택한 petType name string을 selectedPetTypeName에 대입
+                              debugPrint(currentState.toString());
                             });
                           })
               ),
             ),
+            // Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            //   HashTagButton(
+            //     // width: 87, height: 30,
+            //       text: "강아지",
+            //       onPressed: () {
+            //         setState(() {
+            //           currentState++; // 다음 화면으로 넘어가기위한 인덱스 ++
+            //           isDogSelected++; // 강아지 선택함으로써, 0 -> 1 (+1)
+            //
+            //         });
+            //       }), //강아지 버튼
+            //   HashTagButton(
+            //     // width: 87, height: 30,
+            //       text: "고양이",
+            //       onPressed: () {
+            //         setState(() {
+            //           currentState++; // 다음 화면으로 넘어가기위한 인덱스 ++
+            //           isCatSelected++; // 고양이 선택함으로써, 0 -> 1 (+1)
+            //         });
+            //       }), //고양이 버튼
+            // ]),
           ),
-          // Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          //   HashTagButton(
-          //     // width: 87, height: 30,
-          //       text: "강아지",
-          //       onPressed: () {
-          //         setState(() {
-          //           currentState++; // 다음 화면으로 넘어가기위한 인덱스 ++
-          //           isDogSelected++; // 강아지 선택함으로써, 0 -> 1 (+1)
-          //
-          //         });
-          //       }), //강아지 버튼
-          //   HashTagButton(
-          //       // width: 87, height: 30,
-          //       text: "고양이",
-          //       onPressed: () {
-          //         setState(() {
-          //           currentState++; // 다음 화면으로 넘어가기위한 인덱스 ++
-          //           isCatSelected++; // 고양이 선택함으로써, 0 -> 1 (+1)
-          //         });
-          //       }), //고양이 버튼
-          // ]),
+
         ],
       ),
     );
@@ -553,7 +553,7 @@ class _FourthRouteState extends State<FourthRoute> {
     var width = MediaQuery.of(context).size.width / 360;
     var height = MediaQuery.of(context).size.height / 800;
     return Offstage(
-      offstage: currentState!=2,
+      offstage: !(currentState == 2 && widget.newPet.petType != ''), // offstage : true 이면 위젯이 사라짐 / widget.newPet.petType!='' : 펫타입이 빈값이 아니여야 함
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -570,20 +570,22 @@ class _FourthRouteState extends State<FourthRoute> {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal, // scrollDirection: 가로 스크롤 생성
                   // 1 > 0 이면 강아지 선택한 것이고, 0 < 1 이면 고양이 선택한 것
-                  itemCount: widget.newPet.petType[selectedPetTypeIndex].length,
+                  itemCount: PetInfo.petTypes[widget.newPet.petType]!.length,
+                  //widget.newPet.petType[selectedPetTypeIndex].length,
                   // isDogSelected > isCatSelected
                   //     ? _dogSpecies.length : _catSpecies.length,
                   itemBuilder: (context, i) =>
                       HashTagButton(
                         // 1 > 0 이면 강아지 선택한 것이고, 0 < 1 이면 고양이 선택한 것
-                      text: widget.newPet.petType[selectedPetTypeIndex][i],
+                      text: PetInfo.petTypes[widget.newPet.petType]![i],
                       // (isDogSelected > isCatSelected)
                       //     ? _dogSpecies[i] : _catSpecies[i],
                       onPressed: (){
                         setState(() {
                           currentState++; // index : 2 -> 3,
                           widget.newPet.petSpecies
-                          = widget.newPet.petType[selectedPetTypeIndex][i]; // 선택한 펫 세부 종 버튼 값을 newPet.petSpecies 변수에 대입
+                          = PetInfo.petTypes[widget.newPet.petType]![i]; // 펫 세부 종 대입
+                          debugPrint(currentState.toString()); // debug 창 띄우기
                         });
                       })
               ),
@@ -593,15 +595,37 @@ class _FourthRouteState extends State<FourthRoute> {
       ),
     );
   }
-
-  //펫 세부 정보 입력 페이지로 이동
-  moveToFifthRoute(){
-    //widget.newPet.petType
-    //widget.newPet.petSpecies
-    return Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => FifthRoute(newPet : widget.newPet)));
+  thirdCategory(){
+    return Offstage(
+      offstage: currentState !=3,
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height*50/800),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*30/360),
+            child: customPinkElevatedButton("입력 완료", () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      child: FifthRoute(newPet: widget.newPet),
+                      type: PageTransitionType.rightToLeft));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => FifthRoute(newPet : widget.newPet)));
+            }),
+          ),
+        ],
+      ),
+    );
   }
+  //펫 세부 정보 입력 페이지로 이동
+  // moveToFifthRoute(){
+  //   //widget.newPet.petType
+  //   //widget.newPet.petSpecies
+  //   return Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => FifthRoute(newPet : widget.newPet)));
+  // }
 }
 
 class FifthRoute extends StatefulWidget {
@@ -618,6 +642,10 @@ class _FifthRouteState extends State<FifthRoute> {
   TextEditingController _petWeightController = TextEditingController();
 
   final _scrollController = ScrollController();
+
+  int currentState = 1; // 알러지나 질병이 있나요 컨테이너를 다룰 State값
+  int allergyCountState = 0;
+  int diseaseCountState = 0;
 
   //파이어베이스 스테이트
   bool _initialized = false;
@@ -656,7 +684,7 @@ class _FifthRouteState extends State<FifthRoute> {
         'Weight': petData.petWeight,
         'Silhouette': petData.petSilhouette,
         'AllergyList': petData.petAllergyList,
-        'DiseaseList' : petData.petDiseaseList
+        'DiseaseList' : petData.petDiseaseList,
       });
     }
     else
@@ -672,330 +700,421 @@ class _FifthRouteState extends State<FifthRoute> {
   @override
   Widget build(BuildContext context) {
     var myInfo = Logger().userData;
-    PetCategoryListView petCategoryListView =
-    PetCategoryListView(petCategoryStrList: []);
-
+    var width = MediaQuery.of(context).size.width / 360;
+    var height = MediaQuery.of(context).size.height / 800;
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          controller: _scrollController,
-          children: <Widget>[
-            // 1번째 화면 시작 -----------------------------------------------------
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 25.0, top: 25.0),
-                          child: customArrowBack(context),
-                        ),
-                        SizedBox(height: 15.0),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(left: 50, right: 50),
-                          child: customTitleQuestion(
-                              "친구에 대해 ", "더 자세히\n", "가르쳐 주세요!"),
-                        ),
-                        SizedBox(height: 15.0),
-                        // Container(
-                        //     alignment: Alignment.centerLeft,
-                        //     margin: EdgeInsets.only(left: 50, right: 50),
-                        //     child: Row(children: [
-                        //       customSubtitleQuestionColor(
-                        //           widget.petCategoryStrList[0]), // 데이터 변수값 수정해야 함
-                        //       SizedBox(width: 12),
-                        //       customSubtitleQuestionColor(
-                        //           widget.petCategoryStrList[1]), // 데이터 변수값 수정해야 함
-                        //     ])),
-                      ],
-                    ),
-                  ),
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: width * 30),
+          child: ListView(
+              controller: _scrollController,
+              children: <Widget>[
+                // 1번째 화면 시작 -----------------------------------------------------
+                // 뒤로가기 버튼
+                SizedBox(height: height*50),
+                customArrowBack(context),
+                SizedBox(height: height*25),
+                // 친구에 대해 더 자세히\n가르쳐 주세요!
+                customTitleQuestion(
+                    "친구에 대해 ", "더 자세히\n", "가르쳐 주세요!"),
+                SizedBox(height: height*20),
+                // 선택한 해시태그 출력 텍스트 Row
+                Row(
+                  children: [
+                    Text("# "+ widget.newPet.petType,
+                      style: TextStyle(
+                        color: PINK,
+                      ),),
+                    SizedBox(width:20),
+                    Text("# "+ widget.newPet.petSpecies,
+                      style: TextStyle(
+                        color: PINK,
+                      ),),
+                  ],
+                ),
+                SizedBox(height: height*40),
+                customSubtitleQuestion('나이 (살)'),
+                SizedBox(height: height*20),
+                customTextFormField(
+                    _petAgeController, '나이를 입력해 주세요.'),
 
-                  //Align 부분 --------------------------------------------------
+                SizedBox(height: height*40),
+                customSubtitleQuestion('몸 길이 (cm)'),
+                SizedBox(height: height*20),
+                customTextFormField(
+                    _petBodyLengthController, '몸 길이를 입력해 주세요.'),
 
-                  //입력하는 부분 -----------------------------------------------
-                  Container(
-                    child: Column(children: [
-                      SizedBox(height: 15.0),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(left: 50, right: 50),
-                        child: customSubtitleQuestion('나이'),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10, left: 50, right: 50),
-                        child: customTextFormField(
-                            _petAgeController, '나이를 입력해 주세요.'),
-                      )
-                    ]),
-                  ),
-                  Container(
-                    child: Column(children: [
-                      SizedBox(height: 15.0),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(left: 50, right: 50),
-                        child: customSubtitleQuestion('몸 길이'),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10, left: 50, right: 50),
-                        child: customTextFormField(
-                            _petBodyLengthController, '몸 길이를 입력해 주세요.'),
-                      )
-                    ]),
-                  ),
-                  Container(
-                    child: Column(children: [
-                      SizedBox(height: 15.0),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(left: 50, right: 50),
-                        child: customSubtitleQuestion('몸무게'),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10, left: 50, right: 50),
-                        child: customTextFormField(
-                            _petWeightController, '몸무게를 입력해 주세요.'),
-                      )
-                    ]),
-                  ),
 
-                  SizedBox(height: 40.0),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: Container(
-                      margin: EdgeInsets.only(left: 35, right: 35),
-                      child: customPinkElevatedButton(
-                          "나중에 입력할래요!",
-                              () => Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (context) => MyHomePage()),
-                                  (Route<dynamic> route) => false)
-                      ),
-                      // 아니요 버튼을 누름으로써, 모든 프로필 정보를 작성했다는
-                      // bool 데이터 변수를 작성해서 메인으로 넘겨야 함!!!
-                    ),
-                  ),
+                SizedBox(height: height*40),
+                customSubtitleQuestion('몸무게 (kg)'),
+                SizedBox(height: height*20),
+                customTextFormField(
+                    _petWeightController, '몸무게를 입력해 주세요.'),
 
-                  SizedBox(height: 64.0), // 공백처리
-                ],
-              ),
+                SizedBox(height: height*45),
+                customPinkElevatedButton( "잘 모르겠어요.", (){
+                  // 나이, 몸길이, 몸무게 null 값으로 대체하는 setState
+                }),
+                SizedBox(height: height*147),
+                // --------------------------1번째 페이지
+                // --------------------------2번째 페이지
+                customSemiTitleQuestion('', '${widget.newPet.petName}의', ' 실루엣은?'),
+                SizedBox(height: height*30),
+                Container(
+                  height: height*500,
+                  child: GestureDetector(
+                      child: GridView.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 18.0,
+                        crossAxisSpacing: 18.0,
+                        children: [
+                          GestureDetector(
+                              child: silhouetteCard('images/bcs/bcs1.png',
+                                  'BCS 1,2단계(야윈상태)', '갈비뼈, 허리뼈, 골반뼈가 드러나 보임'),
+                              onTap: () => {
+                                widget.newPet.petSilhouette = PetSilhouette.BCS1,
+                                _scrollController.animateTo(1360,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.fastOutSlowIn)
+                              }),
+                          GestureDetector(
+                              child: silhouetteCard('images/bcs/bcs2.png',
+                                  'BCS 3단계(저체중)', '갈비뼈가 쉽게 만져짐'),
+                              onTap: () => {
+                                widget.newPet.petSilhouette = PetSilhouette.BCS2,
+                                _scrollController.animateTo(1360,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.fastOutSlowIn)
+                              }),
+                          GestureDetector(
+                              child: silhouetteCard('images/bcs/bcs3.png',
+                                  'BCS 4,5단계(이상적인 체중)', '갈비뼈가 안보이지만 살짝 만져짐'),
+                              onTap: () => {
+                                widget.newPet.petSilhouette = PetSilhouette.BCS3,
+                                _scrollController.animateTo(1360,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.fastOutSlowIn)
+                              }),
+                          GestureDetector(
+                              child: silhouetteCard('images/bcs/bcs4.png',
+                                  'BCS 6단계(과체중)', '위에서 허리를 확인하기 힘듦'),
+                              onTap: () => {
+                                widget.newPet.petSilhouette = PetSilhouette.BCS4,
+                                _scrollController.animateTo(1360,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.fastOutSlowIn)
+                              }),
+                          GestureDetector(
+                              child: silhouetteCard('images/bcs/bcs5.png',
+                                  'BCS 8,9단계(비만)', '손에 힘을 주고 만져야 갈비뼈가 만져짐'),
+                              onTap: () => {
+                                widget.newPet.petSilhouette = PetSilhouette.BCS5,
+                                _scrollController.animateTo(1360,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.fastOutSlowIn)
+                              })
+                        ],
+                      ),
+                      onTap: () => {
+                        _scrollController.animateTo(1360,
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.fastOutSlowIn)
+                      }),
+                ),
+                SizedBox(height: height*100),
+                //---------------------------------2번째 페이지
+                //---------------------------------3번째 페이지
+                if (currentState==1) firstCategory(),
+                if (currentState==2) secondCategory(),
+                if (currentState==3) thirdCategory(),
+                if (currentState==4) fourthCategory(),
+                SizedBox(height: height*300),
+              ]
+          ),),),
+    );
+  }
+
+  firstCategory() {
+    var width = MediaQuery.of(context).size.width / 360;
+    var height = MediaQuery.of(context).size.height / 800;
+    return Offstage(
+      offstage: (currentState != 1), // offstage : true 이면 위젯이 사라짐.
+      child: Column(children: [
+        customSemiTitleQuestion('', '알러지나 질병', '이 있나요?'),
+        SizedBox(height: height * 35),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              currentState++; // currentState: 1->2
+            });
+          },
+          child: Container(
+            padding: EdgeInsets.only(top:17.0),
+            width: width * 300,
+            height: 52.0,
+            decoration: BoxDecoration(
+                color: PINK, borderRadius: BorderRadius.circular(12.0)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "네",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
             ),
-            // --------------------------1번째 페이지
-            // --------------------------2번째 페이지
-            Container(
-              child: Column(
-                children: <Widget>[
-                  // Container(
-                  //   width: 40.0,
-                  //   height: 40.0,
-                  //   child: animationUpButton(_scrollController, 0),
-                  //   //child: animationUpButton(_scrollController),
-                  // ),
-                  SizedBox(height: 10.0),
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(left: 40),
-                      // 닉네임을 변수로 수정해야함!
-                      child: customSemiTitleQuestion('', '${widget.newPet.petName}의', ' 실루엣은?')),
-                  SizedBox(height: 10.0),
-                  Container(
-                    height: 530,
-                    child: GestureDetector(
-                        child: GridView.count(
-                          crossAxisCount: 2,
-                          padding: EdgeInsets.only(left: 36.0, right: 36.0),
-                          mainAxisSpacing: 18.0,
-                          crossAxisSpacing: 18.0,
-                          children: [
-                            GestureDetector(
-                                child: silhouetteCard('images/bcs/bcs1.png',
-                                    'BCS 1,2단계(야윈상태)', '갈비뼈, 허리뼈, 골반뼈가 드러나 보임'),
-                                onTap: () => {
-                                  widget.newPet.petSilhouette = PetSilhouette.BCS1,
-                                  _scrollController.animateTo(1360,
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.fastOutSlowIn)
-                                }),
-                            GestureDetector(
-                                child: silhouetteCard('images/bcs/bcs2.png',
-                                    'BCS 3단계(저체중)', '갈비뼈가 쉽게 만져짐'),
-                                onTap: () => {
-                                  widget.newPet.petSilhouette = PetSilhouette.BCS2,
-                                  _scrollController.animateTo(1360,
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.fastOutSlowIn)
-                                }),
-                            GestureDetector(
-                                child: silhouetteCard('images/bcs/bcs3.png',
-                                    'BCS 4,5단계(이상적인 체중)', '갈비뼈가 안보이지만 살짝 만져짐'),
-                                onTap: () => {
-                                  widget.newPet.petSilhouette = PetSilhouette.BCS3,
-                                  _scrollController.animateTo(1360,
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.fastOutSlowIn)
-                                }),
-                            GestureDetector(
-                                child: silhouetteCard('images/bcs/bcs4.png',
-                                    'BCS 6단계(과체중)', '위에서 허리를 확인하기 힘듦'),
-                                onTap: () => {
-                                  widget.newPet.petSilhouette = PetSilhouette.BCS4,
-                                  _scrollController.animateTo(1360,
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.fastOutSlowIn)
-                                }),
-                            GestureDetector(
-                                child: silhouetteCard('images/bcs/bcs5.png',
-                                    'BCS 8,9단계(비만)', '손에 힘을 주고 만져야 갈비뼈가 만져짐'),
-                                onTap: () => {
-                                  widget.newPet.petSilhouette = PetSilhouette.BCS5,
-                                  _scrollController.animateTo(1360,
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.fastOutSlowIn)
-                                })
-                          ],
-                        ),
-                        onTap: () => {
-                          _scrollController.animateTo(1360,
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.fastOutSlowIn)
-                        }),
-                  ),
-                  SizedBox(height: 106.0),
-                ],
-              ),
-            ),
-
-            //---------------------------------2번째 페이지
-            //---------------------------------3번째 페이지
-
-            Container(
-              child: Column(
-                children: <Widget>[
-                  // Container(
-                  //     width: 40.0,
-                  //     height: 40.0,
-                  //     child: animationUpButton(_scrollController, 680)),
-                  SizedBox(height: 150.0),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(left: 50),
-                    child: customSemiTitleQuestion('', '알러지나 질병', '이 있나요?'),
-                  ),
-                  SizedBox(height: 37.0),
-                  Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    // child: AllergyButtonListManager(
-                    //     petCategoryListView: petCategoryListView)
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 35, right: 35),
-                          child: customPinkScrollButton(
-                              '네', _scrollController, 2170),
-                        ),
-                        SizedBox(height: 30.0),
-                        Container(
-                          margin: EdgeInsets.only(left: 35, right: 35),
-                          child: customPinkElevatedButton(
-                              "아니요(잘 모르겠어요)",
-                              //서버로 펫 데이터 전송
-                                  () => Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          MyHomePage()),
-                                      (Route<dynamic> route) => false)
-                            //MyHomePage()
-                          ),
-                          // 아니요 버튼을 누름으로써, 모든 프로필 정보를 작성했다는
-                          // bool 데이터 변수를 작성해서 메인으로 넘겨야 함!!!
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 371.0),
-                  //-----------------------------------------3번째 페이지
-                  //-----------------------------------------4번째 페이지
-                  // Container(
-                  //     width: 40.0,
-                  //     height: 40.0,
-                  //     child: animationUpButton(_scrollController, 1360)),
-                  SizedBox(height: 80.0),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(left: 50),
-                    child: customSemiTitleQuestion('', '알러지나 질병', '이 있나요?'),
-                  ),
-                  SizedBox(height: 34.0),
-                  Container(
-                    margin: EdgeInsets.only(left: 40, right: 40),
-                    child: Card(
-                      elevation: 10.0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0)),
-                      child: Container(
-                          margin: EdgeInsets.only(left: 15, right: 15),
-                          width: double.infinity,
-                          height: 60,
-                          child: petCategoryListView),
-                    ),
-                  ),
-                  SizedBox(height: 24.0),
-                  Container(
-                      alignment: Alignment.center,
-                      child: customSubtitleQuestion('(알러지)항목을 선택해 주세요.')),
-                  SizedBox(height: 47.0),
-                  SizedBox(height: 25.0),
-                  Container(
-                      margin: EdgeInsets.only(left: 40, right: 40),
-                      child:
-                      customPinkElevatedButton(
-                          '입력 완료!',
-                              () {
-                            widget.newPet.petAge = int.parse(_petAgeController.text);
-
-                            widget.newPet.petBodyLength =
-                                double.parse(_petBodyLengthController.text);
-
-                            widget.newPet.petWeight =
-                                double.parse(_petWeightController.text);
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        MyHomePage()),
-                                    (route) => false
-                            );
-                          }
-                      )
-                  ),
-
-                  // customPinkElevatedButton(() {
-                  //   PetInfo.petAge = int.parse(_petAgeController.text);
-                  //
-                  //   PetInfo.petBodyLength =
-                  //       double.parse(_petBodyLengthController.text);
-                  //
-                  //   PetInfo.petWeight =
-                  //       double.parse(_petWeightController.text);
-                  // }, '입력 완료!', context, MyHomePage())
-                  SizedBox(height: 80.0)
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
+        SizedBox(height: height * 25),
+        customPinkElevatedButton(
+            "잘 모르겠어요!(나중에 입력할게요)", (){
+              // Logger().sendUserData(
+              //   petData.
+              // );
+              // widget.newPet.petAge = _petAgeController.text;
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                      (Route<dynamic> route) => false);
+            })
+            //-----서버로 펫 데이터 전송
+      ]),
+    );
+  }
+  secondCategory() {
+    var width = MediaQuery.of(context).size.width / 360;
+    var height = MediaQuery.of(context).size.height / 800;
+    return Offstage(
+      offstage: !(currentState == 2),
+      //offstage: (currentState != 2), // offstage : true 이면 위젯이 사라짐
+      child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        customSemiTitleQuestion('', '알러지가', ' 있나요?'),
+        SizedBox(height: height * 35),
+        Container(
+          width: width * 300,
+          height: 70,
+          child: Card(
+            elevation: 2.0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0)),
+            child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Row(children: [
+                  Offstage(
+                      offstage: allergyCountState == 0,
+                      child: Row(
+                        children: [
+                          Text(
+                            "# " + widget.newPet.petAllergyList[0],
+                            style: TextStyle(
+                                color: Color.fromRGBO(255, 113, 113, 0.6)),
+                          ),
+                          SizedBox(width: 15.0),
+                          Text("|  ",
+                              style: TextStyle(
+                                  color: Color.fromRGBO(0, 0, 0, 0.3))),
+                        ],
+                      )),
+                  Offstage(
+                      offstage: (allergyCountState == 0 || allergyCountState == 1),
+                      child: Row(
+                        children: [
+                          SizedBox(width: 15.0),
+                          Text(
+                            "# " + widget.newPet.petAllergyList[1],
+                            style: TextStyle(
+                                color: Color.fromRGBO(255, 113, 113, 0.6)),
+                          ),
+                          SizedBox(width: 15.0),
+                          Text("|  ",
+                              style: TextStyle(
+                                  color: Color.fromRGBO(0, 0, 0, 0.3))),
+                        ],
+                      )),
+                  Offstage(
+                      offstage: (allergyCountState == 0 || allergyCountState == 1 || allergyCountState == 2),
+                      child: Row(
+                        children: [
+                          SizedBox(width: 15.0),
+                          Text(
+                            "# " + widget.newPet.petAllergyList[2],
+                            style: TextStyle(
+                                color: Color.fromRGBO(255, 113, 113, 0.6)),
+                          ),
+                        ],
+                      )),
+                ])), //선택한 펫 종류
+          ), //텍스트창
+        ),
+        SizedBox(height: height * 25),
+        Text("알러지 항목을 골라주세요!(최대 3개)", style: TextStyle(fontSize: 14)),
+        Text("알러지가 없다면, '없음'을 입력해 주세요.", style: TextStyle(fontSize: 14)),
+        SizedBox(height: height * 50),
+        Container(
+          height: 80.0,
+          child: CupertinoScrollbar(
+            thickness: 5.0,
+            // 일반 스크롤 두께
+            thicknessWhileDragging: 8.0,
+            // 드래그할 때 스크롤 두께
+            radius: Radius.circular(34.0),
+            // 스크롤바 둥글게
+            isAlwaysShown: true,
+            // 스크롤바 항상 노출
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal, // ListView 가로 설정
+                itemCount: PetInfo.allergies
+                    // .toList()
+                    .length, // petTypes의 각 key의 List 순회
+                itemBuilder: (context, i) => HashTagButton(
+                    text: PetInfo.allergies[i],
+                    // text: PetInfo.allergies.toList()[i],
+                    onPressed: () {
+                      setState(() {
+                        allergyCountState++;
+                        widget.newPet.petAllergyList
+                            .add(PetInfo.allergies[i]);
+                            // .add(PetInfo.allergies.toList()[i]);
+                        debugPrint(allergyCountState.toString());
+                        if (allergyCountState == 3) {
+                          // 알러지 3개 입력 완료하면
+                          currentState++; // currentState : 2->3
+                        }
+                      });
+                    })),
+          ),
+        )
+      ]),
+    );
+  }
+  thirdCategory() {
+    var width = MediaQuery.of(context).size.width / 360;
+    var height = MediaQuery.of(context).size.height / 800;
+    return Offstage(
+      offstage: !(currentState == 3), // offstage : true 이면 위젯이 사라짐
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: width * 300,
+            height: 70,
+            child: Card(
+              elevation: 2.0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0)),
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Row(children: [
+                    Offstage(
+                        offstage: (diseaseCountState == 0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "# " + widget.newPet.petDiseaseList[0],
+                              style: TextStyle(
+                                  color: Color.fromRGBO(255, 113, 113, 0.6)),
+                            ),
+                            SizedBox(width: 15.0),
+                            Text("|  ",
+                                style: TextStyle(
+                                    color: Color.fromRGBO(0, 0, 0, 0.3))),
+                          ],
+                        )),
+                    Offstage(
+                        offstage: ((diseaseCountState == 0) || (diseaseCountState == 1)),
+                        child: Row(
+                          children: [
+                            SizedBox(width: 15.0),
+                            Text(
+                              "# " + widget.newPet.petDiseaseList[1],
+                              style: TextStyle(
+                                  color: Color.fromRGBO(255, 113, 113, 0.6)),
+                            ),
+                            SizedBox(width: 15.0),
+                            Text("|  ",
+                                style: TextStyle(
+                                    color: Color.fromRGBO(0, 0, 0, 0.3))),
+                          ],
+                        )),
+                    Offstage(
+                        offstage: ((diseaseCountState == 0) || (diseaseCountState == 1) || (diseaseCountState == 2)),
+                        child: Row(
+                          children: [
+                            SizedBox(width: 15.0),
+                            Text(
+                              "# " + widget.newPet.petDiseaseList[2],
+                              style: TextStyle(
+                                  color: Color.fromRGBO(255, 113, 113, 0.6)),
+                            ),
+                          ],
+                        )),
+                  ])),  //선택한 펫 종류
+            ),  //텍스트창
+          ),
+          SizedBox(height: height*25),
+          Text("질병 항목을 골라주세요!(최대 3개)",
+              style: TextStyle(fontSize: 14)),
+          SizedBox(height: height * 50),
+          Container(
+            height: 80.0,
+            child: CupertinoScrollbar(
+              thickness: 5.0,
+              // 일반 스크롤 두께
+              thicknessWhileDragging: 8.0,
+              // 드래그할 때 스크롤 두께
+              radius: Radius.circular(34.0),
+              // 스크롤바 둥글게
+              isAlwaysShown: true,
+              // 스크롤바 항상 노출
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal, // ListView 가로 설정
+                  itemCount: PetInfo.diseases.length, // List 순회
+                  itemBuilder: (context, i) => HashTagButton(
+                      text: PetInfo.diseases[i],
+                      //text: PetInfo.diseases.toList()[i],
+                      onPressed: () {
+                        setState(() {
+                          diseaseCountState++;
+                          widget.newPet.petDiseaseList
+                              .add(PetInfo.diseases[i]);
+                          //.add(PetInfo.diseases.toList()[i]);
+                          debugPrint(diseaseCountState.toString());
+                          if (diseaseCountState == 3) {
+                            // 질병 3개 입력 완료하면
+                            currentState++; // 3 -> 4
+                          }
+                        });
+                      })),
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+  fourthCategory(){
+    return Offstage(
+      offstage: !(currentState == 4),
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height*50/800),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*30/360),
+            child: customPinkElevatedButton("입력 완료", () {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                      (route) => false);
+            }),
+          ),
+        ],
       ),
     );
   }
 }
-
-
 
 //-----------------각종 function, methods 모음-------------------------
 Card customTextFormField(TextEditingController editingController, String hint) {

@@ -100,9 +100,9 @@ class _MyPageState extends State<MyPage> {
                   }),
             ),
             SizedBox(height: 16),
-            //반려동물 프로필 선택창 Stack
-            // !! 추후 Pageview 느낌으로 재구현하기
-            Stack(children: [
+            //반려동물 프로필 선택창 Stack !! 추후 카드 슬라이더 느낌으로 재구현하기
+            Stack(
+                children: [
               Positioned(
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -110,9 +110,10 @@ class _MyPageState extends State<MyPage> {
                   // 카드 테두리의 둥글기 설정값
                   elevation: 4.0,
                   child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 20),
                     // 카드 박스의 Size
                     width: MediaQuery.of(context).size.width * 0.91,
-                    height: MediaQuery.of(context).size.height * 0.26,
+                    // height: MediaQuery.of(context).size.height * 0.26,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -120,9 +121,6 @@ class _MyPageState extends State<MyPage> {
                         Column(
                           // 중간 : PageView로 크게 묶어야 하나?
                           children: [
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.02),
                             // '''버튼
                             Row(
                               children: [
@@ -173,7 +171,7 @@ class _MyPageState extends State<MyPage> {
                             ),
                             //
                             SizedBox(height: 10),
-                            //함께하는 반려동물
+                            //함께하는 반려동물 버튼 : 펫 정보 화면으로 이동하는 버튼
                             InkWell(
                                 splashColor: Colors.grey.withAlpha(30),
                                 child: Container(
@@ -211,14 +209,14 @@ class _MyPageState extends State<MyPage> {
                     elevation: 2.0,
                     child: Container(
                       // 카드 박스의 Size
-                      width: MediaQuery.of(context).size.width*.1, //38
-                      height: MediaQuery.of(context).size.width*.1,
-                      padding: EdgeInsets.all(20),
+                      width: 50, //MediaQuery.of(context).size.width*.1,
+                      height: 50, //MediaQuery.of(context).size.width*.1,
+                      margin: EdgeInsets.all(20),
                       child: GestureDetector(
                         child: SvgPicture.asset(
                           'images/svg/crown.svg',
-                          width: 18,
-                          height: 17,
+                          width: 15,
+                          height: 15,
                           color: Color.fromRGBO(218, 218, 218, 1),
                           alignment: Alignment.center,
                         ),
