@@ -13,7 +13,6 @@ import 'package:pet_service_application/init_profile/FifthRoute.dart';
 import 'package:pet_service_application/init_profile/widget/AlertDuplicateMessage.dart';
 import 'package:pet_service_application/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 
 class ProfileQuestion extends StatelessWidget {
   @override

@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +8,9 @@ import '../../init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/main.dart';
 import 'package:kakao_flutter_sdk/all.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pet_service_application/log_in/class/UserData.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -46,7 +49,8 @@ class _LogInState extends State<LogIn> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-    KakaoContext.clientId = 'fe61cb956b6b20c465dbdde018008754';
+    KakaoContext.clientId = '9562e3633088ea0ac9cd1f627011bf87';
+    KakaoContext.javascriptClientId = "369339f74ffc0e1f44389458d0bbc7e6";
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -197,10 +201,17 @@ class KakaoLogin extends StatefulWidget {
 class _KakaoLoginState extends State<KakaoLogin> {
   bool _isKakaoTalkInstalled = false;
 
+  var validateToken; // 인증용 토큰
+  //var userReference = FirebaseFirestore.instance.collection("UserData");
+
   @override
   void initState() {
     super.initState();
+
+    ///카톡 깔려있는지 확인합니다. 안깔려있으면 깔라고함
     _initKakaoTalkInstalled();
+    /// 자동로그인 체크
+    checkLoggedInKakaoState();
   }
 
   // 카카오톡이 설치되었는지 확인 코드
@@ -215,14 +226,42 @@ class _KakaoLoginState extends State<KakaoLogin> {
 
   _issueAccessToken(String authCode) async {
     try {
+      //엑세스 토큰 받기
       var token = await AuthApi.instance.issueAccessToken(authCode);
+      //엑세스 토큰을 통한 인증
       AccessTokenStore.instance.toStore(token);
-      print(token);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(),
-          ));
+      validateToken = await AccessTokenStore.instance.fromStore();
+      //토큰 인증 오류
+      if (validateToken.refreshToken == null) {
+        throw Exception('LogIn Token Auth Error');
+      }
+      //카카오 로그인 성공, 유저 ID 불러오기
+      else{
+        User kakaoUser = await UserApi.instance.me();
+
+        var userDataCheck = Logger().iskakaoUserExist(kakaoUser.id);
+        userDataCheck.then((value) {
+          if (value)  //계정 존재
+            {
+
+
+
+            }
+          else{
+            Logger().userData.accountInfo = kakaoUser.id;
+
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileQuestion()),
+                    (route) => false);
+
+          }
+        });
+
+
+        print('> kakao id : ${kakaoUser.id.toString()}');
+
+      }
     } catch (e) {
       print(e.toString());
     }
@@ -235,6 +274,7 @@ class _KakaoLoginState extends State<KakaoLogin> {
       await _issueAccessToken(code);
     } catch (e) {
       print(e.toString());
+      debugPrint("test");
     }
   }
 
@@ -245,6 +285,7 @@ class _KakaoLoginState extends State<KakaoLogin> {
       await _issueAccessToken(code);
     } catch (e) {
       print(e.toString());
+      debugPrint("test222");
     }
   }
 
@@ -264,6 +305,23 @@ class _KakaoLoginState extends State<KakaoLogin> {
     );
   }
 }
+
+void checkLoggedInKakaoState() async {
+
+  var userReference = FirebaseFirestore.instance.collection("UserData");
+
+  /// 저장해둔 카카오로그인 아이디가 있는지 체크
+  final kakaoUserUid = await FlutterSecureStorage().read(key: "AccountInfo");
+
+  /// 저장해둔 아이디가 있다면
+  if (kakaoUserUid != null) {
+    /// 해당 DB정보 가져오기
+    DocumentSnapshot documentSnapshot =
+    await userReference.doc(kakaoUserUid).get();
+
+  }
+}
+
 
 /*
 class KakaoWebView extends StatefulWidget {
