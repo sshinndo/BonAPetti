@@ -11,6 +11,7 @@ class Logger {
   //스토리지 불러오기용 링크 주소
   static const String storageUrl = 'gs://bonapetti-715a9.appspot.com';
 
+  //디폴트 펫 데이터 불러오기
   PetInfo getDefaultPet() {
     if (userData.myPets.isNotEmpty)
       return userData.myPets.first;
@@ -70,7 +71,7 @@ class Logger {
     return newUID;
   }
 
-  //중복 계정 여부 확인 함수
+  //중복 이름 여부 확인 함수
   Future<bool> isUserExist(String _name) async {
     var documentSnapshot = await FirebaseFirestore.instance
         .collection("UserData")
@@ -82,6 +83,7 @@ class Logger {
       return true;
   }
 
+  //uid 존재 여부
   Future<dynamic> isKakaoUserExist(int _tokenID) async {
     var documentSnapshot = await FirebaseFirestore.instance
         .collection("UserData")
@@ -92,7 +94,6 @@ class Logger {
     else
       return documentSnapshot.docs.first.id.toString();
   }
-
   Future<bool> isDocExist(int uid) async {
     var collectionRef = FirebaseFirestore.instance
         .collection("UserData");
@@ -190,7 +191,7 @@ class UserData {
     }
     return result;
   }
-
+  //랜덤 유저 정보 불러오기
   static Future<int> getRandomUserID() async {
     try {
       await Firebase.initializeApp();
@@ -216,18 +217,43 @@ class UserData {
 }
 
 class PetInfo {
+  //------  펫이 가지는 속성들-------------
   String petName = ""; // 펫 이름
   String petID = "";  //펫 ID
-  static Map<String,List<String>> petTypeNameList = {}; //펫 종류 리스트
-  String petType = "";  //펫 종류
+
+  String petType = '';  //펫 종류
   String petSpecies = ''; //펫 상세 종
   int petAge = 0;
   double petBodyLength = 0;
   double petWeight = 0;
   PetSilhouette petSilhouette = PetSilhouette.BCS1;
-  List<String>? petAllergyList;
+  List<String> petAllergyList = [];
+  List<String> petDiseaseList = [];
 
   PetInfo(this.petName);
+  //서버상의 펫 타입, 알러지, 질병 데이터
+  static Map<String,List<String>> petTypes = {};
+  static List<String> allergies = [];
+  static List<String> diseases = [];
+  //펫 초기 정보 불러오기
+  static void initialPetListData() async {
+    //펫 타입 초기화
+    petTypes = {};
+    var petDocument = await FirebaseFirestore.instance.collection('Manage').doc('PetType').get();
+    if(petDocument.data() == null)
+      throw Exception('Server Manager Connect Fail');
+    petDocument.data()!.forEach((key,value) {
+      petTypes[key.toString()] = List.from(value);
+    });
+    //펫 알러지 초기화
+    allergies = [];
+    diseases = [];
+    var petInfoDoc = await FirebaseFirestore.instance.collection('Manage').doc('PetInfo').get();
+    if(petInfoDoc.data() == null)
+      throw Exception('Server Manager Connect Fail');
+    allergies = petInfoDoc.data()!['Allergy'].cast<String>();
+    diseases = petInfoDoc.data()!['Disease'].cast<String>();
+  }
 
   //uid로 서버에서 펫 정보 불러오기
   static Future<PetInfo> getPetData(String uid, String petID) async  {
@@ -252,7 +278,63 @@ class PetInfo {
     }
     return result;
   }
+
+  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 = 펫 개수)
+  void sendPetData() async {
+    //펫 정보 없을 바로 종료
+    if(petName == "")
+      throw Exception('Empty Pet Data');
+
+    if (Logger().userData.uid != 0) {
+      CollectionReference pets = FirebaseFirestore.instance.collection(
+          'UserData').doc(Logger().userData.uid.toString()).collection('Pets');
+      var petDocs = await pets.get();
+
+      int petCount = petDocs.docs.length;
+      petID = petCount.toString();
+      pets.doc(petCount.toString()).set({
+        //pet id 설정 후 입력
+        'Name': petName,
+        'Type' : petType,
+        'Species' : petSpecies,
+        'Age': petAge,
+        'BodyLength': petBodyLength,
+        'Weight': petWeight,
+        'Silhouette': petSilhouette,
+        'AllergyList': petAllergyList,
+        'DiseaseList' : petDiseaseList
+      });
+    }
+    else
+      throw Exception('Login Data Not Exist');
+  }
 }
 
 enum PetSilhouette { BCS1, BCS2, BCS3, BCS4, BCS5 } //반려동물 실루엣(BCS)
+
+/* 파이어 베이스 세팅
+//파이어베이스 스테이트
+  bool _initialized = false;
+  bool _error = false;
+
+  //파이어베이스 이니셜
+  void initializeFlutterFire() async {
+    try {
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
+ */
 

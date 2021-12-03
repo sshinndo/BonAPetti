@@ -8,7 +8,7 @@ import 'package:pet_service_application/product/model/IngredientModel.dart';
 import 'package:pet_service_application/product/screen/shopping_basket.dart';
 import 'package:pet_service_application/SquareCardPageView.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
-import 'package:pet_service_application/class/GoodsInfo.dart';
+import 'package:pet_service_application/product/GoodsInfo.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -369,6 +369,7 @@ class _ContentDetailedGoods extends State<ContentDetailedGoods> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Container(
+            width: MediaQuery.of(context).size.width*280/360,
             height: 30,
             color: Color.fromRGBO(166, 0, 0, 0.04),
             child: Row(

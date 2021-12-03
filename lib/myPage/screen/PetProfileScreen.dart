@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
+import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/mypage/screen/EditPetProfileScreen.dart';
 import 'package:pet_service_application/mypage/widget/PetProfileWidget.dart';
@@ -41,7 +42,7 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
                         onTap: (){
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context)=>EditPetProfileScreen())
+                              MaterialPageRoute(builder: (context)=>ThirdRoute())
                           );
                         },
                         child: SvgPicture.asset('images/svg/pencil.svg',

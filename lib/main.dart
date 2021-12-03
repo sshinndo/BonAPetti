@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
-import 'package:pet_service_application/class/GoodsInfo.dart';
+import 'package:pet_service_application/product/GoodsInfo.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
 import 'package:pet_service_application/widgets/BargainCardWidget.dart';
 import 'package:pet_service_application/card_news/CardNewsModel.dart';

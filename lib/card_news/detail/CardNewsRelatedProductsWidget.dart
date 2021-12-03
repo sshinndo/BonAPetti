@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pet_service_application/class/GoodsInfo.dart';
+import 'package:pet_service_application/product/GoodsInfo.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
 
 final pinkBoldTextColor = Color.fromRGBO(255, 87, 87, 1);

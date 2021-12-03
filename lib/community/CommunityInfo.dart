@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart';
-import 'package:pet_service_application/class/GoodsInfo.dart';
+import 'package:pet_service_application/product/GoodsInfo.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 
 class CommunityInfo {
