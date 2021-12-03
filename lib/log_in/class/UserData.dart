@@ -1,9 +1,11 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 
-//사용자의 유저 정보 싱글톤
+///사용자의 유저 정보 싱글톤
 class Logger {
   static final Logger _logger = Logger._internals();
 
@@ -13,8 +15,8 @@ class Logger {
 
   //디폴트 펫 데이터 불러오기
   PetInfo getDefaultPet() {
-    if (userData.myPets.isNotEmpty)
-      return userData.myPets.first;
+    if (userData.myPets.isNotEmpty && userData.myDefaultPet > -1)
+      return userData.myPets[userData.myDefaultPet];
     else
       return PetInfo('???');
   }
@@ -46,7 +48,7 @@ class Logger {
             'Shorts': userData.shorts,
             'MedalImage': userData.medalImage,
             'MyImage': userData.myImage,
-            'MyPets': userData.myPets
+            'MyDefaultPet': userData.myDefaultPet
           });
         }
         Logger().userData.uid = value;
@@ -129,10 +131,10 @@ class Logger {
   }
 }
 
-//유저가 가지는 정보 클래스
+///유저가 가지는 정보 클래스
 class UserData {
   //유저 계정 정보 (카카오 계정 정보 하나)
-  int accountInfo = 0;
+  num accountInfo = 0;
   //유저 ID
   int uid = 0;
 
@@ -146,7 +148,7 @@ class UserData {
 
   //유저 이미지 2개
   String medalImage = "";
-  //프로필 이미지
+  //프로필 이미지 : 유저 이미지 다운로드 url
   String myImage = "";
 
   //차단 유저 정보
@@ -156,8 +158,9 @@ class UserData {
   //유저가 작성한 커뮤니티 게시글들
   List<String> posts = [];
 
-  //UserInfo 펫 클래스 참조
   List<PetInfo> myPets = [];
+  //대표 펫
+  int myDefaultPet = -1;
 
   UserData()
   {
@@ -172,8 +175,10 @@ class UserData {
     catch (e) {
       throw Exception(e);
     }
+    await FirebaseAuth.instance.signInAnonymously();
     var userData = await FirebaseFirestore.instance.collection(
         'UserData').doc(uid).get();
+    var imageRef = FirebaseStorage.instance.ref().child('UserImage/UserProfile');
     UserData result = UserData();
     {
       result.uid = int.parse(uid);
@@ -185,7 +190,9 @@ class UserData {
       result.follower = userData.data()!['follower'].cast<String>();
       result.following = userData.data()!['following'].cast<String>();
       result.medalImage = userData.data()!['MedalImage'];
-      result.myImage = userData.data()!['MyImage'];
+      if(userData.data()!['MyImage'] != '') {
+        result.myImage = await imageRef.child(userData.data()!['MyImage']).getDownloadURL();
+      }
       result.posts = userData.data()!['Posts'].cast<String>();
       result.shorts = userData.data()!['Shorts'].cast<String>();
     }
@@ -216,6 +223,7 @@ class UserData {
   }
 }
 
+///펫 정보 모음
 class PetInfo {
   //------  펫이 가지는 속성들-------------
   String petName = ""; // 펫 이름
@@ -279,7 +287,7 @@ class PetInfo {
     return result;
   }
 
-  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 = 펫 개수)
+  //생성된 펫 정보를 현재 로그인 정보로 서버에 전송 (현재 펫 ID = 펫 개수)
   void sendPetData() async {
     //펫 정보 없을 바로 종료
     if(petName == "")
@@ -310,9 +318,10 @@ class PetInfo {
   }
 }
 
-enum PetSilhouette { BCS1, BCS2, BCS3, BCS4, BCS5 } //반려동물 실루엣(BCS)
+enum PetSilhouette { BCS1, BCS2, BCS3, BCS4, BCS5 } ///반려동물 실루엣(BCS)
 
-/* 파이어 베이스 세팅
+///파이어 베이스 세팅
+/*
 //파이어베이스 스테이트
   bool _initialized = false;
   bool _error = false;
