@@ -38,89 +38,6 @@ class FirstRouteState extends State<FirstRoute> {
   // 닉네임 중복 여부 컨테이너 bool 값
   bool _offstage = true;
 
-  //파이어베이스 스테이트
-  bool _initialized = false;
-  bool _error = false;
-
-  //파이어베이스 이니셜
-  void initializeFlutterFire() async {
-    try {
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (e) {
-      setState(() {
-        _error = true;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    initializeFlutterFire();
-    super.initState();
-  }
-
-  //생성된 계정을 서버로 전송
-  void sendUserData() async {
-    if (myData.name != "") {
-      Future<int> curUserCount = allocUserID();
-      curUserCount.then((value) {
-        debugPrint("Allocate New UID : $value");
-        if (value > 0) {
-          CollectionReference users =
-              FirebaseFirestore.instance.collection('UserData');
-          users.doc(value.toString()).set({
-            'AccountInfo': myData.accountInfo,
-            'Name': myData.name,
-            'Description': myData.description,
-            'following': myData.following,
-            'follower': myData.follower,
-            'Community': myData.posts,
-            'Shorts': myData.shorts,
-            'MedalImage': myData.medalImage,
-            'MyImage': myData.myImage,
-            'MyPets': myData.myPets
-          });
-        }
-        Logger().userData.uid = value;
-      });
-    } else
-      throw Exception('Login Data Already Exist');
-  }
-
-  //새 UID 할당받기 - 서버와 동기화
-  Future<int> allocUserID() async {
-    //현재 유저 수 확인 후 UID 배정받기
-    int newUID =
-        await FirebaseFirestore.instance.runTransaction((transaction) async {
-      DocumentSnapshot snapshot = await transaction
-          .get(FirebaseFirestore.instance.collection('Manage').doc('Users'));
-      if (!snapshot.exists) {
-        throw Exception('Server Manager Connect Fail');
-      }
-      int curUserCount = snapshot.get('Count') + 1;
-      transaction.update(
-          FirebaseFirestore.instance.collection('Manage').doc('Users'),
-          {'Count': curUserCount});
-      return curUserCount;
-    });
-    return newUID;
-  }
-
-  //중복 계정 여부 확인 함수
-  Future<bool> isUserExist(String _name) async {
-    var documentSnapshot = await FirebaseFirestore.instance
-        .collection("UserData")
-        .where('Name', isEqualTo: _name)
-        .get();
-    if (documentSnapshot.docs.isEmpty)
-      return false;
-    else
-      return true;
-  }
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width / 360.0;
@@ -162,7 +79,7 @@ class FirstRouteState extends State<FirstRoute> {
                     SizedBox(height: height * 25.0),
 
                     customPinkElevatedButton('입력 완료!', () {
-                      Future<bool> userExist = isUserExist(userNickname.text);
+                      Future<bool> userExist = Logger().isUserExist(userNickname.text);
                       userExist.then((val) {
                         if (val == true) {
                           setState(() {
@@ -179,7 +96,7 @@ class FirstRouteState extends State<FirstRoute> {
                           //유저 정보 없음, 계정 생성 후 다음으로 이동
                           debugPrint('User doesnt Exist, initiate user');
                           Logger().userData.name = userNickname.text;
-                          sendUserData();
+                          Logger().sendUserData();
                           debugPrint(
                               'User ID : ' + Logger().userData.uid.toString());
                           Navigator.push(
@@ -622,32 +539,6 @@ class _FifthRouteState extends State<FifthRoute> {
     }
   }
 
-  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 = 펫 ID)
-  void sendPetData(PetInfo petData) {
-    //펫 정보 없을 바로 종료
-    if(petData.petName == "")
-      return;
-
-    if (Logger().userData.uid != 0) {
-      CollectionReference pets = FirebaseFirestore.instance.collection(
-          'UserData').doc(Logger().userData.uid.toString()).collection('Pets');
-      pets.doc(petData.petName).set({
-        //pet id 설정 후 입력
-        'Name': petData.petName,
-        'Type' : petData.petType,
-        'Species' : petData.petSpecies,
-        'Age': petData.petAge,
-        'BodyLength': petData.petBodyLength,
-        'Weight': petData.petWeight,
-        'Silhouette': petData.petSilhouette,
-        'AllergyList': petData.petAllergyList,
-        'DiseaseList' : petData.petDiseaseList,
-      });
-    }
-    else
-      throw Exception('Login Data Not Exist');
-  }
-
   @override
   void initState() {
     initializeFlutterFire();
@@ -859,7 +750,7 @@ class _FifthRouteState extends State<FifthRoute> {
                         SizedBox(height: height * 25),
                         customPinkElevatedButton(
                             "잘 모르겠어요!(나중에 입력할게요)", (){
-                          sendPetData(widget.newPet);
+                          widget.newPet.sendPetData();
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(builder: (context) => MyHomePage()),
@@ -1116,7 +1007,7 @@ class _FifthRouteState extends State<FifthRoute> {
                         customPinkElevatedButton(
                             "작성 완료! 메인 화면으로 이동", (){
                           //-------- + 작성한 생성자를 서버로 전송하는 코드(sendUserData)----------
-                          sendPetData(widget.newPet);
+                          widget.newPet.sendPetData();
                           //-------- + 작성한 생성자를 서버로 전송하는 코드(sendUserData)----------
                           Navigator.pushAndRemoveUntil(
                               context,
