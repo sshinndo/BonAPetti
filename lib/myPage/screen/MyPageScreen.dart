@@ -154,7 +154,7 @@ class _MyPageState extends State<MyPage> {
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                     image:
-                                        AssetImage('images/profile/pet_profile_sample.png'),
+                                        AssetImage('images/profile/petDefaultIcon.png'),
                                     // NetworkImage('https://googleflutter.com/sample_image.jpg'),
                                     fit: BoxFit.fill),
                               ),
