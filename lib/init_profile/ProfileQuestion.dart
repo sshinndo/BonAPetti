@@ -218,7 +218,7 @@ class _SecondRouteState extends State<SecondRoute> {
                   // margin: EdgeInsets.symmetric(horizontal: 50.0),
                   child: customPinkElevatedButton('아니요.. ㅠㅠ  바로 앱으로 !', () {
 
-                    sleep(const Duration(seconds: 10));
+                    sleep(const Duration(seconds: 5));
 
 
                     Navigator.pushAndRemoveUntil(
@@ -526,7 +526,8 @@ class _FifthRouteState extends State<FifthRoute> {
 
   int numOfSelectedAllergy = 1; // 선택된 알러지 버튼의 개수
   int numOfSelectedDisease = 1; // 선택된 질병 버튼의 개수
-
+  ///서버 데이터 전송용 딜레이 시간
+  static const int waitSecond = 5;
   //파이어베이스 스테이트
   bool _initialized = false;
   bool _error = false;
@@ -555,7 +556,6 @@ class _FifthRouteState extends State<FifthRoute> {
 
   @override
   Widget build(BuildContext context) {
-    // var myInfo = Logger().userData;
     var width = MediaQuery.of(context).size.width / 360;
     var height = MediaQuery.of(context).size.height / 800;
 
@@ -759,7 +759,7 @@ class _FifthRouteState extends State<FifthRoute> {
                           Logger().userData.myPets.add(widget.newPet.petID);
                           widget.newPet.sendPetData();
 
-                          sleep(const Duration(seconds: 10));
+                          sleep(const Duration(seconds: waitSecond));
 
                           Navigator.pushAndRemoveUntil(
                               context,
@@ -1028,7 +1028,7 @@ class _FifthRouteState extends State<FifthRoute> {
                           widget.newPet.sendPetData();
                           //-------- + 작성한 생성자를 서버로 전송하는 코드----------
 
-                          sleep(const Duration(seconds: 10));
+                          sleep(const Duration(seconds: waitSecond));
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(builder: (context) => Delay_Screen()),
@@ -1041,7 +1041,7 @@ class _FifthRouteState extends State<FifthRoute> {
                           widget.newPet.sendPetData();
                           //-------- + 작성한 생성자를 서버로 전송하는 코드----------
 
-                          sleep(const Duration(seconds: 10));
+                          sleep(const Duration(seconds: waitSecond));
                           Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => Delay_Screen()));

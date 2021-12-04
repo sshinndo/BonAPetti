@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
+import 'package:pet_service_application/log_in/screen/delay_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
@@ -210,7 +211,7 @@ class _KakaoLoginState extends State<KakaoLogin> {
               });
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                  MaterialPageRoute(builder: (context) => Delay_Screen()),
                       (route) => false);
             }
           //계정 첫 생성 후 페이지 넘김

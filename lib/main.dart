@@ -47,19 +47,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _dataImportFinish = false;
 
   @override
   void initState() {
-    _dataImportFinish = false;
-     UserData.getUserData(Logger().userData.uid.toString()).then((updateLogger) {
-       Logger().userData = updateLogger;
-       Logger().getPetData();
-       setState(() {
-         _dataImportFinish = true;
-       });
-     });
     super.initState();
+    if(Logger().petData.isEmpty)
+      Logger().getMyPetList();
     loadData();
   }
   @override
