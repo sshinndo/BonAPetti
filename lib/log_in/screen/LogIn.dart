@@ -128,13 +128,7 @@ class _LogInState extends State<LogIn> {
                                 child: customSubtitleColor('프로필 작성 이동', GREY),
                               ),
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        FirstRoute()
-                                  ),
-                                );
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => FirstRoute()), (route) => false);
                               }
                           ),
                     ])),

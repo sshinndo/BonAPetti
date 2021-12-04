@@ -96,7 +96,7 @@ class _MenuBottomBar extends State<MenuBottomBar> {
           screenIndex = value;
           if (value == 0) { // 홈으로
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyApp()));
+                context, MaterialPageRoute(builder: (context) => MyHomePage()));
           }
           if (value == 1) { // 중고장터
             // Navigator.push(

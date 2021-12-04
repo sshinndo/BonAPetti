@@ -8,15 +8,25 @@ class Logger {
   static final Logger _logger = Logger._internals();
 
   UserData userData = UserData();
+  List<PetInfo> petData = [PetInfo('???')];
   //스토리지 불러오기용 링크 주소
   static const String storageUrl = 'gs://bonapetti-715a9.appspot.com';
 
-  //디폴트 펫 데이터 불러오기
+  ///디폴트 펫 데이터 불러오기
   PetInfo getDefaultPet() {
-    if (userData.myPets.isNotEmpty)
-      return userData.myPets.first;
-    else
-      return PetInfo('???');
+    if(petData.isEmpty)
+      throw Exception('Logger Pet Data Error');
+    else {
+        //대표 펫 설정 이전 or 인덱스 오류
+        if(userData.myDefaultPet < 0)
+          return petData.last;
+        //대표 펫 값 정상
+        else if(userData.myDefaultPet < petData.length)
+          return petData[userData.myDefaultPet];
+        //대표 펫 > 받아온 펫 수 (펫 수신 오류)
+        else
+          return petData.last;
+      }
   }
 
   factory Logger() {
@@ -24,6 +34,20 @@ class Logger {
   }
   //초기화 코드
   Logger._internals();
+
+  void getPetData() async {
+    await FirebaseFirestore.instance.collection('UserData').doc(userData.uid.toString()).collection('Pets').get().then((petDocs) {
+      if(petDocs.docs.length == 0)
+        return;
+      else {
+        petDocs.docs.forEach((doc) {
+          PetInfo.getPetData(userData.uid.toString(), doc.id).then((myPetInfo) {
+            petData.add(myPetInfo);
+          });
+        });
+        }
+    });
+  }
 
   //유저 데이터 첫 생성 : 서버로 동기화
   void sendUserData() async  {
@@ -83,7 +107,7 @@ class Logger {
       return true;
   }
 
-  //uid 존재 여부
+  //유저 데이터 존재 여부
   Future<dynamic> isKakaoUserExist(int _tokenID) async {
     var documentSnapshot = await FirebaseFirestore.instance
         .collection("UserData")
@@ -99,33 +123,6 @@ class Logger {
         .collection("UserData");
     var doc = await collectionRef.doc(uid.toString()).get();
     return doc.exists;
-  }
-
-  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 : 자동)
-  Future<String> sendPetData(PetInfo petData) async {
-    //펫 정보 없을 바로 종료
-    if(petData.petName == "")
-      return '';
-
-    if (Logger().userData.uid != 0) {
-      CollectionReference pets = FirebaseFirestore.instance.collection(
-          'UserData').doc(Logger().userData.uid.toString()).collection('Pets');
-      var petID = pets.add({
-        'Name': petData.petName,
-        'Age': petData.petAge,
-        'Type' : petData.petType,
-        'Species' : petData.petType,
-        'BodyLength': petData.petBodyLength,
-        'Weight': petData.petWeight,
-        'Silhouette': petData.petSilhouette,
-        'AllergyList': petData.petAllergyList,
-      });
-      return petID.then((value) {
-        return value.toString();
-      });
-    }
-    else
-      throw Exception('Login Data Not Exist');
   }
 }
 
@@ -156,15 +153,17 @@ class UserData {
   //유저가 작성한 커뮤니티 게시글들
   List<String> posts = [];
 
+  //대표 펫 인덱스
+  int myDefaultPet = -1;
   //UserInfo 펫 클래스 참조
-  List<PetInfo> myPets = [];
+  List<String> myPets = [];
 
   UserData()
   {
     description = "반갑습니다!";
   }
 
-  //uid로 서버에서 유저정보 불러오기
+  ///uid로 서버에서 유저정보 불러오기
   static Future<UserData> getUserData(String uid) async  {
     try {
       await Firebase.initializeApp();
@@ -285,12 +284,15 @@ class PetInfo {
     if(petName == "")
       throw Exception('Empty Pet Data');
 
+    //uid 정상 호출 후 컬랙션 호출
     if (Logger().userData.uid != 0) {
       CollectionReference pets = FirebaseFirestore.instance.collection(
           'UserData').doc(Logger().userData.uid.toString()).collection('Pets');
       var petDocs = await pets.get();
-
+      //할당할 펫 ID값 불러오고 Logger()에 적용
       int petCount = petDocs.docs.length;
+      Logger().userData.myDefaultPet = petCount;
+      //펫 ID로 문서 생성 및 전송
       petID = petCount.toString();
       pets.doc(petCount.toString()).set({
         //pet id 설정 후 입력
@@ -300,10 +302,12 @@ class PetInfo {
         'Age': petAge,
         'BodyLength': petBodyLength,
         'Weight': petWeight,
-        'Silhouette': petSilhouette,
+        'Silhouette': petSilhouette.toString(),
         'AllergyList': petAllergyList,
         'DiseaseList' : petDiseaseList
       });
+      FirebaseFirestore.instance.collection(
+          'UserData').doc(Logger().userData.uid.toString()).update({'MyDefaultPet' : petCount});
     }
     else
       throw Exception('Login Data Not Exist');
