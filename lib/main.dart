@@ -18,7 +18,8 @@ import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'log_in/class/UserData.dart';
 
 final String appName = "Pet App";
-//
+
+void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

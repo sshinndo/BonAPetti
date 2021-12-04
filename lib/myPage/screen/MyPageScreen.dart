@@ -606,8 +606,8 @@ class _MyPageState extends State<MyPage> {
                     Container(
                       width: 30,
                       height: 30,
-                      child: SvgPicture.asset(
-                        'images/svg/kakao_invite.svg', // 1. list에 넣을 변수 값
+                      child: Image.asset(
+                        'images/kakao_invite.png', // 1. list에 넣을 변수 값
                         width: 25.5, // 아이콘 가로 고정 상수값
                         height: 28, // 아이콘 세로 고정 상수값
                         alignment: Alignment.center,

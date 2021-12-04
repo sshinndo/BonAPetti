@@ -53,7 +53,6 @@ dependencies:
   flutter_svg: ^0.22.0
 
   # 갤러리/카메라 이미지 파일 추가에 필요한 라이브러리
-  image_picker: ^0.8.4
   image_cropper: ^1.4.1
   get: ^4.3.8
 
