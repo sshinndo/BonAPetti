@@ -7,8 +7,12 @@ import 'package:pet_service_application/init_profile/widget/HashTagWidget.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/init_profile/widget/AlertDuplicateMessage.dart';
 import 'package:pet_service_application/main.dart';
+import 'package:pet_service_application/log_in/screen/delay_screen.dart';
+
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
+
+
 
 class ProfileQuestion extends StatelessWidget {
   @override
@@ -219,7 +223,7 @@ class _SecondRouteState extends State<SecondRoute> {
 
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => MyHomePage()),
+                        MaterialPageRoute(builder: (context) => Delay_Screen()),
                         (route) => false);
                   }),
                 ),
@@ -759,7 +763,7 @@ class _FifthRouteState extends State<FifthRoute> {
 
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (context) => MyHomePage()),
+                              MaterialPageRoute(builder: (context) => Delay_Screen()),
                                   (route) => false);
                         })
                       ],
@@ -1027,7 +1031,7 @@ class _FifthRouteState extends State<FifthRoute> {
                           sleep(const Duration(seconds: 10));
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (context) => MyHomePage()),
+                              MaterialPageRoute(builder: (context) => Delay_Screen()),
                                   (route) => false);
                         }),
                         SizedBox(height: height*25),
@@ -1040,7 +1044,7 @@ class _FifthRouteState extends State<FifthRoute> {
                           sleep(const Duration(seconds: 10));
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => MyHomePage()));
+                              MaterialPageRoute(builder: (context) => Delay_Screen()));
                                   // (route) => false);
                         })
                       ],
