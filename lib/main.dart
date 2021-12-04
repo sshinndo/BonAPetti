@@ -23,20 +23,20 @@ import 'log_in/class/UserData.dart';
 
 // void main() => runApp(MyApp());
 //
-// final String appName = "Pet App";
+final String appName = "Pet App";
 //
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: appName,
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: MyHomePage(),
-//     );
-//   }
-// }
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: appName,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
 
 class MyHomePage extends StatefulWidget {
   final List<CardNewsModel> cardNewsModelList = [];
@@ -77,8 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
           CardNewsType.CARDNEWS,
           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/004.png',
           '고양이는 생선만\n먹어도 될까?',
-          null,
-          null,
           [
             DetailCardNewsModel(
                 'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/006.png',
@@ -97,8 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 '아이가 물고기를 좋아한다고 해도\n균형잡힌 식사를 할 수 있도록\n도와주세요!'),
           ],
           [
-          ],
-          null),
+          ],),
     );
 
     widget.cardNewsModelList.add(
@@ -106,8 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
           CardNewsType.CARDNEWS,
           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/016.png',
           '강아지는 하루에\n몇시간을 잘까?',
-          null,
-          null,
           [
             DetailCardNewsModel(
                 'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/006.png',
@@ -127,8 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
           [
             // GoodsInfo()
-          ],
-          null),
+          ],),
     );
 
     widget.cardNewsModelList.add(
@@ -136,8 +130,6 @@ class _MyHomePageState extends State<MyHomePage> {
           CardNewsType.CARDNEWS,
           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/018.png',
           '왜 강아지의 코는\n촉촉할까?',
-          null,
-          null,
           [
             DetailCardNewsModel(
                 'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/006.png',
@@ -157,8 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
           [
             // GoodsInfo 넣을 자리
-          ],
-          null),
+          ],),
     );
 
     widget.cardNewsModelList.add(
@@ -166,8 +157,6 @@ class _MyHomePageState extends State<MyHomePage> {
           CardNewsType.CARDNEWS,
           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/020.png',
           '강아지가 자기 발을\n핥는 이유는?',
-          null,
-          null,
           [
             DetailCardNewsModel(
                 'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/006.png',
@@ -187,8 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
           [
             // GoodsInfo() 넣을 자리
-          ],
-          null),
+          ],),
     );
   }
 
