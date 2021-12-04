@@ -747,6 +747,7 @@ class _FifthRouteState extends State<FifthRoute> {
                         SizedBox(height: height * 25),
                         customPinkElevatedButton(
                             "잘 모르겠어요!(나중에 입력할게요)", (){
+                          Logger().userData.myPets.add(widget.newPet.petID);
                           widget.newPet.sendPetData();
                           Navigator.pushAndRemoveUntil(
                               context,

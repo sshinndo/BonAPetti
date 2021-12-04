@@ -17,7 +17,6 @@ import 'package:pet_service_application/product/screen/DetailedGoodsScreen.dart'
 import 'package:pet_service_application/product/screen/search_screen.dart';
 import 'package:pet_service_application/product/screen/goods_screen.dart';
 import 'package:pet_service_application/product/screen/WishListScreen.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'log_in/class/UserData.dart';
@@ -48,9 +47,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   void initState() {
+    Logger().getPetData();
     super.initState();
     loadData();
   }
@@ -186,8 +185,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    PetInfo firstPet;
-    firstPet = Logger().getDefaultPet();
 
     return Scaffold(
       body: Column(
@@ -196,7 +193,6 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           AppBarWithAlarm(
             nickName: myInfo.name
-            // nickName: UserInfo.userNickname
           ),
           Expanded(
             flex: 1,
@@ -274,7 +270,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                firstPet.petName,
+                                Logger().getDefaultPet().petName,
                                 style: TextStyle(
                                     color: Color.fromRGBO(255, 113, 113, 1),
                                     decoration: TextDecoration.underline,
@@ -364,7 +360,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Row(
                         children: <Widget>[
                           Text(
-                            firstPet.petName,
+                            Logger().getDefaultPet().petName,
                             style: TextStyle(
                                 color: Color.fromRGBO(255, 113, 113, 1),
                                 decoration: TextDecoration.underline,
