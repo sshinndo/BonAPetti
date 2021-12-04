@@ -277,8 +277,8 @@ class PetInfo {
     {
       result.petID = petID;
       result.petName = petDoc.data()!['Name'];
-      result.petType = petDoc.data()!['PetType'];
-      result.petSpecies = petDoc.data()!['PetSpecies'];
+      result.petType = petDoc.data()!['Type'];
+      result.petSpecies = petDoc.data()!['Species'];
       result.petAge = petDoc.data()!['Age'];
       result.petBodyLength = double.parse(petDoc.data()!['BodyLength'].toString());
       result.petWeight = double.parse(petDoc.data()!['Weight'].toString());

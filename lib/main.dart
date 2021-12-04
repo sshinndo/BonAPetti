@@ -41,16 +41,23 @@ import 'log_in/class/UserData.dart';
 class MyHomePage extends StatefulWidget {
   final List<CardNewsModel> cardNewsModelList = [];
 
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _dataImportFinish = false;
+
   @override
   void initState() {
+    _dataImportFinish = false;
      UserData.getUserData(Logger().userData.uid.toString()).then((updateLogger) {
        Logger().userData = updateLogger;
        Logger().getPetData();
+       setState(() {
+         _dataImportFinish = true;
+       });
      });
     super.initState();
     loadData();
