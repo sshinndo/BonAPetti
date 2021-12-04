@@ -37,7 +37,7 @@ class Splash extends StatelessWidget {
       color: Colors.white,
       alignment: Alignment.center,
       child: Container(
-        child: SvgPicture.asset('images/logo_main.svg'),
+        child: Image.asset('images/logo.png'),
         width: 192,
         height: 192,
       ),

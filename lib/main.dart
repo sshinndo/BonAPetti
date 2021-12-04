@@ -22,23 +22,23 @@ import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'log_in/class/UserData.dart';
 
-void main() => runApp(MyApp());
-
-final String appName = "Pet App";
+// void main() => runApp(MyApp());
+//
+// final String appName = "Pet App";
 final UserData myInfo = Logger().userData;
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appName,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
+//
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: appName,
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: MyHomePage(),
+//     );
+//   }
+// }
 
 class MyHomePage extends StatefulWidget {
   final List<CardNewsModel> cardNewsModelList = [];

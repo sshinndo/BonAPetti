@@ -483,9 +483,9 @@ class _FourthRouteState extends State<FourthRoute> {
             height: height*30,
             child: CupertinoScrollbar(
               // 스크롤 바 쓸때만 주석해제하기
-              // thickness: 5.0, // 일반 스크롤 두께
-              // thicknessWhileDragging: 8.0, // 드래그할 때 스크롤 두께
-              // radius: Radius.circular(34.0), // 스크롤바 둥글게
+              thickness: 5.0, // 일반 스크롤 두께
+              thicknessWhileDragging: 8.0, // 드래그할 때 스크롤 두께
+              radius: Radius.circular(34.0), // 스크롤바 둥글게
               // isAlwaysShown: true, // 스크롤바 항상 노출
               child:
               //서버로부터 전송받은 리스트
@@ -529,7 +529,7 @@ class _FourthRouteState extends State<FourthRoute> {
               thickness: 5.0, // 일반 스크롤 두께
               thicknessWhileDragging: 8.0, // 드래그할 때 스크롤 두께
               radius: Radius.circular(34.0), // 스크롤바 둥글게
-              isAlwaysShown: true, // 스크롤바 항상 노출
+              //isAlwaysShown: true, // 스크롤바 항상 노출
               child: ListView.builder(
                 scrollDirection: Axis.horizontal, // scrollDirection: 가로 스크롤 생성
                   itemCount: PetInfo.petTypes[widget.newPet.petType]!.length,
@@ -597,7 +597,7 @@ class _FifthRouteState extends State<FifthRoute> {
   TextEditingController _petBodyLengthController = TextEditingController();
   TextEditingController _petWeightController = TextEditingController();
 
-  final _scrollController = ScrollController();
+  final _scrollController = ScrollController(initialScrollOffset: 30.0);
 
   String _msg = ''; // 뒤로가기 방지 메시지
 
@@ -706,26 +706,23 @@ class _FifthRouteState extends State<FifthRoute> {
                               ),),
                           ],
                         ),
-                        SizedBox(height: height*40),
-                        customSubtitleQuestion('나이 (살)'),
-                        SizedBox(height: height*20),
-                        customTextFormField(
-                            _petAgeController, '나이를 입력해 주세요.'),
+                        SizedBox(height: height*30),
+                        Container(child: customSubtitleQuestion('나이 (살)'),alignment: Alignment.centerLeft),
+                        SizedBox(height: height*15),
+                        customTextFormField(_petAgeController, '나이를 입력해 주세요.'),
+
+                        SizedBox(height: height*30),
+                        Container(child: customSubtitleQuestion('몸 길이 (cm)'), alignment: Alignment.centerLeft),
+                        SizedBox(height: height*15),
+                        customTextFormField(_petBodyLengthController, '몸 길이를 입력해 주세요.'),
+
+
+                        SizedBox(height: height*30),
+                        Container(child: customSubtitleQuestion('몸무게 (kg)'), alignment: Alignment.centerLeft),
+                        SizedBox(height: height*15),
+                        customTextFormField(_petWeightController, '몸무게를 입력해 주세요.'),
 
                         SizedBox(height: height*40),
-                        customSubtitleQuestion('몸 길이 (cm)'),
-                        SizedBox(height: height*20),
-                        customTextFormField(
-                            _petBodyLengthController, '몸 길이를 입력해 주세요.'),
-
-
-                        SizedBox(height: height*40),
-                        customSubtitleQuestion('몸무게 (kg)'),
-                        SizedBox(height: height*20),
-                        customTextFormField(
-                            _petWeightController, '몸무게를 입력해 주세요.'),
-
-                        SizedBox(height: height*45),
                         customPinkElevatedButton( "입력 완료 !", (){
                           //입력한 나이, 몸길이, 몸무게를 생성자 newPet의 변수에 대입하는 코드
                           widget.newPet.petAge = int.parse(_petAgeController.text);
@@ -740,7 +737,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               duration: Duration(milliseconds: 500),
                               curve: Curves.fastOutSlowIn);
                         }),
-                        SizedBox(height: height*22),
+                        SizedBox(height: height*15),
                         customPinkElevatedButton( "나중에 입력할게요", (){
                           // 나이, 몸길이, 몸무게 초기화(=0 대입)하는 코드
                           widget.newPet.petAge=0;
@@ -862,14 +859,11 @@ class _FifthRouteState extends State<FifthRoute> {
                         SizedBox(height: height * 25),
                         customPinkElevatedButton(
                             "잘 모르겠어요!(나중에 입력할게요)", (){
-                          // Logger().sendUserData(
-                          //   petData.
-                          // );
-                          // widget.newPet.petAge = _petAgeController.text;
+                          sendPetData(widget.newPet);
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(builder: (context) => MyHomePage()),
-                                  (Route<dynamic> route) => false);
+                                  (route) => false);
                         })
                       ],
                     ),
@@ -959,7 +953,7 @@ class _FifthRouteState extends State<FifthRoute> {
                             // 스크롤바 둥글게
                             radius: Radius.circular(34.0),
                             // 스크롤바 항상 노출
-                            isAlwaysShown: true,
+                            //isAlwaysShown: true,
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal, // ListView 가로 설정
                                 itemCount: PetInfo.allergies.length, // pet의 allergy 각 List 순회
@@ -1085,7 +1079,7 @@ class _FifthRouteState extends State<FifthRoute> {
                             // 스크롤바 둥글게
                             radius: Radius.circular(34.0),
                             // 스크롤바 항상 노출
-                            isAlwaysShown: true,
+                            //isAlwaysShown: true,
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal, // ListView 가로 설정
                                 itemCount: PetInfo.diseases.length, // pet의 allergy 각 List 순회
@@ -1120,14 +1114,14 @@ class _FifthRouteState extends State<FifthRoute> {
                         }),
                         SizedBox(height: height*25),
                         customPinkElevatedButton(
-                          //-------- + 작성한 생성자를 서버로 전송하는 코드(sendUserData)----------
-                          // Logger().userData.myPets.????
-                          //-------- + 작성한 생성자를 서버로 전송하는 코드(sendUserData)----------
                             "작성 완료! 메인 화면으로 이동", (){
+                          //-------- + 작성한 생성자를 서버로 전송하는 코드(sendUserData)----------
+                          sendPetData(widget.newPet);
+                          //-------- + 작성한 생성자를 서버로 전송하는 코드(sendUserData)----------
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(builder: (context) => MyHomePage()),
-                                  (Route<dynamic> route) => false);
+                                  (route) => false);
                         })
                       ],
                     ),
