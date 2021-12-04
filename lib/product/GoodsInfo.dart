@@ -169,10 +169,11 @@ class GoodsInfo {
   String name; // 상품 이름
   String thumbnailUrl; // 썸네일 이미지 URL
   int price; // 가격
-  String category; // 카테고리
+  // String category; // 카테고리
   GoodsDetailedInfo goodsDetailedInfo;
 
-  GoodsInfo(this.name, this.thumbnailUrl, this.price, this.category,
+  GoodsInfo(this.name, this.thumbnailUrl, this.price,
+      // this.category,
       this.goodsDetailedInfo);
 }
 

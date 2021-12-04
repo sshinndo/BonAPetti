@@ -16,10 +16,9 @@ class ProfileQuestion extends StatelessWidget {
   }
 }
 
-
 class FirstRoute extends StatefulWidget {
-  const FirstRoute({Key? key}) : super(key: key);
 
+  const FirstRoute({Key? key}) : super(key: key);
   @override
   FirstRouteState createState() {
     return FirstRouteState();
@@ -128,6 +127,7 @@ class SecondRoute extends StatefulWidget {
 }
 //펫 데이터 추가 입력 여부 선택
 class _SecondRouteState extends State<SecondRoute> {
+
   @override
   initState() {
     super.initState();

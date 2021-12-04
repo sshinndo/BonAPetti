@@ -54,7 +54,7 @@ class Logger {
   void sendUserData() async  {
     if (userData.name != "")
     {
-      Future<int> curUserCount = allocUserID();
+      Future<int> curUserCount = allocUserID(); // 10006
       curUserCount.then((value) {
         debugPrint("Allocate New UID : $value");
         if(value > 0)
@@ -76,6 +76,7 @@ class Logger {
           });
         }
         Logger().userData.uid = value;
+        debugPrint("Logger().userData.uid"+Logger().userData.uid.toString());
       });
     }
     else
@@ -180,6 +181,7 @@ class UserData {
     catch (e) {
       throw Exception(e);
     }
+    debugPrint("UserData.dart/ getUserData(uid): "+uid);
     var userData = await FirebaseFirestore.instance.collection(
         'UserData').doc(uid).get();
     UserData result = UserData();

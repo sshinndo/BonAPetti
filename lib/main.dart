@@ -325,7 +325,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             product[i]["name"],
                             product[i]["thumbnailUrl"],
                             product[i]["price1"],
-                            product[i]["category"],
+                            // product[i]["category"],
                             GoodsDetailedInfo(
                               false,
                               product[i]["grade"],
@@ -410,7 +410,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             product[5]["name"],
                             product[5]["thumbnailUrl"],
                             product[5]["price1"],
-                            product[5]["category"],
+                            // product[5]["category"],
                             GoodsDetailedInfo(
                               false,
                               product[5]["grade"],
@@ -429,7 +429,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             product[6]["name"],
                             product[6]["thumbnailUrl"],
                             product[6]["price1"],
-                            product[6]["category"],
+                            // product[6]["category"],
                             GoodsDetailedInfo(
                               false,
                               product[6]["grade"],
@@ -448,7 +448,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             product[7]["name"],
                             product[7]["thumbnailUrl"],
                             product[7]["price1"],
-                            product[7]["category"],
+                            // product[7]["category"],
                             GoodsDetailedInfo(
                               false,
                               product[7]["grade"],
