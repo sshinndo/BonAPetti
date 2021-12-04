@@ -37,8 +37,8 @@ class Logger {
 
   //초기화 코드
   Logger._internals();
-
-  void getPetData() async {
+  ///로그인 유저의 펫 데이터 동기화
+  void getMyPetList() async {
     await FirebaseFirestore.instance
         .collection('UserData')
         .doc(userData.uid.toString())
