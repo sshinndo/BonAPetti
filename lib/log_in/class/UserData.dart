@@ -71,7 +71,8 @@ class Logger {
             'Shorts': userData.shorts,
             'MedalImage': userData.medalImage,
             'MyImage': userData.myImage,
-            'MyPets': userData.myPets
+            'MyPets': userData.myPets,
+            'MyDefaultPet' : userData.myDefaultPet
           });
         }
         Logger().userData.uid = value;
@@ -199,7 +200,8 @@ class UserData {
     }
     return result;
   }
-  //랜덤 유저 정보 불러오기
+
+  ///랜덤 유저 정보 불러오기
   static Future<int> getRandomUserID() async {
     try {
       await Firebase.initializeApp();
@@ -243,7 +245,8 @@ class PetInfo {
   static Map<String,List<String>> petTypes = {};
   static List<String> allergies = [];
   static List<String> diseases = [];
-  //펫 초기 정보 불러오기
+
+  ///펫 초기 정보 불러오기
   static void initialPetListData() async {
     //펫 타입 초기화
     petTypes = {};
@@ -263,7 +266,7 @@ class PetInfo {
     diseases = petInfoDoc.data()!['Disease'].cast<String>();
   }
 
-  //uid로 서버에서 펫 정보 불러오기
+  ///uid로 서버에서 펫 정보 불러오기
   static Future<PetInfo> getPetData(String uid, String petID) async  {
     try {
       await Firebase.initializeApp();
@@ -287,7 +290,7 @@ class PetInfo {
     return result;
   }
 
-  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 = 펫 개수)
+  ///생성된 펫 정보를 서버로 전송 (현재 펫 데이터 = 펫 개수)
   void sendPetData() async {
     //펫 정보 없을 바로 종료
     if(petName == "")
