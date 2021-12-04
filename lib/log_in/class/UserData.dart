@@ -100,33 +100,6 @@ class Logger {
     var doc = await collectionRef.doc(uid.toString()).get();
     return doc.exists;
   }
-
-  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 : 자동)
-  Future<String> sendPetData(PetInfo petData) async {
-    //펫 정보 없을 바로 종료
-    if(petData.petName == "")
-      return '';
-
-    if (Logger().userData.uid != 0) {
-      CollectionReference pets = FirebaseFirestore.instance.collection(
-          'UserData').doc(Logger().userData.uid.toString()).collection('Pets');
-      var petID = pets.add({
-        'Name': petData.petName,
-        'Age': petData.petAge,
-        'Type' : petData.petType,
-        'Species' : petData.petType,
-        'BodyLength': petData.petBodyLength,
-        'Weight': petData.petWeight,
-        'Silhouette': petData.petSilhouette,
-        'AllergyList': petData.petAllergyList,
-      });
-      return petID.then((value) {
-        return value.toString();
-      });
-    }
-    else
-      throw Exception('Login Data Not Exist');
-  }
 }
 
 //유저가 가지는 정보 클래스
@@ -300,7 +273,7 @@ class PetInfo {
         'Age': petAge,
         'BodyLength': petBodyLength,
         'Weight': petWeight,
-        'Silhouette': petSilhouette,
+        'Silhouette': petSilhouette.toString(),
         'AllergyList': petAllergyList,
         'DiseaseList' : petDiseaseList
       });
