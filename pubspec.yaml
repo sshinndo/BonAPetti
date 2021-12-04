@@ -68,8 +68,12 @@ dependencies:
   # 서버 통신을 위한
   http: ^0.13.3
 
-  # 여러 이미지 나열 swiper
-  flutter_swiper: ^1.1.6
+#  # 앱 아이콘 추가(줄 바꿈 주의)
+#  flutter_launcher_icons: ^0.8.1
+## 앱 아이콘 추가(줄 바꿈 주의)
+#flutter_icons:
+#  android: "launcher_icon"
+#  image_path: "images/logo.png"
 
 #  # Check that you have this dependency (added in the previous step)
 #  firebase_core: ^0.4.0+9
