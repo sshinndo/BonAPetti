@@ -8,21 +8,22 @@ class Logger {
   static final Logger _logger = Logger._internals();
 
   UserData userData = UserData();
-  List<PetInfo> petData = [PetInfo('???')];
+  List<PetInfo> petData = [];
   //스토리지 불러오기용 링크 주소
   static const String storageUrl = 'gs://bonapetti-715a9.appspot.com';
 
   ///디폴트 펫 데이터 불러오기
   PetInfo getDefaultPet() {
     if(petData.isEmpty)
-      throw Exception('Logger Pet Data Error');
+      return PetInfo('???');
     else {
         //대표 펫 설정 이전 or 인덱스 오류
         if(userData.myDefaultPet < 0)
           return petData.last;
         //대표 펫 값 정상
-        else if(userData.myDefaultPet < petData.length)
+        else if(userData.myDefaultPet < petData.length) {
           return petData[userData.myDefaultPet];
+        }
         //대표 펫 > 받아온 펫 수 (펫 수신 오류)
         else
           return petData.last;
@@ -80,6 +81,13 @@ class Logger {
       throw Exception('Login Data Already Exist');
   }
 
+  ///Logger 디버그 함수
+  loggerDebugPrint() {
+    debugPrint('------------Logger Debug Print----------');
+    debugPrint('User Data : ${userData.toString()}');
+    debugPrint('Pet Data : ${petData.toString()}');
+    debugPrint('------------Logger Debug End------------');
+  }
   //새 UID 할당받기 : 서버와 동기화
   Future<int> allocUserID() async {
     //현재 유저 수 확인 후 UID 배정받기
@@ -187,6 +195,7 @@ class UserData {
       result.myImage = userData.data()!['MyImage'];
       result.posts = userData.data()!['Posts'].cast<String>();
       result.shorts = userData.data()!['Shorts'].cast<String>();
+      result.myDefaultPet = userData.data()!['MyDefaultPet'];
     }
     return result;
   }

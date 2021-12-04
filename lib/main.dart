@@ -24,7 +24,6 @@ import 'log_in/class/UserData.dart';
 // void main() => runApp(MyApp());
 //
 // final String appName = "Pet App";
-final UserData myInfo = Logger().userData;
 //
 // class MyApp extends StatelessWidget {
 //   @override
@@ -49,7 +48,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
-    Logger().getPetData();
+     UserData.getUserData(Logger().userData.uid.toString()).then((updateLogger) {
+       Logger().userData = updateLogger;
+       Logger().getPetData();
+     });
     super.initState();
     loadData();
   }
@@ -185,14 +187,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
+    Logger().loggerDebugPrint();
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
         crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
         children: <Widget>[
           AppBarWithAlarm(
-            nickName: myInfo.name
+            nickName: Logger().userData.name
           ),
           Expanded(
             flex: 1,
