@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/product/GoodsInfo.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
@@ -9,20 +9,14 @@ import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
-//import 'package:pet_service_application/log_in/screen/LogIn.dart';
-//import 'package:pet_service_application/log_in/Splash.dart';
 import 'package:pet_service_application/route/CardNewsListRoute.dart';
 import 'package:pet_service_application/card_news/CardNewsPageView.dart';
-import 'package:pet_service_application/product/screen/DetailedGoodsScreen.dart';
 import 'package:pet_service_application/product/screen/search_screen.dart';
 import 'package:pet_service_application/product/screen/goods_screen.dart';
-import 'package:pet_service_application/product/screen/WishListScreen.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'log_in/class/UserData.dart';
 
-// void main() => runApp(MyApp());
-//
 final String appName = "Pet App";
 //
 class MyApp extends StatelessWidget {

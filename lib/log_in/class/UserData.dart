@@ -16,7 +16,7 @@ class Logger {
   ///디폴트 펫 데이터 불러오기
   PetInfo getDefaultPet() {
     if (petData.isEmpty)
-      return PetInfo('???');
+      return PetInfo('...');
     else {
       //대표 펫 설정 이전 or 인덱스 오류
       if (userData.myDefaultPet < 0)
@@ -37,6 +37,7 @@ class Logger {
 
   //초기화 코드
   Logger._internals();
+
   ///로그인 유저의 펫 데이터 동기화
   void getMyPetList() async {
     await FirebaseFirestore.instance
@@ -49,15 +50,25 @@ class Logger {
         return;
       else {
         petDocs.docs.forEach((doc) {
-          PetInfo.getPetData(userData.uid.toString(), doc.id).then((myPetInfo) {
-            petData.add(myPetInfo);
-          });
+          PetInfo result = PetInfo(doc.data()['Name']);
+          {
+            result.petID = doc.id;
+            result.petName = doc.data()['Name'];
+            result.petType = doc.data()['Type'];
+            result.petSpecies = doc.data()['Species'];
+            result.petAge = doc.data()['Age'];
+            result.petBodyLength =
+                double.parse(doc.data()['BodyLength'].toString());
+            result.petWeight = double.parse(doc.data()['Weight'].toString());
+            result.petAllergyList = doc.data()['AllergyList'].cast<String>();
+          }
+          petData.add(result);
         });
       }
     });
   }
 
-  //유저 데이터 첫 생성 : 서버로 동기화
+  ///유저 데이터 첫 생성 : 서버로 동기화
   void sendUserData() async {
     if (userData.name != "") {
       Future<int> curUserCount = allocUserID(); // 10006
@@ -87,6 +98,7 @@ class Logger {
       throw Exception('Login Data Already Exist');
   }
 
+  ///유저 데이터 수정된 정보 서버로 동기화
   void updateUserData() async {
     if (userData.uid > 0) {
       CollectionReference users =
@@ -136,7 +148,7 @@ class Logger {
     return newUID;
   }
 
-//중복 이름 여부 확인 함수
+///유저 데이터 존재 여부 by 이름
   Future<bool> isUserExist(String _name) async {
     var documentSnapshot = await FirebaseFirestore.instance
         .collection("UserData")
@@ -148,7 +160,7 @@ class Logger {
       return true;
   }
 
-//유저 데이터 존재 여부
+///유저 데이터 존재 여부 by 카카오토큰
   Future<dynamic> isKakaoUserExist(int _tokenID) async {
     var documentSnapshot = await FirebaseFirestore.instance
         .collection("UserData")
@@ -159,7 +171,7 @@ class Logger {
     else
       return documentSnapshot.docs.first.id.toString();
   }
-
+///유저 데이터 존재 여부 by uid
   Future<bool> isDocExist(int uid) async {
     var collectionRef = FirebaseFirestore.instance.collection("UserData");
     var doc = await collectionRef.doc(uid.toString()).get();
@@ -210,11 +222,6 @@ class UserData {
 
   ///uid로 서버에서 유저정보 불러오기
   static Future<UserData> getUserData(String uid) async {
-    try {
-      await Firebase.initializeApp();
-    } catch (e) {
-      throw Exception(e);
-    }
     debugPrint("UserData.dart/ getUserData(uid): " + uid);
     var userData =
         await FirebaseFirestore.instance.collection('UserData').doc(uid).get();
@@ -239,11 +246,6 @@ class UserData {
 
   ///랜덤 유저 정보 불러오기
   static Future<int> getRandomUserID() async {
-    try {
-      await Firebase.initializeApp();
-    } catch (e) {
-      throw Exception(e);
-    }
     int userCount = await FirebaseFirestore.instance
         .collection('Manage')
         .doc('Users')
@@ -313,11 +315,6 @@ class PetInfo {
 
   ///uid로 서버에서 펫 정보 불러오기
   static Future<PetInfo> getPetData(String uid, String petID) async {
-    try {
-      await Firebase.initializeApp();
-    } catch (e) {
-      throw Exception(e);
-    }
     var petDoc = await FirebaseFirestore.instance
         .collection('UserData')
         .doc(uid)
@@ -378,29 +375,3 @@ class PetInfo {
 }
 
 enum PetSilhouette { BCS1, BCS2, BCS3, BCS4, BCS5 } //반려동물 실루엣(BCS)
-
-/* 파이어 베이스 세팅
-//파이어베이스 스테이트
-  bool _initialized = false;
-  bool _error = false;
-
-  //파이어베이스 이니셜
-  void initializeFlutterFire() async {
-    try {
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (e) {
-      setState(() {
-        _error = true;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    initializeFlutterFire();
-    super.initState();
-  }
- */

@@ -223,7 +223,7 @@ class _SecondRouteState extends State<SecondRoute> {
 
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => Delay_Screen()),
+                        MaterialPageRoute(builder: (context) => DelayScreen()),
                         (route) => false);
                   }),
                 ),
@@ -763,7 +763,7 @@ class _FifthRouteState extends State<FifthRoute> {
 
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (context) => Delay_Screen()),
+                              MaterialPageRoute(builder: (context) => DelayScreen()),
                                   (route) => false);
                         })
                       ],
@@ -1031,7 +1031,7 @@ class _FifthRouteState extends State<FifthRoute> {
                           sleep(const Duration(seconds: waitSecond));
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (context) => Delay_Screen()),
+                              MaterialPageRoute(builder: (context) => DelayScreen()),
                                   (route) => false);
                         }),
                         SizedBox(height: height*25),
@@ -1044,7 +1044,7 @@ class _FifthRouteState extends State<FifthRoute> {
                           sleep(const Duration(seconds: waitSecond));
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Delay_Screen()));
+                              MaterialPageRoute(builder: (context) => DelayScreen()));
                                   // (route) => false);
                         })
                       ],
