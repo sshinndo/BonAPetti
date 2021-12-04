@@ -22,11 +22,9 @@ class DelayScreen extends StatelessWidget {
 
     return Scaffold(
       body: Column(
-        //color: Colors.white,
-        //mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
+            alignment: Alignment.center,
             child: Image.asset('images/logo.png'),
             width: 192,
             height: 192,
