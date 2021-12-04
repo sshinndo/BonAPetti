@@ -972,7 +972,7 @@ class _FifthRouteState extends State<FifthRoute> {
                         Text("질병 항목을 골라주세요.(최대 3개)", style: TextStyle(fontSize: 14)),
                         Text("앓고있는 질병이 없다면, '없음'을 입력해 주세요.", style: TextStyle(fontSize: 14)),
                         SizedBox(height: height*50),
-                        // 알러지 목록들 ListView
+                        // disease 목록들 ListView
                         Container(
                           height: height*30,
                           child: CupertinoScrollbar(
@@ -993,7 +993,7 @@ class _FifthRouteState extends State<FifthRoute> {
                                         text: PetInfo.diseases[i],
                                         onPressed: () {
                                           setState(() {
-                                            if (numOfSelectedDisease  < 3){
+                                            if (numOfSelectedDisease  <= 3){
                                               widget.newPet.petDiseaseList
                                                   .add(PetInfo.diseases[i]);
                                               PetInfo.diseases.removeAt(i); // 선택한 알러지 버튼은 지우기
@@ -1002,8 +1002,8 @@ class _FifthRouteState extends State<FifthRoute> {
                                               debugPrint("현재 widget.newPet.petDiseaseList 값:" + widget.newPet.petDiseaseList.toString());
                                               numOfSelectedDisease++; // 1 -> 2 | 2 -> 3 | 3-> 4
                                             }
-                                            else { // 질병 3개 입력 완료하면
-                                              debugPrint("질병 입력을 이미 완료하였습니다. 메인 화면으로 이동해주세요.");
+                                            else { // 질병 3개 입력 완료하면 (numOfSelectedDisease > 4)
+                                              debugPrint("질병 입력을 완료하였습니다. 메인 화면으로 이동해주세요.");
                                             }
                                           });
                                         })),
@@ -1011,7 +1011,7 @@ class _FifthRouteState extends State<FifthRoute> {
                         ),
                         SizedBox(height: height*30),
                         //해당 없음 버튼
-                        customPinkElevatedButton("해당 없음. 메인 화면으로 이동", () {
+                        customPinkElevatedButton("해당 없음", () {
                           //-------- + 작성한 생성자를 서버로 전송하는 코드----------
                           widget.newPet.sendPetData();
                           //-------- + 작성한 생성자를 서버로 전송하는 코드----------
@@ -1022,7 +1022,7 @@ class _FifthRouteState extends State<FifthRoute> {
                         }),
                         SizedBox(height: height*25),
                         customPinkElevatedButton(
-                            "작성 완료! 메인 화면으로 이동", (){
+                            "작성 완료!", (){
                           //-------- + 작성한 생성자를 서버로 전송하는 코드----------
                           widget.newPet.sendPetData();
                           //-------- + 작성한 생성자를 서버로 전송하는 코드----------

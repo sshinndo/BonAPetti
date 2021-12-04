@@ -313,7 +313,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, //1 개의 행에 보여줄 item 개수
+                            crossAxisCount: 2, // 1 개의 행에 보여줄 item 개수
                             childAspectRatio: 2 / 3, //item 의 가로 1, 세로 2 의 비율
                             mainAxisSpacing: 10, //수평 Padding
                             crossAxisSpacing: 10, //수직 Padding
