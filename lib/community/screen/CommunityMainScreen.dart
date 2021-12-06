@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
@@ -9,7 +11,6 @@ import 'package:pet_service_application/widgets/CommunityWidget.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 
 class CommunityMainScreen extends StatefulWidget {
-
   //CommunityMainScreen.CommunityMainScreen();
 
   @override
@@ -18,28 +19,39 @@ class CommunityMainScreen extends StatefulWidget {
 
 class _CommunityMainScreen extends State<CommunityMainScreen> {
   UserData myInfo = Logger().userData;
+  ///가져올 랜덤 포스트 수
+  static const int randomPostCount = 1;
+  String randomPost = '';
 
-  //커뮤니티 위젯 만큼 랜덤 유저 커뮤니티 페이지 불러옴
-  Future<List<CommunityInfo>> initialPosts(int count) async {
-    List<CommunityInfo> randomPosts = [];
-    for(int i = 0; i<count; i++)
-    {
-      var randomPostID = CommunityInfo.getRandomPost();
-      randomPostID.then((idValue) {
-        debugPrint(idValue.toString());
-        var randomPostData = CommunityInfo.getCommunityData(idValue);
-        randomPostData.then((postValue)
-        {
-          randomPosts.add(postValue);
-        });
+//파이어베이스 스테이트
+  bool _initialized = false;
+  bool _error = false;
+
+  //파이어베이스 이니셜
+  void initializeFlutterFire() async {
+    try {
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      setState(() {
+        _error = true;
       });
     }
-    return randomPosts;
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    CommunityInfo.getRandomPost().then((value) {
+      randomPost = value;
+    });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var postData = initialPosts(2);
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start, //세로로 나열 기준은 시작점 (제일 위부터)
@@ -47,10 +59,9 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
         children: [
           AppBarWithAlarm(nickName: myInfo.name),
           Expanded(
-            flex: 1,
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: <Widget>[
+              flex: 1,
+              child:
+                  ListView(scrollDirection: Axis.vertical, children: <Widget>[
                 Container(
                   child: GestureDetector(
                     /*onTap: () {
@@ -66,7 +77,8 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      margin: EdgeInsets.only(left: 30, top: 20, right: 30, bottom: 30),
+                      margin: EdgeInsets.only(
+                          left: 30, top: 20, right: 30, bottom: 30),
                       child: SizedBox(
                         height: 50,
                         width: 100,
@@ -86,35 +98,25 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                       ),
                     ),
                   ),
-                ),  //검색창
-
+                ),    ///검색창
                 Container(
-                  margin: EdgeInsets.only(bottom: 20,left: 10),
-                  child:  Row(
+                  margin: EdgeInsets.only(bottom: 20, left: 10),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
-                          '전체',
+                      Text('전체',
                           style: TextStyle(
                               decoration: TextDecoration.underline,
                               fontWeight: FontWeight.bold,
-                              fontSize: 20
-                          )
-                      ),  //전체
-                      Text(
-                          '친구',
-                          style: TextStyle(
-                              fontSize: 20
-                          )
-                      ),//순수 도그온 카드
+                              fontSize: 20)), //전체
+                      Text('친구', style: TextStyle(fontSize: 20)),
                     ],
-                  ),  //전체-친구 필터 텍스트
-                ),  //숏폼 필터 (제스쳐 추가 필요)
-
+                  ),
+                ),    ///숏폼 필터 (제스쳐 추가 필요)
                 Container(
                     height: 400,
-                    margin:
-                    EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 10),
+                    margin: EdgeInsets.only(
+                        top: 20, bottom: 20, left: 30, right: 10),
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
@@ -125,9 +127,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                                 '돌돌이님',
                                 'images/shorts/shorts_thumb.png',
                                 'images/shorts/shorts_thumb.png',
-                                false
-                            )
-                        ),
+                                false)),
                         ShortsWidget(
                             shortsInfo: ShortsInfo(
                                 'images/profile/sample_profile.png',
@@ -135,9 +135,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                                 '돌돌이님',
                                 'images/shorts/shorts_thumb.png',
                                 'images/shorts/shorts_thumb.png',
-                                false
-                            )
-                        ),
+                                false)),
                         ShortsWidget(
                             shortsInfo: ShortsInfo(
                                 'images/profile/sample_profile.png',
@@ -145,50 +143,62 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                                 '돌돌이님',
                                 'images/shorts/shorts_thumb.png',
                                 'images/shorts/shorts_thumb.png',
-                                false
-                            )
-                        )
+                                false))
                       ],
-                    )
-                ),  //숏폼 위젯 스크롤 뷰
-
+                    )),   ///숏폼 위젯 스크롤 뷰 (가로)
                 Container(
                   //height: 600,
-                  margin: EdgeInsets.only(top: 20,left:30,right:30),
+                  margin: EdgeInsets.only(top: 20, left: 30, right: 30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      FutureBuilder(
-                          future: postData,
-                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      /*FutureBuilder<CommunityInfo>(
+                          future: randomPost,
+                          builder: (BuildContext context, AsyncSnapshot<CommunityInfo> randomPostID) {
+                            debugPrint(randomPostID.connectionState.toString());
                             //데이터를 아직 받아 오지 못했을 시
-                          if(snapshot.hasData == false)
+                            if (randomPostID.hasData == false) {
                               return CircularProgressIndicator();
-                          else if (snapshot.hasError) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Error: ${snapshot.error}',
-                              style: TextStyle(fontSize: 15),
-                              )
-                            );  //오류 발생 반환 패딩
-                          }
-                          else
-                          {
-                            //데이터를 정상적으로 받아왔을 시
-                            return CircularProgressIndicator();//CommunityWidget(communityInfo: snapshot.data[0]);
-                          }
-                        }
-                      )
-                      //커뮤니티 페이지 불러오기
+                            }
+                            else if (randomPostID.hasError) {
+                              return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Post Import Error: ${randomPostID.error}',
+                                    style: TextStyle(fontSize: 15),
+                                  )); //오류 발생 반환 패딩
+                            }
+                            else {
+                              //데이터를 정상적으로 받아왔을 시
+                              debugPrint('Post Import Complete :${randomPostID.data.toString()}');
+                              return CommunityWidget(communityInfo: randomPostID.data as CommunityInfo);
+                            }
+                          })  */
+                      StreamBuilder<DocumentSnapshot>(
+                          stream: FirebaseFirestore.instance.collection('Community').doc(randomPost).snapshots(),
+                          builder: (context, snapshot) {
+                            ///로딩중
+                            if(snapshot.connectionState == ConnectionState.waiting)
+                              return CircularProgressIndicator();
+                            ///오류 발생 시
+                            else if(snapshot.hasError)
+                              return Icon(
+                                Icons.error_outline,
+                                color:Colors.red,
+                                size: 60
+                              );
+                            else {
 
+                              var userData = UserData.getUserData(snapshot.data!['UserID']);
+                              var petData = PetInfo.getPetData(snapshot.data!['UserID'], snapshot.data!['petID']);
+                            }
+                          }
+                      )
                     ],
                   ),
-                )
-              ]
-            )
-          ),
+                )    ///포스트 위젯 스크롤 뷰 (세로)
+              ])),
         ],
       ),
       floatingActionButton: BackSpaceButton(),
