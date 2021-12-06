@@ -66,14 +66,6 @@ dependencies:
   # 서버 통신을 위한
   http: ^0.13.3
 
-  # 앱 아이콘 추가(줄 바꿈 주의)
-  flutter_launcher_icons: "^0.9.2"
-# 앱 아이콘 추가(줄 바꿈 주의)
-flutter_icons:
-  android: "launcher_icon"
-  ios: true # ios 출시할 때
-  image_path: "images/logo.png"
-
 #  # Check that you have this dependency (added in the previous step)
 #  firebase_core: ^0.4.0+9
 #  # Add the dependency for the FlutterFire plugin for Google Analytics
