@@ -8,9 +8,38 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:604282368311:android:311ec2aa614d76327a6ab2",
+        "mobilesdk_app_id": "1:604282368311:android:c90f58b161fdfc087a6ab2",
         "android_client_info": {
           "package_name": "com.bonapetti.bonapetti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604282368311-iaqusf9j9i2icu1ofodvgjfqlfem94na.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjNJTYjONBUHFpuvzI7TRaci7gWpeJ-c8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604282368311-iaqusf9j9i2icu1ofodvgjfqlfem94na.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604282368311:android:311ec2aa614d76327a6ab2",
+        "android_client_info": {
+          "package_name": "com.example.untitled2"
         }
       },
       "oauth_client": [
