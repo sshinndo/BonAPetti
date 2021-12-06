@@ -1,4 +1,4 @@
-package com.example.pet_service_application
+package com.bonapetti.bonapetti
 
 import io.flutter.embedding.android.FlutterActivity
 
