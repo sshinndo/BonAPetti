@@ -19,7 +19,7 @@ List<GoodsInfo> dummyGoodsModelList = [
       product[0]["name"],
       product[0]["thumbnailUrl"],
       product[0]["price1"],
-      product[0]["category"],
+      // product[0]["category"],
       GoodsDetailedInfo(
         false,
         product[0]["grade"],
@@ -36,7 +36,7 @@ List<GoodsInfo> dummyGoodsModelList = [
       product[0]["name"],
       product[0]["thumbnailUrl"],
       product[0]["price1"],
-      product[0]["category"],
+      // product[0]["category"],
       GoodsDetailedInfo(
         false,
         product[0]["grade"],

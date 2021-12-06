@@ -57,7 +57,7 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
               ClipRRect( // 프로필 이미지 설정란
                 borderRadius: BorderRadius.circular(100),
                 child: Image.asset(
-                  'images/profile/pet_profile_sample.png',
+                  'images/profile/petDefaultIcon.png',
                   width: 162,
                   height: 162,
                 ),

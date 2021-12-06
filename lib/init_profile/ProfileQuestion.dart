@@ -1,16 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/init_profile/widget/HashTagWidget.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/init_profile/widget/AlertDuplicateMessage.dart';
 import 'package:pet_service_application/main.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pet_service_application/log_in/screen/delay_screen.dart';
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
+
+
 
 class ProfileQuestion extends StatelessWidget {
   @override
@@ -19,10 +21,9 @@ class ProfileQuestion extends StatelessWidget {
   }
 }
 
-
 class FirstRoute extends StatefulWidget {
-  const FirstRoute({Key? key}) : super(key: key);
 
+  const FirstRoute({Key? key}) : super(key: key);
   @override
   FirstRouteState createState() {
     return FirstRouteState();
@@ -37,30 +38,6 @@ class FirstRouteState extends State<FirstRoute> {
 
   // 닉네임 중복 여부 컨테이너 bool 값
   bool _offstage = true;
-
-  //파이어베이스 스테이트
-  bool _initialized = false;
-  bool _error = false;
-
-  //파이어베이스 이니셜
-  void initializeFlutterFire() async {
-    try {
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (e) {
-      setState(() {
-        _error = true;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    initializeFlutterFire();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,6 +132,7 @@ class SecondRoute extends StatefulWidget {
 }
 //펫 데이터 추가 입력 여부 선택
 class _SecondRouteState extends State<SecondRoute> {
+
   @override
   initState() {
     super.initState();
@@ -239,9 +217,13 @@ class _SecondRouteState extends State<SecondRoute> {
                 Container(
                   // margin: EdgeInsets.symmetric(horizontal: 50.0),
                   child: customPinkElevatedButton('아니요.. ㅠㅠ  바로 앱으로 !', () {
+
+                    sleep(const Duration(seconds: 5));
+
+
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => MyHomePage()),
+                        MaterialPageRoute(builder: (context) => DelayScreen()),
                         (route) => false);
                   }),
                 ),
@@ -424,9 +406,9 @@ class _FourthRouteState extends State<FourthRoute> {
             height: height*30,
             child: CupertinoScrollbar(
               // 스크롤 바 쓸때만 주석해제하기
-              // thickness: 5.0, // 일반 스크롤 두께
-              // thicknessWhileDragging: 8.0, // 드래그할 때 스크롤 두께
-              // radius: Radius.circular(34.0), // 스크롤바 둥글게
+              thickness: 5.0, // 일반 스크롤 두께
+              thicknessWhileDragging: 8.0, // 드래그할 때 스크롤 두께
+              radius: Radius.circular(34.0), // 스크롤바 둥글게
               // isAlwaysShown: true, // 스크롤바 항상 노출
               child:
               //서버로부터 전송받은 리스트
@@ -453,7 +435,7 @@ class _FourthRouteState extends State<FourthRoute> {
 
   //펫 세부 종 선택
   secondCategory() {
-    var width = MediaQuery.of(context).size.width / 360;
+    // var width = MediaQuery.of(context).size.width / 360;
     var height = MediaQuery.of(context).size.height / 800;
     return Offstage(
       // offstage : true 이면 위젯이 사라짐 / widget.newPet.petType!='' : 펫타입이 빈값이 아니여야 함
@@ -470,7 +452,7 @@ class _FourthRouteState extends State<FourthRoute> {
               thickness: 5.0, // 일반 스크롤 두께
               thicknessWhileDragging: 8.0, // 드래그할 때 스크롤 두께
               radius: Radius.circular(34.0), // 스크롤바 둥글게
-              isAlwaysShown: true, // 스크롤바 항상 노출
+              //isAlwaysShown: true, // 스크롤바 항상 노출
               child: ListView.builder(
                 scrollDirection: Axis.horizontal, // scrollDirection: 가로 스크롤 생성
                   itemCount: PetInfo.petTypes[widget.newPet.petType]!.length,
@@ -538,13 +520,14 @@ class _FifthRouteState extends State<FifthRoute> {
   TextEditingController _petBodyLengthController = TextEditingController();
   TextEditingController _petWeightController = TextEditingController();
 
-  final _scrollController = ScrollController();
+  final _scrollController = ScrollController(initialScrollOffset: 30.0);
 
   String _msg = ''; // 뒤로가기 방지 메시지
 
   int numOfSelectedAllergy = 1; // 선택된 알러지 버튼의 개수
   int numOfSelectedDisease = 1; // 선택된 질병 버튼의 개수
-
+  ///서버 데이터 전송용 딜레이 시간
+  static const int waitSecond = 5;
   //파이어베이스 스테이트
   bool _initialized = false;
   bool _error = false;
@@ -563,32 +546,6 @@ class _FifthRouteState extends State<FifthRoute> {
     }
   }
 
-  //생성된 펫 정보를 서버로 전송 (현재 펫 데이터 = 펫 ID)
-  void sendPetData(PetInfo petData) {
-    //펫 정보 없을 바로 종료
-    if(petData.petName == "")
-      return;
-
-    if (Logger().userData.uid != 0) {
-      CollectionReference pets = FirebaseFirestore.instance.collection(
-          'UserData').doc(Logger().userData.uid.toString()).collection('Pets');
-      pets.doc(petData.petName).set({
-        //pet id 설정 후 입력
-        'Name': petData.petName,
-        'Type' : petData.petType,
-        'Species' : petData.petSpecies,
-        'Age': petData.petAge,
-        'BodyLength': petData.petBodyLength,
-        'Weight': petData.petWeight,
-        'Silhouette': petData.petSilhouette,
-        'AllergyList': petData.petAllergyList,
-        'DiseaseList' : petData.petDiseaseList,
-      });
-    }
-    else
-      throw Exception('Login Data Not Exist');
-  }
-
   @override
   void initState() {
     initializeFlutterFire();
@@ -599,7 +556,6 @@ class _FifthRouteState extends State<FifthRoute> {
 
   @override
   Widget build(BuildContext context) {
-    var myInfo = Logger().userData;
     var width = MediaQuery.of(context).size.width / 360;
     var height = MediaQuery.of(context).size.height / 800;
 
@@ -647,26 +603,23 @@ class _FifthRouteState extends State<FifthRoute> {
                               ),),
                           ],
                         ),
-                        SizedBox(height: height*40),
-                        customSubtitleQuestion('나이 (살)'),
-                        SizedBox(height: height*20),
-                        customTextFormField(
-                            _petAgeController, '나이를 입력해 주세요.'),
+                        SizedBox(height: height*30),
+                        Container(child: customSubtitleQuestion('나이 (살)'),alignment: Alignment.centerLeft),
+                        SizedBox(height: height*15),
+                        customTextFormField(_petAgeController, '나이를 입력해 주세요.'),
+
+                        SizedBox(height: height*30),
+                        Container(child: customSubtitleQuestion('몸 길이 (cm)'), alignment: Alignment.centerLeft),
+                        SizedBox(height: height*15),
+                        customTextFormField(_petBodyLengthController, '몸 길이를 입력해 주세요.'),
+
+
+                        SizedBox(height: height*30),
+                        Container(child: customSubtitleQuestion('몸무게 (kg)'), alignment: Alignment.centerLeft),
+                        SizedBox(height: height*15),
+                        customTextFormField(_petWeightController, '몸무게를 입력해 주세요.'),
 
                         SizedBox(height: height*40),
-                        customSubtitleQuestion('몸 길이 (cm)'),
-                        SizedBox(height: height*20),
-                        customTextFormField(
-                            _petBodyLengthController, '몸 길이를 입력해 주세요.'),
-
-
-                        SizedBox(height: height*40),
-                        customSubtitleQuestion('몸무게 (kg)'),
-                        SizedBox(height: height*20),
-                        customTextFormField(
-                            _petWeightController, '몸무게를 입력해 주세요.'),
-
-                        SizedBox(height: height*45),
                         customPinkElevatedButton( "입력 완료 !", (){
                           //입력한 나이, 몸길이, 몸무게를 생성자 newPet의 변수에 대입하는 코드
                           widget.newPet.petAge = int.parse(_petAgeController.text);
@@ -681,7 +634,7 @@ class _FifthRouteState extends State<FifthRoute> {
                               duration: Duration(milliseconds: 500),
                               curve: Curves.fastOutSlowIn);
                         }),
-                        SizedBox(height: height*22),
+                        SizedBox(height: height*15),
                         customPinkElevatedButton( "나중에 입력할게요", (){
                           // 나이, 몸길이, 몸무게 초기화(=0 대입)하는 코드
                           widget.newPet.petAge=0;
@@ -803,14 +756,15 @@ class _FifthRouteState extends State<FifthRoute> {
                         SizedBox(height: height * 25),
                         customPinkElevatedButton(
                             "잘 모르겠어요!(나중에 입력할게요)", (){
-                          // Logger().sendUserData(
-                          //   petData.
-                          // );
-                          // widget.newPet.petAge = _petAgeController.text;
+                          Logger().userData.myPets.add(widget.newPet.petID);
+                          widget.newPet.sendPetData();
+
+                          sleep(const Duration(seconds: waitSecond));
+
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (context) => MyHomePage()),
-                                  (Route<dynamic> route) => false);
+                              MaterialPageRoute(builder: (context) => DelayScreen()),
+                                  (route) => false);
                         })
                       ],
                     ),
@@ -826,65 +780,65 @@ class _FifthRouteState extends State<FifthRoute> {
                             child: customSemiTitleQuestion('', '알러지가', '  있나요?')
                         ),
                         SizedBox(height: height*33),
-                        // 해시태그 표시 카드 박스
-                        Container(
-                          width: width * 300,
-                          height: 70,
-                          child: Card(
-                            elevation: 2.0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0)),
-                            //선택한 알러지값 노출
-                            // child: Padding(
-                            //     padding: EdgeInsets.symmetric(horizontal: 30.0),
-                            //     // 표시될 #해시태그 리스트
-                            //     child: Row(children: [
-                            //       Offstage(
-                            //           offstage: (numOfSelected == 1),
-                            //           child: Row(
-                            //             children: [
-                            //               Text(
-                            //                 "# " + widget.newPet.petAllergyList[0].toString(), //'1'번째 선택한 값 : petAllergyList['0']
-                            //                 style: TextStyle(
-                            //                     color: Color.fromRGBO(255, 113, 113, 0.6)),
-                            //               ),
-                            //               SizedBox(width: 15.0),
-                            //               Text("|  ",
-                            //                   style: TextStyle(
-                            //                       color: Color.fromRGBO(0, 0, 0, 0.3))),
-                            //             ],
-                            //           )),
-                            //       Offstage(
-                            //           offstage: (numOfSelected==1 || numOfSelected==2),
-                            //           child: Row(
-                            //             children: [
-                            //               SizedBox(width: 15.0),
-                            //               Text(
-                            //                 "# " + widget.newPet.petAllergyList[1].toString(),
-                            //                 style: TextStyle(
-                            //                     color: Color.fromRGBO(255, 113, 113, 0.6)),
-                            //               ),
-                            //               SizedBox(width: 15.0),
-                            //               Text("|  ",
-                            //                   style: TextStyle(
-                            //                       color: Color.fromRGBO(0, 0, 0, 0.3))),
-                            //             ],
-                            //           )),
-                            //       Offstage(
-                            //           offstage: (numOfSelected==1 || numOfSelected==2 || numOfSelected == 3),
-                            //           child: Row(
-                            //             children: [
-                            //               SizedBox(width: 15.0),
-                            //               Text(
-                            //                 "# " + widget.newPet.petAllergyList[2].toString(),
-                            //                 style: TextStyle(
-                            //                     color: Color.fromRGBO(255, 113, 113, 0.6)),
-                            //               ),
-                            //             ],
-                            //           )),
-                            //     ])),
-                          ),
-                        ),
+                        // // 해시태그 표시 카드 박스
+                        // Container(
+                        //   width: width * 300,
+                        //   height: 70,
+                        //   child: Card(
+                        //     elevation: 2.0,
+                        //     shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(12.0)),
+                        //     // //선택한 알러지값 노출
+                        //     // child: Padding(
+                        //     //     padding: EdgeInsets.symmetric(horizontal: 30.0),
+                        //     //     // 표시될 #해시태그 리스트
+                        //     //     child: Row(children: [
+                        //     //       Offstage(
+                        //     //           offstage: (numOfSelectedAllergy == 1 || widget.newPet.petAllergyList==[]),
+                        //     //           child: Row(
+                        //     //             children: [
+                        //     //               Text(
+                        //     //                 "# " + widget.newPet.petAllergyList!.toString(), //'1'번째 선택한 값 : petAllergyList['0']
+                        //     //                 style: TextStyle(
+                        //     //                     color: Color.fromRGBO(255, 113, 113, 0.6)),
+                        //     //               ),
+                        //     //               SizedBox(width: 15.0),
+                        //     //               Text("|  ",
+                        //     //                   style: TextStyle(
+                        //     //                       color: Color.fromRGBO(0, 0, 0, 0.3))),
+                        //     //             ],
+                        //     //           )),
+                        //     //       Offstage(
+                        //     //           offstage: (numOfSelectedAllergy==1 || numOfSelectedAllergy==2),
+                        //     //           child: Row(
+                        //     //             children: [
+                        //     //               SizedBox(width: 15.0),
+                        //     //               Text(
+                        //     //                 "# " + widget.newPet.petAllergyList!.toString(),
+                        //     //                 style: TextStyle(
+                        //     //                     color: Color.fromRGBO(255, 113, 113, 0.6)),
+                        //     //               ),
+                        //     //               SizedBox(width: 15.0),
+                        //     //               Text("|  ",
+                        //     //                   style: TextStyle(
+                        //     //                       color: Color.fromRGBO(0, 0, 0, 0.3))),
+                        //     //             ],
+                        //     //           )),
+                        //     //       Offstage(
+                        //     //           offstage: (numOfSelectedAllergy <= 3),
+                        //     //           child: Row(
+                        //     //             children: [
+                        //     //               SizedBox(width: 15.0),
+                        //     //               Text(
+                        //     //                 "# " + widget.newPet.petAllergyList.last!.toString(),
+                        //     //                 style: TextStyle(
+                        //     //                     color: Color.fromRGBO(255, 113, 113, 0.6)),
+                        //     //               ),
+                        //     //             ],
+                        //     //           )),
+                        //     //     ])),
+                        //   ),
+                        // ),
                         SizedBox(height: height*25),
                         Text("알러지 항목을 골라주세요!(최대 3개)", style: TextStyle(fontSize: 14)),
                         Text("알러지가 없다면, '없음'을 입력해 주세요.", style: TextStyle(fontSize: 14)),
@@ -900,7 +854,7 @@ class _FifthRouteState extends State<FifthRoute> {
                             // 스크롤바 둥글게
                             radius: Radius.circular(34.0),
                             // 스크롤바 항상 노출
-                            isAlwaysShown: true,
+                            //isAlwaysShown: true,
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal, // ListView 가로 설정
                                 itemCount: PetInfo.allergies.length, // pet의 allergy 각 List 순회
@@ -911,21 +865,22 @@ class _FifthRouteState extends State<FifthRoute> {
                                     // text: PetInfo.allergies.toList()[i],
                                     onPressed: () {
                                       setState(() {
-                                        if (numOfSelectedAllergy  < 3){
+                                        if (numOfSelectedAllergy  <= 3){
                                           widget.newPet.petAllergyList
                                               .add(PetInfo.allergies[i]);
-                                          // .add(PetInfo.allergies.toList()[i]);
+                                          PetInfo.allergies.removeAt(i); // 선택된 알러지 버튼은 지우기
+
                                           debugPrint("$numOfSelectedAllergy 번째 선택된 알러지는 : "
                                               + widget.newPet.petAllergyList[numOfSelectedAllergy-1].toString());
                                           debugPrint("현재 widget.newPet.petAllergyList 값:" + widget.newPet.petAllergyList.toString());
                                           numOfSelectedAllergy++; // 1 -> 2 | 2 -> 3 | 3-> 4
                                         }
-                                        else { // 알러지 3개 입력 완료하면
-                                          debugPrint("알러지 입력을 이미 완료하였으므로, 다음 창으로 넘어갑니다.");
-                                          _scrollController.animateTo(height*800*4,
-                                              duration: Duration(milliseconds: 500),
-                                              curve: Curves.fastOutSlowIn);
-                                        }
+                                        // else { // 알러지 3개 입력 완료하면
+                                        //   debugPrint("알러지 입력을 이미 완료하였으므로, 다음 창으로 넘어갑니다.");
+                                        //   _scrollController.animateTo(height*800*4,
+                                        //       duration: Duration(milliseconds: 500),
+                                        //       curve: Curves.fastOutSlowIn);
+                                        // }
                                       });
                                     })),
                           ),
@@ -933,6 +888,14 @@ class _FifthRouteState extends State<FifthRoute> {
                         SizedBox(height: height*30),
                         //해당 없음 버튼
                         customPinkElevatedButton("해당 없음", () {
+                          // 알러지 입력창 이동
+                          _scrollController.animateTo(height*800*5,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.fastOutSlowIn);
+                        }),
+                        SizedBox(height: height*25),
+                        customPinkElevatedButton("입력 완료!", () {
+                          debugPrint("알러지 입력을 이미 완료하였으므로, 다음 창으로 넘어갑니다.");
                           // 알러지 입력창 이동
                           _scrollController.animateTo(height*800*5,
                               duration: Duration(milliseconds: 500),
@@ -953,69 +916,75 @@ class _FifthRouteState extends State<FifthRoute> {
                         ),
                         SizedBox(height: height*33),
                         // 해시태그 표시 카드 박스
-                        Container(
-                          width: width * 300,
-                          height: 70,
-                          child: Card(
-                            elevation: 2.0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0)),
-                            //선택한 알러지값 노출
-                            // child: Padding(
-                            //     padding: EdgeInsets.symmetric(horizontal: 30.0),
-                            //     // 표시될 #해시태그 리스트
-                            //     child: Row(children: [
-                            //       Offstage(
-                            //           offstage: (numOfSelected == 1),
-                            //           child: Row(
-                            //             children: [
-                            //               Text(
-                            //                 "# " + widget.newPet.petAllergyList[0].toString(), //'1'번째 선택한 값 : petAllergyList['0']
-                            //                 style: TextStyle(
-                            //                     color: Color.fromRGBO(255, 113, 113, 0.6)),
-                            //               ),
-                            //               SizedBox(width: 15.0),
-                            //               Text("|  ",
-                            //                   style: TextStyle(
-                            //                       color: Color.fromRGBO(0, 0, 0, 0.3))),
-                            //             ],
-                            //           )),
-                            //       Offstage(
-                            //           offstage: (numOfSelected==1 || numOfSelected==2),
-                            //           child: Row(
-                            //             children: [
-                            //               SizedBox(width: 15.0),
-                            //               Text(
-                            //                 "# " + widget.newPet.petAllergyList[1].toString(),
-                            //                 style: TextStyle(
-                            //                     color: Color.fromRGBO(255, 113, 113, 0.6)),
-                            //               ),
-                            //               SizedBox(width: 15.0),
-                            //               Text("|  ",
-                            //                   style: TextStyle(
-                            //                       color: Color.fromRGBO(0, 0, 0, 0.3))),
-                            //             ],
-                            //           )),
-                            //       Offstage(
-                            //           offstage: (numOfSelected==1 || numOfSelected==2 || numOfSelected == 3),
-                            //           child: Row(
-                            //             children: [
-                            //               SizedBox(width: 15.0),
-                            //               Text(
-                            //                 "# " + widget.newPet.petAllergyList[2].toString(),
-                            //                 style: TextStyle(
-                            //                     color: Color.fromRGBO(255, 113, 113, 0.6)),
-                            //               ),
-                            //             ],
-                            //           )),
-                            //     ])),
-                          ),
-                        ),
+                        // Container(
+                        //   width: width * 300,
+                        //   height: 70,
+                        //   child: Card(
+                        //     elevation: 2.0,
+                        //     shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(12.0)),
+                        //     // 선택한 알러지값 노출
+                        //     child: Padding(
+                        //         padding: EdgeInsets.symmetric(horizontal: 30.0),
+                        //         // 표시될 #해시태그 리스트
+                        //         child: Row(children: [
+                        //           Offstage(
+                        //               offstage: (numOfSelectedDisease == 1 || widget.newPet.petDiseaseList.isEmpty),
+                        //               child: Row(
+                        //                 children: [
+                        //                   Text(
+                        //                     widget.newPet.petAllergyList.elementAt(0).isNotEmpty
+                        //                         ? "# " + widget.newPet.petDiseaseList.elementAt(0)
+                        //                         :"",
+                        //                     style: TextStyle(
+                        //                         color: Color.fromRGBO(255, 113, 113, 0.6)),
+                        //                   ),
+                        //                   SizedBox(width: 15.0),
+                        //                   Text("|  ",
+                        //                       style: TextStyle(
+                        //                           color: Color.fromRGBO(0, 0, 0, 0.3))),
+                        //                 ],
+                        //               )),
+                        //           Offstage(
+                        //               offstage: (numOfSelectedDisease <=2 || widget.newPet.petDiseaseList.isEmpty),
+                        //               child: Row(
+                        //                 children: [
+                        //                   SizedBox(width: 15.0),
+                        //                   Text(
+                        //                     widget.newPet.petDiseaseList.elementAt(1).isNotEmpty
+                        //                         ? "# " + widget.newPet.petDiseaseList.elementAt(1)
+                        //                         :"",
+                        //                     style: TextStyle(
+                        //                         color: Color.fromRGBO(255, 113, 113, 0.6)),
+                        //                   ),
+                        //                   SizedBox(width: 15.0),
+                        //                   Text("|  ",
+                        //                       style: TextStyle(
+                        //                           color: Color.fromRGBO(0, 0, 0, 0.3))),
+                        //                 ],
+                        //               )),
+                        //           Offstage(
+                        //               offstage: (numOfSelectedDisease<= 3 || widget.newPet.petDiseaseList.isEmpty),
+                        //               child: Row(
+                        //                 children: [
+                        //                   SizedBox(width: 15.0),
+                        //                   Text(
+                        //                     widget.newPet.petDiseaseList.elementAt(2).isNotEmpty
+                        //                         ? "# " + widget.newPet.petDiseaseList.elementAt(2)
+                        //                         :"",
+                        //                     style: TextStyle(
+                        //                         color: Color.fromRGBO(255, 113, 113, 0.6)),
+                        //                   ),
+                        //                 ],
+                        //               )),
+                        //         ])),
+                        //   ),
+                        // ),
                         SizedBox(height: height*25),
                         Text("질병 항목을 골라주세요.(최대 3개)", style: TextStyle(fontSize: 14)),
                         Text("앓고있는 질병이 없다면, '없음'을 입력해 주세요.", style: TextStyle(fontSize: 14)),
                         SizedBox(height: height*50),
-                        // 알러지 목록들 ListView
+                        // disease 목록들 ListView
                         Container(
                           height: height*30,
                           child: CupertinoScrollbar(
@@ -1026,7 +995,7 @@ class _FifthRouteState extends State<FifthRoute> {
                             // 스크롤바 둥글게
                             radius: Radius.circular(34.0),
                             // 스크롤바 항상 노출
-                            isAlwaysShown: true,
+                            //isAlwaysShown: true,
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal, // ListView 가로 설정
                                 itemCount: PetInfo.diseases.length, // pet의 allergy 각 List 순회
@@ -1036,16 +1005,17 @@ class _FifthRouteState extends State<FifthRoute> {
                                         text: PetInfo.diseases[i],
                                         onPressed: () {
                                           setState(() {
-                                            if (numOfSelectedDisease  < 3){
+                                            if (numOfSelectedDisease  <= 3){
                                               widget.newPet.petDiseaseList
                                                   .add(PetInfo.diseases[i]);
+                                              PetInfo.diseases.removeAt(i); // 선택한 알러지 버튼은 지우기
                                               debugPrint("$numOfSelectedDisease 번째 선택된 알러지는 : "
                                                   + widget.newPet.petDiseaseList[numOfSelectedDisease-1].toString());
                                               debugPrint("현재 widget.newPet.petDiseaseList 값:" + widget.newPet.petDiseaseList.toString());
                                               numOfSelectedDisease++; // 1 -> 2 | 2 -> 3 | 3-> 4
                                             }
-                                            else { // 질병 3개 입력 완료하면
-                                              debugPrint("질병 입력을 이미 완료하였습니다. 메인 화면으로 이동해주세요.");
+                                            else { // 질병 3개 입력 완료하면 (numOfSelectedDisease > 4)
+                                              debugPrint("질병 입력을 완료하였습니다. 메인 화면으로 이동해주세요.");
                                             }
                                           });
                                         })),
@@ -1054,26 +1024,32 @@ class _FifthRouteState extends State<FifthRoute> {
                         SizedBox(height: height*30),
                         //해당 없음 버튼
                         customPinkElevatedButton("해당 없음", () {
-                          // 알러지 입력창 이동
-                          // _scrollController.animateTo(height*800*5,
-                          //     duration: Duration(milliseconds: 500),
-                          //     curve: Curves.fastOutSlowIn);
+                          //-------- + 작성한 생성자를 서버로 전송하는 코드----------
+                          widget.newPet.sendPetData();
+                          //-------- + 작성한 생성자를 서버로 전송하는 코드----------
+
+                          sleep(const Duration(seconds: waitSecond));
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (context) => DelayScreen()),
+                                  (route) => false);
                         }),
                         SizedBox(height: height*25),
                         customPinkElevatedButton(
-                          //-------- + 작성한 생성자를 서버로 전송하는 코드(sendUserData)----------
-                          // Logger().userData.myPets.????
-                          //-------- + 작성한 생성자를 서버로 전송하는 코드(sendUserData)----------
-                            "작성 완료! 메인 화면으로 이동", (){
-                          Navigator.pushAndRemoveUntil(
+                            "작성 완료!", (){
+                          //-------- + 작성한 생성자를 서버로 전송하는 코드----------
+                          widget.newPet.sendPetData();
+                          //-------- + 작성한 생성자를 서버로 전송하는 코드----------
+
+                          sleep(const Duration(seconds: waitSecond));
+                          Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => MyHomePage()),
-                                  (Route<dynamic> route) => false);
+                              MaterialPageRoute(builder: (context) => DelayScreen()));
+                                  // (route) => false);
                         })
                       ],
                     ),
                   ),
-
                   // if (currentState==2) secondCategory(),
                   // if (currentState==3) thirdCategory(),
                   // if (currentState==4) fourthCategory(),

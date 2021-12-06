@@ -33,7 +33,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                 // 프로필 이미지 설정란
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image.asset(
-                  'images/profile/sample_profile.png',
+                  'images/profile/userDefaultIcon.png',
                   fit: BoxFit.fill,
                   width: width * 0.2,
                   height: width * 0.2,

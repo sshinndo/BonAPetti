@@ -11,6 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
+	<string>보나펫티</string>
 	<string>pet_service_application</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>

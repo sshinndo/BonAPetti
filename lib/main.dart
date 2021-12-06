@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/product/GoodsInfo.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
@@ -9,24 +9,17 @@ import 'package:pet_service_application/card_news/CardNewsModel.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/card_news/detail/DetailCardNews.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
-//import 'package:pet_service_application/log_in/screen/LogIn.dart';
-//import 'package:pet_service_application/log_in/Splash.dart';
 import 'package:pet_service_application/route/CardNewsListRoute.dart';
 import 'package:pet_service_application/card_news/CardNewsPageView.dart';
-import 'package:pet_service_application/product/screen/DetailedGoodsScreen.dart';
 import 'package:pet_service_application/product/screen/search_screen.dart';
 import 'package:pet_service_application/product/screen/goods_screen.dart';
-import 'package:pet_service_application/product/screen/WishListScreen.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'log_in/class/UserData.dart';
 
-void main() => runApp(MyApp());
-
 final String appName = "Pet App";
-final UserData myInfo = Logger().userData;
 
+void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -43,6 +36,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   final List<CardNewsModel> cardNewsModelList = [];
 
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -52,6 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    if(Logger().petData.isEmpty)
+      Logger().getMyPetList();
     loadData();
   }
   @override
@@ -69,8 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
           CardNewsType.CARDNEWS,
           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/004.png',
           '고양이는 생선만\n먹어도 될까?',
-          null,
-          null,
           [
             DetailCardNewsModel(
                 'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/006.png',
@@ -89,8 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 '아이가 물고기를 좋아한다고 해도\n균형잡힌 식사를 할 수 있도록\n도와주세요!'),
           ],
           [
-          ],
-          null),
+          ],),
     );
 
     widget.cardNewsModelList.add(
@@ -98,8 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
           CardNewsType.CARDNEWS,
           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/016.png',
           '강아지는 하루에\n몇시간을 잘까?',
-          null,
-          null,
           [
             DetailCardNewsModel(
                 'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/006.png',
@@ -119,8 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
           [
             // GoodsInfo()
-          ],
-          null),
+          ],),
     );
 
     widget.cardNewsModelList.add(
@@ -128,8 +118,6 @@ class _MyHomePageState extends State<MyHomePage> {
           CardNewsType.CARDNEWS,
           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/018.png',
           '왜 강아지의 코는\n촉촉할까?',
-          null,
-          null,
           [
             DetailCardNewsModel(
                 'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/006.png',
@@ -149,8 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
           [
             // GoodsInfo 넣을 자리
-          ],
-          null),
+          ],),
     );
 
     widget.cardNewsModelList.add(
@@ -158,8 +145,6 @@ class _MyHomePageState extends State<MyHomePage> {
           CardNewsType.CARDNEWS,
           'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/020.png',
           '강아지가 자기 발을\n핥는 이유는?',
-          null,
-          null,
           [
             DetailCardNewsModel(
                 'https://raw.githubusercontent.com/DragonTrainerTristana/Food_App_Project_Image_Asset/main/Card_News/006.png',
@@ -179,24 +164,20 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
           [
             // GoodsInfo() 넣을 자리
-          ],
-          null),
+          ],),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    PetInfo firstPet;
-    firstPet = Logger().getDefaultPet();
-
+    Logger().loggerDebugPrint();
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
         crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
         children: <Widget>[
           AppBarWithAlarm(
-            nickName: myInfo.name
-            // nickName: UserInfo.userNickname
+            nickName: Logger().userData.name
           ),
           Expanded(
             flex: 1,
@@ -274,7 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                firstPet.petName,
+                                Logger().getDefaultPet().petName,
                                 style: TextStyle(
                                     color: Color.fromRGBO(255, 113, 113, 1),
                                     decoration: TextDecoration.underline,
@@ -320,7 +301,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, //1 개의 행에 보여줄 item 개수
+                            crossAxisCount: 2, // 1 개의 행에 보여줄 item 개수
                             childAspectRatio: 2 / 3, //item 의 가로 1, 세로 2 의 비율
                             mainAxisSpacing: 10, //수평 Padding
                             crossAxisSpacing: 10, //수직 Padding
@@ -332,7 +313,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             product[i]["name"],
                             product[i]["thumbnailUrl"],
                             product[i]["price1"],
-                            product[i]["category"],
+                            // product[i]["category"],
                             GoodsDetailedInfo(
                               false,
                               product[i]["grade"],
@@ -364,7 +345,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Row(
                         children: <Widget>[
                           Text(
-                            firstPet.petName,
+                            Logger().getDefaultPet().petName,
                             style: TextStyle(
                                 color: Color.fromRGBO(255, 113, 113, 1),
                                 decoration: TextDecoration.underline,
@@ -417,7 +398,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             product[5]["name"],
                             product[5]["thumbnailUrl"],
                             product[5]["price1"],
-                            product[5]["category"],
+                            // product[5]["category"],
                             GoodsDetailedInfo(
                               false,
                               product[5]["grade"],
@@ -436,7 +417,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             product[6]["name"],
                             product[6]["thumbnailUrl"],
                             product[6]["price1"],
-                            product[6]["category"],
+                            // product[6]["category"],
                             GoodsDetailedInfo(
                               false,
                               product[6]["grade"],
@@ -455,7 +436,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             product[7]["name"],
                             product[7]["thumbnailUrl"],
                             product[7]["price1"],
-                            product[7]["category"],
+                            // product[7]["category"],
                             GoodsDetailedInfo(
                               false,
                               product[7]["grade"],

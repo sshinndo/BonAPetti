@@ -46,14 +46,12 @@ dependencies:
   # kakao login version
   kakao_flutter_sdk: ^0.7.0
   platform: ^3.0.0
-  shared_preferences: ^2.0.5
   package_info_plus: ^1.0.4
 
   # svg 벡터 이미지 사용하기 위함
   flutter_svg: ^0.22.0
 
   # 갤러리/카메라 이미지 파일 추가에 필요한 라이브러리
-  image_picker: ^0.8.4
   image_cropper: ^1.4.1
   get: ^4.3.8
 
@@ -62,15 +60,19 @@ dependencies:
   permission_handler: ^7.1.0
   file_picker: ^3.0.4
   csv: ^5.0.0
-  flutter_secure_storage: ^5.0.2
 
-  url_launcher: ^6.0.0
+  url_launcher: ^6.0.4
 
   # 서버 통신을 위한
   http: ^0.13.3
 
-  # 여러 이미지 나열 swiper
-  flutter_swiper: ^1.1.6
+  # 앱 아이콘 추가(줄 바꿈 주의)
+  flutter_launcher_icons: "^0.9.2"
+# 앱 아이콘 추가(줄 바꿈 주의)
+flutter_icons:
+  android: "launcher_icon"
+  #ios: true // ios 출시할 때
+  image_path: "images/logo.png"
 
 #  # Check that you have this dependency (added in the previous step)
 #  firebase_core: ^0.4.0+9

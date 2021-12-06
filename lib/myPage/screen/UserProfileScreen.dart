@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({Key? key}) : super(key: key);
@@ -46,7 +45,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ClipRRect( // 프로필 이미지 설정란
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image.asset(
-                  'images/profile/sample_profile.png',
+                  'images/profile/userDefaultIcon.png',
                   width: 122,
                   height: 122,
                 ),
@@ -211,6 +210,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               //소개 한 마디 초기화 후 새로 대입
                               Logger().userData.description = '';
                               Logger().userData.description = descriptionController.text;
+                              Logger().updateUserData();
                             }
                             Navigator.pop(context);
                           }

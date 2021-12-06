@@ -67,7 +67,7 @@ class _GoodsScreen extends State<GoodsScreen> {
                           product[i]["name"],
                           product[i]["thumbnailUrl"],
                           product[i]["price1"],
-                          product[i]["category"],
+                          // product[i]["category"],
                           GoodsDetailedInfo(
                             false,
                             product[i]["grade"],

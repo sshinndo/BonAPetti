@@ -2,14 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
+import 'package:pet_service_application/log_in/screen/delay_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../init_profile/ProfileQuestion.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
-import 'package:pet_service_application/main.dart';
 import 'package:kakao_flutter_sdk/all.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pet_service_application/log_in/class/UserData.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -59,6 +56,7 @@ class _LogInState extends State<LogIn> {
       throw Exception('Could not launch $url');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     //구글 설문지 링크
@@ -70,7 +68,8 @@ class _LogInState extends State<LogIn> {
     KakaoContext.clientId = '9562e3633088ea0ac9cd1f627011bf87';
     KakaoContext.javascriptClientId = "369339f74ffc0e1f44389458d0bbc7e6";
 
-    return Scaffold(
+    if(_initialized)
+      return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Builder(builder: (context) {
         return SingleChildScrollView(
@@ -128,20 +127,22 @@ class _LogInState extends State<LogIn> {
                                 child: customSubtitleColor('프로필 작성 이동', GREY),
                               ),
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        FirstRoute()
-                                  ),
-                                );
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => FirstRoute()), (route) => false);
                               }
                           ),
                     ])),
               ],
             )));
       }),
-    );
+    );  ///로그인 화면
+    else
+      return Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: Builder(builder: (context) {
+          return CircularProgressIndicator();
+        }
+        )
+      );  ///로딩중
   }
 }
 
@@ -216,14 +217,14 @@ class _KakaoLoginState extends State<KakaoLogin> {
               });
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                  MaterialPageRoute(builder: (context) => DelayScreen()),
                       (route) => false);
             }
           //계정 첫 생성 후 페이지 넘김
           else{
             Logger().userData.accountInfo = kakaoUser.id;
             Navigator.pushAndRemoveUntil(
-                context,
+           context,
                 MaterialPageRoute(builder: (context) => ProfileQuestion()),
                     (route) => false);
           }
