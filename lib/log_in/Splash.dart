@@ -1,11 +1,7 @@
+//    @dart=2.14
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pet_service_application/log_in/screen/LogIn.dart';
-
-import 'class/UserData.dart';
 
 void main() => runApp(MyAppSplash());
 
