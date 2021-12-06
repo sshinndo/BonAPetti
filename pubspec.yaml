@@ -71,7 +71,7 @@ dependencies:
 # 앱 아이콘 추가(줄 바꿈 주의)
 flutter_icons:
   android: "launcher_icon"
-  #ios: true // ios 출시할 때
+  ios: true # ios 출시할 때
   image_path: "images/logo.png"
 
 #  # Check that you have this dependency (added in the previous step)
