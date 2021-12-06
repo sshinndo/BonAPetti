@@ -21,7 +21,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
   UserData myInfo = Logger().userData;
   ///가져올 랜덤 포스트 수
   static const int randomPostCount = 1;
-  String randomPost = '';
+  var randomPost;
 
 //파이어베이스 스테이트
   bool _initialized = false;
@@ -153,7 +153,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      /*FutureBuilder<CommunityInfo>(
+                      FutureBuilder<CommunityInfo>(
                           future: randomPost,
                           builder: (BuildContext context, AsyncSnapshot<CommunityInfo> randomPostID) {
                             debugPrint(randomPostID.connectionState.toString());
@@ -174,8 +174,8 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                               debugPrint('Post Import Complete :${randomPostID.data.toString()}');
                               return CommunityWidget(communityInfo: randomPostID.data as CommunityInfo);
                             }
-                          })  */
-                      StreamBuilder<DocumentSnapshot>(
+                          })
+                      /*StreamBuilder<DocumentSnapshot>(
                           stream: FirebaseFirestore.instance.collection('Community').doc(randomPost).snapshots(),
                           builder: (context, snapshot) {
                             ///로딩중
@@ -194,7 +194,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                               var petData = PetInfo.getPetData(snapshot.data!['UserID'], snapshot.data!['petID']);
                             }
                           }
-                      )
+                      )*/
                     ],
                   ),
                 )    ///포스트 위젯 스크롤 뷰 (세로)

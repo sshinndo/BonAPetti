@@ -224,8 +224,6 @@ class UserData {
   static Future<UserData> getUserData(String uid) async {
     var userData =
         await FirebaseFirestore.instance.collection('UserData').doc(uid).get();
-    var userData = await FirebaseFirestore.instance.collection(
-        'UserData').doc(uid).get();
     var imageRef = FirebaseStorage.instance.ref().child('UserImage/UserProfile');
     UserData result = UserData();
     {
