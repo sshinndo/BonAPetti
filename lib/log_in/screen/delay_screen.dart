@@ -15,7 +15,7 @@ class DelayScreen extends StatelessWidget {
       Logger().getMyPetList();
     });
     Timer(
-        Duration(seconds: 7),
+        Duration(seconds: 5), // 7초는 너무 길어서, 5초로 수정
         () => Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (BuildContext context) => MyHomePage())));
 

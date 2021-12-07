@@ -17,6 +17,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+        //Android SDK를 적용할 프로젝트의 build.gradle(Project) 파일에 다음과 같이 Android SDK 레파지토리를 설정
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}
     }
 }
 

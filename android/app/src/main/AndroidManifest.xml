@@ -50,6 +50,9 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+     <!-- 카카오 API를 통해 카카오 서버와 통신하기 위해 앱에 인터넷 사용 권한을 설정해야 합니다.
+     AndroidManifest.xml에 다음과 같이 인터넷 사용 권한을 설정합니다.
+     이 설정은 카카오 API를 통한 HTTP 요청이 올바르게 완료되도록 해 줍니다.-->
      <uses-permission android:name="android.permission.INTERNET" />
      <!--Android +10에 있고 " 앱이 백그라운드에서 실행 중일 때도 계속 업데이트를 받고 싶다면 " 문서에 따라 이 권한을 추가해야 합니다 :-->
      <!--참고: https://stackoverflow.com/questions/69318847/flutter-location-permission-issues-in-android-manifest-file-->

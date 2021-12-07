@@ -53,9 +53,6 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-//        ndk {
-//            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
-//        }
     }
 
     // start of signingConfigs
@@ -98,5 +95,9 @@ dependencies {
     // error: ~cloud_firestore-3.1.0\android\src\main\java\io\flutter\plugins\firebase\firestore\streamhandler\TransactionStreamHandler.java uses unchecked or unsafe operations.
     implementation "androidx.multidex:multidex:2.0.0"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    //kakao
+    implementation "com.kakao.sdk:v2-user:2.8.3" // 카카오 로그인
+    implementation "com.kakao.sdk:v2-talk:2.8.3" // 친구, 메시지(카카오톡)
+    implementation "com.kakao.sdk:v2-link:2.8.3" // 메시지(카카오링크)
 
 }
