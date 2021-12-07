@@ -22,14 +22,25 @@ class DelayScreen extends StatelessWidget {
 
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            alignment: Alignment.center,
-            child: Image.asset('images/logo.png'),
-            width: 192,
-            height: 192,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                child: Image.asset('images/logo.png', alignment: Alignment.center),
+                width: 192,
+                height: 192,
+              ),
+            ],
           ),
-          CircularProgressIndicator()
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+            ],
+          )
         ]
       ),
     );
