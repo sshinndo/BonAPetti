@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
+import 'package:pet_service_application/log_in/Splash.dart';
 import 'package:pet_service_application/product/GoodsInfo.dart';
 import 'package:pet_service_application/widgets/GoodsWidget.dart';
 import 'package:pet_service_application/widgets/BargainCardWidget.dart';
@@ -18,26 +19,10 @@ import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'log_in/class/UserData.dart';
 
-final String appName = "Pet App";
-
-void main() => runApp(MyApp());
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appName,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
+void main() => runApp(MyAppSplash()); // 스플래쉬 화면에서 시작
 
 class MyHomePage extends StatefulWidget {
   final List<CardNewsModel> cardNewsModelList = [];
-
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
