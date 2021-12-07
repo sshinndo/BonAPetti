@@ -61,7 +61,7 @@ dependencies:
   file_picker: ^3.0.4
   csv: ^5.0.0
 
-  url_launcher: ^6.0.4
+  url_launcher: ^6.0.7
 
   # 서버 통신을 위한
   http: ^0.13.3

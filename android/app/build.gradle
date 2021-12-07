@@ -27,13 +27,13 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-// Gradle 빌드시 key.properties 파일을 참조하도록
+// start of Gradle 서명 구성, Gradle 빌드시 key.properties 파일을 참조하도록
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
-
+// end of Gradle 서명 구성
 android {
     compileSdkVersion 30
 
@@ -45,13 +45,14 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         // 패키지명 수정함 : com.example.untitled2 ->
         applicationId "com.bonapetti.bonapetti"
-        minSdkVersion 21 // 에러 해결을위해 19 ->21 수정.
-        targetSdkVersion 30
+        minSdkVersion 19 // 앱이 실행되는 Android 플랫폼의 최소 버전이며, 플랫폼의 API 수준 식별자에 의해 지정됩니다
+        targetSdkVersion 30 // 앱이 실행되는 API 수준, 경우에 따라 최소 API 수준에 정의된 것만 사용하도록 제한하기보다는 앱이 타겟 API 수준에서 정의된 매니페스트 요소나 동작을 사용하도록 허용
         compileSdkVersion 30
         // firebase setting 3 - multiDexEnabled true
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 //        ndk {
 //            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
 //        }
@@ -71,12 +72,11 @@ android {
         release {
             // release 속성으로 변경
             signingConfig signingConfigs.release
-            // start of 코드 난독화 및 사이즈 축소
+            // start of 코드난독화 및 사이즈 축소
             minifyEnabled true
-            shrinkResources true
             useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // end of 코드 난독화 및 사이즈 축소
+            // end of 코드난독화 및 사이즈 축소
         }
     }
 }
