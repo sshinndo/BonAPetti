@@ -1,6 +1,7 @@
 //    @dart=2.14
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 //import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
@@ -20,6 +21,7 @@ import 'package:pet_service_application/widgets/ShortsWidget.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
 import 'class/colorCustomClass.dart';
 import 'log_in/class/UserData.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 
 void main() => runApp(MyAppSplash()); // 스플래쉬 화면에서 시작
 
@@ -162,10 +164,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     Logger().loggerDebugPrint();
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        body: Column(
+    return Scaffold(
+      floatingActionButton: BackSpaceButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      bottomNavigationBar: MenuBottomBar(),
+      body: DoubleBackToCloseApp(
+        snackBar: const SnackBar(
+            content: Text('한 번 더 뒤로가기를 누르시면 앱이 종료됩니다!')),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
           crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬
           children: <Widget>[
@@ -581,32 +587,29 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-        floatingActionButton: BackSpaceButton(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        bottomNavigationBar: MenuBottomBar(),
       ),
     );
   }
-  // 뒤로가기 두 번 누를 시 종료
-  Future<bool> _onWillPop() async {
-    return (await showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        title: new Text('보나펫티',style: TextStyle(color: PINK)),
-        content: new Text('앱을 종료하시겠습니까?',style: TextStyle(color: DARKGREY)),
-        actions: <Widget>[
-          new TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: new Text('아니요',style: TextStyle(color: PINK)),
-          ),
-          new TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: new Text('네',style: TextStyle(color: DARKGREY)),
-          ),
-        ],
-      ),
-    )) ?? false;
-  }
+  // // 뒤로가기 두 번 누를 시 종료
+  // Future<bool> _onWillPop() async {
+  //   return (await showDialog(
+  //     context: context,
+  //     builder: (context) => new AlertDialog(
+  //       title: new Text('보나펫티',style: TextStyle(color: PINK)),
+  //       content: new Text('앱을 종료하시겠습니까?',style: TextStyle(color: DARKGREY)),
+  //       actions: <Widget>[
+  //         new TextButton(
+  //           onPressed: () => SystemNavigator.pop(), // 앱 종료
+  //           child: new Text('아니요',style: TextStyle(color: PINK)),
+  //         ),
+  //         new TextButton(
+  //           onPressed: () => Navigator.of(context).pop(true), // 돌아가기
+  //           child: new Text('네',style: TextStyle(color: DARKGREY)),
+  //         ),
+  //       ],
+  //     ),
+  //   )) ?? false;
+  // }
 }
 
 class GoodsScreenList extends StatelessWidget {

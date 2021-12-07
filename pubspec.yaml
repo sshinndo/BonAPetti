@@ -61,7 +61,11 @@ dependencies:
   file_picker: ^3.0.4
   csv: ^5.0.0
 
+  # 외부 브라우저 연결
   url_launcher: ^6.0.7
+
+  # 뒤로가기 2번 누르면 종료
+  double_back_to_close_app: ^2.0.0
 
   # 서버 통신을 위한
   http: ^0.13.3
