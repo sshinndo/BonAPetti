@@ -45,7 +45,7 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         // 패키지명 수정함 : com.example.untitled2 ->
         applicationId "com.bonapetti.bonapetti"
-        minSdkVersion 19 // 앱이 실행되는 Android 플랫폼의 최소 버전이며, 플랫폼의 API 수준 식별자에 의해 지정됩니다
+        minSdkVersion 21 // 앱이 실행되는 Android 플랫폼의 최소 버전이며, 플랫폼의 API 수준 식별자에 의해 지정됩니다
         targetSdkVersion 30 // 앱이 실행되는 API 수준, 경우에 따라 최소 API 수준에 정의된 것만 사용하도록 제한하기보다는 앱이 타겟 API 수준에서 정의된 매니페스트 요소나 동작을 사용하도록 허용
         compileSdkVersion 30
         // firebase setting 3 - multiDexEnabled true
@@ -53,9 +53,6 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-//        ndk {
-//            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
-//        }
     }
 
     // start of signingConfigs
@@ -98,5 +95,9 @@ dependencies {
     // error: ~cloud_firestore-3.1.0\android\src\main\java\io\flutter\plugins\firebase\firestore\streamhandler\TransactionStreamHandler.java uses unchecked or unsafe operations.
     implementation "androidx.multidex:multidex:2.0.0"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    //kakao
+    implementation "com.kakao.sdk:v2-user:2.8.3" // 카카오 로그인 : 최소 요구 조건 minSdkVersion 21 (21.12.08 기준)
+    implementation "com.kakao.sdk:v2-talk:2.8.3" // 친구, 메시지(카카오톡)
+    implementation "com.kakao.sdk:v2-link:2.8.3" // 메시지(카카오링크)
 
 }
