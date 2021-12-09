@@ -89,7 +89,7 @@ class _CommunityWidget extends State<CommunityWidget> {
                       //빈 공간
                       ? SizedBox()
                       //첫 이미지 (대표 이미지)
-                      : Image.network(
+                      : Image.asset(
                           widget.communityInfo.imageUrls.first,
                           fit: BoxFit.fill),
                 )), ///커뮤니티 대표 이미지

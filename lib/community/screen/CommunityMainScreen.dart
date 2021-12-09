@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +23,8 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
   static const int randomPostCount = 1;
   var randomPost;
 
+  CommunityInfo dummyPost = CommunityInfo();
+
 //파이어베이스 스테이트
   bool _initialized = false;
   bool _error = false;
@@ -43,10 +45,17 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
 
   @override
   void initState() {
-    initializeFlutterFire();
+    /*initializeFlutterFire();
     CommunityInfo.getRandomPost().then((value) {
       randomPost = value;
-    });
+    });*/
+    {
+      dummyPost.user = Logger().userData;
+      dummyPost.pet = Logger().getDefaultPet();
+      dummyPost.imageUrls.add('images/community/community_image.png');
+      dummyPost.hashTags = '#해시태그#추가예정';
+      dummyPost.dialogue.add('포스트 위젯 : 업데이트로 추가 예정입니다.');
+    }
     super.initState();
   }
 
@@ -153,7 +162,10 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      FutureBuilder<CommunityInfo>(
+                      CommunityWidget(
+                          communityInfo: dummyPost
+                      )
+                      /*FutureBuilder<CommunityInfo>(
                           future: randomPost,
                           builder: (BuildContext context, AsyncSnapshot<CommunityInfo> randomPostID) {
                             debugPrint(randomPostID.connectionState.toString());
@@ -174,27 +186,7 @@ class _CommunityMainScreen extends State<CommunityMainScreen> {
                               debugPrint('Post Import Complete :${randomPostID.data.toString()}');
                               return CommunityWidget(communityInfo: randomPostID.data as CommunityInfo);
                             }
-                          })
-                      /*StreamBuilder<DocumentSnapshot>(
-                          stream: FirebaseFirestore.instance.collection('Community').doc(randomPost).snapshots(),
-                          builder: (context, snapshot) {
-                            ///로딩중
-                            if(snapshot.connectionState == ConnectionState.waiting)
-                              return CircularProgressIndicator();
-                            ///오류 발생 시
-                            else if(snapshot.hasError)
-                              return Icon(
-                                Icons.error_outline,
-                                color:Colors.red,
-                                size: 60
-                              );
-                            else {
-
-                              var userData = UserData.getUserData(snapshot.data!['UserID']);
-                              var petData = PetInfo.getPetData(snapshot.data!['UserID'], snapshot.data!['petID']);
-                            }
-                          }
-                      )*/
+                          })*/
                     ],
                   ),
                 )    ///포스트 위젯 스크롤 뷰 (세로)
