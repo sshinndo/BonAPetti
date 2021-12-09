@@ -169,8 +169,23 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       bottomNavigationBar: MenuBottomBar(),
       body: DoubleBackToCloseApp(
-        snackBar: const SnackBar(
-            content: Text('한 번 더 뒤로가기를 누르시면 앱이 종료됩니다!')),
+        snackBar: SnackBar(
+          content: const Text(
+            "한번 더 뒤로가기를 누르시면 앱이 종료됩니다!",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          duration: const Duration(seconds: 3),
+          backgroundColor: PINK,
+          action: SnackBarAction(
+            label: '닫기',
+            textColor: Colors.white,
+            onPressed: () { },
+          ),
+        ),
+        // snackBar: const SnackBar(
+        //     content: Text('한 번 더 뒤로가기를 누르시면 앱이 종료됩니다!')),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start, // Column 기준 정렬
           crossAxisAlignment: CrossAxisAlignment.center, // Row 기준 정렬

@@ -272,6 +272,21 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         // 재현님이 만든 커뮤니티 페이지로 이동하기 채우기
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>MyCommunityScreen()));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: const Text(
+                            "임시 커뮤니티 모습이에요. 곧 업데이트 됩니다 !",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          duration: const Duration(seconds: 3),
+                          backgroundColor: PINK,
+                          action: SnackBarAction(
+                            label: '닫기',
+                            textColor: Colors.white,
+                            onPressed: () { },
+                          ),
+                        ));
                       }
                   ),
                 ),
@@ -314,7 +329,22 @@ class _MyPageState extends State<MyPage> {
                         ),
                       ),
                       onTap: () {
-                        // 중고장터 페이지로 이동하는 기능 채우기
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: const Text(
+                            "알뜰 장터는 구현 예정입니다!",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          duration: const Duration(seconds: 3),
+                          backgroundColor: PINK,
+                          action: SnackBarAction(
+                            label: '닫기',
+                            textColor: Colors.white,
+                            onPressed: () { },
+                          ),
+                        ));
+                        // 알뜰장터 페이지로 이동하는 기능 채우기
                       }
                   ),
                 ),
@@ -422,6 +452,21 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
               onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: const Text(
+                    "리뷰 페이지 개발 예정입니다!",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  duration: const Duration(seconds: 3),
+                  backgroundColor: PINK,
+                  action: SnackBarAction(
+                    label: '닫기',
+                    textColor: Colors.white,
+                    onPressed: () { },
+                  ),
+                ));
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(
@@ -627,13 +672,21 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => 카카오톡 친구초대()
-                //   ),
-                // );
-                // print('_ Page is clicked');
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: const Text(
+                    "업데이트 될 예정입니다!",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  duration: const Duration(seconds: 3),
+                  backgroundColor: PINK,
+                  action: SnackBarAction(
+                    label: '닫기',
+                    textColor: Colors.white,
+                    onPressed: () { },
+                  ),
+                ));
               },
             ),
             // 2-5. 신고하기
