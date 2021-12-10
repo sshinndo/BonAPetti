@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:pet_service_application/community/ShortsInfo.dart';
-import 'package:pet_service_application/community/screen/ShortsScreen.dart';
+//import 'package:pet_service_application/community/screen/ShortsScreen.dart';
 
 class ShortsWidget extends StatefulWidget {
   final ShortsInfo shortsInfo;  //쇼츠 정보 객체
@@ -40,7 +39,7 @@ class _ShortsWidget extends State<ShortsWidget> {
           children: [//Image.network
             Image.asset(
                 widget.shortsInfo.thumbnailUrl,
-                fit: BoxFit.cover), //썸네일
+                fit: BoxFit.cover), ///썸네일
             Container(
               margin: EdgeInsets.only(left: 20, top: 20),
               alignment: Alignment.topLeft,
@@ -51,21 +50,23 @@ class _ShortsWidget extends State<ShortsWidget> {
                   fontSize: nameSize,
                   )
                 )
-            ),  //펫 이름
+            ),  ///펫 이름
             Container(
                 margin: EdgeInsets.only(left: 10, bottom: 10),
                 alignment: Alignment.bottomLeft,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SizedBox(
-                      width: profileIconSize,
-                      height: profileIconSize,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(100.0),
                       child: Image.asset(
-                        widget.shortsInfo.profileImage,
-                        fit: BoxFit.fitHeight
-                      )
+                          widget.shortsInfo.profileImage,
+                          height: profileIconSize,
+                          width: profileIconSize,
+                          fit: BoxFit.fitHeight
+                      ) //Profile Icon
                     ),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                     Text(
                         widget.shortsInfo.nickName,
                         style: TextStyle(

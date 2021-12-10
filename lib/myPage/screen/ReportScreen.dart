@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 class Report extends StatefulWidget {
   const Report({Key? key}) : super(key: key);

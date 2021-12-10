@@ -11,7 +11,6 @@ import 'package:pet_service_application/community/screen/CommunityMainScreen.dar
 import 'package:pet_service_application/myPage/screen/ActivityMedalScreen.dart';
 import 'package:pet_service_application/myPage/screen/FaqScreen.dart';
 import 'package:pet_service_application/myPage/screen/ReportScreen.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 import 'package:pet_service_application/myPage/screen/PetProfileScreen.dart';
 import 'package:pet_service_application/myPage/screen/UserProfileScreen.dart';
 import 'package:pet_service_application/myPage/screen/QnaScreen.dart';
@@ -652,7 +651,7 @@ class _MyPageState extends State<MyPage> {
                       width: 30,
                       height: 30,
                       child: Image.asset(
-                        'images/kakao_invite.png', // 1. list에 넣을 변수 값
+                        'images/profile/kakao_invite.png', // 1. list에 넣을 변수 값
                         width: 25.5, // 아이콘 가로 고정 상수값
                         height: 28, // 아이콘 세로 고정 상수값
                         alignment: Alignment.center,
