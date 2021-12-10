@@ -1,7 +1,5 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -51,7 +49,7 @@ class Logger {
       if (petDocs.docs.length == 0)
         return;
       else {
-        petDocs.docs.forEach((doc) {
+        for(var doc in petDocs.docs) {
           PetInfo result = PetInfo(doc.data()['Name']);
           {
             result.petID = doc.id;
@@ -65,7 +63,7 @@ class Logger {
             result.petAllergyList = doc.data()['AllergyList'].cast<String>();
           }
           petData.add(result);
-        });
+        }
       }
     });
   }
@@ -335,6 +333,7 @@ class PetInfo {
           double.parse(petDoc.data()!['BodyLength'].toString());
       result.petWeight = double.parse(petDoc.data()!['Weight'].toString());
       result.petAllergyList = petDoc.data()!['AllergyList'].cast<String>();
+      result.petSilhouette = PetSilhouette.values.firstWhere((element) => element.toString() == petDoc.data()!['Silhouette']);
     }
     return result;
   }

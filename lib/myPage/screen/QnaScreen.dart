@@ -5,7 +5,6 @@ import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/init_profile/ProfileQuestion.dart';
-import 'package:pet_service_application/log_in/class/UserInfoClass.dart';
 
 // class QnaDatas{
 //   final String questionTitle; // 질문 제목
