@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
 import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
+import 'package:pet_service_application/myPage/screen/ActivityMedalScreen.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({Key? key}) : super(key: key);
@@ -80,6 +81,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         onTap:(){
                           // 사진촬영 기능으로 이동
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: const Text(
+                              "잠시만 기다려주세요! 멋진 사진을 프로필로 설정하기 위해 개발중입니다!",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            duration: const Duration(seconds: 3),
+                            backgroundColor: PINK,
+                            action: SnackBarAction(
+                              label: '닫기',
+                              textColor: Colors.white,
+                              onPressed: () { },
+                            ),
+                          ));
                         }
                     ),
                   ),
@@ -109,6 +125,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         onTap:(){
                           // 갤러리 기능으로 이동
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: const Text(
+                              "잠시만 기다려주세요! 멋진 사진을 프로필로 설정하기 위해 개발중입니다!",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            duration: const Duration(seconds: 3),
+                            backgroundColor: PINK,
+                            action: SnackBarAction(
+                              label: '닫기',
+                              textColor: Colors.white,
+                              onPressed: () { },
+                            ),
+                          ));
                         }
                     ),
                   ),
@@ -136,6 +167,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     onTap:(){
                       // 대표활동메달 팝업 페이지로 이동
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ActivityMedal()
+                        ),
+                      );
                     }
                 ),
               ),

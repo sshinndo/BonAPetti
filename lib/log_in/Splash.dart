@@ -3,16 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pet_service_application/log_in/screen/LogIn.dart';
 
-void main() => runApp(MyAppSplash());
-
-final String appName = "Pet App";
-
 class MyAppSplash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: appName,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

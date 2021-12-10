@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_service_application/class/colorCustomClass.dart';
 import 'package:pet_service_application/community/screen/CommunityMainScreen.dart';
 import 'package:pet_service_application/mypage/screen/MyPageScreen.dart';
 import 'package:pet_service_application/product/screen/shopping_basket.dart';
@@ -95,10 +96,27 @@ class _MenuBottomBar extends State<MenuBottomBar> {
           //상태 갱신이 되지 않으면 동작을 하지 않음
           screenIndex = value;
           if (value == 0) { // 홈으로
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyHomePage()));
+            Navigator.pushAndRemoveUntil(
+                context, MaterialPageRoute(builder: (context) => MyHomePage()),
+                (route)=>false
+            );
           }
-          if (value == 1) { // 중고장터
+          if (value == 1) { // 알뜰장터
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+             content: const Text(
+               "알뜰 장터는 구현 예정입니다!",
+               style: TextStyle(
+                 color: Colors.white,
+               ),
+             ),
+             duration: const Duration(seconds: 3),
+              backgroundColor: PINK,
+              action: SnackBarAction(
+                label: '닫기',
+                textColor: Colors.white,
+                onPressed: () { },
+              ),
+            ));
             // Navigator.push(
             //     context, MaterialPageRoute(builder: (context) => UsedMarket()));
           }
@@ -107,6 +125,21 @@ class _MenuBottomBar extends State<MenuBottomBar> {
                 MaterialPageRoute(builder: (context) => WishListScreen()));
           }
           if (value == 3) { // 커뮤니티
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: const Text(
+                "임시 커뮤니티 모습이에요. 곧 업데이트 됩니다 !",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              duration: const Duration(seconds: 3),
+              backgroundColor: PINK,
+              action: SnackBarAction(
+                label: '닫기',
+                textColor: Colors.white,
+                onPressed: () { },
+              ),
+            ));
             Navigator.push(context,
                  MaterialPageRoute(builder: (context) => CommunityMainScreen()));
           }

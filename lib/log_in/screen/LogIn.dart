@@ -121,15 +121,15 @@ class _LogInState extends State<LogIn> {
                           });
                         }
                       ),
-                          SizedBox(width: 30),
-                          GestureDetector(
-                              child: Container(
-                                child: customSubtitleColor('프로필 작성 이동', GREY),
-                              ),
-                              onTap: () {
-                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => FirstRoute()), (route) => false);
-                              }
-                          ),
+                          // SizedBox(width: 30),
+                          // GestureDetector(
+                          //     child: Container(
+                          //       child: customSubtitleColor('프로필 작성 이동', GREY),
+                          //     ),
+                          //     onTap: () {
+                          //       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => FirstRoute()), (route) => false);
+                          //     }
+                          // ),
                     ])),
               ],
             )));
@@ -258,7 +258,7 @@ class _KakaoLoginState extends State<KakaoLogin> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () => _isKakaoTalkInstalled ? _loginWithTalk() : _loginWithKakao(),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.8,

@@ -1,33 +1,32 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bonapetti.bonapetti">
+     <queries>
+         <!-- If your app opens https URLs -->
+         <intent>
+             <action android:name="android.intent.action.VIEW" />
+             <data android:scheme="https" />
+         </intent>
+     </queries>
    <application
+        android:name="io.flutter.app.FlutterApplication"
         android:label="보나펫티"
         android:icon="@mipmap/launcher_icon">
         <activity
-            android:name="com.bonapetti.bonapetti.MainActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/LaunchTheme"
+            android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:theme="@style/LaunchTheme"
             android:windowSoftInputMode="adjustResize">
+            <!--위 아래는 https://here4you.tistory.com/198 참고하여 작성-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
-                <data android:scheme="kakao9562e3633088ea0ac9cd1f627011bf87" android:host="oauth"/>
             </intent-filter>
-            <!-- Specifies an Android theme to apply to this Activity as soon as
-                 the Android process has started. This theme is visible to the user
-                 while the Flutter UI initializes. After that, this theme continues
-                 to determine the Window background behind the Flutter UI. -->
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-            <!-- Displays an Android View that continues showing the launch screen
-                 Drawable until Flutter paints its first frame, then this splash
-                 screen fades out. A splash screen is useful to avoid any visual
-                 gap between the end of Android's launch screen and the painting of
-                 Flutter's first frame. -->
             <meta-data
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
@@ -35,6 +34,14 @@
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
+            <intent-filter android:label="flutter_web_auth">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="kakao9562e3633088ea0ac9cd1f627011bf87" android:host="oauth"/>
+            </intent-filter>
+        </activity>
         <activity
            android:name="com.yalantis.ucrop.UCropActivity"
            android:screenOrientation="portrait"
@@ -43,7 +50,15 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+     <!-- 카카오 API를 통해 카카오 서버와 통신하기 위해 앱에 인터넷 사용 권한을 설정해야 합니다.
+     AndroidManifest.xml에 다음과 같이 인터넷 사용 권한을 설정합니다.
+     이 설정은 카카오 API를 통한 HTTP 요청이 올바르게 완료되도록 해 줍니다.-->
      <uses-permission android:name="android.permission.INTERNET" />
+     <!--Android +10에 있고 " 앱이 백그라운드에서 실행 중일 때도 계속 업데이트를 받고 싶다면 " 문서에 따라 이 권한을 추가해야 합니다 :-->
+     <!--참고: https://stackoverflow.com/questions/69318847/flutter-location-permission-issues-in-android-manifest-file-->
+     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
      <!--
      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
