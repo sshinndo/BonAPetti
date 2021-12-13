@@ -15,24 +15,25 @@ class _AppBarWithAlarm extends State<AppBarWithAlarm> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Container(
+      child: Container(
       margin: EdgeInsets.only(
           top: 20 + MediaQuery.of(context).padding.top, bottom: 10),
-      height: AppBar().preferredSize.height,
-      child: Row(
-        children: [
-          Expanded(flex: 1, child: Container()),
-          Expanded(
-              flex: 3,
-              child: Center(
-                child: Text(
-                  widget.nickName,
-                  style: TextStyle(
+          height: AppBar().preferredSize.height,
+          child: Row(
+            children: [
+              Expanded(flex: 1, child: Container()),
+              Expanded(
+                flex: 3,
+                child: Center(
+                  child: Text(
+                    widget.nickName,
+                    style: TextStyle(
                       fontSize: 20.0,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
-                ),
-              )),
+                  ),
+                )
+              ),
           Expanded(
               flex: 1,
               child: Center(

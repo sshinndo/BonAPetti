@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pet_service_application/community/screen/PostUploadScreen.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
@@ -120,7 +121,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
                           ),
                           onTap: () {
                             /// 포스트 작성 페이지
-                            //Navigator.push(context, MaterialPageRoute(builder: (context)=>MyCommunityScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>PostUploadScreen()));
                           }
                       ),
                     ),///글 올리기 Card
