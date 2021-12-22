@@ -60,7 +60,8 @@ class _LogInState extends State<LogIn> {
   @override
   Widget build(BuildContext context) {
     //구글 설문지 링크
-    const String _url = 'https://docs.google.com/forms/d/e/1FAIpQLSffJTPtzolI8Yg2gnCa1HSNW-RYGY2-YNks0BXfMvoZqmRLig/viewform';
+    const String _url =
+        'https://docs.google.com/forms/d/e/1FAIpQLSffJTPtzolI8Yg2gnCa1HSNW-RYGY2-YNks0BXfMvoZqmRLig/viewform';
 
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -68,81 +69,88 @@ class _LogInState extends State<LogIn> {
     KakaoContext.clientId = '9562e3633088ea0ac9cd1f627011bf87';
     KakaoContext.javascriptClientId = "369339f74ffc0e1f44389458d0bbc7e6";
 
-    if(_initialized)
-      return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: Builder(builder: (context) {
-        return SingleChildScrollView(
-            // 키보드 올라옴에 따라 스크린도 같이 올라가는 위젯
-            scrollDirection: Axis.vertical,
-            child: SafeArea(
-                child: Column(
-              children: <Widget>[
-                // 보나펫티 로고
-                Container(
-                  margin: EdgeInsets.only(left: 32, right: 32, top: 100)
-                ),
-                Image.asset('images/logo.png',
-                    width: width * 0.266, height: height * 0.12,
-                ),
-                SizedBox(height: 20),
-                Text.rich(TextSpan(children: [
-                  TextSpan(
-                      text: '보나펫티로 든든한 ',
-                      style: TextStyle(
-                          color: Color.fromRGBO(68, 0, 0, 0.8),
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w300)),
-                  TextSpan(
-                      text: '밥심!',
-                      style: TextStyle(
-                          color: Color.fromRGBO(68, 0, 0, 0.8),
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w900))
-                ])),
-                SizedBox(height: 35),
-                Image.asset('images/loginCharacter.png',
-                  width: width * 210 / 360, height: height * 208 / 800,
-                ),
-                SizedBox(height: 33),
-                KakaoLogin(),
-                SizedBox(height: 20),
-                Container(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      GestureDetector(
-                        child: Container(
-                          child: customSubtitleColor('문의하기', GREY),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            _launched = _launchInBrowser(_url);
-                          });
-                        }
-                      ),
-                          // SizedBox(width: 30),
-                          // GestureDetector(
-                          //     child: Container(
-                          //       child: customSubtitleColor('프로필 작성 이동', GREY),
-                          //     ),
-                          //     onTap: () {
-                          //       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => FirstRoute()), (route) => false);
-                          //     }
-                          // ),
-                    ])),
-              ],
-            )));
-      }),
-    );  ///로그인 화면
-    else
+    if (_initialized)
       return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Builder(builder: (context) {
-          return CircularProgressIndicator();
-        }
-        )
-      );  ///로딩중
+          return SingleChildScrollView(
+              // 키보드 올라옴에 따라 스크린도 같이 올라가는 위젯
+              scrollDirection: Axis.vertical,
+              child: SafeArea(
+                  child: Column(
+                children: <Widget>[
+                  // 보나펫티 로고
+                  Container(
+                      margin: EdgeInsets.only(left: 32, right: 32, top: 100)),
+                  Image.asset(
+                    'images/logo.png',
+                    width: width * 0.266,
+                    height: height * 0.12,
+                  ),
+                  SizedBox(height: 20),
+                  Text.rich(TextSpan(children: [
+                    TextSpan(
+                        text: '보나펫티로 든든한 ',
+                        style: TextStyle(
+                            color: Color.fromRGBO(68, 0, 0, 0.8),
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w300)),
+                    TextSpan(
+                        text: '밥심!',
+                        style: TextStyle(
+                            color: Color.fromRGBO(68, 0, 0, 0.8),
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w900))
+                  ])),
+                  SizedBox(height: 35),
+                  Image.asset(
+                    'images/loginCharacter.png',
+                    width: width * 210 / 360,
+                    height: height * 208 / 800,
+                  ),
+                  SizedBox(height: 33),
+                  KakaoLogin(),
+                  SizedBox(height: 20),
+                  Container(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                        GestureDetector(
+                            child: Container(
+                              child: customSubtitleColor('문의하기', GREY),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                _launched = _launchInBrowser(_url);
+                              });
+                            }),
+                        SizedBox(width: 30),
+                        GestureDetector(
+                            child: Container(
+                              child: customSubtitleColor('GUEST Mode', GREY),
+                            ),
+                            onTap: () {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FirstRoute()),
+                                  (route) => false);
+                            }),
+                      ])),
+                ],
+              )));
+        }),
+      );
+
+    ///로그인 화면
+    else
+      return Scaffold(
+          resizeToAvoidBottomInset: true,
+          body: Builder(builder: (context) {
+            return CircularProgressIndicator();
+          }));
+
+    ///로딩중
   }
 }
 
@@ -169,9 +177,9 @@ class KakaoLogin extends StatefulWidget {
   @override
   _KakaoLoginState createState() => _KakaoLoginState();
 }
+
 //카카오톡을 통한 계정 로그인
 class _KakaoLoginState extends State<KakaoLogin> {
-
   bool _isKakaoTalkInstalled = false;
   var validateToken; // 인증용 토큰
   @override
@@ -190,6 +198,7 @@ class _KakaoLoginState extends State<KakaoLogin> {
       _isKakaoTalkInstalled = installed;
     });
   }
+
   //유저 ID 불러와서 인증
   _issueAccessToken(String authCode) async {
     try {
@@ -203,30 +212,30 @@ class _KakaoLoginState extends State<KakaoLogin> {
         throw Exception('LogIn Token Auth Error');
       }
       //카카오 로그인 성공, 유저 ID 불러오기
-      else{
+      else {
         User kakaoUser = await UserApi.instance.me();
 
         //계정 존재 여부 체크
         var userDataCheck = Logger().isKakaoUserExist(kakaoUser.id);
         userDataCheck.then((value) {
-          if (value != false)  //계정 존재
-            {
-              var getAccountData = UserData.getUserData(value.toString());
-              getAccountData.then((value) {
-                Logger().userData = value;
-              });
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => DelayScreen()),
-                      (route) => false);
-            }
+          if (value != false) //계정 존재
+          {
+            var getAccountData = UserData.getUserData(value.toString());
+            getAccountData.then((value) {
+              Logger().userData = value;
+            });
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => DelayScreen()),
+                (route) => false);
+          }
           //계정 첫 생성 후 페이지 넘김
-          else{
+          else {
             Logger().userData.accountInfo = kakaoUser.id;
             Navigator.pushAndRemoveUntil(
-           context,
+                context,
                 MaterialPageRoute(builder: (context) => ProfileQuestion()),
-                    (route) => false);
+                (route) => false);
           }
         });
         print('> kakao id : ${kakaoUser.id.toString()}');
