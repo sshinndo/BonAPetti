@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_service_application/appbar/AppBarWithAlarm.dart';
 import 'package:pet_service_application/bottombar/MenuBottomBar.dart';
@@ -7,12 +8,12 @@ import 'package:pet_service_application/community/CommunityInfo.dart';
 import 'package:pet_service_application/log_in/class/UserData.dart';
 
 class PostScreen extends StatefulWidget {
-  final CommunityInfo communityInfo; //굿즈 정보 객체
+  final CommunityInfo communityInfo; //포스트 정보 객체
 
   PostScreen({Key? key, required this.communityInfo}) : super(key: key); //생성자
 
   @override
-  _PostScreen createState() => _PostScreen(); //위젯 생성
+  _PostScreen createState() => _PostScreen();
 }
 
 class _PostScreen extends State<PostScreen> {
@@ -78,28 +79,33 @@ class _PostScreen extends State<PostScreen> {
                     )),///프로필 설명
                 Padding(padding: EdgeInsets.symmetric(vertical: 20)),
                 Container(
-                    child: Card(
-                        margin: EdgeInsets.only(top: 10, bottom: 20),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child:
-                        //포스트 이미지 존재 여부
-                        widget.communityInfo.imageUrls.isEmpty
-                        //빈 공간
-                            ? SizedBox(
-                          height: 50,
-                        )
-                        //첫 이미지 (대표 이미지)
-                            : Image.network(
-                          widget.communityInfo.imageUrls.first,
-                          fit: BoxFit.fill,
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return CircularProgressIndicator();
-                          },
-                        ))),///커뮤니티 대표 이미지
+                  height: MediaQuery.of(context).size.height * 0.4,
+                    child: widget.communityInfo.imageUrls.isEmpty
+                    //빈 공간
+                      ? SizedBox(height: 50)
+                    //첫 이미지 (대표 이미지)
+                      : PageView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: widget.communityInfo.imageUrls.length,
+                        itemBuilder: (BuildContext context, int index)
+                        {
+                          return Card(
+                            margin: EdgeInsets.only(top: 10, bottom: 20),
+                            shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: Image.network(
+                                    widget.communityInfo.imageUrls[index],
+                                    fit: BoxFit.fill,
+                                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                        return CircularProgressIndicator();
+                                    },
+                                  )
+                          );
+                        }
+                      )
+                    ),///커뮤니티 이미지들
                 Padding(padding: EdgeInsets.symmetric(vertical: 20)),
                 Container(
                   alignment: Alignment.centerLeft,
