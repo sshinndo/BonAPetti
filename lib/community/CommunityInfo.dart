@@ -24,8 +24,52 @@ class CommunityInfo {
 
   //생성자
  CommunityInfo();
+ 
+ ///새 포스트 정보 생성 : 서버로 전송 (굿즈이름은 빈칸으로 임시 입력)
+  Future<String> sendPostData() async {
+    // 새 포스트 정보(postID 비어있음)
+    if(postID == '') {
+      CollectionReference posts = 
+          FirebaseFirestore.instance.collection('Community');
+      var newPost = await posts.add({
+        'UserID' : user.uid.toString(),
+        'LikeList' : likeList,
+        'date' : DateTime.now(),
+        'dialogue' : dialogue,
+        'goods' : "",
+        'hashTags' : hashTags,
+        'images' : imageUrls,
+        'petID' : pet.petID.toString()
+      });
+      postID = newPost.id;
+      return postID;
+    }
+    else
+      throw Exception('new Post Data Error');
+  }
 
-  ///uid 로 서버에서 유저정보 불러오기
+  ///포스트 정보 갱신 : 서버로 전송 (굿즈이름은 빈칸으로 임시 입력)
+  Future<void> updatePostData() async {
+    //서버상에 이미 있는 포스트 정보
+    if(postID != '') {
+      CollectionReference posts =
+      FirebaseFirestore.instance.collection('Community');
+      posts.doc(postID).set({
+        'UserID' : user.uid.toString(),
+        'LikeList' : likeList,
+        'date' : DateTime.now(),
+        'dialogue' : dialogue,
+        'goods' : "",
+        'hashTags' : hashTags,
+        'images' : imageUrls,
+        'petID' : pet.petID.toString()
+      });
+    }
+    else
+      throw Exception('Post not Exist in Server');
+  }
+
+  ///uid 로 서버에서 포스트정보 불러오기
   static Future<CommunityInfo> getCommunityData(String postID) async {
     ///ID로 유저 문서 접근
     var postDoc = await FirebaseFirestore.instance
