@@ -52,7 +52,11 @@ class SearchBar extends StatelessWidget {
   final SearchContentsManagerWidget managerWidget;
   SearchBar({Key? key, required this.managerWidget}) : super(key: key);
 
-  final textFieldController = TextEditingController();
+  // _filter : 검색 위젯을 컨트롤 하는 위젯
+  final TextEditingController _filter = TextEditingController();
+  // focusNode:  현재 검색 위젯에 커서가 있는지에 대한 상태를 가지는 위젯
+  FocusNode focusNode = FocusNode();
+  String _searchText = ""; // 현재 검색 값
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +68,7 @@ class SearchBar extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
-        margin: EdgeInsets.only(left: 50, top: 20, right: 50),
+        // margin: EdgeInsets.only(left: 50, top: 20, right: 50),
         child: Container(
           child: Row(
             children: [
@@ -79,7 +83,7 @@ class SearchBar extends StatelessWidget {
               ),
               Expanded(
                 child: CupertinoTextField(
-                  controller: textFieldController,
+                  controller: _filter,
                   style: TextStyle(
                       fontSize: 17, color: Color.fromRGBO(0, 0, 0, 0.5)),
                   cursorColor: Color.fromRGBO(217, 217, 217, 1),
