@@ -126,34 +126,46 @@ class _ActivityMedalState extends State<ActivityMedal> {
             // color: Colors.blue,
             child: Column(
               children: [
-                Text(
-                    "회원가입메달",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                      "회원가입메달",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                SizedBox(height: 45),
-                CircleAvatar(
-                  radius: 200,
-                  backgroundColor: LIGHTGREY,
-                ),
-                SizedBox(height: 31),
-                Text(
-                  "보나펫티 가입을 환영합니다!",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                SizedBox(height: 20),
+                Expanded(
+                  flex: 5,
+                  child: CircleAvatar(
+                    radius: 200,
+                    backgroundColor: LIGHTGREY,
                   ),
                 ),
-                SizedBox(height: 15),
-                Text(
-                  "회원가입을 한 분들을 위한 메달",
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
+                SizedBox(height: 25),
+                Expanded(
+                  flex: 3,
+                    child: Column(
+                      children: [
+                  Text(
+                    "보나펫티 가입을 환영합니다!",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
+                  SizedBox(height: 15),
+                  Text(
+                    "회원가입을 한 분들을 위한 메달",
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],))
+
               ],
             ),
         )

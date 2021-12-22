@@ -165,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     Logger().loggerDebugPrint();
     return Scaffold(
-      floatingActionButton: BackSpaceButton(),
+      // floatingActionButton: BackSpaceButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       bottomNavigationBar: MenuBottomBar(),
       body: DoubleBackToCloseApp(

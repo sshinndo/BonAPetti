@@ -83,7 +83,7 @@ class _LogInState extends State<LogIn> {
                   margin: EdgeInsets.only(left: 32, right: 32, top: 100)
                 ),
                 Image.asset('images/logo.png',
-                    width: width * 0.266, height: height * 0.12
+                    width: width * 0.266, height: height * 0.12,
                 ),
                 SizedBox(height: 20),
                 Text.rich(TextSpan(children: [
